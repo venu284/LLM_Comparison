@@ -1,0 +1,29 @@
+{
+  "task_id": "BF-010",
+  "category": "bugfix",
+  "difficulty": "hard",
+  "title": "Memory Leak in Event Listener",
+  "bug_description": "A component adds a window resize listener on every render and never removes it, causing listener accumulation.",
+  "prompt": "You are a web developer. Fix the bug in the following code.\n\nBUG DESCRIPTION: A component registers a window resize listener repeatedly and never cleans it up, causing a listener leak across rerenders and unmounts.\n\nCODE:\nimport React, { useEffect, useState } from 'react';\n\nexport default function ResizeTracker() {\n  const [width, setWidth] = useState(window.innerWidth);\n  const [ticks, setTicks] = useState(0);\n\n  useEffect(() => {\n    const handleResize = () => {\n      setWidth(window.innerWidth);\n    };\n\n    window.addEventListener('resize', handleResize);\n  });\n\n  return (\n    <div>\n      <div data-testid=\"width\">{width}</div>\n      <button type=\"button\" onClick={() => setTicks((current) => current + 1)}>\n        Rerender {ticks}\n      </button>\n    </div>\n  );\n}\n\nCONSTRAINTS:\n- Fix the bug while preserving existing functionality\n- Do not rewrite the entire component\n- Return the complete fixed file\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Fix the bug while preserving existing functionality",
+    "Do not rewrite the entire component",
+    "Return the complete fixed file"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "buggy_file": "fixtures/buggy-components/BF-010.buggy.jsx",
+  "test_file": "tests/bugfix/BF-010.test.jsx",
+  "test_count": 2,
+  "tags": [
+    "react",
+    "events",
+    "cleanup",
+    "memory-leak",
+    "bugfix"
+  ],
+  "reference_solution": "solutions/bugfix/BF-010.fixed.jsx"
+}

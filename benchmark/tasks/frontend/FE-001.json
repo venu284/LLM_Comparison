@@ -1,0 +1,23 @@
+{
+  "task_id": "FE-001",
+  "category": "frontend",
+  "difficulty": "easy",
+  "title": "Counter Component",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build a React functional component called `Counter` that displays a number (starting at 0) and two buttons: \"Increment\" (+1) and \"Decrement\" (-1). The count should never go below 0. Display the current count in an element with `data-testid=\"count\"`.\n\nCONSTRAINTS:\n- Functional component with `useState`\n- Default export\n- Count cannot go below 0\n- Buttons labeled exactly \"Increment\" and \"Decrement\"\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Functional component with `useState`",
+    "Default export",
+    "Count cannot go below 0",
+    "Buttons labeled exactly \"Increment\" and \"Decrement\""
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "test_file": "tests/frontend/FE-001.test.jsx",
+  "test_count": 7,
+  "tags": ["react", "state", "counter"],
+  "reference_solution": "solutions/frontend/FE-001.jsx"
+}
+

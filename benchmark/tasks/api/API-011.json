@@ -1,0 +1,24 @@
+{
+  "task_id": "API-011",
+  "category": "api",
+  "difficulty": "hard",
+  "title": "Webhook Receiver with Retry Queue",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build an Express.js application that receives webhooks and processes them with retry logic. Implement POST `/webhooks`, GET `/webhooks`, GET `/webhooks/:id`, POST `/webhooks/:id/process`, and POST `/webhooks/:id/retry`. Store webhooks in-memory with a unique id, status, retry count, and timestamp. Use the injected `processWebhook` function from `app.set('processWebhook', fn)` to simulate processing.\n\nCONSTRAINTS:\n- Use Express.js\n- Use an in-memory store\n- Support an injectable processing function\n- Implement retry logic with a max of 3 retries before `dead`\n- Export the app with `module.exports = app`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use Express.js",
+    "Use an in-memory store",
+    "Support an injectable processing function",
+    "Implement retry logic with a max of 3 retries before `dead`",
+    "Export the app with `module.exports = app`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "test_file": "tests/api/API-011.test.js",
+  "test_count": 11,
+  "tags": ["express", "webhooks", "retries", "queues"],
+  "reference_solution": "solutions/api/API-011.js"
+}
+

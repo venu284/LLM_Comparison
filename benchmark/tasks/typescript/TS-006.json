@@ -1,0 +1,23 @@
+{
+  "task_id": "TS-006",
+  "category": "typescript",
+  "difficulty": "medium",
+  "title": "Discriminated Union for State Machine",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Define and export an order lifecycle state machine using discriminated unions. Export `OrderState`, `OrderAction`, and a function `transition(state: OrderState, action: OrderAction): OrderState`. Implement valid transitions for pending to confirmed, confirmed to shipped with a tracking number, shipped to delivered, and cancellation for non-delivered orders with a reason. Invalid transitions should throw an Error.\n\nCONSTRAINTS:\n- Use discriminated unions\n- Export all required types and functions\n- Compile under `tsc --strict --noEmit`\n- Do not use `any`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use discriminated unions",
+    "Export all required types and functions",
+    "Compile under `tsc --strict --noEmit`",
+    "Do not use `any`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".ts",
+    "export_type": "named"
+  },
+  "test_file": "tests/typescript/TS-006.test.ts",
+  "test_count": 9,
+  "tags": ["typescript", "state-machine", "discriminated-unions"],
+  "reference_solution": "solutions/typescript/TS-006.ts"
+}
+

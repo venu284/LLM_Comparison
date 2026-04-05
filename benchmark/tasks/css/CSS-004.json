@@ -1,0 +1,23 @@
+{
+  "task_id": "CSS-004",
+  "category": "css",
+  "difficulty": "easy",
+  "title": "Badge and Pill Styles",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Write CSS for notification badges and pill-shaped tags. `.badge` should be a 20px by 20px circle with centered white text, a red background, `border-radius: 50%`, and absolute positioning. `.pill` should be a rounded capsule with `padding: 4px 12px`, `border-radius: 9999px`, a light gray background, and `font-size: 14px`. Include `.pill--success`, `.pill--warning`, and `.pill--danger` background color variants.\n\nCONSTRAINTS:\n- Return a single CSS file\n- `.badge` must be circular and absolutely positioned\n- `.pill` must be capsule-shaped with the specified padding and radius\n- Include success, warning, and danger variants\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Return a single CSS file",
+    "`.badge` must be circular and absolutely positioned",
+    "`.pill` must be capsule-shaped with the specified padding and radius",
+    "Include success, warning, and danger variants"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".css",
+    "export_type": "none"
+  },
+  "test_file": "tests/css/CSS-004.test.js",
+  "test_count": 6,
+  "tags": ["css", "components", "badge", "pill"],
+  "reference_solution": "solutions/css/CSS-004.css"
+}
+

@@ -1,0 +1,23 @@
+{
+  "task_id": "API-012",
+  "category": "api",
+  "difficulty": "hard",
+  "title": "API Versioning with Router",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build an Express.js application with API versioning using `Express.Router`. Implement GET `/api/v1/users`, GET `/api/v2/users`, POST `/api/v2/users`, and GET `/api/version`. V1 returns users with only `name`. V2 returns `name`, `email`, and `createdAt`, plus a `meta` object. Both versions share the same in-memory user store.\n\nCONSTRAINTS:\n- Use Express.js and `Express.Router`\n- Share a single in-memory user store between versions\n- Keep v1 read-only\n- Export the app with `module.exports = app`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use Express.js and `Express.Router`",
+    "Share a single in-memory user store between versions",
+    "Keep v1 read-only",
+    "Export the app with `module.exports = app`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "test_file": "tests/api/API-012.test.js",
+  "test_count": 10,
+  "tags": ["express", "routing", "versioning"],
+  "reference_solution": "solutions/api/API-012.js"
+}
+

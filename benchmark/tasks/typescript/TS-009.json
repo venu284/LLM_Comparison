@@ -1,0 +1,23 @@
+{
+  "task_id": "TS-009",
+  "category": "typescript",
+  "difficulty": "hard",
+  "title": "Generic Repository Pattern",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Define and export a generic repository pattern. Export `Entity`, `Repository<T extends Entity>`, and `InMemoryRepository<T extends Entity>`. The repository should support `findAll`, `findById`, `create`, `update`, and `delete`. Auto-generate ids in a uuid-style format and set timestamps on create and update.\n\nCONSTRAINTS:\n- Use TypeScript generics and utility types\n- Export all required interfaces and classes\n- Compile under `tsc --strict --noEmit`\n- Do not use `any`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use TypeScript generics and utility types",
+    "Export all required interfaces and classes",
+    "Compile under `tsc --strict --noEmit`",
+    "Do not use `any`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".ts",
+    "export_type": "named"
+  },
+  "test_file": "tests/typescript/TS-009.test.ts",
+  "test_count": 11,
+  "tags": ["typescript", "repository", "generics", "classes"],
+  "reference_solution": "solutions/typescript/TS-009.ts"
+}
+

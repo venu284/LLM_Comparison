@@ -1,0 +1,24 @@
+{
+  "task_id": "CSS-011",
+  "category": "css",
+  "difficulty": "hard",
+  "title": "Animated Card Flip",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Write a complete HTML file with embedded CSS. Create a `.flip-card` that is 300px by 200px with `.flip-card-inner`, `.flip-card-front`, and `.flip-card-back`. The front is visible by default with a blue background. The back is green, contains the text `Back Side`, and is revealed on hover by rotating 180 degrees on the Y axis using CSS 3D transforms. Use `perspective: 1000px` on the outer container and a 600ms transition.\n\nCONSTRAINTS:\n- Return a single HTML file with embedded CSS\n- The card must be 300px by 200px\n- Use CSS 3D transforms for the flip interaction\n- Use `perspective: 1000px`\n- Use a 600ms transition\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Return a single HTML file with embedded CSS",
+    "The card must be 300px by 200px",
+    "Use CSS 3D transforms for the flip interaction",
+    "Use `perspective: 1000px`",
+    "Use a 600ms transition"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".html",
+    "export_type": "none"
+  },
+  "test_file": "tests/css/CSS-011.spec.js",
+  "test_count": 7,
+  "tags": ["css", "animation", "transform", "playwright"],
+  "reference_solution": "solutions/css/CSS-011.html"
+}
+

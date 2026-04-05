@@ -1,0 +1,23 @@
+{
+  "task_id": "API-002",
+  "category": "api",
+  "difficulty": "easy",
+  "title": "Echo Endpoint",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build an Express.js application with a POST `/echo` endpoint that returns whatever JSON body it receives, wrapped in `{ \"received\": <body> }`. If no body is sent, return `{ \"error\": \"No body provided\" }` with status 400. Use `express.json()` middleware.\n\nCONSTRAINTS:\n- Use Express.js\n- Export the app with `module.exports = app`\n- Use `express.json()` middleware\n- Handle a missing body with status 400\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use Express.js",
+    "Export the app with `module.exports = app`",
+    "Use `express.json()` middleware",
+    "Handle a missing body with status 400"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "test_file": "tests/api/API-002.test.js",
+  "test_count": 6,
+  "tags": ["express", "post", "middleware"],
+  "reference_solution": "solutions/api/API-002.js"
+}
+

@@ -1,0 +1,28 @@
+{
+  "task_id": "BF-013",
+  "category": "bugfix",
+  "difficulty": "hard",
+  "title": "Deep Equality vs Reference Equality",
+  "bug_description": "A memoized calculation depends on a freshly created object, so it recomputes on unrelated rerenders.",
+  "prompt": "You are a web developer. Fix the bug in the following code.\n\nBUG DESCRIPTION: A `useMemo` calculation depends on a newly created object, so the memo invalidates on every rerender even when the real inputs have not changed.\n\nCODE:\nimport React, { useMemo, useState } from 'react';\n\nexport default function Summary({ items, multiplier = 1, onCalculate = () => {} }) {\n  const [ticks, setTicks] = useState(0);\n  const options = { multiplier };\n\n  const total = useMemo(() => {\n    onCalculate();\n    return items.reduce((sum, item) => sum + item, 0) * options.multiplier;\n  }, [items, options, onCalculate]);\n\n  return (\n    <div>\n      <div data-testid=\"total\">{total}</div>\n      <button type=\"button\" onClick={() => setTicks((current) => current + 1)}>\n        Rerender {ticks}\n      </button>\n    </div>\n  );\n}\n\nCONSTRAINTS:\n- Fix the bug while preserving existing functionality\n- Do not rewrite the entire component\n- Return the complete fixed file\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Fix the bug while preserving existing functionality",
+    "Do not rewrite the entire component",
+    "Return the complete fixed file"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "buggy_file": "fixtures/buggy-components/BF-013.buggy.jsx",
+  "test_file": "tests/bugfix/BF-013.test.jsx",
+  "test_count": 3,
+  "tags": [
+    "react",
+    "useMemo",
+    "performance",
+    "bugfix"
+  ],
+  "reference_solution": "solutions/bugfix/BF-013.fixed.jsx"
+}

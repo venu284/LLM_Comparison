@@ -1,0 +1,28 @@
+{
+  "task_id": "BF-004",
+  "category": "bugfix",
+  "difficulty": "easy",
+  "title": "CSS Flexbox Direction",
+  "bug_description": "A responsive layout keeps `flex-direction: row` in the mobile media query, so items never stack vertically on small screens.",
+  "prompt": "You are a web developer. Fix the bug in the following code.\n\nBUG DESCRIPTION: A responsive layout keeps `flex-direction: row` inside the mobile media query, so the layout stays horizontal on small screens.\n\nCODE:\n.layout {\n  display: flex;\n  flex-direction: row;\n}\n\n@media (max-width: 768px) {\n  .layout {\n    flex-direction: row;\n  }\n}\n\nCONSTRAINTS:\n- Fix the bug while preserving existing functionality\n- Do not rewrite the entire stylesheet\n- Return the complete fixed file\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Fix the bug while preserving existing functionality",
+    "Do not rewrite the entire stylesheet",
+    "Return the complete fixed file"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".css",
+    "export_type": "none"
+  },
+  "buggy_file": "fixtures/buggy-components/BF-004.buggy.css",
+  "test_file": "tests/bugfix/BF-004.test.js",
+  "test_count": 2,
+  "tags": [
+    "css",
+    "responsive",
+    "flexbox",
+    "bugfix"
+  ],
+  "reference_solution": "solutions/bugfix/BF-004.fixed.css"
+}

@@ -1,0 +1,24 @@
+{
+  "task_id": "CSS-008",
+  "category": "css",
+  "difficulty": "medium",
+  "title": "Form Styling",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Write CSS for a `.form` with styled labels, inputs, and a submit button. `.form-label` should be block-level, bold, and have 8px margin-bottom. `.form-input` should be full-width with 40px height, 12px padding, a 1px solid `#ddd` border, and 4px border-radius. On focus, apply a blue `#3498db` border and `0 0 0 3px rgba(52,152,219,0.1)` box-shadow with no default outline. `.form-input.invalid` should get red border and red box-shadow. `.form-button` should be full-width, 44px tall, blue with white text, borderless, rounded, and darker on hover.\n\nCONSTRAINTS:\n- Return a single CSS file\n- Style labels, inputs, and the submit button as specified\n- Add focus styles to `.form-input`\n- Add invalid styles to `.form-input.invalid`\n- Add hover styling to `.form-button`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Return a single CSS file",
+    "Style labels, inputs, and the submit button as specified",
+    "Add focus styles to `.form-input`",
+    "Add invalid styles to `.form-input.invalid`",
+    "Add hover styling to `.form-button`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".css",
+    "export_type": "none"
+  },
+  "test_file": "tests/css/CSS-008.test.js",
+  "test_count": 8,
+  "tags": ["css", "forms", "focus", "validation"],
+  "reference_solution": "solutions/css/CSS-008.css"
+}
+

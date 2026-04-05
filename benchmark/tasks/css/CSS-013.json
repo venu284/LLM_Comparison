@@ -1,0 +1,23 @@
+{
+  "task_id": "CSS-013",
+  "category": "css",
+  "difficulty": "hard",
+  "title": "Dark Mode Theme Toggle",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Write a complete HTML file with embedded CSS that implements a dark and light theme system using CSS custom properties. Define light theme variables under `:root` and dark theme overrides under `[data-theme=\"dark\"]`. Build a page with a `.container`, a `.card`, and a checkbox toggle that switches `data-theme` on the `html` element. All colors in the page must come from the CSS variables, except within the variable definitions.\n\nCONSTRAINTS:\n- Return a single HTML file with embedded CSS\n- Use CSS custom properties for all colors\n- Define dark theme overrides on `[data-theme=\"dark\"]`\n- Include a working checkbox toggle with minimal JavaScript\n- Do not hardcode colors outside the variable definitions\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Return a single HTML file with embedded CSS",
+    "Use CSS custom properties for all colors",
+    "Define dark theme overrides on `[data-theme=\"dark\"]`",
+    "Include a working checkbox toggle with minimal JavaScript",
+    "Do not hardcode colors outside the variable definitions"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".html",
+    "export_type": "none"
+  },
+  "test_file": "tests/css/CSS-013.spec.js",
+  "test_count": 9,
+  "tags": ["css", "variables", "theme", "playwright"],
+  "reference_solution": "solutions/css/CSS-013.html"
+}

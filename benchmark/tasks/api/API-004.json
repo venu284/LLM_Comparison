@@ -1,0 +1,22 @@
+{
+  "task_id": "API-004",
+  "category": "api",
+  "difficulty": "easy",
+  "title": "Query Parameter Greeting",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build an Express.js application with GET `/greet` that accepts the query parameter `name`. Return `{ \"message\": \"Hello, {name}!\" }` with status 200. If `name` is not provided, return `{ \"message\": \"Hello, World!\" }`. Also accept an optional query parameter `uppercase` so that when `uppercase=true`, the message is fully uppercased.\n\nCONSTRAINTS:\n- Use Express.js\n- Use query parameters\n- Export the app with `module.exports = app`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use Express.js",
+    "Use query parameters",
+    "Export the app with `module.exports = app`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "test_file": "tests/api/API-004.test.js",
+  "test_count": 6,
+  "tags": ["express", "query-params", "responses"],
+  "reference_solution": "solutions/api/API-004.js"
+}
+

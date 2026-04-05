@@ -1,0 +1,23 @@
+{
+  "task_id": "TS-004",
+  "category": "typescript",
+  "difficulty": "easy",
+  "title": "Array and Record Utility Types",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Define and export `StringRecord` as `Record<string, string>`. Export a function `groupBy<T>(items: T[], key: keyof T): Record<string, T[]>` that groups items by the selected key. Export a function `pluck<T, K extends keyof T>(items: T[], key: K): T[K][]` that extracts values for the selected key.\n\nCONSTRAINTS:\n- Use TypeScript generics\n- Export all required types and functions\n- Compile under `tsc --strict --noEmit`\n- Do not use `any`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use TypeScript generics",
+    "Export all required types and functions",
+    "Compile under `tsc --strict --noEmit`",
+    "Do not use `any`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".ts",
+    "export_type": "named"
+  },
+  "test_file": "tests/typescript/TS-004.test.ts",
+  "test_count": 6,
+  "tags": ["typescript", "generics", "record", "arrays"],
+  "reference_solution": "solutions/typescript/TS-004.ts"
+}
+

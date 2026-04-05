@@ -1,0 +1,24 @@
+{
+  "task_id": "CSS-002",
+  "category": "css",
+  "difficulty": "easy",
+  "title": "Sticky Header",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Write CSS for a page with a `.header` that is 60px tall, has a white background, and sticks to the top of the page when scrolling. The `.content` section below should scroll normally. Add a subtle box-shadow of `0 2px 4px rgba(0,0,0,0.1)` to the header.\n\nCONSTRAINTS:\n- Return a single CSS file\n- `.header` must be sticky at the top\n- `.header` height must be 60px\n- Add the specified box-shadow\n- Ensure the header stacks above content with a positive z-index\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Return a single CSS file",
+    "`.header` must be sticky at the top",
+    "`.header` height must be 60px",
+    "Add the specified box-shadow",
+    "Ensure the header stacks above content with a positive z-index"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".css",
+    "export_type": "none"
+  },
+  "test_file": "tests/css/CSS-002.test.js",
+  "test_count": 5,
+  "tags": ["css", "sticky", "header"],
+  "reference_solution": "solutions/css/CSS-002.css"
+}
+

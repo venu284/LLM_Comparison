@@ -1,0 +1,24 @@
+{
+  "task_id": "CSS-005",
+  "category": "css",
+  "difficulty": "medium",
+  "title": "Card Grid with Hover Effects",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Write CSS for a `.card-grid` container that displays `.card` items in a responsive grid with 3 columns on desktop (at least 1024px), 2 columns on tablet (at least 768px), and 1 column on mobile. Cards should have a 16px gap, white background, 8px border-radius, and a subtle border. On hover, each card should lift with `transform: translateY(-4px)` and `box-shadow: 0 8px 16px rgba(0,0,0,0.1)` using a 200ms transition.\n\nCONSTRAINTS:\n- Return a single CSS file\n- Use CSS Grid for layout\n- Include responsive breakpoints for desktop and tablet\n- Add the specified hover transform and shadow\n- Add a smooth transition\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Return a single CSS file",
+    "Use CSS Grid for layout",
+    "Include responsive breakpoints for desktop and tablet",
+    "Add the specified hover transform and shadow",
+    "Add a smooth transition"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".css",
+    "export_type": "none"
+  },
+  "test_file": "tests/css/CSS-005.test.js",
+  "test_count": 8,
+  "tags": ["css", "grid", "responsive", "hover"],
+  "reference_solution": "solutions/css/CSS-005.css"
+}
+

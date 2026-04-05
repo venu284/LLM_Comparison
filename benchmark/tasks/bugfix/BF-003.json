@@ -1,0 +1,28 @@
+{
+  "task_id": "BF-003",
+  "category": "bugfix",
+  "difficulty": "easy",
+  "title": "Off-by-One Pagination",
+  "bug_description": "An Express pagination endpoint slices the array using a 1-indexed page number incorrectly, so page 1 skips the first records.",
+  "prompt": "You are a web developer. Fix the bug in the following code.\n\nBUG DESCRIPTION: An Express pagination endpoint uses the wrong slice indexes for a 1-indexed `page` value, so page 1 skips the first records.\n\nCODE:\nconst express = require('express');\n\nconst app = express();\nconst items = Array.from({ length: 10 }, (_, index) => ({\n  id: index + 1,\n  name: `Item ${index + 1}`\n}));\n\napp.get('/items', (req, res) => {\n  const page = Number.parseInt(req.query.page, 10) || 1;\n  const limit = Number.parseInt(req.query.limit, 10) || 3;\n  const data = items.slice(page * limit, (page + 1) * limit);\n\n  res.status(200).json(data);\n});\n\nmodule.exports = app;\n\nCONSTRAINTS:\n- Fix the bug while preserving existing functionality\n- Do not rewrite the entire module\n- Return the complete fixed file\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Fix the bug while preserving existing functionality",
+    "Do not rewrite the entire module",
+    "Return the complete fixed file"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "buggy_file": "fixtures/buggy-components/BF-003.buggy.js",
+  "test_file": "tests/bugfix/BF-003.test.js",
+  "test_count": 2,
+  "tags": [
+    "express",
+    "pagination",
+    "off-by-one",
+    "bugfix"
+  ],
+  "reference_solution": "solutions/bugfix/BF-003.fixed.js"
+}

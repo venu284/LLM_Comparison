@@ -1,0 +1,28 @@
+{
+  "task_id": "BF-005",
+  "category": "bugfix",
+  "difficulty": "medium",
+  "title": "Stale Closure in useEffect",
+  "bug_description": "A timer effect closes over a stale `count` value, so the interval only updates the UI once instead of continuing to increment.",
+  "prompt": "You are a web developer. Fix the bug in the following code.\n\nBUG DESCRIPTION: A timer component captures a stale `count` value inside `setInterval`, so the displayed value updates once and then stops incrementing.\n\nCODE:\nimport React, { useEffect, useState } from 'react';\n\nexport default function Timer() {\n  const [count, setCount] = useState(0);\n\n  useEffect(() => {\n    const intervalId = window.setInterval(() => {\n      setCount(count + 1);\n    }, 1000);\n\n    return () => window.clearInterval(intervalId);\n  }, []);\n\n  return <div data-testid=\"count\">{count}</div>;\n}\n\nCONSTRAINTS:\n- Fix the bug while preserving existing functionality\n- Do not rewrite the entire component\n- Return the complete fixed file\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Fix the bug while preserving existing functionality",
+    "Do not rewrite the entire component",
+    "Return the complete fixed file"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "buggy_file": "fixtures/buggy-components/BF-005.buggy.jsx",
+  "test_file": "tests/bugfix/BF-005.test.jsx",
+  "test_count": 3,
+  "tags": [
+    "react",
+    "useEffect",
+    "timers",
+    "bugfix"
+  ],
+  "reference_solution": "solutions/bugfix/BF-005.fixed.jsx"
+}

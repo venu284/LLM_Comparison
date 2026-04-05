@@ -1,0 +1,22 @@
+{
+  "task_id": "TS-013",
+  "category": "typescript",
+  "difficulty": "hard",
+  "title": "Middleware Pipeline Types",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Define a type-safe middleware pipeline system. Export `Context<T>`, `Middleware<T, U>`, and a `Pipeline` class with a chainable `use` method and an async `execute` method. Also export `loggerMiddleware` and `transformMiddleware` as sample middleware.\n\nCONSTRAINTS:\n- Use TypeScript generics for the pipeline and middleware chain\n- Export all required types, classes, and functions\n- Compile under `tsc --strict --noEmit`\n- Do not use `any`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use TypeScript generics for the pipeline and middleware chain",
+    "Export all required types, classes, and functions",
+    "Compile under `tsc --strict --noEmit`",
+    "Do not use `any`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".ts",
+    "export_type": "named"
+  },
+  "test_file": "tests/typescript/TS-013.test.ts",
+  "test_count": 9,
+  "tags": ["typescript", "middleware", "pipeline", "generics"],
+  "reference_solution": "solutions/typescript/TS-013.ts"
+}

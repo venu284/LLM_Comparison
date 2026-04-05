@@ -1,0 +1,28 @@
+{
+  "task_id": "BF-006",
+  "category": "bugfix",
+  "difficulty": "medium",
+  "title": "Express Middleware Order",
+  "bug_description": "Authentication middleware is mounted after the protected route, so the route is publicly accessible.",
+  "prompt": "You are a web developer. Fix the bug in the following code.\n\nBUG DESCRIPTION: Authentication middleware is mounted after the protected route, so requests reach the route handler before authentication runs.\n\nCODE:\nconst express = require('express');\n\nconst app = express();\n\nconst auth = (req, res, next) => {\n  if (req.headers.authorization !== 'Bearer test-token') {\n    return res.status(401).json({ error: 'Unauthorized' });\n  }\n\n  return next();\n};\n\napp.get('/protected', (req, res) => {\n  res.status(200).json({ message: 'Protected data' });\n});\n\napp.use(auth);\n\nmodule.exports = app;\n\nCONSTRAINTS:\n- Fix the bug while preserving existing functionality\n- Do not rewrite the entire module\n- Return the complete fixed file\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Fix the bug while preserving existing functionality",
+    "Do not rewrite the entire module",
+    "Return the complete fixed file"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "buggy_file": "fixtures/buggy-components/BF-006.buggy.js",
+  "test_file": "tests/bugfix/BF-006.test.js",
+  "test_count": 2,
+  "tags": [
+    "express",
+    "middleware",
+    "auth",
+    "bugfix"
+  ],
+  "reference_solution": "solutions/bugfix/BF-006.fixed.js"
+}

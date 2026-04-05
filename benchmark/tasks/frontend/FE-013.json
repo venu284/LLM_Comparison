@@ -1,0 +1,28 @@
+{
+  "task_id": "FE-013",
+  "category": "frontend",
+  "difficulty": "hard",
+  "title": "Modal with Focus Trap",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build a React functional component called `Modal` that takes props `isOpen`, `onClose`, `title`, and `children`. When open, render a backdrop overlay and a centered modal dialog. Clicking the backdrop calls `onClose`. Pressing Escape calls `onClose`. Implement a focus trap so the first focusable element receives focus on open and Tab cycles through focusable elements within the modal only. Add a close button (×) in the top-right. Add `role=\"dialog\"` and `aria-modal=\"true\"` to the dialog element.\n\nCONSTRAINTS:\n- Functional component with `useEffect`, `useRef`\n- Default export\n- Props: `isOpen`, `onClose`, `title`, `children`\n- Backdrop click closes modal\n- Escape key closes modal\n- Focus trap within modal\n- Close button (×) in top-right\n- `role=\"dialog\"` and `aria-modal=\"true\"`\n- First focusable element receives focus on open\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Functional component with `useEffect`, `useRef`",
+    "Default export",
+    "Props: `isOpen`, `onClose`, `title`, `children`",
+    "Backdrop click closes modal",
+    "Escape key closes modal",
+    "Focus trap within modal",
+    "Close button (×) in top-right",
+    "`role=\"dialog\"` and `aria-modal=\"true\"`",
+    "First focusable element receives focus on open"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "test_file": "tests/frontend/FE-013.test.jsx",
+  "test_count": 11,
+  "tags": ["react", "modal", "accessibility", "focus-management"],
+  "reference_solution": "solutions/frontend/FE-013.jsx"
+}
+

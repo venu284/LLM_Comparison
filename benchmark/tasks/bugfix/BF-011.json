@@ -1,0 +1,28 @@
+{
+  "task_id": "BF-011",
+  "category": "bugfix",
+  "difficulty": "hard",
+  "title": "Express Error Swallowing",
+  "bug_description": "An async Express route allows rejected promises to bypass error handling, so failed requests do not return a proper 500 response.",
+  "prompt": "You are a web developer. Fix the bug in the following code.\n\nBUG DESCRIPTION: An async Express route awaits a failing promise but does not forward the error to Express, so the request can hang instead of returning a JSON 500 response.\n\nCODE:\nconst express = require('express');\n\nconst app = express();\n\napp.set('getData', async () => ({ message: 'ok' }));\n\napp.get('/data', async (req, res) => {\n  const getData = app.get('getData');\n  const data = await getData();\n  res.status(200).json(data);\n});\n\nmodule.exports = app;\n\nCONSTRAINTS:\n- Fix the bug while preserving existing functionality\n- Do not rewrite the entire module\n- Return the complete fixed file\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Fix the bug while preserving existing functionality",
+    "Do not rewrite the entire module",
+    "Return the complete fixed file"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "buggy_file": "fixtures/buggy-components/BF-011.buggy.js",
+  "test_file": "tests/bugfix/BF-011.test.js",
+  "test_count": 3,
+  "tags": [
+    "express",
+    "async",
+    "error-handling",
+    "bugfix"
+  ],
+  "reference_solution": "solutions/bugfix/BF-011.fixed.js"
+}

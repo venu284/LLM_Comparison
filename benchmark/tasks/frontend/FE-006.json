@@ -1,0 +1,25 @@
+{
+  "task_id": "FE-006",
+  "category": "frontend",
+  "difficulty": "medium",
+  "title": "Search Filter List",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build a React functional component called `SearchFilter` that takes a prop `items` (array of strings) and renders a search input and a filtered list. As the user types in the search input, the list should filter to show only items that contain the search text case-insensitively. If no items match, show \"No results found.\" Display the count of matching items as \"Showing {n} of {total}\".\n\nCONSTRAINTS:\n- Functional component with `useState`\n- Default export\n- Props: `items` (string array)\n- Case-insensitive filtering\n- Show \"No results found.\" when no matches\n- Display \"Showing {n} of {total}\"\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Functional component with `useState`",
+    "Default export",
+    "Props: `items` (string array)",
+    "Case-insensitive filtering",
+    "Show \"No results found.\" when no matches",
+    "Display \"Showing {n} of {total}\""
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "test_file": "tests/frontend/FE-006.test.jsx",
+  "test_count": 9,
+  "tags": ["react", "search", "filtering"],
+  "reference_solution": "solutions/frontend/FE-006.jsx"
+}
+

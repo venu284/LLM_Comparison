@@ -1,0 +1,23 @@
+{
+  "task_id": "TS-003",
+  "category": "typescript",
+  "difficulty": "easy",
+  "title": "Readonly and Optional Types",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Define and export `Config` with `host: string`, `port: number`, optional `debug?: boolean`, and optional `tags?: string[]`. Export `ReadonlyConfig` as `Readonly<Config>`. Export a function `mergeConfig(base: Config, overrides: Partial<Config>): Config` that merges the overrides into the base config.\n\nCONSTRAINTS:\n- Use TypeScript utility types where appropriate\n- Export all required types and functions\n- Compile under `tsc --strict --noEmit`\n- Do not use `any`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use TypeScript utility types where appropriate",
+    "Export all required types and functions",
+    "Compile under `tsc --strict --noEmit`",
+    "Do not use `any`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".ts",
+    "export_type": "named"
+  },
+  "test_file": "tests/typescript/TS-003.test.ts",
+  "test_count": 5,
+  "tags": ["typescript", "utility-types", "config"],
+  "reference_solution": "solutions/typescript/TS-003.ts"
+}
+

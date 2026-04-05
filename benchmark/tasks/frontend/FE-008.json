@@ -1,0 +1,26 @@
+{
+  "task_id": "FE-008",
+  "category": "frontend",
+  "difficulty": "medium",
+  "title": "Star Rating Component",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build a React functional component called `StarRating` that displays 5 clickable stars. Clicking a star sets the rating to that star's position from 1 to 5. Stars at or below the rating should be filled (★), stars above should be empty (☆). Hovering over a star should preview the rating without changing the actual rating until clicked. Add `data-testid=\"star-{n}\"` to each star from 1 to 5. Display \"Rating: {n}/5\" below the stars.\n\nCONSTRAINTS:\n- Functional component with `useState`\n- Default export\n- 5 stars, clickable\n- Filled star: ★, Empty star: ☆\n- Hover preview without committing\n- data-testid=\"star-{n}\" (1 through 5)\n- Display \"Rating: {n}/5\"\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Functional component with `useState`",
+    "Default export",
+    "5 stars, clickable",
+    "Filled star: ★, Empty star: ☆",
+    "Hover preview without committing",
+    "data-testid=\"star-{n}\" (1 through 5)",
+    "Display \"Rating: {n}/5\""
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "test_file": "tests/frontend/FE-008.test.jsx",
+  "test_count": 10,
+  "tags": ["react", "interaction", "rating"],
+  "reference_solution": "solutions/frontend/FE-008.jsx"
+}
+

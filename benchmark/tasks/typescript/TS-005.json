@@ -1,0 +1,23 @@
+{
+  "task_id": "TS-005",
+  "category": "typescript",
+  "difficulty": "medium",
+  "title": "Generic API Response Wrapper",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Define and export `ApiResponse<T>` with `data`, `status`, `message`, and `timestamp`. Define and export `PaginatedResponse<T>` that extends `ApiResponse<T[]>` with a `pagination` object containing `page`, `limit`, `total`, and `totalPages`. Define and export `ApiError` with `status`, `code`, `message`, and optional `details`. Export `createSuccessResponse<T>(data: T): ApiResponse<T>` and `createErrorResponse(status: number, code: string, message: string): ApiError`.\n\nCONSTRAINTS:\n- Use TypeScript generics and interfaces\n- Export all required types and functions\n- Compile under `tsc --strict --noEmit`\n- Do not use `any`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use TypeScript generics and interfaces",
+    "Export all required types and functions",
+    "Compile under `tsc --strict --noEmit`",
+    "Do not use `any`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".ts",
+    "export_type": "named"
+  },
+  "test_file": "tests/typescript/TS-005.test.ts",
+  "test_count": 8,
+  "tags": ["typescript", "generics", "api-modeling"],
+  "reference_solution": "solutions/typescript/TS-005.ts"
+}
+

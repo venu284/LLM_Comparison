@@ -1,0 +1,24 @@
+{
+  "task_id": "CSS-012",
+  "category": "css",
+  "difficulty": "hard",
+  "title": "CSS-Only Accordion",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Write a complete HTML file with embedded CSS for an accordion with 3 sections using only CSS. Use hidden radio inputs and labels. Clicking a section label should expand its `.content` using a `max-height` transition. Only one section can be open at a time. Sections should have a border-bottom and padding, and the active label should become bold with a different background color.\n\nCONSTRAINTS:\n- Return a single HTML file with embedded CSS\n- Use hidden radio inputs with the same `name`\n- Use a smooth `max-height` transition\n- Allow only one section open at a time\n- Style the active label differently\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Return a single HTML file with embedded CSS",
+    "Use hidden radio inputs with the same `name`",
+    "Use a smooth `max-height` transition",
+    "Allow only one section open at a time",
+    "Style the active label differently"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".html",
+    "export_type": "none"
+  },
+  "test_file": "tests/css/CSS-012.spec.js",
+  "test_count": 8,
+  "tags": ["css", "accordion", "playwright", "interaction"],
+  "reference_solution": "solutions/css/CSS-012.html"
+}
+

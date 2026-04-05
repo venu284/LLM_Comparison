@@ -1,0 +1,33 @@
+.badge {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: #ff3b30;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.pill {
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: #e5e7eb;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pill--success {
+  background: #22c55e;
+}
+
+.pill--warning {
+  background: #f59e0b;
+}
+
+.pill--danger {
+  background: #ef4444;
+}
+

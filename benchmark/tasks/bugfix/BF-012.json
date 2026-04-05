@@ -1,0 +1,28 @@
+{
+  "task_id": "BF-012",
+  "category": "bugfix",
+  "difficulty": "hard",
+  "title": "Infinite Re-render Loop",
+  "bug_description": "A component sets state inside an effect that depends on that same state, triggering an infinite render loop.",
+  "prompt": "You are a web developer. Fix the bug in the following code.\n\nBUG DESCRIPTION: A component calls `setData` inside an effect whose dependency list includes `data`, so every update retriggers the effect and causes an infinite rerender loop.\n\nCODE:\nimport React, { useEffect, useState } from 'react';\n\nexport default function DataLoader({ fetchData }) {\n  const [data, setData] = useState('');\n\n  useEffect(() => {\n    setData(fetchData());\n  }, [data, fetchData]);\n\n  return <div>{data}</div>;\n}\n\nCONSTRAINTS:\n- Fix the bug while preserving existing functionality\n- Do not rewrite the entire component\n- Return the complete fixed file\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Fix the bug while preserving existing functionality",
+    "Do not rewrite the entire component",
+    "Return the complete fixed file"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "buggy_file": "fixtures/buggy-components/BF-012.buggy.jsx",
+  "test_file": "tests/bugfix/BF-012.test.jsx",
+  "test_count": 2,
+  "tags": [
+    "react",
+    "useEffect",
+    "rerender-loop",
+    "bugfix"
+  ],
+  "reference_solution": "solutions/bugfix/BF-012.fixed.jsx"
+}

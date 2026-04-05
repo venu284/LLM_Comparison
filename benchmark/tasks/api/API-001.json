@@ -1,0 +1,23 @@
+{
+  "task_id": "API-001",
+  "category": "api",
+  "difficulty": "easy",
+  "title": "Health Check Endpoint",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build an Express.js application with a single GET `/health` endpoint that returns `{ \"status\": \"ok\", \"timestamp\": <current ISO timestamp> }` with status 200. Export the app.\n\nCONSTRAINTS:\n- Use Express.js\n- Export the app with `module.exports = app`\n- Return a JSON response\n- Use status code 200\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use Express.js",
+    "Export the app with `module.exports = app`",
+    "Return a JSON response",
+    "Use status code 200"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "test_file": "tests/api/API-001.test.js",
+  "test_count": 5,
+  "tags": ["express", "health-check", "json"],
+  "reference_solution": "solutions/api/API-001.js"
+}
+

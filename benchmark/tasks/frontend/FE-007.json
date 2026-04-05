@@ -1,0 +1,25 @@
+{
+  "task_id": "FE-007",
+  "category": "frontend",
+  "difficulty": "medium",
+  "title": "Accordion Component",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build a React functional component called `Accordion` that takes a prop `sections` (array of `{ title: string, content: string }`). Render each section with a clickable title. Clicking a title toggles its content visibility. Only one section can be open at a time. If the open section's title is clicked, it closes. Add `data-testid=\"section-{index}\"` to each section wrapper.\n\nCONSTRAINTS:\n- Functional component with `useState`\n- Default export\n- Props: `sections` (array of `{ title, content }`)\n- Only one section open at a time\n- Clicking open section closes it\n- data-testid=\"section-{index}\" on each wrapper\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Functional component with `useState`",
+    "Default export",
+    "Props: `sections` (array of `{ title, content }`)",
+    "Only one section open at a time",
+    "Clicking open section closes it",
+    "data-testid=\"section-{index}\" on each wrapper"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "test_file": "tests/frontend/FE-007.test.jsx",
+  "test_count": 9,
+  "tags": ["react", "accordion", "toggle"],
+  "reference_solution": "solutions/frontend/FE-007.jsx"
+}
+

@@ -1,0 +1,23 @@
+{
+  "task_id": "TS-010",
+  "category": "typescript",
+  "difficulty": "hard",
+  "title": "Builder Pattern with Type Safety",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Implement a type-safe builder pattern for constructing `HttpRequest` objects. Export `HttpRequest` and a `RequestBuilder` class with chainable methods `setUrl`, `setMethod`, `setHeader`, `setBody`, `setTimeout`, and `build`. Only allow `.build()` once `url` and `method` have been set at the type level.\n\nCONSTRAINTS:\n- Use TypeScript generics or phantom types for build safety\n- Export all required types and classes\n- Compile under `tsc --strict --noEmit`\n- Do not use `any`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use TypeScript generics or phantom types for build safety",
+    "Export all required types and classes",
+    "Compile under `tsc --strict --noEmit`",
+    "Do not use `any`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".ts",
+    "export_type": "named"
+  },
+  "test_file": "tests/typescript/TS-010.test.ts",
+  "test_count": 10,
+  "tags": ["typescript", "builder-pattern", "type-safety"],
+  "reference_solution": "solutions/typescript/TS-010.ts"
+}
+

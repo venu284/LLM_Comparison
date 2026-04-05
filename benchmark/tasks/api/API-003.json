@@ -1,0 +1,23 @@
+{
+  "task_id": "API-003",
+  "category": "api",
+  "difficulty": "easy",
+  "title": "Item CRUD Create and List",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build an Express.js application with an in-memory array store and two endpoints: POST `/items` which accepts `{ \"name\": string }`, adds an item with an auto-incremented `id`, and returns the created item with status 201; and GET `/items` which returns the array of all items with status 200. If the POST body is missing `name`, return status 400 with `{ \"error\": \"Name is required\" }`.\n\nCONSTRAINTS:\n- Use Express.js\n- Use in-memory array storage\n- Auto-increment `id`\n- Export the app with `module.exports = app`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use Express.js",
+    "Use in-memory array storage",
+    "Auto-increment `id`",
+    "Export the app with `module.exports = app`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "test_file": "tests/api/API-003.test.js",
+  "test_count": 7,
+  "tags": ["express", "crud", "in-memory"],
+  "reference_solution": "solutions/api/API-003.js"
+}
+

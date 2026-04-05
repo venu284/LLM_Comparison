@@ -1,0 +1,24 @@
+{
+  "task_id": "CSS-006",
+  "category": "css",
+  "difficulty": "medium",
+  "title": "Animated Loading Spinner",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Write CSS for a `.spinner` loading animation. It should be a 40px circle with a 4px solid light gray border and a blue `border-top-color` of `#3498db`. Use `@keyframes spin` to rotate 360 degrees infinitely with a linear timing function and a 1 second duration. Center the spinner in its `.spinner-container` parent using flexbox.\n\nCONSTRAINTS:\n- Return a single CSS file\n- Define `@keyframes spin`\n- Use a circular border-based spinner\n- Animate it infinitely with a 1 second linear rotation\n- Center the spinner with flexbox on `.spinner-container`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Return a single CSS file",
+    "Define `@keyframes spin`",
+    "Use a circular border-based spinner",
+    "Animate it infinitely with a 1 second linear rotation",
+    "Center the spinner with flexbox on `.spinner-container`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".css",
+    "export_type": "none"
+  },
+  "test_file": "tests/css/CSS-006.test.js",
+  "test_count": 7,
+  "tags": ["css", "animation", "spinner", "loading"],
+  "reference_solution": "solutions/css/CSS-006.css"
+}
+

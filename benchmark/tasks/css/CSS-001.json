@@ -1,0 +1,23 @@
+{
+  "task_id": "CSS-001",
+  "category": "css",
+  "difficulty": "easy",
+  "title": "Center a Card",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Write CSS to center a `.card` element that is 300px wide and 200px tall both vertically and horizontally in the viewport. Use flexbox on the parent `.container` element. The container should take up the full viewport height.\n\nCONSTRAINTS:\n- Return a single CSS file\n- Use flexbox on `.container`\n- `.card` must be 300px wide and 200px tall\n- The container must fill the viewport height\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Return a single CSS file",
+    "Use flexbox on `.container`",
+    "`.card` must be 300px wide and 200px tall",
+    "The container must fill the viewport height"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".css",
+    "export_type": "none"
+  },
+  "test_file": "tests/css/CSS-001.test.js",
+  "test_count": 5,
+  "tags": ["css", "flexbox", "centering"],
+  "reference_solution": "solutions/css/CSS-001.css"
+}
+

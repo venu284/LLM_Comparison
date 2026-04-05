@@ -1,0 +1,26 @@
+{
+  "task_id": "FE-005",
+  "category": "frontend",
+  "difficulty": "medium",
+  "title": "Todo List",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build a React functional component called `TodoList` that allows users to add, complete, and delete todo items. Include an input field and \"Add\" button. Each todo shows its text, a checkbox to mark complete with a strikethrough when done, and a \"Delete\" button. Show the count of remaining incomplete items as \"{n} items left\". Empty input should not add a todo.\n\nCONSTRAINTS:\n- Functional component with `useState`\n- Default export\n- Input field with \"Add\" button\n- Each todo: text + checkbox + delete button\n- Strikethrough completed items using `text-decoration: line-through`\n- \"{n} items left\" count updates live\n- Cannot add empty todos\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Functional component with `useState`",
+    "Default export",
+    "Input field with \"Add\" button",
+    "Each todo: text + checkbox + delete button",
+    "Strikethrough completed items using `text-decoration: line-through`",
+    "\"{n} items left\" count updates live",
+    "Cannot add empty todos"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "test_file": "tests/frontend/FE-005.test.jsx",
+  "test_count": 10,
+  "tags": ["react", "todos", "forms"],
+  "reference_solution": "solutions/frontend/FE-005.jsx"
+}
+

@@ -1,0 +1,41 @@
+{
+  "name": "llm-webdev-benchmark",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "jest --verbose",
+    "test:frontend": "jest tests/frontend/ --runInBand",
+    "test:api": "jest tests/api/ --runInBand",
+    "test:css": "jest tests/css/ --runInBand && npx playwright test tests/css/",
+    "test:typescript": "tsc --noEmit --strict solutions/typescript/*.ts && jest tests/typescript/ --runInBand",
+    "test:bugfix": "jest tests/bugfix/ --runInBand",
+    "validate": "bash scripts/validate-all.sh",
+    "report": "python3 scripts/generate-report.py"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@testing-library/jest-dom": "^5.16.0",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.0.0",
+    "@types/bcryptjs": "^2.4.0",
+    "@types/express": "^4.17.0",
+    "@types/jest": "^29.5.0",
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "@types/supertest": "^2.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "postcss": "^8.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "supertest": "^6.3.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.3.0"
+  }
+}

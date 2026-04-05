@@ -1,0 +1,24 @@
+{
+  "task_id": "CSS-003",
+  "category": "css",
+  "difficulty": "easy",
+  "title": "Responsive Two-Column Layout",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Write CSS for a `.layout` container with a `.sidebar` that is 250px wide and a `.main` area that takes the remaining space, placed side by side using flexbox. On screens narrower than 768px, stack them vertically with the sidebar on top and the main section below, each taking full width.\n\nCONSTRAINTS:\n- Return a single CSS file\n- Use flexbox for the desktop layout\n- `.sidebar` width must be 250px\n- Add a `@media` query for screens below 768px\n- Stack the layout vertically on narrow screens\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Return a single CSS file",
+    "Use flexbox for the desktop layout",
+    "`.sidebar` width must be 250px",
+    "Add a `@media` query for screens below 768px",
+    "Stack the layout vertically on narrow screens"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".css",
+    "export_type": "none"
+  },
+  "test_file": "tests/css/CSS-003.test.js",
+  "test_count": 5,
+  "tags": ["css", "responsive", "layout", "flexbox"],
+  "reference_solution": "solutions/css/CSS-003.css"
+}
+

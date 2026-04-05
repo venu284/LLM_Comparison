@@ -1,0 +1,28 @@
+{
+  "task_id": "BF-002",
+  "category": "bugfix",
+  "difficulty": "easy",
+  "title": "Missing Key Prop in List",
+  "bug_description": "A todo list renders mapped items without a stable key, causing a React warning and unstable list behavior.",
+  "prompt": "You are a web developer. Fix the bug in the following code.\n\nBUG DESCRIPTION: A todo list is rendered without a stable `key` prop on each mapped child, which causes a React warning and unstable list behavior when deleting items.\n\nCODE:\nimport React, { useState } from 'react';\n\nconst initialTodos = [\n  { id: '1', text: 'Write tests' },\n  { id: '2', text: 'Fix bugs' },\n  { id: '3', text: 'Ship project' }\n];\n\nexport default function TodoList() {\n  const [todos, setTodos] = useState(initialTodos);\n\n  return (\n    <ul>\n      {todos.map((todo, index) => (\n        <li>\n          <span>{todo.text}</span>\n          <button\n            type=\"button\"\n            onClick={() => setTodos((current) => current.filter((_, itemIndex) => itemIndex !== index))}\n          >\n            Delete\n          </button>\n        </li>\n      ))}\n    </ul>\n  );\n}\n\nCONSTRAINTS:\n- Fix the bug while preserving existing functionality\n- Do not rewrite the entire component\n- Return the complete fixed file\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Fix the bug while preserving existing functionality",
+    "Do not rewrite the entire component",
+    "Return the complete fixed file"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "buggy_file": "fixtures/buggy-components/BF-002.buggy.jsx",
+  "test_file": "tests/bugfix/BF-002.test.jsx",
+  "test_count": 2,
+  "tags": [
+    "react",
+    "lists",
+    "keys",
+    "bugfix"
+  ],
+  "reference_solution": "solutions/bugfix/BF-002.fixed.jsx"
+}

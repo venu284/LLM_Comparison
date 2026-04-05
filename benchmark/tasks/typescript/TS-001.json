@@ -1,0 +1,23 @@
+{
+  "task_id": "TS-001",
+  "category": "typescript",
+  "difficulty": "easy",
+  "title": "Basic User Interface",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Define TypeScript interfaces for a user system. Create and export `User` with `id: string`, `name: string`, `email: string`, and `createdAt: Date`. Create and export `CreateUserInput` with `name: string` and `email: string`. Also export a function `createUser(input: CreateUserInput): User` that generates a random id using `Math.random().toString(36).substr(2, 9)` and sets `createdAt` to the current date.\n\nCONSTRAINTS:\n- Use TypeScript\n- Export all required interfaces and functions\n- Compile under `tsc --strict --noEmit`\n- Do not use `any`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use TypeScript",
+    "Export all required interfaces and functions",
+    "Compile under `tsc --strict --noEmit`",
+    "Do not use `any`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".ts",
+    "export_type": "named"
+  },
+  "test_file": "tests/typescript/TS-001.test.ts",
+  "test_count": 6,
+  "tags": ["typescript", "interfaces", "functions"],
+  "reference_solution": "solutions/typescript/TS-001.ts"
+}
+

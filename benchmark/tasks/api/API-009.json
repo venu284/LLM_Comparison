@@ -1,0 +1,24 @@
+{
+  "task_id": "API-009",
+  "category": "api",
+  "difficulty": "hard",
+  "title": "JWT Authentication System",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build an Express.js application with JWT authentication. Implement POST `/auth/register`, POST `/auth/login`, and GET `/auth/profile`. Registration accepts `{ name, email, password }`, stores the user with a hashed password using `bcryptjs`, and returns the created user without the password. Login verifies credentials and returns a JWT token. Profile is protected and requires `Authorization: Bearer <token>`. Use `process.env.JWT_SECRET` with a default of `test-secret`. Tokens expire in 1 hour.\n\nCONSTRAINTS:\n- Use Express.js\n- Use `bcryptjs` for password hashing\n- Use `jsonwebtoken` for JWT handling\n- Use `process.env.JWT_SECRET` with a default fallback\n- Export the app with `module.exports = app`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use Express.js",
+    "Use `bcryptjs` for password hashing",
+    "Use `jsonwebtoken` for JWT handling",
+    "Use `process.env.JWT_SECRET` with a default fallback",
+    "Export the app with `module.exports = app`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "test_file": "tests/api/API-009.test.js",
+  "test_count": 13,
+  "tags": ["express", "jwt", "authentication", "bcrypt"],
+  "reference_solution": "solutions/api/API-009.js"
+}
+

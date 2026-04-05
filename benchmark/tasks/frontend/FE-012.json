@@ -1,0 +1,27 @@
+{
+  "task_id": "FE-012",
+  "category": "frontend",
+  "difficulty": "hard",
+  "title": "Drag and Drop List",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build a React functional component called `DragDropList` that takes a prop `items` (array of `{ id: string, text: string }`) and `onReorder` (function). Render each item as a draggable list item. Users can drag items to reorder them. During drag, show a visual drop indicator by adding class `drop-target` to the drop position. After dropping, call `onReorder` with the new items array. Each item should have `data-testid=\"item-{id}\"` and `draggable=\"true\"`.\n\nCONSTRAINTS:\n- Functional component with `useState`\n- Default export\n- Props: `items` and `onReorder`\n- HTML5 drag and drop API\n- Visual drop indicator with class `drop-target`\n- `data-testid=\"item-{id}\"` on each item\n- `draggable=\"true\"` on each item\n- Call `onReorder` with reordered array after drop\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Functional component with `useState`",
+    "Default export",
+    "Props: `items` and `onReorder`",
+    "HTML5 drag and drop API",
+    "Visual drop indicator with class `drop-target`",
+    "`data-testid=\"item-{id}\"` on each item",
+    "`draggable=\"true\"` on each item",
+    "Call `onReorder` with reordered array after drop"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "test_file": "tests/frontend/FE-012.test.jsx",
+  "test_count": 10,
+  "tags": ["react", "drag-and-drop", "list"],
+  "reference_solution": "solutions/frontend/FE-012.jsx"
+}
+

@@ -1,0 +1,24 @@
+{
+  "task_id": "API-008",
+  "category": "api",
+  "difficulty": "medium",
+  "title": "Rate Limiter Middleware",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build an Express.js application with a custom rate limiter middleware. The middleware should limit each IP to a configurable number of requests per time window. Apply it to all routes with a maximum of 5 requests per 60 seconds. When the limit is exceeded, return 429 with `{ \"error\": \"Too many requests\", \"retryAfter\": <seconds remaining> }`. Add a GET `/api/data` endpoint that returns `{ \"message\": \"Success\" }`. Set the `X-RateLimit-Remaining` header on every response.\n\nCONSTRAINTS:\n- Use Express.js\n- Implement a custom middleware without external rate-limiter packages\n- Track limits per IP\n- Make the limit configuration reusable\n- Export the app with `module.exports = app`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use Express.js",
+    "Implement a custom middleware without external rate-limiter packages",
+    "Track limits per IP",
+    "Make the limit configuration reusable",
+    "Export the app with `module.exports = app`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "test_file": "tests/api/API-008.test.js",
+  "test_count": 8,
+  "tags": ["express", "middleware", "rate-limiting"],
+  "reference_solution": "solutions/api/API-008.js"
+}
+

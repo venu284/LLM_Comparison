@@ -1,0 +1,28 @@
+{
+  "task_id": "BF-001",
+  "category": "bugfix",
+  "difficulty": "easy",
+  "title": "useState Not Updating",
+  "bug_description": "A counter component mutates a local value instead of updating React state, so the displayed count never changes.",
+  "prompt": "You are a web developer. Fix the bug in the following code.\n\nBUG DESCRIPTION: A counter component uses a local increment/decrement mutation instead of updating React state, so the display never changes.\n\nCODE:\nimport React, { useState } from 'react';\n\nexport default function Counter() {\n  const [count] = useState(0);\n\n  const increment = () => {\n    let nextCount = count;\n    nextCount++;\n  };\n\n  const decrement = () => {\n    if (count === 0) {\n      return;\n    }\n\n    let nextCount = count;\n    nextCount--;\n  };\n\n  return (\n    <div>\n      <div data-testid=\"count\">{count}</div>\n      <button type=\"button\" onClick={increment}>\n        Increment\n      </button>\n      <button type=\"button\" onClick={decrement}>\n        Decrement\n      </button>\n    </div>\n  );\n}\n\nCONSTRAINTS:\n- Fix the bug while preserving existing functionality\n- Do not rewrite the entire component\n- Return the complete fixed file\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Fix the bug while preserving existing functionality",
+    "Do not rewrite the entire component",
+    "Return the complete fixed file"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "buggy_file": "fixtures/buggy-components/BF-001.buggy.jsx",
+  "test_file": "tests/bugfix/BF-001.test.jsx",
+  "test_count": 3,
+  "tags": [
+    "react",
+    "state",
+    "counter",
+    "bugfix"
+  ],
+  "reference_solution": "solutions/bugfix/BF-001.fixed.jsx"
+}

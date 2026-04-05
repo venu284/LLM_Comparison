@@ -1,0 +1,23 @@
+{
+  "task_id": "API-013",
+  "category": "api",
+  "difficulty": "hard",
+  "title": "Error Handling and Logging Middleware",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build an Express.js application with comprehensive error handling. Add a request logger middleware that stores method, path, and timestamp in an in-memory array accessible through GET `/logs`. Add a global error handler returning `{ \"error\": { \"message\": string, \"code\": string, \"status\": number } }`. Implement custom error classes `NotFoundError`, `ValidationError`, and `UnauthorizedError`. Add the following test routes: GET `/test/not-found`, GET `/test/validation`, GET `/test/unauthorized`, and GET `/test/unknown`.\n\nCONSTRAINTS:\n- Use Express.js\n- Implement custom error classes\n- Use a 4-argument global error handler\n- Log requests in-memory\n- Export the app with `module.exports = app`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use Express.js",
+    "Implement custom error classes",
+    "Use a 4-argument global error handler",
+    "Log requests in-memory",
+    "Export the app with `module.exports = app`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "test_file": "tests/api/API-013.test.js",
+  "test_count": 12,
+  "tags": ["express", "errors", "logging", "middleware"],
+  "reference_solution": "solutions/api/API-013.js"
+}

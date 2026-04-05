@@ -1,0 +1,24 @@
+{
+  "task_id": "CSS-009",
+  "category": "css",
+  "difficulty": "hard",
+  "title": "Holy Grail Layout",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Write CSS for the holy grail layout using CSS Grid. The page has `.header`, `.sidebar-left`, `.main`, `.sidebar-right`, and `.footer`. The header and footer are 60px tall and full width. Each sidebar is 200px wide and the main area takes the remaining space. The layout should fill the full viewport height. Below 768px, the sidebars should stack below the main content, each taking full width. Below 480px, hide both sidebars.\n\nCONSTRAINTS:\n- Return a single CSS file\n- Use CSS Grid for the main layout\n- Fill the viewport height\n- Add breakpoints below 768px and 480px\n- Hide sidebars below 480px\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Return a single CSS file",
+    "Use CSS Grid for the main layout",
+    "Fill the viewport height",
+    "Add breakpoints below 768px and 480px",
+    "Hide sidebars below 480px"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".css",
+    "export_type": "none"
+  },
+  "test_file": "tests/css/CSS-009.test.js",
+  "test_count": 9,
+  "tags": ["css", "grid", "layout", "responsive"],
+  "reference_solution": "solutions/css/CSS-009.css"
+}
+

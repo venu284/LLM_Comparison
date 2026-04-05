@@ -1,0 +1,23 @@
+{
+  "task_id": "API-007",
+  "category": "api",
+  "difficulty": "medium",
+  "title": "Request Validation Middleware",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build an Express.js application with a custom validation middleware. Create a `validate` middleware function that accepts a schema object and returns middleware. The schema format is `{ fieldName: { required: boolean, type: 'string'|'number'|'email', minLength?: number, min?: number, max?: number } }`. Apply it to POST `/register` with a schema for `name`, `email`, and `age`. Return status 400 with `{ \"errors\": [{ \"field\": \"name\", \"message\": \"...\" }] }` when validation fails.\n\nCONSTRAINTS:\n- Use Express.js\n- Implement custom middleware\n- Validate email with a regex\n- Export the app with `module.exports = app`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use Express.js",
+    "Implement custom middleware",
+    "Validate email with a regex",
+    "Export the app with `module.exports = app`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "test_file": "tests/api/API-007.test.js",
+  "test_count": 10,
+  "tags": ["express", "middleware", "validation"],
+  "reference_solution": "solutions/api/API-007.js"
+}
+

@@ -1,0 +1,23 @@
+{
+  "task_id": "FE-002",
+  "category": "frontend",
+  "difficulty": "easy",
+  "title": "Toggle Switch",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build a React functional component called `ToggleSwitch` that renders a button. When clicked, it toggles between showing \"ON\" and \"OFF\" text. The button text should display the current state. It starts in the \"OFF\" state. Add a `data-testid=\"toggle-btn\"` to the button.\n\nCONSTRAINTS:\n- Functional component with `useState`\n- Default export\n- Initial state is \"OFF\"\n- Button text shows current state (\"ON\" or \"OFF\")\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Functional component with `useState`",
+    "Default export",
+    "Initial state is \"OFF\"",
+    "Button text shows current state (\"ON\" or \"OFF\")"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "test_file": "tests/frontend/FE-002.test.jsx",
+  "test_count": 6,
+  "tags": ["react", "state", "toggle"],
+  "reference_solution": "solutions/frontend/FE-002.jsx"
+}
+

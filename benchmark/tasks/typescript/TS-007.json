@@ -1,0 +1,23 @@
+{
+  "task_id": "TS-007",
+  "category": "typescript",
+  "difficulty": "medium",
+  "title": "Type Guards and Narrowing",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Define and export `Shape` as a discriminated union of `Circle`, `Rectangle`, and `Triangle`. Export type guard functions `isCircle`, `isRectangle`, and `isTriangle`. Export `area(shape: Shape): number` and `describe(shape: Shape): string` with the expected calculations and descriptive strings.\n\nCONSTRAINTS:\n- Use discriminated unions and type guards\n- Export all required types and functions\n- Compile under `tsc --strict --noEmit`\n- Do not use `any`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use discriminated unions and type guards",
+    "Export all required types and functions",
+    "Compile under `tsc --strict --noEmit`",
+    "Do not use `any`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".ts",
+    "export_type": "named"
+  },
+  "test_file": "tests/typescript/TS-007.test.ts",
+  "test_count": 8,
+  "tags": ["typescript", "type-guards", "narrowing"],
+  "reference_solution": "solutions/typescript/TS-007.ts"
+}
+

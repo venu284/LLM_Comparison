@@ -1,0 +1,23 @@
+{
+  "task_id": "TS-002",
+  "category": "typescript",
+  "difficulty": "easy",
+  "title": "Enum and Union Types",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Define and export an enum `Status` with values `Pending`, `Active`, `Inactive`, and `Archived`. Define and export a type `StatusFilter` that can be either a single `Status` or an array of `Status`. Export a function `filterByStatus(items, filter)` that filters items matching the status or statuses.\n\nCONSTRAINTS:\n- Use TypeScript\n- Export the enum, type, and function\n- Compile under `tsc --strict --noEmit`\n- Do not use `any`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use TypeScript",
+    "Export the enum, type, and function",
+    "Compile under `tsc --strict --noEmit`",
+    "Do not use `any`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".ts",
+    "export_type": "named"
+  },
+  "test_file": "tests/typescript/TS-002.test.ts",
+  "test_count": 6,
+  "tags": ["typescript", "enum", "union-types"],
+  "reference_solution": "solutions/typescript/TS-002.ts"
+}
+

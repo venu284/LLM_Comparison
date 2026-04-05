@@ -1,0 +1,29 @@
+{
+  "task_id": "BF-009",
+  "category": "bugfix",
+  "difficulty": "hard",
+  "title": "Race Condition in Async Search",
+  "bug_description": "Multiple in-flight search requests resolve out of order, allowing stale results to replace the latest query.",
+  "prompt": "You are a web developer. Fix the bug in the following code.\n\nBUG DESCRIPTION: An async search component updates results from every completed request, so a slower old request can overwrite the results for the most recent query.\n\nCODE:\nimport React, { useEffect, useState } from 'react';\n\nexport default function AsyncSearch({ searchFn }) {\n  const [query, setQuery] = useState('');\n  const [results, setResults] = useState([]);\n\n  useEffect(() => {\n    if (!query) {\n      setResults([]);\n      return;\n    }\n\n    searchFn(query).then((nextResults) => {\n      setResults(nextResults);\n    });\n  }, [query, searchFn]);\n\n  return (\n    <div>\n      <input\n        aria-label=\"Search\"\n        value={query}\n        onChange={(event) => setQuery(event.target.value)}\n      />\n      <ul>\n        {results.map((result) => (\n          <li key={result}>{result}</li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n\nCONSTRAINTS:\n- Fix the bug while preserving existing functionality\n- Do not rewrite the entire component\n- Return the complete fixed file\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Fix the bug while preserving existing functionality",
+    "Do not rewrite the entire component",
+    "Return the complete fixed file"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "buggy_file": "fixtures/buggy-components/BF-009.buggy.jsx",
+  "test_file": "tests/bugfix/BF-009.test.jsx",
+  "test_count": 3,
+  "tags": [
+    "react",
+    "async",
+    "search",
+    "race-condition",
+    "bugfix"
+  ],
+  "reference_solution": "solutions/bugfix/BF-009.fixed.jsx"
+}

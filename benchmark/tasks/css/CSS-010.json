@@ -1,0 +1,24 @@
+{
+  "task_id": "CSS-010",
+  "category": "css",
+  "difficulty": "hard",
+  "title": "Responsive 3-Column Grid",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Write a complete HTML file with embedded CSS. Create a `.grid-container` with 9 `.grid-item` children numbered 1 through 9. Display 3 equal columns on desktop at 1024px and above, 2 columns on tablet at 600px and above, and 1 column below 600px. Use a 16px gap, 16px padding, a light gray background, and 8px border-radius. Ensure equal-height rows with `grid-auto-rows: 1fr` or equivalent.\n\nCONSTRAINTS:\n- Return a single HTML file with embedded CSS\n- Render exactly 9 grid items\n- Use CSS Grid with the specified breakpoints\n- Use 16px gap and 16px item padding\n- Give items a light gray background and 8px border-radius\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Return a single HTML file with embedded CSS",
+    "Render exactly 9 grid items",
+    "Use CSS Grid with the specified breakpoints",
+    "Use 16px gap and 16px item padding",
+    "Give items a light gray background and 8px border-radius"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".html",
+    "export_type": "none"
+  },
+  "test_file": "tests/css/CSS-010.spec.js",
+  "test_count": 8,
+  "tags": ["css", "grid", "playwright", "responsive"],
+  "reference_solution": "solutions/css/CSS-010.html"
+}
+

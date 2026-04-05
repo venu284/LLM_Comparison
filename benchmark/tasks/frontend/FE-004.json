@@ -1,0 +1,24 @@
+{
+  "task_id": "FE-004",
+  "category": "frontend",
+  "difficulty": "easy",
+  "title": "User Greeting Card",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build a React functional component called `GreetingCard` that accepts props `name` (string) and `age` (number). It should display \"Hello, {name}!\" in an h2 tag and \"You are {age} years old.\" in a paragraph. If no name is provided, display \"Hello, Stranger!\". If age is not provided, do not render the age paragraph.\n\nCONSTRAINTS:\n- Functional component\n- Default export\n- Props: `name` (optional string), `age` (optional number)\n- Default name: \"Stranger\"\n- Conditionally render age paragraph\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Functional component",
+    "Default export",
+    "Props: `name` (optional string), `age` (optional number)",
+    "Default name: \"Stranger\"",
+    "Conditionally render age paragraph"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "test_file": "tests/frontend/FE-004.test.jsx",
+  "test_count": 6,
+  "tags": ["react", "props", "conditional-rendering"],
+  "reference_solution": "solutions/frontend/FE-004.jsx"
+}
+

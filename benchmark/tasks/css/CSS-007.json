@@ -1,0 +1,24 @@
+{
+  "task_id": "CSS-007",
+  "category": "css",
+  "difficulty": "medium",
+  "title": "Navigation with Dropdown",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Write CSS for a horizontal `.nav` bar with `.nav-item` elements. Each `.nav-item` may contain a `.dropdown` child that is hidden by default. On `.nav-item:hover`, the dropdown should appear below it using absolute positioning. The dropdown should have a white background, border, shadow, and `.dropdown-item` hover styling. The nav bar should use a dark background `#2c3e50` with white text. Add a smooth 150ms opacity transition for the dropdown.\n\nCONSTRAINTS:\n- Return a single CSS file\n- Hide `.dropdown` by default\n- Reveal the dropdown on `.nav-item:hover`\n- Position the dropdown absolutely below its parent\n- Add the specified nav colors and dropdown transition\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Return a single CSS file",
+    "Hide `.dropdown` by default",
+    "Reveal the dropdown on `.nav-item:hover`",
+    "Position the dropdown absolutely below its parent",
+    "Add the specified nav colors and dropdown transition"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".css",
+    "export_type": "none"
+  },
+  "test_file": "tests/css/CSS-007.test.js",
+  "test_count": 8,
+  "tags": ["css", "navigation", "dropdown", "hover"],
+  "reference_solution": "solutions/css/CSS-007.css"
+}
+

@@ -1,0 +1,23 @@
+{
+  "task_id": "TS-008",
+  "category": "typescript",
+  "difficulty": "medium",
+  "title": "Mapped Types and Conditional Types",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Define and export `Nullable<T>`, `IsString<T>`, and `ExtractStrings<T>` using mapped and conditional types. Export `pickStrings<T>(obj: T): ExtractStrings<T>` that returns only the string-valued properties from the input object.\n\nCONSTRAINTS:\n- Use mapped types and conditional types\n- Export all required types and functions\n- Compile under `tsc --strict --noEmit`\n- Do not use `any` except where explicitly required by the prompt constraint\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use mapped types and conditional types",
+    "Export all required types and functions",
+    "Compile under `tsc --strict --noEmit`",
+    "Do not use `any` except where explicitly required by the prompt constraint"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".ts",
+    "export_type": "named"
+  },
+  "test_file": "tests/typescript/TS-008.test.ts",
+  "test_count": 7,
+  "tags": ["typescript", "mapped-types", "conditional-types"],
+  "reference_solution": "solutions/typescript/TS-008.ts"
+}
+

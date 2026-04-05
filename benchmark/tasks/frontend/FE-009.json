@@ -1,0 +1,27 @@
+{
+  "task_id": "FE-009",
+  "category": "frontend",
+  "difficulty": "hard",
+  "title": "Paginated Data Table",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build a React functional component called `DataTable` that takes a prop `data` (array of objects with `id`, `name`, `email`, `role`) and `pageSize` (number, default 5). Render a table with columns Name, Email, Role. Implement pagination with \"Previous\" and \"Next\" buttons and a \"Page X of Y\" display. Add column header sorting so clicking a column header sorts by that column and toggles ascending or descending. The currently sorted column header should show ▲ or ▼. Previous is disabled on page 1 and Next is disabled on the last page.\n\nCONSTRAINTS:\n- Functional component with `useState`\n- Default export\n- Props: `data` (array), `pageSize` (number, default 5)\n- Table with Name, Email, Role columns\n- Pagination: Previous/Next buttons + \"Page X of Y\"\n- Column sorting: click header to sort asc/desc\n- Show ▲ or ▼ on the sorted column\n- Disable Previous on page 1, Next on last page\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Functional component with `useState`",
+    "Default export",
+    "Props: `data` (array), `pageSize` (number, default 5)",
+    "Table with Name, Email, Role columns",
+    "Pagination: Previous/Next buttons + \"Page X of Y\"",
+    "Column sorting: click header to sort asc/desc",
+    "Show ▲ or ▼ on the sorted column",
+    "Disable Previous on page 1, Next on last page"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "test_file": "tests/frontend/FE-009.test.jsx",
+  "test_count": 12,
+  "tags": ["react", "table", "pagination", "sorting"],
+  "reference_solution": "solutions/frontend/FE-009.jsx"
+}
+

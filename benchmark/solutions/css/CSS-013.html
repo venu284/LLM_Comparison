@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS-013 Theme Toggle</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --text: #333333;
+        --primary: #3498db;
+        --card-bg: #f5f5f5;
+        --border: #dddddd;
+        --muted: #eef6fc;
+        --shadow: 0 14px 30px rgba(52, 152, 219, 0.12);
+      }
+
+      [data-theme="dark"] {
+        --bg: #1a1a2e;
+        --text: #e0e0e0;
+        --primary: #64b5f6;
+        --card-bg: #16213e;
+        --border: #333333;
+        --muted: #0f1b30;
+        --shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: var(--bg);
+        color: var(--text);
+        font-family: sans-serif;
+        transition: background 200ms ease, color 200ms ease;
+      }
+
+      .container {
+        width: min(100%, 560px);
+        padding: 24px;
+      }
+
+      .toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding: 14px 16px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: var(--muted);
+      }
+
+      .card {
+        padding: 24px;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        background: var(--card-bg);
+        box-shadow: var(--shadow);
+      }
+
+      .title {
+        margin: 0 0 8px;
+        color: var(--primary);
+      }
+
+      .theme-toggle {
+        accent-color: var(--primary);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <label class="toggle-row" for="theme-toggle">
+        <span>Enable dark mode</span>
+        <input id="theme-toggle" class="theme-toggle" type="checkbox" />
+      </label>
+
+      <div class="card">
+        <h1 class="title">Theme Preview</h1>
+        <p>This card uses CSS custom properties for every color.</p>
+      </div>
+    </div>
+
+    <script>
+      const toggle = document.getElementById('theme-toggle');
+      toggle.addEventListener('change', () => {
+        document.documentElement.dataset.theme = toggle.checked ? 'dark' : 'light';
+        if (!toggle.checked) {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      });
+    </script>
+  </body>
+</html>

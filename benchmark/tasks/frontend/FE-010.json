@@ -1,0 +1,27 @@
+{
+  "task_id": "FE-010",
+  "category": "frontend",
+  "difficulty": "hard",
+  "title": "Multi-Step Form Wizard",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build a React functional component called `FormWizard` with 3 steps. Step 1 has Name and Email inputs. Step 2 has Address and City inputs. Step 3 is a review page showing all entered data. Include \"Previous\" and \"Next\" buttons, with no Previous button on step 1 and a \"Submit\" button instead of Next on step 3. Show a step indicator in the format \"Step X of 3\". Validate that all fields in the current step are non-empty before allowing Next. Show inline error text \"This field is required\" for empty fields on Next click. On submit, call the `onSubmit` prop with the form data object.\n\nCONSTRAINTS:\n- Functional component with `useState`\n- Default export\n- 3 steps with specific fields per step\n- Step indicator \"Step X of 3\"\n- Validation: non-empty fields required before advancing\n- Inline error messages \"This field is required\"\n- \"Submit\" button on step 3 calls `onSubmit` prop\n- `onSubmit` receives `{ name, email, address, city }`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Functional component with `useState`",
+    "Default export",
+    "3 steps with specific fields per step",
+    "Step indicator \"Step X of 3\"",
+    "Validation: non-empty fields required before advancing",
+    "Inline error messages \"This field is required\"",
+    "\"Submit\" button on step 3 calls `onSubmit` prop",
+    "`onSubmit` receives `{ name, email, address, city }`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "test_file": "tests/frontend/FE-010.test.jsx",
+  "test_count": 13,
+  "tags": ["react", "forms", "wizard", "validation"],
+  "reference_solution": "solutions/frontend/FE-010.jsx"
+}
+

@@ -1,0 +1,23 @@
+{
+  "task_id": "TS-011",
+  "category": "typescript",
+  "difficulty": "hard",
+  "title": "Event Emitter with Type-Safe Events",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Implement a type-safe event emitter. Export `EventMap`, `TypedEventEmitter<T extends EventMap>`, and a sample `AppEvents` map with `user:login`, `user:logout`, and `error` events. Support `on`, `off`, `emit`, and `once`.\n\nCONSTRAINTS:\n- Use TypeScript generics for type-safe event payloads\n- Export all required types and classes\n- Compile under `tsc --strict --noEmit`\n- Do not use `any`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use TypeScript generics for type-safe event payloads",
+    "Export all required types and classes",
+    "Compile under `tsc --strict --noEmit`",
+    "Do not use `any`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".ts",
+    "export_type": "named"
+  },
+  "test_file": "tests/typescript/TS-011.test.ts",
+  "test_count": 10,
+  "tags": ["typescript", "events", "generics"],
+  "reference_solution": "solutions/typescript/TS-011.ts"
+}
+

@@ -1,0 +1,24 @@
+{
+  "task_id": "API-005",
+  "category": "api",
+  "difficulty": "medium",
+  "title": "RESTful CRUD for Users",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build an Express.js application with full CRUD for a `users` resource stored in-memory. Implement GET `/users`, GET `/users/:id`, POST `/users`, PUT `/users/:id`, and DELETE `/users/:id`. POST requires `name` and `email`. PUT allows partial updates. Auto-increment the `id`. Return 404 with `{ \"error\": \"User not found\" }` for missing users and 400 for an invalid POST body.\n\nCONSTRAINTS:\n- Use Express.js\n- Use an in-memory store\n- Auto-increment `id`\n- Use proper status codes: 200, 201, 204, 400, 404\n- Export the app with `module.exports = app`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use Express.js",
+    "Use an in-memory store",
+    "Auto-increment `id`",
+    "Use proper status codes: 200, 201, 204, 400, 404",
+    "Export the app with `module.exports = app`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "test_file": "tests/api/API-005.test.js",
+  "test_count": 12,
+  "tags": ["express", "crud", "users"],
+  "reference_solution": "solutions/api/API-005.js"
+}
+

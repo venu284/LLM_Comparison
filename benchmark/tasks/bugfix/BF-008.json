@@ -1,0 +1,28 @@
+{
+  "task_id": "BF-008",
+  "category": "bugfix",
+  "difficulty": "medium",
+  "title": "TypeScript Type Narrowing Bug",
+  "bug_description": "A `string | number` function applies string logic to numbers and number logic to strings because the branches are swapped.",
+  "prompt": "You are a web developer. Fix the bug in the following code.\n\nBUG DESCRIPTION: A function narrows `string | number` correctly, but the logic inside the branches is reversed, so strings and numbers are processed using the wrong methods.\n\nCODE:\nexport function processValue(input: string | number): string {\n  if (typeof input === 'string') {\n    return (input as unknown as number).toFixed(2);\n  }\n\n  return (input as unknown as string).toUpperCase();\n}\n\nCONSTRAINTS:\n- Fix the bug while preserving existing functionality\n- Do not rewrite the entire module\n- Return the complete fixed file\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Fix the bug while preserving existing functionality",
+    "Do not rewrite the entire module",
+    "Return the complete fixed file"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".ts",
+    "export_type": "named"
+  },
+  "buggy_file": "fixtures/buggy-components/BF-008.buggy.ts",
+  "test_file": "tests/bugfix/BF-008.test.ts",
+  "test_count": 3,
+  "tags": [
+    "typescript",
+    "narrowing",
+    "union-types",
+    "bugfix"
+  ],
+  "reference_solution": "solutions/bugfix/BF-008.fixed.ts"
+}

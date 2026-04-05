@@ -1,0 +1,28 @@
+{
+  "task_id": "FE-011",
+  "category": "frontend",
+  "difficulty": "hard",
+  "title": "Debounced Autocomplete",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build a React functional component called `Autocomplete` that takes a prop `fetchSuggestions` (an async function receiving a query string and returning a string array). Render an input field. As the user types, debounce the input by 300ms, then call `fetchSuggestions` with the current value. Display suggestions in a dropdown below the input. Clicking a suggestion fills the input with that value and closes the dropdown. Show \"Loading...\" while waiting for results. Show \"No suggestions\" if the result is empty. Close the dropdown when the input is empty. Pressing Escape closes the dropdown.\n\nCONSTRAINTS:\n- Functional component with `useState`, `useEffect`\n- Default export\n- Props: `fetchSuggestions` (async function)\n- 300ms debounce on input\n- Show \"Loading...\" while fetching\n- Show \"No suggestions\" for empty results\n- Click suggestion to fill input and close dropdown\n- Escape key closes dropdown\n- Empty input closes dropdown\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Functional component with `useState`, `useEffect`",
+    "Default export",
+    "Props: `fetchSuggestions` (async function)",
+    "300ms debounce on input",
+    "Show \"Loading...\" while fetching",
+    "Show \"No suggestions\" for empty results",
+    "Click suggestion to fill input and close dropdown",
+    "Escape key closes dropdown",
+    "Empty input closes dropdown"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "test_file": "tests/frontend/FE-011.test.jsx",
+  "test_count": 11,
+  "tags": ["react", "async", "debounce", "autocomplete"],
+  "reference_solution": "solutions/frontend/FE-011.jsx"
+}
+

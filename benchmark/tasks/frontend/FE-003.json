@@ -1,0 +1,24 @@
+{
+  "task_id": "FE-003",
+  "category": "frontend",
+  "difficulty": "easy",
+  "title": "Character Counter Input",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build a React functional component called `CharCounter` that renders a textarea and a character count display below it. The character count should update in real-time as the user types. Maximum 200 characters. When the user exceeds 200 characters, show the count in red by adding a class `over-limit`. Display format: \"X / 200\".\n\nCONSTRAINTS:\n- Functional component with `useState`\n- Default export\n- Max 200 characters\n- Display format: \"{count} / 200\"\n- Add class `over-limit` when count > 200\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Functional component with `useState`",
+    "Default export",
+    "Max 200 characters",
+    "Display format: \"{count} / 200\"",
+    "Add class `over-limit` when count > 200"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "test_file": "tests/frontend/FE-003.test.jsx",
+  "test_count": 7,
+  "tags": ["react", "textarea", "validation"],
+  "reference_solution": "solutions/frontend/FE-003.jsx"
+}
+

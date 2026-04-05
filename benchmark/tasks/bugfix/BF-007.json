@@ -1,0 +1,28 @@
+{
+  "task_id": "BF-007",
+  "category": "bugfix",
+  "difficulty": "medium",
+  "title": "Async State Update After Unmount",
+  "bug_description": "A component starts an async fetch in `useEffect` but never cleans it up, so it can continue after unmount.",
+  "prompt": "You are a web developer. Fix the bug in the following code.\n\nBUG DESCRIPTION: A component starts async work in `useEffect` without cleanup or cancellation, so the request can outlive the component and continue after unmount.\n\nCODE:\nimport React, { useEffect, useState } from 'react';\n\nexport default function DataFetcher({ fetchData }) {\n  const [data, setData] = useState('Loading...');\n\n  useEffect(() => {\n    fetchData().then((result) => {\n      setData(result);\n    });\n  }, [fetchData]);\n\n  return <div>{data}</div>;\n}\n\nCONSTRAINTS:\n- Fix the bug while preserving existing functionality\n- Do not rewrite the entire component\n- Return the complete fixed file\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Fix the bug while preserving existing functionality",
+    "Do not rewrite the entire component",
+    "Return the complete fixed file"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".jsx",
+    "export_type": "default"
+  },
+  "buggy_file": "fixtures/buggy-components/BF-007.buggy.jsx",
+  "test_file": "tests/bugfix/BF-007.test.jsx",
+  "test_count": 2,
+  "tags": [
+    "react",
+    "async",
+    "cleanup",
+    "bugfix"
+  ],
+  "reference_solution": "solutions/bugfix/BF-007.fixed.jsx"
+}

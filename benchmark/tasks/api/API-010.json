@@ -1,0 +1,24 @@
+{
+  "task_id": "API-010",
+  "category": "api",
+  "difficulty": "hard",
+  "title": "File-Based Key-Value Store API",
+  "prompt": "You are a web developer. Complete the following task.\n\nTASK: Build an Express.js application that implements a key-value store persisted to a JSON file named `store.json`. Implement PUT `/store/:key`, GET `/store/:key`, DELETE `/store/:key`, and GET `/store`. All mutations must persist to disk. On startup, load existing data from the file or create an empty store if the file does not exist.\n\nCONSTRAINTS:\n- Use Express.js\n- Use the `fs` module for persistence\n- Persist data in a JSON file\n- Handle concurrent writes safely\n- Export the app with `module.exports = app`\n\nIMPORTANT:\n- Return ONLY the code. No explanations.\n- Output a single complete file.\n- Do not use markdown code blocks.",
+  "constraints": [
+    "Use Express.js",
+    "Use the `fs` module for persistence",
+    "Persist data in a JSON file",
+    "Handle concurrent writes safely",
+    "Export the app with `module.exports = app`"
+  ],
+  "expected_output": {
+    "type": "single_file",
+    "extension": ".js",
+    "export_type": "module.exports"
+  },
+  "test_file": "tests/api/API-010.test.js",
+  "test_count": 11,
+  "tags": ["express", "fs", "persistence", "storage"],
+  "reference_solution": "solutions/api/API-010.js"
+}
+
