@@ -1,0 +1,24 @@
+services:
+  benchmark:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: llm-webdev-benchmark:latest
+    working_dir: /benchmark
+    shm_size: 1gb
+    environment:
+      CI: "1"
+      BUGFIX_VARIANT: "${BUGFIX_VARIANT:-fixed}"
+    volumes:
+      - ./package.json:/benchmark/package.json:ro
+      - ./package-lock.json:/benchmark/package-lock.json:ro
+      - ./jest.config.js:/benchmark/jest.config.js:ro
+      - ./playwright.config.js:/benchmark/playwright.config.js:ro
+      - ./tsconfig.json:/benchmark/tsconfig.json:ro
+      - ./tests:/benchmark/tests:ro
+      - ./tasks:/benchmark/tasks:ro
+      - ./solutions:/benchmark/solutions:ro
+      - ./fixtures:/benchmark/fixtures:ro
+      - ./scripts:/benchmark/scripts:ro
+      - ./results:/benchmark/results
+    command: bash scripts/validate-all.sh

@@ -6,7 +6,7 @@ const appPath = require.resolve('../../solutions/api/API-009');
 let app;
 
 beforeEach(() => {
-  delete require.cache[appPath];
+  jest.resetModules();
   delete process.env.JWT_SECRET;
   app = require(appPath);
 });

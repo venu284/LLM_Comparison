@@ -17,7 +17,7 @@
   },
   "buggy_file": "fixtures/buggy-components/BF-006.buggy.js",
   "test_file": "tests/bugfix/BF-006.test.js",
-  "test_count": 2,
+  "test_count": 5,
   "tags": [
     "express",
     "middleware",

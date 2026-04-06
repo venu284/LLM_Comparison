@@ -17,7 +17,7 @@
   },
   "buggy_file": "fixtures/buggy-components/BF-001.buggy.jsx",
   "test_file": "tests/bugfix/BF-001.test.jsx",
-  "test_count": 3,
+  "test_count": 6,
   "tags": [
     "react",
     "state",

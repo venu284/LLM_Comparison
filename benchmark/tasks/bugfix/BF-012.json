@@ -17,7 +17,7 @@
   },
   "buggy_file": "fixtures/buggy-components/BF-012.buggy.jsx",
   "test_file": "tests/bugfix/BF-012.test.jsx",
-  "test_count": 2,
+  "test_count": 5,
   "tags": [
     "react",
     "useEffect",

@@ -1,0 +1,9 @@
+node_modules
+coverage
+playwright-report
+test-results
+results
+.git
+.DS_Store
+docker-compose.yml
+docker-run.sh

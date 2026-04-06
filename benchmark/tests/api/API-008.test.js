@@ -4,7 +4,7 @@ const appPath = require.resolve('../../solutions/api/API-008');
 let app;
 
 beforeEach(() => {
-  delete require.cache[appPath];
+  jest.resetModules();
   app = require(appPath);
 });
 
@@ -68,4 +68,3 @@ describe('API-008: Rate Limiter Middleware', () => {
     expect(otherIpResponse.headers['x-ratelimit-remaining']).toBe('4');
   });
 });
-

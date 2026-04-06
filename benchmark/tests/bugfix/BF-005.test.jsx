@@ -1,8 +1,9 @@
 import React from 'react';
 import { act, render, screen } from '@testing-library/react';
-const { loadBugfixDefaultExport } = require('./helpers');
+const { loadBugfixDefaultExport, readBugfixSource } = require('./helpers');
 
 const Timer = loadBugfixDefaultExport('BF-005');
+const source = readBugfixSource('BF-005');
 
 describe('BF-005: Stale Closure in useEffect', () => {
   beforeEach(() => {
@@ -41,5 +42,25 @@ describe('BF-005: Stale Closure in useEffect', () => {
     });
 
     expect(screen.getByTestId('count')).toHaveTextContent('5');
+  });
+
+  test('source includes clearInterval cleanup for the interval', () => {
+    expect(source).toMatch(/clearInterval/);
+  });
+
+  test('component unmounts without throwing errors', () => {
+    const { unmount } = render(<Timer />);
+    expect(() => unmount()).not.toThrow();
+  });
+
+  test('advancing timers after unmount does not throw', () => {
+    const { unmount } = render(<Timer />);
+    unmount();
+
+    expect(() => {
+      act(() => {
+        jest.advanceTimersByTime(3000);
+      });
+    }).not.toThrow();
   });
 });

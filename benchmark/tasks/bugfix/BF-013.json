@@ -17,7 +17,7 @@
   },
   "buggy_file": "fixtures/buggy-components/BF-013.buggy.jsx",
   "test_file": "tests/bugfix/BF-013.test.jsx",
-  "test_count": 3,
+  "test_count": 5,
   "tags": [
     "react",
     "useMemo",

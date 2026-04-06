@@ -4,7 +4,7 @@ const appPath = require.resolve('../../solutions/api/API-012');
 let app;
 
 beforeEach(() => {
-  delete require.cache[appPath];
+  jest.resetModules();
   app = require(appPath);
 });
 
@@ -83,4 +83,3 @@ describe('API-012: API Versioning with Router', () => {
     expect(response.body.meta.count).toBe(1);
   });
 });
-

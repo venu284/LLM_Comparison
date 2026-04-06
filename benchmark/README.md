@@ -16,7 +16,7 @@ Current status:
 - Matching task metadata, automated tests, and reference solutions are present for every task
 - Bug-fix tasks include buggy fixture files and fixed reference solutions
 - Structural verification is complete
-- Runtime validation is still pending in this environment because `node`/`npm` are not installed here
+- Runtime validation now passes end-to-end through the repo-local Docker workflow in `benchmark/`
 
 ## Structure
 
@@ -58,10 +58,18 @@ benchmark/
 - `npm run validate` runs every category that currently has test files and checks bug-fix tasks against both fixed and buggy variants
 - `bash scripts/run-task.sh FE-001` runs a single task by id
 
+## Docker Workflow
+
+- `./docker-run.sh build` builds a Linux validation image from the `benchmark/` directory
+- `./docker-run.sh validate` runs the full Phase 2 validation flow inside Docker
+- `./docker-run.sh task API-009` runs a single benchmark task inside Docker
+- `./docker-run.sh eval FE-001 path/to/output.jsx` overlays one candidate solution into the container and runs that task's tests
+- `docker compose run --rm benchmark` provides an optional live-mounted validation workflow
+
 ## Notes
 
 - The benchmark tree now contains the full planned suite: 65 tasks, 65 tests, and 65 reference solutions.
 - The folder layout matches the construction guide closely, with bug-fix source fixtures stored in `fixtures/buggy-components/`.
 - Jest is configured through `ts-jest` so JSX test files can run without adding a separate Babel layer.
 - Bug-fix validation now uses the same test files against both `solutions/bugfix/` and `fixtures/buggy-components/`.
-- Full test execution still needs a machine with Node.js installed.
+- The Docker image installs Node.js dependencies and Playwright Chromium, and `./docker-run.sh validate` now passes end-to-end.

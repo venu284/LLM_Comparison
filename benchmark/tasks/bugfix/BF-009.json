@@ -17,7 +17,7 @@
   },
   "buggy_file": "fixtures/buggy-components/BF-009.buggy.jsx",
   "test_file": "tests/bugfix/BF-009.test.jsx",
-  "test_count": 3,
+  "test_count": 5,
   "tags": [
     "react",
     "async",

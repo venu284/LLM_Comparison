@@ -7,7 +7,7 @@ const storeFile = path.join(path.dirname(appPath), 'store.json');
 let app;
 
 beforeEach(() => {
-  delete require.cache[appPath];
+  jest.resetModules();
   if (fs.existsSync(storeFile)) {
     fs.unlinkSync(storeFile);
   }
@@ -58,7 +58,7 @@ describe('API-010: File-Based Key-Value Store API', () => {
 
   test('data persists to the JSON file', async () => {
     await request(app).put('/store/theme').send({ value: 'dark' });
-    const storedData = JSON.parse(fs.readFileSync(app.locals.storeFile, 'utf8'));
+    const storedData = JSON.parse(fs.readFileSync(storeFile, 'utf8'));
     expect(storedData).toEqual({ theme: 'dark' });
   });
 
@@ -89,4 +89,3 @@ describe('API-010: File-Based Key-Value Store API', () => {
     expect(response.body.value).toBe('light');
   });
 });
-

@@ -14,4 +14,12 @@ describe('BF-008: TypeScript Type Narrowing Bug', () => {
     const content = readBugfixSource('BF-008');
     expect(content).not.toMatch(/:\s*any\b/);
   });
+
+  test('empty string input stays an empty string', () => {
+    expect(processValue('')).toBe('');
+  });
+
+  test('zero is formatted as a fixed decimal string', () => {
+    expect(processValue(0)).toBe('0.00');
+  });
 });

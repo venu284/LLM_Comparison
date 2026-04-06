@@ -3,8 +3,31 @@ import { fireEvent, render, screen } from '@testing-library/react';
 const { loadBugfixDefaultExport } = require('./helpers');
 
 const ResizeTracker = loadBugfixDefaultExport('BF-010');
+const originalInnerWidth = window.innerWidth;
+
+function setInnerWidth(value) {
+  Object.defineProperty(window, 'innerWidth', {
+    configurable: true,
+    writable: true,
+    value
+  });
+}
 
 describe('BF-010: Memory Leak in Event Listener', () => {
+  beforeEach(() => {
+    setInnerWidth(1024);
+  });
+
+  afterEach(() => {
+    setInnerWidth(originalInnerWidth);
+    jest.restoreAllMocks();
+  });
+
+  test('component initially renders the current width', () => {
+    render(<ResizeTracker />);
+    expect(screen.getByTestId('width')).toHaveTextContent('1024');
+  });
+
   test('only one resize listener is registered across rerenders', () => {
     const addSpy = jest.spyOn(window, 'addEventListener');
 
@@ -17,7 +40,6 @@ describe('BF-010: Memory Leak in Event Listener', () => {
     );
 
     expect(resizeRegistrations).toHaveLength(1);
-    addSpy.mockRestore();
   });
 
   test('cleanup removes the resize listener on unmount', () => {
@@ -31,6 +53,25 @@ describe('BF-010: Memory Leak in Event Listener', () => {
     );
 
     expect(resizeRemovals.length).toBeGreaterThan(0);
-    removeSpy.mockRestore();
+  });
+
+  test('resize events update the displayed width', () => {
+    render(<ResizeTracker />);
+
+    setInnerWidth(640);
+    fireEvent(window, new Event('resize'));
+
+    expect(screen.getByTestId('width')).toHaveTextContent('640');
+  });
+
+  test('width continues updating after multiple rerenders', () => {
+    render(<ResizeTracker />);
+
+    fireEvent.click(screen.getByRole('button', { name: /rerender/i }));
+    fireEvent.click(screen.getByRole('button', { name: /rerender/i }));
+    setInnerWidth(480);
+    fireEvent(window, new Event('resize'));
+
+    expect(screen.getByTestId('width')).toHaveTextContent('480');
   });
 });

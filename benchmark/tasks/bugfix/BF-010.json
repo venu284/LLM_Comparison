@@ -17,7 +17,7 @@
   },
   "buggy_file": "fixtures/buggy-components/BF-010.buggy.jsx",
   "test_file": "tests/bugfix/BF-010.test.jsx",
-  "test_count": 2,
+  "test_count": 5,
   "tags": [
     "react",
     "events",

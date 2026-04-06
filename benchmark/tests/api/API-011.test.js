@@ -4,7 +4,7 @@ const appPath = require.resolve('../../solutions/api/API-011');
 let app;
 
 beforeEach(() => {
-  delete require.cache[appPath];
+  jest.resetModules();
   app = require(appPath);
 });
 
@@ -95,4 +95,3 @@ describe('API-011: Webhook Receiver with Retry Queue', () => {
     expect(response.status).toBe(404);
   });
 });
-

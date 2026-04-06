@@ -3,7 +3,7 @@ import {
   Rectangle,
   Triangle,
   area,
-  describe,
+  describe as describeShape,
   isCircle,
   isRectangle,
   isTriangle
@@ -37,12 +37,12 @@ describe('TS-007: Type Guards and Narrowing', () => {
   });
 
   test('describe returns expected strings', () => {
-    expect(describe(circle)).toBe('Circle with radius 3');
-    expect(describe(rectangle)).toBe('Rectangle 4x6');
+    expect(describeShape(circle)).toBe('Circle with radius 3');
+    expect(describeShape(rectangle)).toBe('Rectangle 4x6');
   });
 
   test('describe handles triangles', () => {
-    expect(describe(triangle)).toBe('Triangle 8x5');
+    expect(describeShape(triangle)).toBe('Triangle 8x5');
   });
 
   test('solution uses no any types', () => {

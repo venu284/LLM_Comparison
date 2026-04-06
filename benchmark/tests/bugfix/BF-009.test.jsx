@@ -63,4 +63,32 @@ describe('BF-009: Race Condition in Async Search', () => {
       expect(screen.queryByText('alpha')).not.toBeInTheDocument();
     });
   });
+
+  test('a single slow query eventually renders its results', async () => {
+    const { searchFn, resolvers } = createControlledSearch();
+    render(<AsyncSearch searchFn={searchFn} />);
+
+    fireEvent.change(screen.getByLabelText(/search/i), { target: { value: 'hello' } });
+    expect(searchFn).toHaveBeenCalledWith('hello');
+
+    resolvers.hello(['hello result']);
+
+    await waitFor(() => {
+      expect(screen.getByText('hello result')).toBeInTheDocument();
+    });
+  });
+
+  test('clearing the query before a late response prevents stale results from reappearing', async () => {
+    const { resolvers, searchFn } = createControlledSearch();
+    render(<AsyncSearch searchFn={searchFn} />);
+
+    fireEvent.change(screen.getByLabelText(/search/i), { target: { value: 'ab' } });
+    fireEvent.change(screen.getByLabelText(/search/i), { target: { value: '' } });
+
+    resolvers.ab(['ab result']);
+
+    await waitFor(() => {
+      expect(screen.queryByText('ab result')).not.toBeInTheDocument();
+    });
+  });
 });

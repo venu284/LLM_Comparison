@@ -4,7 +4,7 @@ const appPath = require.resolve('../../solutions/api/API-003');
 let app;
 
 beforeEach(() => {
-  delete require.cache[appPath];
+  jest.resetModules();
   app = require(appPath);
 });
 
@@ -47,4 +47,3 @@ describe('API-003: Item CRUD Create and List', () => {
     expect(response.body.error).toBe('Name is required');
   });
 });
-

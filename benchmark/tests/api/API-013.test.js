@@ -4,7 +4,7 @@ const appPath = require.resolve('../../solutions/api/API-013');
 let app;
 
 beforeEach(() => {
-  delete require.cache[appPath];
+  jest.resetModules();
   app = require(appPath);
 });
 

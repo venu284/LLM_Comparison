@@ -17,7 +17,7 @@
   },
   "buggy_file": "fixtures/buggy-components/BF-011.buggy.js",
   "test_file": "tests/bugfix/BF-011.test.js",
-  "test_count": 3,
+  "test_count": 5,
   "tags": [
     "express",
     "async",

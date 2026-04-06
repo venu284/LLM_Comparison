@@ -17,7 +17,7 @@
   },
   "buggy_file": "fixtures/buggy-components/BF-008.buggy.ts",
   "test_file": "tests/bugfix/BF-008.test.ts",
-  "test_count": 3,
+  "test_count": 5,
   "tags": [
     "typescript",
     "narrowing",

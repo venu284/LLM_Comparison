@@ -27,4 +27,35 @@ describe('BF-002: Missing Key Prop in List', () => {
     expect(screen.getByText('Write tests')).toBeInTheDocument();
     expect(screen.getByText('Ship project')).toBeInTheDocument();
   });
+
+  test('initial render shows the full three-item todo list', () => {
+    render(<TodoList />);
+
+    expect(screen.getAllByRole('listitem')).toHaveLength(3);
+    expect(screen.getByText('Write tests')).toBeInTheDocument();
+    expect(screen.getByText('Fix bugs')).toBeInTheDocument();
+    expect(screen.getByText('Ship project')).toBeInTheDocument();
+  });
+
+  test('deleting the first item preserves the remaining todos', () => {
+    render(<TodoList />);
+
+    fireEvent.click(screen.getAllByRole('button', { name: 'Delete' })[0]);
+
+    expect(screen.queryByText('Write tests')).not.toBeInTheDocument();
+    expect(screen.getAllByRole('listitem')).toHaveLength(2);
+    expect(screen.getByText('Fix bugs')).toBeInTheDocument();
+    expect(screen.getByText('Ship project')).toBeInTheDocument();
+  });
+
+  test('sequential deletes reduce the rendered list to zero items', () => {
+    render(<TodoList />);
+
+    fireEvent.click(screen.getAllByRole('button', { name: 'Delete' })[0]);
+    fireEvent.click(screen.getAllByRole('button', { name: 'Delete' })[0]);
+    fireEvent.click(screen.getAllByRole('button', { name: 'Delete' })[0]);
+
+    expect(screen.queryAllByRole('listitem')).toHaveLength(0);
+    expect(screen.queryAllByRole('button', { name: 'Delete' })).toHaveLength(0);
+  });
 });
