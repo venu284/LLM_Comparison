@@ -1,0 +1,14 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+
+logs/*
+temp/*
+exports/*
+
+!logs/.gitkeep
+!temp/.gitkeep
+!exports/.gitkeep

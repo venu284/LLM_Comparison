@@ -1,0 +1,43 @@
+experiment:
+  name: "Web Dev LLM Benchmark v1.0"
+  runs_per_task: 3
+  temperature: 0.2
+  max_tokens: 4096
+  warmup_requests: 3
+  test_timeout_seconds: 60
+
+paths:
+  benchmark_dir: "../benchmark"
+  temp_dir: "temp"
+  logs_dir: "logs"
+  exports_dir: "exports"
+
+database:
+  url: "${DATABASE_URL}"
+
+cost_rates:
+  DeepSeek-R1-0528:
+    input: 0.55
+    output: 2.19
+    source: "https://platform.deepseek.com/api-docs/pricing"
+    accessed: "2026-04-06"
+  Qwen3-Coder:
+    input: 0.50
+    output: 2.00
+    source: "https://dashscope.console.aliyun.com"
+    accessed: "2026-04-06"
+  GLM-4:
+    input: 0.40
+    output: 1.60
+    source: "https://open.bigmodel.cn/pricing"
+    accessed: "2026-04-06"
+  Gemini-2.5-Flash:
+    input: 0.15
+    output: 0.60
+    source: "https://ai.google.dev/pricing"
+    accessed: "2026-04-06"
+  Qwen2.5-Coder-32B:
+    input: 0.30
+    output: 1.20
+    source: "https://dashscope.console.aliyun.com"
+    accessed: "2026-04-06"
