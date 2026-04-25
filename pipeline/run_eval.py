@@ -130,6 +130,7 @@ async def evaluate_task(
     if store_results:
         storage = ResultsStorage(get_database_url() or "")
         storage.connect()
+        storage.setup_database(str(loader.benchmark_dir))
 
     task = loader.load_task(task_id)
     logger.info("Loaded task: %s (%s/%s)", task.task_id, task.category, task.difficulty)

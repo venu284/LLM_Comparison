@@ -167,6 +167,10 @@ def ensure_runtime_dirs() -> Dict[str, Path]:
 
 def get_database_url() -> Optional[str]:
     url = load_config().get("database", {}).get("url") or os.getenv("DATABASE_URL")
+    if isinstance(url, str):
+        url = url.strip()
+        if not url or _ENV_PATTERN.search(url):
+            return None
     return url or None
 
 
