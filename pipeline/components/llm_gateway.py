@@ -178,7 +178,22 @@ class LLMGateway:
                         model.name,
                         response.error_message,
                     )
+                    if self._is_rate_limit_error(response.error_message):
+                        remaining = n - index
+                        if remaining > 0:
+                            logger.warning(
+                                "Skipping remaining %s warmup request(s) for %s after rate limit",
+                                remaining,
+                                model.name,
+                            )
+                        break
         logger.info("Warmup complete.")
+
+    def _is_rate_limit_error(self, error_message: Optional[str]) -> bool:
+        if not error_message:
+            return False
+        error_text = error_message.lower()
+        return "429" in error_text or "rate limit" in error_text or "rate-limit" in error_text
 
     def _normalize_content(self, content: object) -> str:
         if isinstance(content, str):

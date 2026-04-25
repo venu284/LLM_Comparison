@@ -40,9 +40,9 @@ cost_rates:
     source: "https://openrouter.ai/minimax/minimax-m2.5:free"
     accessed: "2026-04-25"
     note: "Free tier via OpenRouter"
-  Gemma-4-31B:
+  "Google: Gemma 4 26B A4B (free)":
     input: 0.0
     output: 0.0
-    source: "https://openrouter.ai/google/gemma-4-31b-it:free"
+    source: "https://openrouter.ai/google/gemma-4-26b-a4b-it:free"
     accessed: "2026-04-25"
     note: "Free tier via OpenRouter"
