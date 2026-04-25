@@ -63,7 +63,7 @@ python scripts/warmup.py
 python run_eval.py --task FE-001 --runs 1 --no-db
 
 # Single task with selected models
-python run_eval.py --task FE-001 --models "Nemotron-3-Super" "Qwen3-Coder-480B" --runs 1 --no-db
+python run_eval.py --task FE-001 --models "Nemotron-3-Super" "Devstral-2" --runs 1 --no-db
 
 # Category batch
 python run_eval.py --category frontend --runs 3
@@ -90,5 +90,5 @@ Nemotron-3-Super
 GLM-4.5-Air
 GPT-OSS-120B
 MiniMax-M2.5
-Qwen3-Coder-480B
+Devstral-2
 ```

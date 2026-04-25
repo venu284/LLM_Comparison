@@ -53,8 +53,8 @@ MODELS: List[ModelConfig] = [
         api_key_env="OPENROUTER_API_KEY",
     ),
     ModelConfig(
-        name="Qwen3-Coder-480B",
-        model_id="openrouter/qwen/qwen3-coder:free",
+        name="Devstral-2",
+        model_id="openrouter/mistralai/devstral-2512:free",
         provider="openrouter",
         api_key_env="OPENROUTER_API_KEY",
     ),
@@ -109,10 +109,10 @@ def _default_config() -> Dict[str, Any]:
                 "accessed": "2026-04-25",
                 "note": "Free tier via OpenRouter",
             },
-            "Qwen3-Coder-480B": {
+            "Devstral-2": {
                 "input": 0.0,
                 "output": 0.0,
-                "source": "https://openrouter.ai/qwen/qwen3-coder:free",
+                "source": "https://openrouter.ai/mistralai/devstral-2512:free",
                 "accessed": "2026-04-25",
                 "note": "Free tier via OpenRouter",
             },
