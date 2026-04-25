@@ -63,7 +63,7 @@ def main() -> None:
 
     print()
     print("Done. You can now run:")
-    print('  python run_eval.py --task FE-001 --models "Gemini-2.5-Flash" --runs 1')
+    print('  python run_eval.py --task FE-001 --models "Gemma-4-31B" --runs 1')
 
 
 if __name__ == "__main__":

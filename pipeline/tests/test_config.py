@@ -13,6 +13,15 @@ if str(PIPELINE_DIR) not in sys.path:
 import config
 
 
+OPENROUTER_MODELS = [
+    ("Nemotron-3-Super", "openrouter/nvidia/nemotron-3-super-120b-a12b:free"),
+    ("GLM-4.5-Air", "openrouter/z-ai/glm-4.5-air:free"),
+    ("GPT-OSS-120B", "openrouter/openai/gpt-oss-120b:free"),
+    ("MiniMax-M2.5", "openrouter/minimax/minimax-m2.5:free"),
+    ("Gemma-4-31B", "openrouter/google/gemma-4-31b-it:free"),
+]
+
+
 class ConfigDatabaseUrlTests(unittest.TestCase):
     def setUp(self) -> None:
         self.previous_database_url = os.environ.pop("DATABASE_URL", None)
@@ -27,6 +36,30 @@ class ConfigDatabaseUrlTests(unittest.TestCase):
 
     def test_unresolved_database_url_placeholder_returns_none(self) -> None:
         self.assertIsNone(config.get_database_url())
+
+
+class ConfigOpenRouterModelTests(unittest.TestCase):
+    def setUp(self) -> None:
+        config.load_config.cache_clear()
+
+    def tearDown(self) -> None:
+        config.load_config.cache_clear()
+
+    def test_models_use_openrouter_free_model_ids_and_single_api_key(self) -> None:
+        self.assertEqual(
+            [(model.name, model.model_id) for model in config.MODELS],
+            OPENROUTER_MODELS,
+        )
+        self.assertEqual({model.provider for model in config.MODELS}, {"openrouter"})
+        self.assertEqual({model.api_key_env for model in config.MODELS}, {"OPENROUTER_API_KEY"})
+
+    def test_cost_rates_are_zero_for_openrouter_models(self) -> None:
+        rates = config.get_cost_rates()
+
+        self.assertEqual(set(rates), {name for name, _ in OPENROUTER_MODELS})
+        for model_name, _ in OPENROUTER_MODELS:
+            self.assertEqual(rates[model_name]["input"], 0.0)
+            self.assertEqual(rates[model_name]["output"], 0.0)
 
 
 if __name__ == "__main__":

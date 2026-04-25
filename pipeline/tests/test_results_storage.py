@@ -26,6 +26,15 @@ if str(PIPELINE_DIR) not in sys.path:
 from components.results_storage import ResultsStorage
 
 
+OPENROUTER_MODELS = [
+    ("Nemotron-3-Super", "openrouter/nvidia/nemotron-3-super-120b-a12b:free", "openrouter"),
+    ("GLM-4.5-Air", "openrouter/z-ai/glm-4.5-air:free", "openrouter"),
+    ("GPT-OSS-120B", "openrouter/openai/gpt-oss-120b:free", "openrouter"),
+    ("MiniMax-M2.5", "openrouter/minimax/minimax-m2.5:free", "openrouter"),
+    ("Gemma-4-31B", "openrouter/google/gemma-4-31b-it:free", "openrouter"),
+]
+
+
 class FakeCursor:
     def __init__(self) -> None:
         self.executed = []
@@ -76,7 +85,7 @@ class ResultsStorageSetupTests(unittest.TestCase):
         executed = storage.conn.cursor_instance.executed
         self.assertGreaterEqual(len(executed), 7)
         self.assertIn("CREATE TABLE IF NOT EXISTS tasks", executed[0][0])
-        self.assertEqual(executed[1][1], ("DeepSeek-R1-0528", "deepseek/deepseek-reasoner", "deepseek"))
+        self.assertEqual([statement[1] for statement in executed[1:6]], OPENROUTER_MODELS)
         self.assertEqual(
             executed[-1][1],
             ("FE-001", "frontend", "easy", "Render a button", 3, ["react", "ui"]),

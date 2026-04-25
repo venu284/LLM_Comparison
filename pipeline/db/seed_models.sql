@@ -1,7 +1,7 @@
 INSERT INTO models (name, model_id, provider) VALUES
-    ('DeepSeek-R1-0528', 'deepseek/deepseek-reasoner', 'deepseek'),
-    ('Qwen3-Coder', 'dashscope/qwen3-coder', 'dashscope'),
-    ('GLM-4', 'zhipuai/glm-4', 'zhipuai'),
-    ('Gemini-2.5-Flash', 'gemini/gemini-2.5-flash', 'google'),
-    ('Qwen2.5-Coder-32B', 'dashscope/qwen2.5-coder-32b-instruct', 'dashscope')
+    ('Nemotron-3-Super', 'openrouter/nvidia/nemotron-3-super-120b-a12b:free', 'openrouter'),
+    ('GLM-4.5-Air', 'openrouter/z-ai/glm-4.5-air:free', 'openrouter'),
+    ('GPT-OSS-120B', 'openrouter/openai/gpt-oss-120b:free', 'openrouter'),
+    ('MiniMax-M2.5', 'openrouter/minimax/minimax-m2.5:free', 'openrouter'),
+    ('Gemma-4-31B', 'openrouter/google/gemma-4-31b-it:free', 'openrouter')
 ON CONFLICT (name) DO NOTHING;

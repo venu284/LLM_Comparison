@@ -16,28 +16,33 @@ database:
   url: "${DATABASE_URL}"
 
 cost_rates:
-  DeepSeek-R1-0528:
-    input: 0.55
-    output: 2.19
-    source: "https://platform.deepseek.com/api-docs/pricing"
-    accessed: "2026-04-06"
-  Qwen3-Coder:
-    input: 0.50
-    output: 2.00
-    source: "https://dashscope.console.aliyun.com"
-    accessed: "2026-04-06"
-  GLM-4:
-    input: 0.40
-    output: 1.60
-    source: "https://open.bigmodel.cn/pricing"
-    accessed: "2026-04-06"
-  Gemini-2.5-Flash:
-    input: 0.15
-    output: 0.60
-    source: "https://ai.google.dev/pricing"
-    accessed: "2026-04-06"
-  Qwen2.5-Coder-32B:
-    input: 0.30
-    output: 1.20
-    source: "https://dashscope.console.aliyun.com"
-    accessed: "2026-04-06"
+  Nemotron-3-Super:
+    input: 0.0
+    output: 0.0
+    source: "https://openrouter.ai/nvidia/nemotron-3-super-120b-a12b:free"
+    accessed: "2026-04-25"
+    note: "Free tier via OpenRouter"
+  GLM-4.5-Air:
+    input: 0.0
+    output: 0.0
+    source: "https://openrouter.ai/z-ai/glm-4.5-air:free"
+    accessed: "2026-04-25"
+    note: "Free tier via OpenRouter"
+  GPT-OSS-120B:
+    input: 0.0
+    output: 0.0
+    source: "https://openrouter.ai/openai/gpt-oss-120b:free"
+    accessed: "2026-04-25"
+    note: "Free tier via OpenRouter"
+  MiniMax-M2.5:
+    input: 0.0
+    output: 0.0
+    source: "https://openrouter.ai/minimax/minimax-m2.5:free"
+    accessed: "2026-04-25"
+    note: "Free tier via OpenRouter"
+  Gemma-4-31B:
+    input: 0.0
+    output: 0.0
+    source: "https://openrouter.ai/google/gemma-4-31b-it:free"
+    accessed: "2026-04-25"
+    note: "Free tier via OpenRouter"

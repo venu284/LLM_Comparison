@@ -39,20 +39,17 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Fill in `.env` with your database URL and model API keys:
+Fill in `.env` with your Neon database URL and OpenRouter API key:
 
 ```bash
-DATABASE_URL=postgresql://postgres:password@localhost:5432/llm_benchmark
-DEEPSEEK_API_KEY=...
-DASHSCOPE_API_KEY=...
-GLM_API_KEY=...
-GOOGLE_API_KEY=...
+DATABASE_URL=postgresql://user:pass@ep-cool-night-123456.us-east-2.aws.neon.tech/neondb?sslmode=require
+OPENROUTER_API_KEY=sk-or-v1-...
 ```
 
 Then prepare the database and prerequisite benchmark image:
 
 ```bash
-bash scripts/setup_db.sh
+python scripts/setup_neon.py
 cd ../benchmark && ./docker-run.sh build && ./docker-run.sh validate && cd ../pipeline
 ```
 
@@ -66,7 +63,7 @@ python scripts/warmup.py
 python run_eval.py --task FE-001 --runs 1 --no-db
 
 # Single task with selected models
-python run_eval.py --task FE-001 --models "DeepSeek-R1-0528" "Gemini-2.5-Flash" --runs 1 --no-db
+python run_eval.py --task FE-001 --models "Nemotron-3-Super" "Gemma-4-31B" --runs 1 --no-db
 
 # Category batch
 python run_eval.py --category frontend --runs 3
@@ -85,3 +82,13 @@ python scripts/export_results.py --output exports/results.csv
 - Bugfix evaluation uses the benchmark's `.fixed.<ext>` naming convention automatically.
 - Cost values are estimates derived from configured token pricing rates in `config.yaml`.
 - Runtime artifacts in `temp/`, `logs/`, and `exports/` are git-ignored except for the `.gitkeep` placeholders.
+
+## Model Names
+
+```text
+Nemotron-3-Super
+GLM-4.5-Air
+GPT-OSS-120B
+MiniMax-M2.5
+Gemma-4-31B
+```
