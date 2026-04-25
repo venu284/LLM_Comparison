@@ -146,7 +146,13 @@ async def evaluate_task(
             logger.info("RUN %s/%s for %s", run_number, run_count, task.task_id)
             logger.info("%s", "=" * 60)
 
-            responses = await gateway.query_all(task.formatted_prompt)
+            import asyncio as _asyncio
+
+            responses = []
+            for model in gateway.models:
+                response = await gateway.query_single_with_retry(task.formatted_prompt, model)
+                responses.append(response)
+                await _asyncio.sleep(3)
 
             for response in responses:
                 logger.info("--- %s ---", response.model_name)

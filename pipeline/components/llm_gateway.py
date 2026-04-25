@@ -33,7 +33,7 @@ class LLMGateway:
         models: List[ModelConfig] = MODELS,
         temperature: float = 0.2,
         max_tokens: int = 4096,
-        max_retries: int = 3,
+        max_retries: int = 5,
     ):
         self.models = models
         self.temperature = temperature
@@ -124,7 +124,7 @@ class LLMGateway:
             if not transient or attempt == retries - 1:
                 return response
 
-            wait_seconds = (2 ** attempt) * 5
+            wait_seconds = (2 ** attempt) * 15
             logger.warning(
                 "Retrying %s in %ss (attempt %s/%s): %s",
                 model.name,
