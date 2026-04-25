@@ -9,8 +9,8 @@ from config import ModelConfig
 class LLMGatewayWarmupTests(unittest.IsolatedAsyncioTestCase):
     async def test_warmup_stops_repeating_a_model_after_rate_limit(self) -> None:
         model = ModelConfig(
-            name="Google: Gemma 4 26B A4B (free)",
-            model_id="openrouter/google/gemma-4-26b-a4b-it:free",
+            name="Qwen3-Coder-480B",
+            model_id="openrouter/qwen/qwen3-coder:free",
             provider="openrouter",
             api_key_env="OPENROUTER_API_KEY",
         )

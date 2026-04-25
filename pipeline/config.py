@@ -53,8 +53,8 @@ MODELS: List[ModelConfig] = [
         api_key_env="OPENROUTER_API_KEY",
     ),
     ModelConfig(
-        name="Google: Gemma 4 26B A4B (free)",
-        model_id="openrouter/google/gemma-4-26b-a4b-it:free",
+        name="Qwen3-Coder-480B",
+        model_id="openrouter/qwen/qwen3-coder:free",
         provider="openrouter",
         api_key_env="OPENROUTER_API_KEY",
     ),
@@ -109,10 +109,10 @@ def _default_config() -> Dict[str, Any]:
                 "accessed": "2026-04-25",
                 "note": "Free tier via OpenRouter",
             },
-            "Google: Gemma 4 26B A4B (free)": {
+            "Qwen3-Coder-480B": {
                 "input": 0.0,
                 "output": 0.0,
-                "source": "https://openrouter.ai/google/gemma-4-26b-a4b-it:free",
+                "source": "https://openrouter.ai/qwen/qwen3-coder:free",
                 "accessed": "2026-04-25",
                 "note": "Free tier via OpenRouter",
             },
