@@ -16,33 +16,33 @@ database:
   url: "${DATABASE_URL}"
 
 cost_rates:
-  Nemotron-3-Super:
+  Llama-3.3-70B:
     input: 0.0
     output: 0.0
-    source: "https://openrouter.ai/nvidia/nemotron-3-super-120b-a12b:free"
+    source: "https://console.groq.com"
     accessed: "2026-04-25"
-    note: "Free tier via OpenRouter"
-  GLM-4.5-Air:
+    note: "Free tier via Groq"
+  DeepSeek-R1-Distill-70B:
     input: 0.0
     output: 0.0
-    source: "https://openrouter.ai/z-ai/glm-4.5-air:free"
+    source: "https://console.groq.com"
     accessed: "2026-04-25"
-    note: "Free tier via OpenRouter"
-  GPT-OSS-120B:
+    note: "Free tier via Groq"
+  Qwen-QwQ-32B:
     input: 0.0
     output: 0.0
-    source: "https://openrouter.ai/openai/gpt-oss-120b:free"
+    source: "https://console.groq.com"
     accessed: "2026-04-25"
-    note: "Free tier via OpenRouter"
-  MiniMax-M2.5:
+    note: "Free tier via Groq"
+  Llama-4-Scout:
     input: 0.0
     output: 0.0
-    source: "https://openrouter.ai/minimax/minimax-m2.5:free"
+    source: "https://console.groq.com"
     accessed: "2026-04-25"
-    note: "Free tier via OpenRouter"
-  Devstral-2:
+    note: "Free tier via Groq"
+  Mistral-Saba-24B:
     input: 0.0
     output: 0.0
-    source: "https://openrouter.ai/mistralai/devstral-2512:free"
+    source: "https://console.groq.com"
     accessed: "2026-04-25"
-    note: "Free tier via OpenRouter"
+    note: "Free tier via Groq"

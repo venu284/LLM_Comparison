@@ -39,11 +39,11 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Fill in `.env` with your Neon database URL and OpenRouter API key:
+Fill in `.env` with your Neon database URL and Groq API key:
 
 ```bash
 DATABASE_URL=postgresql://user:pass@ep-cool-night-123456.us-east-2.aws.neon.tech/neondb?sslmode=require
-OPENROUTER_API_KEY=sk-or-v1-...
+GROQ_API_KEY=gsk_...
 ```
 
 Then prepare the database and prerequisite benchmark image:
@@ -63,7 +63,7 @@ python scripts/warmup.py
 python run_eval.py --task FE-001 --runs 1 --no-db
 
 # Single task with selected models
-python run_eval.py --task FE-001 --models "Nemotron-3-Super" "Devstral-2" --runs 1 --no-db
+python run_eval.py --task FE-001 --models "Llama-3.3-70B" "DeepSeek-R1-Distill-70B" --runs 1 --no-db
 
 # Category batch
 python run_eval.py --category frontend --runs 3
@@ -86,9 +86,9 @@ python scripts/export_results.py --output exports/results.csv
 ## Model Names
 
 ```text
-Nemotron-3-Super
-GLM-4.5-Air
-GPT-OSS-120B
-MiniMax-M2.5
-Devstral-2
+Llama-3.3-70B
+DeepSeek-R1-Distill-70B
+Qwen-QwQ-32B
+Llama-4-Scout
+Mistral-Saba-24B
 ```

@@ -29,34 +29,34 @@ class ModelConfig:
 
 MODELS: List[ModelConfig] = [
     ModelConfig(
-        name="Nemotron-3-Super",
-        model_id="openrouter/nvidia/nemotron-3-super-120b-a12b:free",
-        provider="openrouter",
-        api_key_env="OPENROUTER_API_KEY",
+        name="Llama-3.3-70B",
+        model_id="groq/llama-3.3-70b-versatile",
+        provider="groq",
+        api_key_env="GROQ_API_KEY",
     ),
     ModelConfig(
-        name="GLM-4.5-Air",
-        model_id="openrouter/z-ai/glm-4.5-air:free",
-        provider="openrouter",
-        api_key_env="OPENROUTER_API_KEY",
+        name="DeepSeek-R1-Distill-70B",
+        model_id="groq/deepseek-r1-distill-llama-70b",
+        provider="groq",
+        api_key_env="GROQ_API_KEY",
     ),
     ModelConfig(
-        name="GPT-OSS-120B",
-        model_id="openrouter/openai/gpt-oss-120b:free",
-        provider="openrouter",
-        api_key_env="OPENROUTER_API_KEY",
+        name="Qwen-QwQ-32B",
+        model_id="groq/qwen-qwq-32b",
+        provider="groq",
+        api_key_env="GROQ_API_KEY",
     ),
     ModelConfig(
-        name="MiniMax-M2.5",
-        model_id="openrouter/minimax/minimax-m2.5:free",
-        provider="openrouter",
-        api_key_env="OPENROUTER_API_KEY",
+        name="Llama-4-Scout",
+        model_id="groq/meta-llama/llama-4-scout-17b-16e-instruct",
+        provider="groq",
+        api_key_env="GROQ_API_KEY",
     ),
     ModelConfig(
-        name="Devstral-2",
-        model_id="openrouter/mistralai/devstral-2512:free",
-        provider="openrouter",
-        api_key_env="OPENROUTER_API_KEY",
+        name="Mistral-Saba-24B",
+        model_id="groq/mistral-saba-24b",
+        provider="groq",
+        api_key_env="GROQ_API_KEY",
     ),
 ]
 
@@ -81,40 +81,40 @@ def _default_config() -> Dict[str, Any]:
         },
         "database": {"url": os.getenv("DATABASE_URL", "")},
         "cost_rates": {
-            "Nemotron-3-Super": {
+            "Llama-3.3-70B": {
                 "input": 0.0,
                 "output": 0.0,
-                "source": "https://openrouter.ai/nvidia/nemotron-3-super-120b-a12b:free",
+                "source": "https://console.groq.com",
                 "accessed": "2026-04-25",
-                "note": "Free tier via OpenRouter",
+                "note": "Free tier via Groq",
             },
-            "GLM-4.5-Air": {
+            "DeepSeek-R1-Distill-70B": {
                 "input": 0.0,
                 "output": 0.0,
-                "source": "https://openrouter.ai/z-ai/glm-4.5-air:free",
+                "source": "https://console.groq.com",
                 "accessed": "2026-04-25",
-                "note": "Free tier via OpenRouter",
+                "note": "Free tier via Groq",
             },
-            "GPT-OSS-120B": {
+            "Qwen-QwQ-32B": {
                 "input": 0.0,
                 "output": 0.0,
-                "source": "https://openrouter.ai/openai/gpt-oss-120b:free",
+                "source": "https://console.groq.com",
                 "accessed": "2026-04-25",
-                "note": "Free tier via OpenRouter",
+                "note": "Free tier via Groq",
             },
-            "MiniMax-M2.5": {
+            "Llama-4-Scout": {
                 "input": 0.0,
                 "output": 0.0,
-                "source": "https://openrouter.ai/minimax/minimax-m2.5:free",
+                "source": "https://console.groq.com",
                 "accessed": "2026-04-25",
-                "note": "Free tier via OpenRouter",
+                "note": "Free tier via Groq",
             },
-            "Devstral-2": {
+            "Mistral-Saba-24B": {
                 "input": 0.0,
                 "output": 0.0,
-                "source": "https://openrouter.ai/mistralai/devstral-2512:free",
+                "source": "https://console.groq.com",
                 "accessed": "2026-04-25",
-                "note": "Free tier via OpenRouter",
+                "note": "Free tier via Groq",
             },
         },
     }

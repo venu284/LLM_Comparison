@@ -9,10 +9,10 @@ from config import ModelConfig
 class LLMGatewayWarmupTests(unittest.IsolatedAsyncioTestCase):
     async def test_warmup_stops_repeating_a_model_after_rate_limit(self) -> None:
         model = ModelConfig(
-            name="Devstral-2",
-            model_id="openrouter/mistralai/devstral-2512:free",
-            provider="openrouter",
-            api_key_env="OPENROUTER_API_KEY",
+            name="Mistral-Saba-24B",
+            model_id="groq/mistral-saba-24b",
+            provider="groq",
+            api_key_env="GROQ_API_KEY",
         )
         gateway = LLMGateway(models=[model])
         calls = []
@@ -28,7 +28,7 @@ class LLMGatewayWarmupTests(unittest.IsolatedAsyncioTestCase):
                 tokens_input=0,
                 tokens_output=0,
                 success=False,
-                error_message="OpenRouter provider returned 429 rate-limited upstream",
+                error_message="Groq provider returned 429 rate limited",
             )
 
         gateway.query_single_with_retry = fake_query

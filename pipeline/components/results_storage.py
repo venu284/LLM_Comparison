@@ -122,16 +122,16 @@ class ResultsStorage:
         logger.info("Schema initialized")
 
     def seed_models(self) -> None:
-        """Insert OpenRouter model records. Idempotent."""
+        """Insert model records. Idempotent."""
         if not self.conn:
             raise RuntimeError("Database connection has not been established")
 
         models_data = [
-            ("Nemotron-3-Super", "openrouter/nvidia/nemotron-3-super-120b-a12b:free", "openrouter"),
-            ("GLM-4.5-Air", "openrouter/z-ai/glm-4.5-air:free", "openrouter"),
-            ("GPT-OSS-120B", "openrouter/openai/gpt-oss-120b:free", "openrouter"),
-            ("MiniMax-M2.5", "openrouter/minimax/minimax-m2.5:free", "openrouter"),
-            ("Devstral-2", "openrouter/mistralai/devstral-2512:free", "openrouter"),
+            ("Llama-3.3-70B", "groq/llama-3.3-70b-versatile", "groq"),
+            ("DeepSeek-R1-Distill-70B", "groq/deepseek-r1-distill-llama-70b", "groq"),
+            ("Qwen-QwQ-32B", "groq/qwen-qwq-32b", "groq"),
+            ("Llama-4-Scout", "groq/meta-llama/llama-4-scout-17b-16e-instruct", "groq"),
+            ("Mistral-Saba-24B", "groq/mistral-saba-24b", "groq"),
         ]
         with self.conn.cursor() as cursor:
             for name, model_id, provider in models_data:
@@ -190,6 +190,16 @@ class ResultsStorage:
         logger.info("Database setup complete")
 
     def save_run(self, result: RunResult) -> int:
+        if not self.conn or getattr(self.conn, "closed", False):
+            self.connect()
+        try:
+            return self._save_run_inner(result)
+        except psycopg2.OperationalError:
+            logger.warning("Database connection lost while saving run; reconnecting")
+            self.connect()
+            return self._save_run_inner(result)
+
+    def _save_run_inner(self, result: RunResult) -> int:
         if not self.conn:
             raise RuntimeError("Database connection has not been established")
 

@@ -1,7 +1,7 @@
 INSERT INTO models (name, model_id, provider) VALUES
-    ('Nemotron-3-Super', 'openrouter/nvidia/nemotron-3-super-120b-a12b:free', 'openrouter'),
-    ('GLM-4.5-Air', 'openrouter/z-ai/glm-4.5-air:free', 'openrouter'),
-    ('GPT-OSS-120B', 'openrouter/openai/gpt-oss-120b:free', 'openrouter'),
-    ('MiniMax-M2.5', 'openrouter/minimax/minimax-m2.5:free', 'openrouter'),
-    ('Devstral-2', 'openrouter/mistralai/devstral-2512:free', 'openrouter')
+    ('Llama-3.3-70B', 'groq/llama-3.3-70b-versatile', 'groq'),
+    ('DeepSeek-R1-Distill-70B', 'groq/deepseek-r1-distill-llama-70b', 'groq'),
+    ('Qwen-QwQ-32B', 'groq/qwen-qwq-32b', 'groq'),
+    ('Llama-4-Scout', 'groq/meta-llama/llama-4-scout-17b-16e-instruct', 'groq'),
+    ('Mistral-Saba-24B', 'groq/mistral-saba-24b', 'groq')
 ON CONFLICT (name) DO NOTHING;
