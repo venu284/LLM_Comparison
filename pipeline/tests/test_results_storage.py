@@ -35,10 +35,10 @@ from models.run_result import RunResult
 
 MODEL_SEEDS = [
     ("Llama-3.3-70B", "groq/llama-3.3-70b-versatile", "groq"),
-    ("DeepSeek-R1-Distill-70B", "groq/deepseek-r1-distill-llama-70b", "groq"),
-    ("Qwen-QwQ-32B", "groq/qwen-qwq-32b", "groq"),
     ("Llama-4-Scout", "groq/meta-llama/llama-4-scout-17b-16e-instruct", "groq"),
-    ("Mistral-Saba-24B", "groq/mistral-saba-24b", "groq"),
+    ("GPT-OSS-120B", "groq/openai/gpt-oss-120b", "groq"),
+    ("Qwen3-32B", "groq/qwen/qwen3-32b", "groq"),
+    ("Llama-3.1-8B", "groq/llama-3.1-8b-instant", "groq"),
 ]
 
 

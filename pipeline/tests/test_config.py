@@ -15,15 +15,15 @@ import config
 
 MODEL_CONFIGS = [
     ("Llama-3.3-70B", "groq/llama-3.3-70b-versatile", "groq", "GROQ_API_KEY"),
-    ("DeepSeek-R1-Distill-70B", "groq/deepseek-r1-distill-llama-70b", "groq", "GROQ_API_KEY"),
-    ("Qwen-QwQ-32B", "groq/qwen-qwq-32b", "groq", "GROQ_API_KEY"),
     (
         "Llama-4-Scout",
         "groq/meta-llama/llama-4-scout-17b-16e-instruct",
         "groq",
         "GROQ_API_KEY",
     ),
-    ("Mistral-Saba-24B", "groq/mistral-saba-24b", "groq", "GROQ_API_KEY"),
+    ("GPT-OSS-120B", "groq/openai/gpt-oss-120b", "groq", "GROQ_API_KEY"),
+    ("Qwen3-32B", "groq/qwen/qwen3-32b", "groq", "GROQ_API_KEY"),
+    ("Llama-3.1-8B", "groq/llama-3.1-8b-instant", "groq", "GROQ_API_KEY"),
 ]
 
 

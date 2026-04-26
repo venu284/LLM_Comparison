@@ -22,25 +22,25 @@ cost_rates:
     source: "https://console.groq.com"
     accessed: "2026-04-25"
     note: "Free tier via Groq"
-  DeepSeek-R1-Distill-70B:
-    input: 0.0
-    output: 0.0
-    source: "https://console.groq.com"
-    accessed: "2026-04-25"
-    note: "Free tier via Groq"
-  Qwen-QwQ-32B:
-    input: 0.0
-    output: 0.0
-    source: "https://console.groq.com"
-    accessed: "2026-04-25"
-    note: "Free tier via Groq"
   Llama-4-Scout:
     input: 0.0
     output: 0.0
     source: "https://console.groq.com"
     accessed: "2026-04-25"
     note: "Free tier via Groq"
-  Mistral-Saba-24B:
+  GPT-OSS-120B:
+    input: 0.0
+    output: 0.0
+    source: "https://console.groq.com"
+    accessed: "2026-04-25"
+    note: "Free tier via Groq"
+  Qwen3-32B:
+    input: 0.0
+    output: 0.0
+    source: "https://console.groq.com"
+    accessed: "2026-04-25"
+    note: "Free tier via Groq"
+  Llama-3.1-8B:
     input: 0.0
     output: 0.0
     source: "https://console.groq.com"

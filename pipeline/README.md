@@ -63,7 +63,7 @@ python scripts/warmup.py
 python run_eval.py --task FE-001 --runs 1 --no-db
 
 # Single task with selected models
-python run_eval.py --task FE-001 --models "Llama-3.3-70B" "DeepSeek-R1-Distill-70B" --runs 1 --no-db
+python run_eval.py --task FE-001 --models "Llama-3.3-70B" "GPT-OSS-120B" --runs 1 --no-db
 
 # Category batch
 python run_eval.py --category frontend --runs 3
@@ -87,8 +87,8 @@ python scripts/export_results.py --output exports/results.csv
 
 ```text
 Llama-3.3-70B
-DeepSeek-R1-Distill-70B
-Qwen-QwQ-32B
 Llama-4-Scout
-Mistral-Saba-24B
+GPT-OSS-120B
+Qwen3-32B
+Llama-3.1-8B
 ```

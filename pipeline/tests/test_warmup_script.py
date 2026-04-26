@@ -38,9 +38,9 @@ class WarmupScriptTests(unittest.TestCase):
         self.assertEqual(os.environ["GROQ_API_KEY"], "from-env-local")
 
     def test_parse_args_accepts_model_filter_and_request_count(self) -> None:
-        args = warmup.parse_args(["--models", "Mistral-Saba-24B", "--requests", "1"])
+        args = warmup.parse_args(["--models", "Llama-3.1-8B", "--requests", "1"])
 
-        self.assertEqual(args.models, ["Mistral-Saba-24B"])
+        self.assertEqual(args.models, ["Llama-3.1-8B"])
         self.assertEqual(args.requests, 1)
 
 

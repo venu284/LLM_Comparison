@@ -9,8 +9,8 @@ from config import ModelConfig
 class LLMGatewayWarmupTests(unittest.IsolatedAsyncioTestCase):
     async def test_warmup_stops_repeating_a_model_after_rate_limit(self) -> None:
         model = ModelConfig(
-            name="Mistral-Saba-24B",
-            model_id="groq/mistral-saba-24b",
+            name="Llama-3.1-8B",
+            model_id="groq/llama-3.1-8b-instant",
             provider="groq",
             api_key_env="GROQ_API_KEY",
         )
