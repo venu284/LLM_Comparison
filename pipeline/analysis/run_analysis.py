@@ -29,8 +29,13 @@ PIPELINE_DIR = Path(__file__).resolve().parent.parent
 if str(PIPELINE_DIR) not in sys.path:
     sys.path.insert(0, str(PIPELINE_DIR))
 
+from analysis import figures  # noqa: E402
 from analysis.data import load_experiment_data  # noqa: E402
 from analysis.recommender import (  # noqa: E402
+    DEFAULT_WEIGHTS,
+    Recommender,
+    build_profiles,
+    classify_prompt,
     evaluate_classifier,
     load_benchmark_prompts,
 )
@@ -73,6 +78,62 @@ def _jsonable(value: Any) -> Any:
     if isinstance(value, float) and np.isnan(value):
         return None
     return value
+
+
+HOLDOUT_PROMPTS = [
+    ("Create a searchable dropdown that filters options as the user types", "frontend"),
+    ("Add rate limiting middleware to my Express server", "api"),
+    ("Make this three column grid collapse to one column on tablets", "css"),
+    ("Add generics to this reusable list so it keeps element types", "typescript"),
+    ("The submit handler fires twice on every click, sort it out", "bugfix"),
+    ("Users report the cart total is off by one cent sometimes", "bugfix"),
+    ("Convert these prop types to a strict interface", "typescript"),
+    ("Build a sticky footer that stays at the bottom on short pages", "css"),
+    ("Pagination returns duplicate records on page two", "bugfix"),
+    ("Implement a modal with focus trapping and escape to close", "frontend"),
+]
+
+
+def holdout_classifier_accuracy() -> float:
+    """Classifier accuracy on paraphrases written outside the benchmark template.
+
+    The 100% figure on benchmark prompts is inflated by their shared template;
+    this is the number that reflects deployment.
+    """
+    correct = sum(1 for prompt, expected in HOLDOUT_PROMPTS if classify_prompt(prompt) == expected)
+    return correct / len(HOLDOUT_PROMPTS)
+
+
+def score_decomposition(data, prompts: pd.DataFrame, weights: Dict[str, float]) -> pd.DataFrame:
+    """Mean weighted contribution of each scoring term, per model.
+
+    Averaged over all 65 tasks using each task's real category and difficulty,
+    so the picture reflects the benchmark rather than one hand-picked task.
+    """
+    profiles = build_profiles(data.runs)
+    recommender = Recommender(profiles, weights)
+    metadata = data.task_metadata()
+    prompt_lookup = dict(zip(prompts["task_id"], prompts["prompt"]))
+
+    totals: Dict[str, List[Dict[str, float]]] = {name: [] for name in profiles}
+    for task_id in data.task_ids:
+        difficulty = str(metadata.loc[task_id, "difficulty"])
+        category = (
+            classify_prompt(prompt_lookup[task_id])
+            if task_id in prompt_lookup
+            else str(metadata.loc[task_id, "category"])
+        )
+        for name in profiles:
+            totals[name].append(recommender.score(name, category, difficulty).components)
+
+    rows = {}
+    for name, records in totals.items():
+        frame = pd.DataFrame(records)
+        rows[name] = frame.mean().to_dict()
+
+    frame = pd.DataFrame(rows).T
+    frame["total"] = frame.sum(axis=1)
+    return frame
 
 
 def chart_strategy_comparison(scores: Dict[str, float], output: Path) -> None:
@@ -265,12 +326,55 @@ def main() -> None:
     logger.info("Wrote %s", output_path)
 
     if not args.no_charts:
-        chart_strategy_comparison(validation.strategy_scores, charts_dir / "phase6_01_strategies.png")
-        chart_mcnemar(stats_report, charts_dir / "phase6_02_mcnemar.png")
-        chart_sensitivity(
-            data.overall_pass_rates(), filtered_summary, charts_dir / "phase6_03_zero_test_sensitivity.png"
+        accuracy_weights = {"category": 1.0, "difficulty": 0.0, "latency": 0.0, "tokens": 0.0}
+        framework_terms = score_decomposition(data, prompts, DEFAULT_WEIGHTS)
+        accuracy_terms = score_decomposition(data, prompts, accuracy_weights)
+        holdout = holdout_classifier_accuracy()
+
+        payload["classifier"]["holdout_accuracy"] = holdout
+        payload["classifier"]["holdout_n"] = len(HOLDOUT_PROMPTS)
+        payload["score_decomposition"] = _jsonable(framework_terms)
+
+        synthetic_path = analysis_dir / "phase7_synthetic.json"
+        synthetic = None
+        if synthetic_path.exists():
+            with open(synthetic_path, "r", encoding="utf-8") as handle:
+                synthetic = json.load(handle)
+
+        figures.figure_formula_anatomy(charts_dir / "fig1_formula.png", DEFAULT_WEIGHTS)
+        figures.figure_score_decomposition(
+            charts_dir / "fig2_score_decomposition.png", framework_terms, accuracy_terms
         )
-        logger.info("Wrote 3 charts to %s", charts_dir)
+        figures.figure_headroom(charts_dir / "fig3_headroom.png", validation.strategy_scores)
+        figures.figure_per_category(charts_dir / "fig4_per_category.png", validation.per_category)
+        figures.figure_weight_sensitivity(charts_dir / "fig5_weight_sensitivity.png", sensitivity_grid)
+        figures.figure_mcnemar(
+            charts_dir / "fig6_mcnemar.png", _jsonable(stats_report.mcnemar)
+        )
+        figures.figure_classifier_pipeline(
+            charts_dir / "fig7_classifier.png", classifier["accuracy"], holdout
+        )
+        figures.figure_zero_test(
+            charts_dir / "fig8_zero_test.png", data.overall_pass_rates(), filtered_summary
+        )
+        written = 8
+
+        if synthetic:
+            figures.figure_bradley_terry(
+                charts_dir / "fig9_bradley_terry.png", synthetic["ranking"]
+            )
+            written += 1
+        else:
+            logger.warning(
+                "Skipped the Bradley-Terry figure: run human_eval/run_synthetic.py "
+                "--output exports/analysis/phase7_synthetic.json first"
+            )
+
+        # Rewrite with the classifier holdout figure and decomposition included.
+        with open(output_path, "w", encoding="utf-8") as handle:
+            json.dump(payload, handle, indent=2)
+
+        logger.info("Wrote %s figures to %s", written, charts_dir)
 
     scores = validation.strategy_scores
     logger.info("\n%s", "=" * 62)

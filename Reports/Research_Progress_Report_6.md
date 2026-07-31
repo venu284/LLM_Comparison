@@ -97,6 +97,13 @@ with the pre-registered defaults w1 = 0.5, w2 = 0.2, w3 = 0.15, w4 = 0.15.
 Latency and token terms are normalized by dividing by the best value across
 models, so the fastest model scores 1.0 and the terms are unit-free.
 
+![The recommendation scoring formula](figures/fig1_formula.png)
+
+**Figure 1.** The scoring formula and its four weighted terms. Seventy percent of
+the score rewards accuracy and thirty percent rewards speed and brevity — a
+split fixed in Phase 2 before any data existed. Section 3.6 shows that this
+split is what makes the algorithm underperform.
+
 **Stage 1 — task classification.** Rule-based keyword matching. An early version
 counted keyword hits across all five categories at once and classified only 8%
 of bug-fix tasks correctly: a bug-fix prompt embeds the broken React or Express
@@ -108,6 +115,11 @@ the 65 benchmark prompts.
 
 **Stage 2 — profile lookup and scoring.** Per-model empirical profiles built
 from training data only, then scored and ranked.
+
+![Two-stage task classifier](figures/fig7_classifier.png)
+
+**Figure 2.** The two-stage classifier. Testing repair intent before language
+keywords is what lifts bug-fix classification from 8% to 100%.
 
 ### 2.3 Validation Design (Phase 6 — Complete)
 
@@ -198,6 +210,10 @@ category only the Bug Fixing effect is statistically distinguishable from noise.
 | Llama-3.1-8B | Llama-4-Scout | 2 | 6 | 0.5781 | no |
 | Llama-3.3-70B | Llama-4-Scout | 5 | 4 | 1.0000 | no |
 
+![Pairwise McNemar tests](figures/fig6_mcnemar.png)
+
+**Figure 3.** Holm-adjusted p-values for all ten pairwise comparisons.
+
 Five of ten pairs are significant, and four of those five involve Qwen3-32B.
 **The top three models are statistically indistinguishable from one another.**
 
@@ -218,7 +234,8 @@ matches easily. Tested on ten freshly written paraphrases in natural developer
 phrasing, accuracy was **80%**. Both failures were bug reports lacking any
 explicit repair verb — "the submit handler fires twice on every click, sort it
 out" and "users report the cart total is off by one cent sometimes". Realistic
-classifier accuracy is therefore closer to 80% than 100%.
+classifier accuracy is therefore closer to 80% than 100%. Both figures are shown
+on Figure 2.
 
 ### 3.6 Recommendation Algorithm Validation (RQ3, H4)
 
@@ -233,6 +250,12 @@ Leave-one-task-out over 65 tasks:
 
 Improvement over best single model: **−31.4%**. Bootstrap 95% CI on the
 difference: [−27.7, −7.7] percentage points, p = 0.0004. **H4 is not supported.**
+
+![Routing strategies and the available headroom](figures/fig3_headroom.png)
+
+**Figure 4.** The four strategies under leave-one-task-out cross-validation. The
+red rule marks the level H4 required; it sits *above* the oracle, so no routing
+algorithm could have reached it on this model set.
 
 **The headroom result is the more important finding.** Oracle 58.5% against
 best-single 53.8% means the maximum improvement available to any router is
@@ -251,6 +274,26 @@ Per category:
 | CSS | 30.8% | 46.2% | 36.9% | 53.8% |
 | Frontend | 23.1% | 30.8% | 24.6% | 38.5% |
 
+![Strategies by category](figures/fig4_per_category.png)
+
+**Figure 5.** Where the best-single and oracle bars are equal — REST API and Bug
+Fixing — a single model already achieves everything routing could achieve.
+
+#### Why the algorithm selects the wrong model
+
+Decomposing the score into its four weighted terms shows where the loss comes
+from. GPT-OSS-120B contributes the largest accuracy term of any model and still
+places fourth on total score, because it is the slowest and most verbose of the
+four competitive models.
+
+![Score decomposition under two weightings](figures/fig2_score_decomposition.png)
+
+**Figure 6.** Mean weighted contribution per term across all 65 tasks. Under the
+framework weights (left) the speed and brevity terms decide the outcome and a
+mid-tier model is selected; removing them (right) selects the most accurate
+model. The top two totals on the left differ by 0.0005, so the formula barely
+discriminates between them.
+
 ### 3.7 Weight Sensitivity
 
 | w1 (cat) | w2 (diff) | w3 (lat) | w4 (tok) | Recommender | vs baseline |
@@ -264,6 +307,11 @@ Per category:
 The result is driven entirely by the speed and efficiency terms. Any weighting
 that includes them underperforms; pure category weighting ties the baseline. No
 weighting tested beats it.
+
+![Weight sensitivity](figures/fig5_weight_sensitivity.png)
+
+**Figure 7.** Every weighting tested against the single-model baseline. Only pure
+category weighting reaches it, and none exceeds it.
 
 The weights were fixed in Phase 2 before data existed, and they were not tuned
 after the fact to rescue H4. This table is reported as a sensitivity analysis,
@@ -292,6 +340,11 @@ of Qwen3-32B's 65 attempts, leaving badly unequal denominators:
 | Llama-3.1-8B | 24 / 54 | 44.4% |
 | Qwen3-32B | 8 / 25 | 32.0% |
 
+![Zero-test sensitivity](figures/fig8_zero_test.png)
+
+**Figure 8.** Pass rates under both treatments, with the surviving attempt count
+printed inside each orange bar. Qwen3-32B retains only 25 of its 65 attempts.
+
 So the p-value moved partly because the association genuinely weakened and
 partly because most of one arm's data was deleted. **Neither treatment is
 correct.** Scoring a harness failure as a model failure is wrong when the
@@ -319,6 +372,12 @@ Bradley-Terry fitted to 1,200 generated votes converged in 20 iterations:
 | Llama-4-Scout | 1012.2 | [986, 1035] | 43.1% |
 | Llama-3.1-8B | 1003.7 | [980, 1027] | 36.9% |
 | Qwen3-32B | 928.1 | [901, 954] | 12.3% |
+
+![Synthetic Bradley-Terry ratings](figures/fig9_bradley_terry.png)
+
+**Figure 9.** Fitted ratings with bootstrap 95% intervals, beside each model's
+automated pass rate. Every interval except Qwen3-32B's overlaps at least one
+other, which is the expected shape at this vote count. **Synthetic data.**
 
 Estimator check: Spearman ρ = 1.000 between fitted ratings and observed win
 rates, confirming the fit reproduces the ordering in the votes it was given.
