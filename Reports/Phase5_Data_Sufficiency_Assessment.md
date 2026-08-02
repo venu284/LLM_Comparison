@@ -203,18 +203,27 @@ in the numbers reported above.
 `validate.py` scores **top-1**, and at line 103 it reads each task's **true
 difficulty label** from the benchmark metadata. A user typing a prompt supplies
 neither. The live entry point, `Recommender.recommend_for_prompt`, hardcodes
-`difficulty="medium"` and returns one model. Measured under actual deployment
-conditions:
+`difficulty="medium"` and returns one model.
 
-| Strategy | Coverage of 65 tasks |
-|---|---:|
-| Oracle (any of the 5) | 58.5% |
-| **Best fixed pair — GPT-OSS-120B + Llama-4-Scout** | **58.5%** |
-| Best fixed single — GPT-OSS-120B | 53.8% |
-| Router top-2, true difficulty | 49.2% |
-| Router top-2, `difficulty="medium"` (**as deployed**) | 46.2% |
-| Router top-1, true difficulty (the reported 36.9%) | 36.9% |
-| Router top-1, `difficulty="medium"` (**as deployed**) | 35.4% |
+Both fixed baselines below are **refit inside each fold** — the best single
+model and the best pair are chosen from the other 64 tasks and then scored on
+the held-out one — so no strategy in the table enjoys an information advantage
+over another. This mirrors what `validate.py:114-115` already does for the
+single-model baseline. Measured under actual deployment conditions:
+
+| Strategy | Coverage of 65 tasks | Provenance |
+|---|---:|---|
+| Oracle (any of the 5) | 58.5% | bound, not a strategy |
+| **Best fixed pair — GPT-OSS-120B + Llama-4-Scout** | **58.5%** | LOOCV, refit per fold |
+| Best fixed single — GPT-OSS-120B | 53.8% | LOOCV, refit per fold |
+| Router top-2, true difficulty | 49.2% | LOOCV |
+| Router top-2, `difficulty="medium"` (**as deployed**) | 46.2% | LOOCV |
+| Router top-1, true difficulty (the reported 36.9%) | 36.9% | LOOCV |
+| Router top-1, `difficulty="medium"` (**as deployed**) | 35.4% | LOOCV |
+
+All 65 folds select the same pair (GPT-OSS-120B + Llama-4-Scout) and the same
+single model (GPT-OSS-120B), so the baselines are stable rather than
+fold-dependent.
 
 ### 4a.2 For a two-response product, routing headroom is zero, not +8.6%
 
@@ -246,7 +255,23 @@ pre-registered weights spend 30% of the score on exactly those two properties.
 The efficiency terms are not a tie-breaker here; they are decisive, and they
 select against accuracy.
 
-### 4a.4 What this means for Phases 6 and 8
+### 4a.4 The code gap, concretely
+
+Three things the application needs that do not exist yet:
+
+- **No top-k path.** `Recommender.recommend_for_prompt` returns
+  `Tuple[str, str]` — one model name plus the inferred category. `rank()` already
+  produces the full ordering, so exposing top-k is small, but nothing calls it.
+- **No difficulty estimator.** Difficulty is an input to the scoring formula
+  (w₂ = 0.2) with no way to obtain it at runtime. Validation reads the ground
+  truth label; the live path hardcodes `"medium"`. This is the largest missing
+  piece, because difficulty is the strongest signal in the data.
+- **No serving layer.** The recommender selects a model but nothing calls that
+  model. Phase 5's `run_eval.py` invokes models via LiteLLM for the benchmark;
+  the application needs an equivalent path for live prompts, returning both
+  responses.
+
+### 4a.5 What this means for Phases 6 and 8
 
 The Phase 6 *finding* is unchanged and still correct — it is now simply much
 sharper. What it says is that **model selection is the wrong axis for this
@@ -255,6 +280,10 @@ one-response design it was tested under.
 
 That does not leave the application with nothing to do. Three framings the data
 does support, in order of how well it supports them:
+
+These are **proposals, not measured results.** Each follows from the data above,
+but none has been validated the way H4 was; the first in particular needs its own
+LOOCV before it appears in the thesis as anything more than a design direction.
 
 1. **Ship the static pair and route on the second slot only.** GPT-OSS-120B is
    always one of the two answers; the algorithm chooses the *companion* — fast

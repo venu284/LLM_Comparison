@@ -314,6 +314,18 @@ mid-tier model is selected; removing them (right) selects the most accurate
 model. The top two totals on the left differ by 0.0005, so the formula barely
 discriminates between them.
 
+#### Scope note: this validation is top-1, and it is given the true difficulty
+
+Everything in §3.6 measures a **top-1** recommender that receives each task's
+ground-truth difficulty label. The Phase 8 application is a **top-2** router that
+must infer difficulty from free text — `recommend_for_prompt` currently hardcodes
+`difficulty="medium"` — so these numbers do not describe the deployed pipeline.
+Measured under deployment conditions the router returns 46.2% top-2 coverage
+against 58.5% for a static GPT-OSS-120B + Llama-4-Scout pair, which reaches the
+oracle exactly. For a two-response product the routing headroom is therefore
+**zero**, not +8.6%. Full analysis, with all baselines refit per fold, is in
+`Reports/Phase5_Data_Sufficiency_Assessment.md` §4a.
+
 ### 3.7 Weight Sensitivity
 
 | w1 (cat) | w2 (diff) | w3 (lat) | w4 (tok) | Recommender | vs baseline |
