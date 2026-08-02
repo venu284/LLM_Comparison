@@ -190,6 +190,95 @@ claim is *probably* directionally right, but it has not been shown.
 
 ---
 
+## 4a. Addendum: the algorithm as a live top-2 router
+
+Added after the intended deployment was clarified: the algorithm is not only an
+offline routing experiment. It is the runtime component of the Phase 8
+application — it takes free-text user input, classifies it, and returns **two**
+models' responses by default. Three things follow, and none of them are visible
+in the numbers reported above.
+
+### 4a.1 The validated number does not describe the deployed pipeline
+
+`validate.py` scores **top-1**, and at line 103 it reads each task's **true
+difficulty label** from the benchmark metadata. A user typing a prompt supplies
+neither. The live entry point, `Recommender.recommend_for_prompt`, hardcodes
+`difficulty="medium"` and returns one model. Measured under actual deployment
+conditions:
+
+| Strategy | Coverage of 65 tasks |
+|---|---:|
+| Oracle (any of the 5) | 58.5% |
+| **Best fixed pair — GPT-OSS-120B + Llama-4-Scout** | **58.5%** |
+| Best fixed single — GPT-OSS-120B | 53.8% |
+| Router top-2, true difficulty | 49.2% |
+| Router top-2, `difficulty="medium"` (**as deployed**) | 46.2% |
+| Router top-1, true difficulty (the reported 36.9%) | 36.9% |
+| Router top-1, `difficulty="medium"` (**as deployed**) | 35.4% |
+
+### 4a.2 For a two-response product, routing headroom is zero, not +8.6%
+
+A static pair of GPT-OSS-120B and Llama-4-Scout **reaches the oracle exactly**.
+Those two models between them solve every one of the 38 tasks that any of the
+five can solve. Once the product returns two answers, there is no correctness
+left for a router to win — not 8.6%, nothing. Every fixed pair containing
+GPT-OSS-120B scores 55.4–58.5%; every pair without it scores 38.5–50.8%.
+
+The current router returns Llama-3.1-8B + Llama-3.3-70B on 47 of 65 tasks, and
+that pair covers 46.2%. **The shipped algorithm would be 12.3 points worse than
+hardcoding two models.**
+
+### 4a.3 Why: the router ranks the best model fourth
+
+Score components for a frontend/medium task, weights as pre-registered:
+
+| Model | Total | Category | Difficulty | Latency | Tokens | Actual pass rate |
+|---|---:|---:|---:|---:|---:|---:|
+| Llama-4-Scout | 0.487 | 0.192 | 0.070 | 0.088 | 0.136 | 43.1% |
+| Llama-3.1-8B | 0.471 | 0.115 | 0.060 | 0.150 | 0.146 | 36.9% |
+| Llama-3.3-70B | 0.418 | 0.115 | 0.060 | 0.092 | 0.150 | 44.6% |
+| **GPT-OSS-120B** | **0.342** | 0.154 | 0.070 | 0.060 | 0.058 | **53.8%** |
+| Qwen3-32B | 0.089 | 0.038 | 0.020 | 0.015 | 0.016 | 12.3% |
+
+The most accurate model ranks **fourth of five**. It is slow (1,518 ms against
+Llama-3.1-8B's 606 ms) and verbose (640 output tokens against 247), and the
+pre-registered weights spend 30% of the score on exactly those two properties.
+The efficiency terms are not a tie-breaker here; they are decisive, and they
+select against accuracy.
+
+### 4a.4 What this means for Phases 6 and 8
+
+The Phase 6 *finding* is unchanged and still correct — it is now simply much
+sharper. What it says is that **model selection is the wrong axis for this
+product**, and the evidence is stronger for the two-response design than for the
+one-response design it was tested under.
+
+That does not leave the application with nothing to do. Three framings the data
+does support, in order of how well it supports them:
+
+1. **Ship the static pair and route on the second slot only.** GPT-OSS-120B is
+   always one of the two answers; the algorithm chooses the *companion* — fast
+   and terse when the request looks simple or latency-sensitive, a second strong
+   model when it looks hard. Correctness is protected by construction, and the
+   algorithm governs the trade-off it can actually measure.
+2. **Difficulty-aware escalation.** Difficulty is the dominant signal in the data
+   (Cramér's V 0.515 against 0.288 for model identity), and it is the one thing
+   the current classifier does not estimate — it is passed in from ground truth
+   during validation and hardcoded to `"medium"` at runtime. A difficulty
+   estimator on the prompt is the single highest-value addition to the algorithm.
+3. **Report the efficiency trade-off explicitly to the user** rather than folding
+   it into a hidden weighted score. The 30% efficiency weight is a product
+   decision disguised as an algorithmic one; surfacing "this one is 2.5× faster
+   and 60% shorter, this one is 17 points more accurate" is both more honest and
+   more useful than silently preferring the fast model.
+
+**Do not fix this by re-tuning the weights.** They were pre-registered in Phase 2
+before data existed, and the weight-sensitivity grid is a sensitivity analysis,
+not a search for a passing configuration. If a runtime profile is introduced for
+the application, it must be reported separately from the pre-registered result.
+
+---
+
 ## 5. What changed in the repository today
 
 | File | Change |
