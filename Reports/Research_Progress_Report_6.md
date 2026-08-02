@@ -65,12 +65,13 @@ only and are not evidence for H3.
 
 ### 2.1 Analysis Module (Phase 6 — Complete)
 
-A new module, `pipeline/analysis/`, was built with five components:
+A new module, `pipeline/analysis/`, was built with six components:
 
 | File | Purpose |
 |---|---|
-| `data.py` | Single loading path for Phase 5 results; PostgreSQL with CSV fallback |
+| `data.py` | Single loading path for Phase 5 results; PostgreSQL with CSV fallback; the three zero-test treatments |
 | `stats.py` | Chi-squared, Cramér's V, Spearman, McNemar, Holm correction |
+| `failure_taxonomy.py` | Reconstructs the failure taxonomy `failure_mode` never recorded (§3.8) |
 | `recommender.py` | Two-stage task classifier and weighted scoring algorithm |
 | `validate.py` | Leave-one-task-out cross-validation against three baselines |
 | `run_analysis.py` | Orchestrator; writes JSON results and charts |
@@ -139,6 +140,7 @@ A new top-level module, `human_eval/`:
 | File | Purpose |
 |---|---|
 | `app.py` | Blind side-by-side voting interface |
+| `sampler.py` | Comparison scheduler: anchor set, coverage balancing, per-evaluator de-duplication |
 | `bradley_terry.py` | Maximum-likelihood Bradley-Terry fit with bootstrap intervals |
 | `synthetic_votes.py` | Vote generator for pipeline validation |
 | `run_synthetic.py` | End-to-end runner |
@@ -152,6 +154,24 @@ No schema change was needed; the `human_votes` table has been in
 opaque comparison id to the two models and resolves it only when the vote is
 posted, so identity cannot be read from the page source. Left/right assignment
 is randomized per comparison.
+
+**Comparison selection.** A comparison cell is one task and one unordered model
+pair; 65 tasks give 646 cells, four short of 650 because one run produced no
+extractable code. Cells are not drawn uniformly. Uniform draw would give an
+evaluator completing the protocol's 80 comparisons a ≈ 0.99 chance of rating the
+same cell twice — which Krippendorff's α counts as two coders — and would leave
+cross-evaluator overlap, the basis α is computed on, entirely to chance. The
+scheduler instead rates a fixed 20-cell anchor set with every evaluator, sends
+the remaining comparisons to the least-observed cell, and never re-offers a cell
+to someone who has already rated it. A 10-evaluator, 800-vote simulation lands
+76–83 votes on each of the 10 model pairs against a target of 80.
+
+Tasks that no model solved are kept in the pool rather than filtered out;
+excluding them would bias H3 upward by only asking about work the models can do.
+Each comparison instead carries an outcome stratum, which shows that roughly half
+of all comparisons pair two solutions that both failed their tests. PROTOCOL.md
+§6.2 therefore requires Spearman ρ on the passing subset alongside the overall
+figure.
 
 **Implementation note.** The Phase 2 framework named FastAPI for the backend.
 The voting interface is built on the Python standard library instead. It is a
@@ -322,17 +342,20 @@ not as a search for a passing configuration.
 Phase 5 scored 63 of 325 runs as failures despite the Docker harness reporting
 no test count at all. Re-running the analysis with those runs excluded:
 
+The two obvious treatments disagree:
+
 | Treatment | n | Overall χ² p | Cramér's V |
 |---|---:|---:|---:|
 | All runs (as published) | 325 | 1.9 × 10⁻⁵ | 0.288 |
-| Zero-test runs dropped | 262 | 0.369 | 0.128 |
+| All zero-test runs dropped | 262 | 0.369 | 0.128 |
 
-**The overall model effect loses significance under the alternative treatment.**
+Neither is defensible on its own. Scoring a harness failure as a model failure
+is wrong when the harness was at fault; dropping the run is wrong when the model
+emitted code so broken that no test could run. Worse, dropping removes 40 of
+Qwen3-32B's 65 attempts, so the p-value moves partly because the association
+weakened and partly because most of one arm's data was deleted:
 
-This must be read carefully in both directions. Dropping those runs removes 40
-of Qwen3-32B's 65 attempts, leaving badly unequal denominators:
-
-| Model | Passes / attempts (filtered) | Rate |
+| Model | Passes / attempts (all dropped) | Rate |
 |---|---:|---:|
 | GPT-OSS-120B | 35 / 63 | 55.6% |
 | Llama-3.3-70B | 29 / 60 | 48.3% |
@@ -340,23 +363,62 @@ of Qwen3-32B's 65 attempts, leaving badly unequal denominators:
 | Llama-3.1-8B | 24 / 54 | 44.4% |
 | Qwen3-32B | 8 / 25 | 32.0% |
 
+Choosing between them requires knowing *why* each run reported no tests, which
+is what `failure_mode` was designed to capture and never recorded.
+
+#### A reconstructed taxonomy, and a third treatment
+
+`failure_mode` cannot be recovered, but most of what it would have held can be
+derived from columns that *were* recorded. `pipeline/analysis/failure_taxonomy.py`
+classifies each run from `tests_total`, `tokens_output` and `extraction_success`.
+Of the 63 zero-test runs:
+
+| Cause | Runs | Basis |
+|---|---:|---|
+| Defective task | 10 | API-013 and CSS-012 returned zero tests for *every* model |
+| Truncated output | 10 | Hit the 4,096-token ceiling; all Qwen3-32B |
+| Cause not recoverable | 43 | A harness crash and non-compiling code are indistinguishable in the stored columns |
+
+![Zero-test failure taxonomy](figures/fig10_failure_taxonomy.png)
+
+**Figure 10.** What explains each model's zero-test runs. The gray segment is
+deliberately uncolored: it is missing information, not a diagnosed category.
+Qwen3-32B is the only model that ever hit the token ceiling.
+
+This is a derived view computed at analysis time. **Nothing is written back to
+the `runs` table** — repairing the Phase 5 rows would invalidate comparison with
+the already-published numbers.
+
+The taxonomy supports a third treatment: drop only the 20 rows whose cause is
+provably not the model's competence, and keep the 43 undiagnosed ones as
+failures.
+
+| Treatment | n | Overall χ² p | Cramér's V | Attempts per model |
+|---|---:|---:|---:|---|
+| All runs (as published) | 325 | 1.9 × 10⁻⁵ | 0.288 | 65 / 65 / 65 / 65 / 65 |
+| **Only artifactual dropped** | **305** | **2.6 × 10⁻⁴** | **0.265** | **63 / 63 / 63 / 63 / 53** |
+| All zero-test runs dropped | 262 | 0.369 | 0.128 | 63 / 60 / 60 / 54 / 25 |
+
 ![Zero-test sensitivity](figures/fig8_zero_test.png)
 
-**Figure 8.** Pass rates under both treatments, with the surviving attempt count
-printed inside each orange bar. Qwen3-32B retains only 25 of its 65 attempts.
+**Figure 8.** Pass rates under all three treatments, with each model's surviving
+attempt count printed inside its bar.
 
-So the p-value moved partly because the association genuinely weakened and
-partly because most of one arm's data was deleted. **Neither treatment is
-correct.** Scoring a harness failure as a model failure is wrong when the
-harness was at fault; dropping it is wrong when the model emitted code so broken
-that no test could run. The honest conclusion is that the published Phase 5
-result is **not robust to a defensible alternative treatment**, and resolving
-this requires the failure taxonomy that `failure_mode` was designed to capture
-but never recorded.
+**The model effect survives the defensible exclusion and collapses only under
+the indefensible one.** Under the middle treatment the denominators stay
+comparable — Qwen3-32B retains 53 of 65 rather than 25 — and the effect holds at
+p = 2.6 × 10⁻⁴. The loss of significance in the third row is substantially an
+artefact of deleting four-fifths of one model's hardest runs, which lifts its
+rate from 12.3% to 32.0%.
 
-Because the filtered dataset is no longer a complete task × model grid, paired
-statistics on it are undefined. McNemar and the LOOCV validation refuse to run
-against it rather than silently treating missing cells as failures.
+This does not make the published number airtight, and the report does not claim
+it does: 43 runs remain undiagnosed, and their true classification could move the
+estimate in either direction. What has changed is that the headline result no
+longer rests on an arbitrary choice between two extremes.
+
+Because both filtered datasets are no longer a complete task × model grid,
+paired statistics on them are undefined. McNemar and the LOOCV validation refuse
+to run against them rather than silently treating missing cells as failures.
 
 ### 3.9 Phase 7 Synthetic Pilot
 
@@ -492,14 +554,23 @@ extremes reliably, 800 for roughly ±30 rating points per model.
 
 ### Immediate next steps
 
+Whether to re-collect the benchmark data with a stronger model set before
+continuing is assessed separately in
+`Reports/Phase5_Data_Sufficiency_Assessment.md`. Its conclusion is to proceed on
+the current data: the five models' success profiles are near-nested, so stronger
+models would deepen the nesting that already caps any router at +8.6%. Repeated
+runs and a raised token ceiling are the changes worth making, and they belong
+after Phase 7.
+
 1. **Recruit evaluators and collect human votes.** Everything needed is built.
    Target 800 votes from 8–12 evaluators. Synthetic votes must be cleared first
    (`python run_synthetic.py --clear`).
 
-2. **Resolve the zero-test rows.** This now blocks a clean thesis claim. Two
-   parts: confirm whether API-013 and CSS-012 are defective tasks by running them
-   against their reference solutions in Docker, and populate `failure_mode` so
-   harness failures can be separated from model failures.
+2. **Finish resolving the zero-test rows.** The derived taxonomy (§3.8) accounts
+   for 20 of the 63; 43 remain undiagnosed. Two parts left: confirm whether
+   API-013 and CSS-012 are defective tasks by running them against their
+   reference solutions in Docker, and populate `failure_mode` at write time on
+   any future run, so the taxonomy is recorded rather than reconstructed.
 
 3. **Re-run Qwen3-32B at a higher token limit.** Thirteen of its 65 runs hit the
    4,096-token ceiling and ten of those produced no test count. Until this is
@@ -527,8 +598,12 @@ categories.
 **New to this phase:**
 
 - **Zero-test treatment.** The central RQ1 result is significant under the
-  published treatment and not significant when the 63 zero-test runs are
-  dropped. Unresolved, and the most serious threat in the project.
+  published treatment (p = 1.9 × 10⁻⁵) and under the reconstructed taxonomy's
+  middle treatment (p = 2.6 × 10⁻⁴), and not significant when all 63 zero-test
+  runs are dropped (p = 0.37). The middle treatment is the one whose exclusions
+  can each be justified individually, so the result stands — but 43 of the 63
+  runs remain undiagnosed, and a classification of those that ran against the
+  effect could still move it. Section 3.8.
 
 - **Statistical power.** At 65 observations per category, only a large effect is
   detectable. The four non-significant category results are consistent with

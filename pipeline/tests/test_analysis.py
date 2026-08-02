@@ -20,6 +20,7 @@ PIPELINE_DIR = Path(__file__).resolve().parent.parent
 if str(PIPELINE_DIR) not in sys.path:
     sys.path.insert(0, str(PIPELINE_DIR))
 
+from analysis import failure_taxonomy  # noqa: E402
 from analysis.recommender import (  # noqa: E402
     DEFAULT_WEIGHTS,
     Recommender,
@@ -142,6 +143,98 @@ class TestClassifier:
         assert classify_prompt("") in {
             "frontend", "api", "css", "typescript", "bugfix",
         }
+
+
+class TestFailureTaxonomy:
+    """Known-answer frames, one per label, plus the precedence between them."""
+
+    @staticmethod
+    def _row(task_id, model, *, passed=False, tests_total=5, tokens=500, extracted=True):
+        return {
+            "task_id": task_id,
+            "model_name": model,
+            "pass_fail": passed,
+            "tests_total": tests_total,
+            "tokens_output": tokens,
+            "extraction_success": extracted,
+        }
+
+    def _frame(self, rows):
+        return pd.DataFrame(rows)
+
+    def test_passing_and_failing_runs_with_tests(self):
+        frame = self._frame([
+            self._row("T-001", "A", passed=True),
+            self._row("T-001", "B", passed=False),
+        ])
+        labels = failure_taxonomy.classify(frame, max_tokens=4096)
+        assert list(labels) == [failure_taxonomy.PASSED, failure_taxonomy.TESTS_FAILED]
+
+    def test_a_task_no_model_ran_a_test_on_is_called_defective(self):
+        frame = self._frame([
+            self._row("T-001", "A", tests_total=0),
+            self._row("T-001", "B", tests_total=0),
+            self._row("T-002", "A", tests_total=0),
+            self._row("T-002", "B", passed=True),
+        ])
+        labels = failure_taxonomy.classify(frame, max_tokens=4096)
+        assert list(labels[:2]) == [failure_taxonomy.DEFECTIVE_TASK] * 2
+        # T-002 had a model run tests, so its zero-test row is not the task's fault.
+        assert labels.iloc[2] == failure_taxonomy.NO_TESTS_RUN
+
+    def test_hitting_the_token_ceiling_is_truncation(self):
+        frame = self._frame([
+            self._row("T-001", "A", tests_total=0, tokens=4096),
+            self._row("T-001", "B", passed=True),
+        ])
+        labels = failure_taxonomy.classify(frame, max_tokens=4096)
+        assert labels.iloc[0] == failure_taxonomy.TRUNCATED_OUTPUT
+
+    def test_a_defective_task_outranks_truncation(self):
+        """Both are true of the row; the task explains it regardless."""
+        frame = self._frame([
+            self._row("T-001", "A", tests_total=0, tokens=4096),
+            self._row("T-001", "B", tests_total=0),
+        ])
+        labels = failure_taxonomy.classify(frame, max_tokens=4096)
+        assert labels.iloc[0] == failure_taxonomy.DEFECTIVE_TASK
+
+    def test_a_passing_run_is_never_artifactual_even_if_truncated(self):
+        frame = self._frame([
+            self._row("T-001", "A", passed=True, tokens=4096),
+            self._row("T-001", "B", passed=True),
+        ])
+        assert not failure_taxonomy.artifactual_mask(frame, max_tokens=4096).any()
+
+    def test_undifferentiable_rows_are_labelled_not_guessed(self):
+        frame = self._frame([
+            self._row("T-001", "A", tests_total=0),
+            self._row("T-001", "B", passed=True),
+        ])
+        labels = failure_taxonomy.classify(frame, max_tokens=4096)
+        assert labels.iloc[0] == failure_taxonomy.NO_TESTS_RUN
+        assert labels.iloc[0] not in failure_taxonomy.ARTIFACTUAL_LABELS
+
+    def test_every_run_gets_exactly_one_label(self):
+        frame = self._frame([
+            self._row("T-001", "A", passed=True),
+            self._row("T-001", "B", tests_total=0, tokens=4096),
+            self._row("T-002", "A", tests_total=0, extracted=False),
+            self._row("T-002", "B", passed=False),
+        ])
+        labels = failure_taxonomy.classify(frame, max_tokens=4096)
+        assert len(labels) == len(frame)
+        assert set(labels).issubset(set(failure_taxonomy.LABELS))
+        assert labels.iloc[2] == failure_taxonomy.EXTRACTION_FAILED
+
+    def test_summary_reports_absent_labels_as_zero(self):
+        frame = self._frame([
+            self._row("T-001", "A", passed=True),
+            self._row("T-001", "B", passed=False),
+        ])
+        table = failure_taxonomy.summary(frame, max_tokens=4096)
+        assert list(table.columns) == list(failure_taxonomy.LABELS)
+        assert table[failure_taxonomy.TRUNCATED_OUTPUT].sum() == 0
 
 
 class TestRecommenderScoring:

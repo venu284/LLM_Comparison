@@ -530,53 +530,147 @@ def figure_bradley_terry(output: Path, ranking: Sequence[dict]) -> None:
     plt.close(figure)
 
 
-def figure_zero_test(output: Path, full_rates: pd.Series, filtered: pd.DataFrame) -> None:
-    """The sensitivity that flips RQ1, with denominators made visible."""
+#: Fixed order, never cycled. Three adjacent slots of the validated categorical
+#: set; the subset was re-run through the palette checker (worst adjacent CVD
+#: ΔE 9.2 deutan, normal-vision ΔE 27.6). Aqua sits below 3:1 against the
+#: surface, so every aqua bar carries a visible direct label.
+TREATMENT_STYLE = {
+    "keep": (BLUE, "All runs (as published)"),
+    "drop_all": (ORANGE, "All zero-test runs dropped"),
+    "drop_artifactual": (AQUA, "Only artifactual runs dropped"),
+}
+
+
+def figure_zero_test(
+    output: Path,
+    treatments: Dict[str, Dict[str, object]],
+    order: Sequence[str] = ("keep", "drop_all", "drop_artifactual"),
+) -> None:
+    """RQ1 under each zero-test treatment, with denominators made visible.
+
+    Three treatments rather than two, because the two extremes disagree and
+    neither is defensible alone. The middle bar is the readable answer, so the
+    denominators sit inside each bar: they are the reason the extremes diverge.
+    """
     _base_style()
-    figure, axes = plt.subplots(figsize=(9.8, 4.7))
+    figure, axes = plt.subplots(figsize=(10.4, 5.0))
 
-    models = list(full_rates.index)
+    present = [name for name in order if name in treatments]
+    rates = {name: pd.DataFrame(**treatments[name]["rates"]) for name in present}
+    models = list(rates[present[0]].index)
     positions = np.arange(len(models))
-    width = 0.36
+    slot = 0.82 / len(present)
 
-    published = [full_rates[model] * 100 for model in models]
-    dropped = [filtered.loc[model, "rate"] * 100 for model in models]
+    for index, name in enumerate(present):
+        color, label = TREATMENT_STYLE[name]
+        offset = (index - (len(present) - 1) / 2) * slot
+        frame = rates[name]
+        values = [frame.loc[model, "rate"] * 100 if model in frame.index else 0.0
+                  for model in models]
+        # 2px surface gap between adjacent bars.
+        axes.bar(positions + offset, values, slot * 0.9, label=label, color=color, zorder=3)
 
-    axes.bar(positions - width / 2, published, width * 0.94, label="All runs (as published)",
-             color=BLUE, zorder=3)
-    axes.bar(positions + width / 2, dropped, width * 0.94, label="Zero-test runs dropped",
-             color=ORANGE, zorder=3)
-
-    for position, (value, model) in enumerate(zip(published, models)):
-        axes.text(position - width / 2, value + 1.3, f"{value:.1f}", ha="center",
-                  va="bottom", fontsize=7.8, color=INK_SECONDARY)
-    for position, model in enumerate(models):
-        value = filtered.loc[model, "rate"] * 100
-        attempts = int(filtered.loc[model, "n"])
-        axes.text(position + width / 2, value + 1.3, f"{value:.1f}", ha="center",
-                  va="bottom", fontsize=7.8, color=INK_SECONDARY)
-        # Inside the bar, so white rather than muted gray -- the denominators
-        # are the reason the two bars are not comparable and have to be legible.
-        axes.text(position + width / 2, 1.8, f"n={attempts}", ha="center",
-                  va="bottom", fontsize=7.6, color=SURFACE,
-                  fontweight="bold" if attempts < 40 else "normal")
+        for position, model in enumerate(models):
+            if model not in frame.index:
+                continue
+            value = frame.loc[model, "rate"] * 100
+            attempts = int(frame.loc[model, "n"])
+            axes.text(position + offset, value + 1.2, f"{value:.1f}", ha="center",
+                      va="bottom", fontsize=7.4, color=INK_SECONDARY)
+            axes.text(position + offset, 1.6, f"{attempts}", ha="center", va="bottom",
+                      fontsize=7.2, color=SURFACE,
+                      fontweight="bold" if attempts < 55 else "normal")
 
     axes.set_xticks(positions)
     axes.set_xticklabels(models, fontsize=8.6, color=INK_SECONDARY, rotation=12, ha="right")
     axes.set_ylabel("Tasks passed (%)")
     axes.set_ylim(0, 72)
-    axes.legend(frameon=False, loc="upper right", fontsize=8.6,
+    axes.legend(frameon=False, loc="upper right", fontsize=8.4,
                 handlelength=1.1, handleheight=0.9)
+
+    def _p(name: str) -> float:
+        return float(treatments[name]["overall_chi2"]["p_value"])
+
     axes.set_title(
-        "Dropping the zero-test runs changes χ² p from 0.00002 to 0.37",
-        fontsize=11.5, pad=12, color=INK, fontweight="bold",
+        "RQ1 survives the defensible exclusion and collapses only under the indefensible one\n"
+        f"χ² p = {_p('keep'):.5f} kept · {_p('drop_artifactual'):.5f} artifactual dropped · "
+        f"{_p('drop_all'):.2f} all dropped",
+        fontsize=11.2, pad=12, color=INK, fontweight="bold",
     )
     _clean(axes)
-    figure.tight_layout(rect=(0, 0.055, 1, 1))
+    figure.tight_layout(rect=(0, 0.075, 1, 1))
     _caption(
         figure,
-        "The two bars are not directly comparable: dropping those runs leaves unequal denominators, "
-        "and Qwen3-32B retains only 25 of its 65 attempts.",
+        "Numerals inside each bar are that model's surviving attempts out of 65. Dropping every "
+        "zero-test run leaves Qwen3-32B with 25, which is what removes the effect; dropping only "
+        "the provably artifactual runs leaves it 53 and the effect stands.",
+    )
+    figure.savefig(output, dpi=200, facecolor=SURFACE)
+    plt.close(figure)
+
+
+def figure_failure_taxonomy(output: Path, taxonomy: Dict[str, object]) -> None:
+    """What explains the zero-test runs, per model.
+
+    Restricted to the zero-test rows, because that is the open question. Two
+    identified causes get the fixed categorical hues; the residual is gray on
+    purpose -- it is missing information, not a category, and giving it a hue
+    would imply it had been diagnosed.
+    """
+    _base_style()
+    figure, axes = plt.subplots(figsize=(9.8, 4.2))
+
+    buckets = [
+        ("defective_task", BLUE, "Defective task (no model ran a test)"),
+        ("truncated_output", ORANGE, "Truncated at the 4,096-token ceiling"),
+        ("extraction_failed", AQUA, "No code block extracted"),
+        ("no_tests_run", DEEMPHASIS, "Cause not recoverable from stored columns"),
+    ]
+
+    by_model: Dict[str, Dict[str, int]] = taxonomy["by_model"]
+    models = sorted(by_model, key=lambda name: -sum(by_model[name].get(key, 0)
+                                                    for key, _, _ in buckets))
+    positions = np.arange(len(models))
+
+    left = np.zeros(len(models))
+    for key, color, label in buckets:
+        values = np.array([by_model[model].get(key, 0) for model in models], dtype=float)
+        if not values.any():
+            continue
+        axes.barh(positions, values, 0.62, left=left, label=label, color=color, zorder=3)
+        for position, (value, start) in enumerate(zip(values, left)):
+            if value >= 2:
+                axes.text(start + value / 2, position, f"{int(value)}", ha="center", va="center",
+                          fontsize=8, color=INK if color is DEEMPHASIS else SURFACE,
+                          fontweight="bold")
+        left = left + values
+
+    for position, total in enumerate(left):
+        if total:
+            axes.text(total + 0.6, position, f"{int(total)} of 65", va="center",
+                      fontsize=8, color=INK_SECONDARY)
+
+    axes.set_yticks(positions)
+    axes.set_yticklabels(models, fontsize=8.8, color=INK_SECONDARY)
+    axes.invert_yaxis()
+    axes.set_xlabel("Runs that reported zero tests")
+    axes.set_xlim(0, max(left.max() * 1.22, 5))
+    axes.legend(frameon=False, loc="lower right", fontsize=8.2,
+                handlelength=1.1, handleheight=0.9)
+    explained = taxonomy["zero_test_explained"]
+    total_zero = taxonomy["zero_test_rows"]
+    axes.set_title(
+        f"{explained} of the {total_zero} zero-test runs have a recoverable cause; "
+        f"{total_zero - explained} do not\n"
+        "Reconstructed at analysis time — the stored failure_mode column is empty in all 325 rows",
+        fontsize=11.2, pad=12, color=INK, fontweight="bold",
+    )
+    _clean(axes, grid_axis="x")
+    figure.tight_layout(rect=(0, 0.06, 1, 1))
+    _caption(
+        figure,
+        "Qwen3-32B is the only model that ever hit the token ceiling, so leaving its truncated "
+        "runs in place confounds the published chain-of-thought finding with plain truncation.",
     )
     figure.savefig(output, dpi=200, facecolor=SURFACE)
     plt.close(figure)

@@ -91,10 +91,37 @@ analysis will report overlapping intervals as ties rather than forcing an order.
 
 1. Confirm eligibility, obtain informed consent, assign an evaluator id.
 2. Evaluator opens the voting interface (`python human_eval/app.py`).
-3. The interface serves comparisons drawn at random from tasks with two or more
-   extractable solutions, until the evaluator stops.
+3. The interface serves comparisons scheduled by `human_eval/sampler.py` until
+   the evaluator stops.
 4. Votes are written to the `human_votes` table with the evaluator id.
 5. Collection closes at the 800-vote target or after two weeks, whichever first.
+
+### 5.1 How comparisons are chosen
+
+A **comparison cell** is one task and one unordered pair of models. The 65 tasks
+give 646 cells — 650 minus the four lost to the single run whose code could not
+be extracted. Cells are not drawn uniformly, for three reasons:
+
+- **No evaluator ever sees the same cell twice.** Under uniform sampling an
+  evaluator completing 80 comparisons draws a repeat with probability ≈ 0.99
+  (birthday bound over 646 cells), and one person rating the same pair twice is
+  counted as two coders by Krippendorff's α.
+- **A fixed anchor set is rated by everyone.** Twenty cells, two per model pair,
+  chosen deterministically from a fixed seed and interleaved through each
+  session rather than front-loaded. This is the subset §6.3 computes α on; under
+  uniform sampling that subset would exist only by chance, and at the 300-vote
+  minimum only about 51 cells would attract a second rating at all.
+- **Remaining comparisons go to the least-observed cell.** A Bradley-Terry
+  interval is set by the least-observed model pair, so balance buys precision at
+  no extra cost. A 10-evaluator, 800-vote simulation lands 76–83 votes on each of
+  the 10 pairs against a target of 80.
+
+Tasks that no model solved are **kept** in the pool. Twenty-seven of the 65 are
+failed by every model, and excluding them would bias H3 upward by only ever
+asking about work the models can do. Each comparison is instead labelled with an
+outcome stratum — both passed, one passed, neither passed — and `/api/results`
+reports the mix. In the same 800-vote simulation it comes out at roughly 50%
+neither-passed, 27% both-passed, 23% split.
 
 **Data recorded per vote:** task, both models, winner (`a` / `b` / `tie`),
 evaluator id, timestamp. No personal data beyond the pseudonymous evaluator id.
@@ -107,10 +134,15 @@ evaluator id, timestamp. No personal data beyond the pseudonymous evaluator id.
    pass-rate ordering across the five models. H3 holds if ρ > 0.7.
    With n = 5 the correlation is descriptive and its p-value is weak; the point
    estimate and interval are what get reported, with that limitation stated.
-3. **Inter-rater agreement.** Krippendorff's α across evaluators on the subset of
-   comparisons seen by more than one person. Low agreement means "human
-   preference" is not a single coherent target and H3 is ill-posed as framed —
-   which is itself a reportable finding.
+   Report ρ twice: over all comparisons, and restricted to tasks where at least
+   one model passed. Half the comparisons are between two solutions that both
+   failed their tests, where the automated ranking expresses no preference at
+   all, so the two figures answer different questions and both belong in the
+   report.
+3. **Inter-rater agreement.** Krippendorff's α across evaluators on the anchor
+   set (§5.1) — the twenty cells every evaluator rates. Low agreement means
+   "human preference" is not a single coherent target and H3 is ill-posed as
+   framed — which is itself a reportable finding.
 4. **Disagreement analysis.** Inspect comparisons where the human majority
    preferred the model that failed the automated tests. These are the cases that
    reveal what the test suites miss.
@@ -127,8 +159,13 @@ evaluator id, timestamp. No personal data beyond the pseudonymous evaluator id.
   web developers.
 - **Code shown without execution.** Reviewers judge from reading, so runtime
   behavior that is not visible in the source cannot influence their vote.
-- **Task coverage.** Random sampling of comparisons means some tasks receive many
-  votes and others none.
+- **Comparisons between two failing solutions.** Roughly half of all cells pair
+  two solutions that failed their tests, because 27 of the 65 tasks were solved
+  by no model. Preference there is a judgment about style between two wrong
+  answers, and the automated ranking has no opinion to correlate with. This is
+  why §6.2 reports ρ on the passing subset as well; it is a property of the
+  benchmark's difficulty, not something the scheduler can remove without biasing
+  the result the other way.
 
 ## 8. Current Instrumentation Status
 
@@ -136,6 +173,8 @@ Built and validated:
 
 - `app.py` — blind side-by-side voting interface, stdlib only, writes to
   `human_votes`
+- `sampler.py` — comparison scheduler: anchor set, coverage balancing,
+  per-evaluator de-duplication, outcome strata (§5.1)
 - `bradley_terry.py` — MM-algorithm maximum-likelihood fit with bootstrap
   intervals; verified to recover planted strengths to within 0.003
 - `synthetic_votes.py` — generated votes for pipeline validation

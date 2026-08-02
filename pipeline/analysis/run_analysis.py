@@ -29,7 +29,7 @@ PIPELINE_DIR = Path(__file__).resolve().parent.parent
 if str(PIPELINE_DIR) not in sys.path:
     sys.path.insert(0, str(PIPELINE_DIR))
 
-from analysis import figures  # noqa: E402
+from analysis import failure_taxonomy, figures  # noqa: E402
 from analysis.data import load_experiment_data  # noqa: E402
 from analysis.recommender import (  # noqa: E402
     DEFAULT_WEIGHTS,
@@ -92,6 +92,15 @@ HOLDOUT_PROMPTS = [
     ("Pagination returns duplicate records on page two", "bugfix"),
     ("Implement a modal with focus trapping and escape to close", "frontend"),
 ]
+
+
+def _rate_summary(data) -> pd.DataFrame:
+    """Passes, attempts and rate per model. Denominators travel with the rate."""
+    return (
+        data.runs.groupby("model_name")["pass_fail"]
+        .agg(passes="sum", n="size")
+        .assign(rate=lambda frame: frame["passes"] / frame["n"])
+    )
 
 
 def holdout_classifier_accuracy() -> float:
@@ -269,13 +278,25 @@ def main() -> None:
     bootstrap = bootstrap_difference(validation, iterations=args.bootstrap)
     sensitivity_grid = weight_sensitivity(data, prompts=prompts)
 
-    filtered = load_experiment_data(exclude_zero_tests=True)
+    treatments = {
+        name: load_experiment_data(zero_test_treatment=name)
+        for name in ("drop_all", "drop_artifactual")
+    }
+    treatment_blocks = {
+        name: {
+            "n": int(len(subset.runs)),
+            "dropped": int(subset.dropped_rows),
+            "fully_paired": subset.is_fully_paired(),
+            "attempts": _jsonable(subset.attempt_counts()),
+            "rates": _jsonable(_rate_summary(subset)),
+            "overall_chi2": _jsonable(build_stats_report(subset).overall_chi2),
+        }
+        for name, subset in treatments.items()
+    }
+
+    filtered = treatments["drop_all"]
     filtered_stats = build_stats_report(filtered)
-    filtered_summary = (
-        filtered.runs.groupby("model_name")["pass_fail"]
-        .agg(passes="sum", n="size")
-        .assign(rate=lambda frame: frame["passes"] / frame["n"])
-    )
+    filtered_summary = _rate_summary(filtered)
 
     payload = {
         "source": data.source,
@@ -310,6 +331,7 @@ def main() -> None:
             ),
         },
         "weight_sensitivity": _jsonable(sensitivity_grid),
+        "failure_taxonomy": _jsonable(failure_taxonomy.report(data.runs)),
         "zero_test_sensitivity": {
             "filtered_n": int(len(filtered.runs)),
             "filtered_fully_paired": filtered.is_fully_paired(),
@@ -317,6 +339,17 @@ def main() -> None:
             "filtered_rates": _jsonable(filtered_summary),
             "filtered_overall_chi2": _jsonable(filtered_stats.overall_chi2),
             "notes": filtered_stats.notes,
+            "treatments": {
+                "keep": {
+                    "n": int(len(data.runs)),
+                    "dropped": 0,
+                    "fully_paired": data.is_fully_paired(),
+                    "attempts": _jsonable(data.attempt_counts()),
+                    "rates": _jsonable(_rate_summary(data)),
+                    "overall_chi2": _jsonable(stats_report.overall_chi2),
+                },
+                **treatment_blocks,
+            },
         },
     }
 
@@ -355,9 +388,12 @@ def main() -> None:
             charts_dir / "fig7_classifier.png", classifier["accuracy"], holdout
         )
         figures.figure_zero_test(
-            charts_dir / "fig8_zero_test.png", data.overall_pass_rates(), filtered_summary
+            charts_dir / "fig8_zero_test.png", payload["zero_test_sensitivity"]["treatments"]
         )
-        written = 8
+        figures.figure_failure_taxonomy(
+            charts_dir / "fig10_failure_taxonomy.png", payload["failure_taxonomy"]
+        )
+        written = 9
 
         if synthetic:
             figures.figure_bradley_terry(
@@ -391,6 +427,18 @@ def main() -> None:
         validation.h4_improvement_pct,
         payload["validation"]["max_possible_improvement_pct"],
     )
+
+    logger.info("\nRQ1 under each zero-test treatment (model x outcome chi-squared):")
+    for name, block in payload["zero_test_sensitivity"]["treatments"].items():
+        chi2 = block["overall_chi2"]
+        logger.info(
+            "  %-17s n=%3d  p=%-10.5g  V=%.3f  %s",
+            name,
+            block["n"],
+            chi2["p_value"],
+            chi2["cramers_v"],
+            "paired" if block["fully_paired"] else "ragged denominators",
+        )
 
 
 if __name__ == "__main__":

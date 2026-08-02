@@ -13,9 +13,24 @@ from typing import List, Optional
 
 import pandas as pd
 
+from analysis import failure_taxonomy
 from config import MODELS, get_database_url, get_paths
 
 logger = logging.getLogger(__name__)
+
+#: How the 63 runs with `tests_total == 0` are treated.
+#:
+#: - `keep` reproduces the published Phase 5 numbers: every zero-test run counts
+#:   as a model failure.
+#: - `drop_all` removes all 63. Defensible only if you believe none of them are
+#:   the model's fault, and it leaves ragged denominators (Qwen3-32B retains 25
+#:   of 65 attempts), so the resulting rates are not comparable across models.
+#: - `drop_artifactual` removes only the rows whose cause is provably not the
+#:   model -- defective tasks, truncation at the token ceiling, extraction
+#:   failures -- and keeps the undifferentiable remainder as failures. This is
+#:   the middle treatment, and the only one whose exclusions can each be
+#:   justified individually.
+TREATMENTS = ("keep", "drop_all", "drop_artifactual")
 
 CATEGORIES = ["frontend", "api", "css", "typescript", "bugfix"]
 DIFFICULTIES = ["easy", "medium", "hard"]
@@ -49,6 +64,8 @@ class ExperimentData:
     source: str
     zero_test_rows: int
     excluded_zero_tests: bool
+    treatment: str = "keep"
+    dropped_rows: int = 0
 
     @property
     def models(self) -> List[str]:
@@ -101,6 +118,23 @@ class ExperimentData:
         )
         order = CATEGORIES if dimension == "category" else DIFFICULTIES
         return table[[column for column in order if column in table.columns]]
+
+    def failure_labels(self) -> pd.Series:
+        """The derived failure label per run.
+
+        Computed on the unfiltered frame before any treatment was applied, so
+        `defective_task` still means "no model ran a test on this task" even when
+        the rows that proved it have since been dropped.
+        """
+        return self.runs["failure_mode_derived"]
+
+    def failure_summary(self) -> pd.DataFrame:
+        """Derived failure labels as models x labels counts."""
+        table = pd.crosstab(self.runs["model_name"], self.failure_labels())
+        for label in failure_taxonomy.LABELS:
+            if label not in table.columns:
+                table[label] = 0
+        return table[list(failure_taxonomy.LABELS)]
 
     def task_metadata(self) -> pd.DataFrame:
         """One row per task: its category and difficulty."""
@@ -164,14 +198,25 @@ def load_experiment_data(
     csv_path: Optional[Path] = None,
     prefer_database: bool = True,
     exclude_zero_tests: bool = False,
+    zero_test_treatment: Optional[str] = None,
 ) -> ExperimentData:
     """Load Phase 5 results.
 
-    `exclude_zero_tests` drops runs where the Docker harness reported no test
-    count. Those runs were scored as failures in the published Phase 5 numbers,
-    so the default keeps them; the flag exists so the report can state whether
-    any conclusion depends on that treatment.
+    Runs where the Docker harness reported no test count were scored as failures
+    in the published Phase 5 numbers, so the default keeps them. `TREATMENTS`
+    documents the alternatives; pass one via `zero_test_treatment` so the report
+    can state whether any conclusion depends on that choice.
+
+    `exclude_zero_tests=True` is the older spelling of
+    `zero_test_treatment="drop_all"` and still works.
     """
+    if zero_test_treatment is None:
+        zero_test_treatment = "drop_all" if exclude_zero_tests else "keep"
+    if zero_test_treatment not in TREATMENTS:
+        raise ValueError(
+            f"Unknown zero_test_treatment {zero_test_treatment!r}; expected one of {TREATMENTS}"
+        )
+
     frame: Optional[pd.DataFrame] = None
     source = "csv"
 
@@ -192,8 +237,18 @@ def load_experiment_data(
         frame[column] = pd.to_numeric(frame[column], errors="coerce").fillna(0).astype(int)
 
     zero_tests = int((frame["tests_total"] == 0).sum())
-    if exclude_zero_tests:
+
+    # Labelled before any filtering, because `defective_task` is defined by a
+    # pattern across all five models on a task. Filter first and the evidence for
+    # the label disappears along with the rows.
+    frame["failure_mode_derived"] = failure_taxonomy.classify(frame)
+
+    total_rows = len(frame)
+    if zero_test_treatment == "drop_all":
         frame = frame[frame["tests_total"] > 0].copy()
+    elif zero_test_treatment == "drop_artifactual":
+        artifactual = frame["failure_mode_derived"].isin(failure_taxonomy.ARTIFACTUAL_LABELS)
+        frame = frame[~artifactual].copy()
 
     unexpected = set(frame["model_name"].unique()) - set(MODEL_PARAMS_B)
     if unexpected:
@@ -203,7 +258,9 @@ def load_experiment_data(
         runs=frame.reset_index(drop=True),
         source=source,
         zero_test_rows=zero_tests,
-        excluded_zero_tests=exclude_zero_tests,
+        excluded_zero_tests=zero_test_treatment != "keep",
+        treatment=zero_test_treatment,
+        dropped_rows=total_rows - len(frame),
     )
 
 
