@@ -1,0 +1,556 @@
+<title>Sufficiency Router Charter</title>
+<style>
+:root{
+  --paper:#EEF1EC; --paper-2:#E4E9E2; --card:#F7F9F6;
+  --ink:#161C19; --ink-2:#3E4A44; --ink-3:#6B7A72;
+  --rule:#CBD4C9; --rule-2:#B3BFB0;
+  --accent:#8A5C10; --accent-soft:#F0E4C9;
+  --keep:#2F6A55; --keep-soft:#DCE9E2;
+  --drop:#93392C; --drop-soft:#F2DFDB;
+  --measure:68ch;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#131916; --paper-2:#1A211D; --card:#1B231F;
+    --ink:#E6EBE6; --ink-2:#B2BDB6; --ink-3:#7F8C85;
+    --rule:#2C3630; --rule-2:#3D4941;
+    --accent:#D8A74E; --accent-soft:#33280F;
+    --keep:#6FBBA0; --keep-soft:#16302A;
+    --drop:#D4796A; --drop-soft:#33201C;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131916; --paper-2:#1A211D; --card:#1B231F;
+  --ink:#E6EBE6; --ink-2:#B2BDB6; --ink-3:#7F8C85;
+  --rule:#2C3630; --rule-2:#3D4941;
+  --accent:#D8A74E; --accent-soft:#33280F;
+  --keep:#6FBBA0; --keep-soft:#16302A;
+  --drop:#D4796A; --drop-soft:#33201C;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Iowan Old Style","Charter","Palatino Linotype",Palatino,Georgia,serif;
+  font-size:17px; line-height:1.62; -webkit-font-smoothing:antialiased;
+}
+.mono,code,th,.id,.tag,table{font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px 96px}
+.col{max-width:var(--measure)}
+
+/* masthead */
+header.mast{border-bottom:2px solid var(--ink);margin-bottom:44px;padding:56px 0 20px}
+.eyebrow{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);display:flex;flex-wrap:wrap;gap:18px;margin-bottom:22px}
+h1{font-size:clamp(38px,6vw,62px);line-height:1.04;margin:0 0 18px;font-weight:600;letter-spacing:-.02em;text-wrap:balance;max-width:16ch}
+.standfirst{font-size:20px;line-height:1.5;color:var(--ink-2);max-width:60ch;margin:0 0 26px}
+.standfirst b{color:var(--ink);font-weight:600}
+.metaline{display:flex;flex-wrap:wrap;gap:8px 26px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:14px}
+
+section{margin:0 0 60px}
+h2{font-size:13px;font-family:ui-monospace,"SF Mono",Menlo,monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);font-weight:500;
+   border-bottom:1px solid var(--rule);padding-bottom:9px;margin:0 0 26px;display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+h2 .n{color:var(--accent)}
+h3{font-size:24px;font-weight:600;letter-spacing:-.01em;margin:34px 0 12px;text-wrap:balance}
+h4{font-size:18px;font-weight:600;margin:24px 0 8px}
+p{margin:0 0 16px}
+.lead{font-size:19px;color:var(--ink-2)}
+ul,ol{margin:0 0 16px;padding-left:22px}
+li{margin-bottom:7px}
+strong{font-weight:600}
+a{color:var(--accent);text-underline-offset:2px;text-decoration-thickness:1px}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+/* the one bold move: the goal slab */
+.slab{background:var(--ink);color:var(--paper);padding:40px 38px;margin:0 0 20px;border-left:6px solid var(--accent)}
+.slab .k{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.slab p{font-size:25px;line-height:1.4;margin:0;max-width:44ch;font-weight:500}
+.slab em{font-style:normal;color:var(--accent)}
+
+/* decision rows: left rail of IDs */
+.rec{display:grid;grid-template-columns:74px 1fr;gap:20px;padding:18px 0;border-top:1px solid var(--rule)}
+.rec:last-of-type{border-bottom:1px solid var(--rule)}
+.id{font-size:12.5px;font-weight:600;color:var(--accent);padding-top:5px;letter-spacing:.04em}
+.rec h4{margin:0 0 6px;font-size:18px}
+.rec p{margin:0 0 8px;color:var(--ink-2);font-size:16px}
+.rec p:last-child{margin-bottom:0}
+
+/* tables */
+.scroll{overflow-x:auto;margin:0 0 20px;border:1px solid var(--rule);background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
+th{text-align:left;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:500;
+   padding:11px 14px;border-bottom:1px solid var(--rule-2);white-space:nowrap;background:var(--paper-2)}
+td{padding:10px 14px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2)}
+tr:last-child td{border-bottom:none}
+td.num{text-align:right;white-space:nowrap;color:var(--ink)}
+tr.hi td{background:var(--accent-soft);color:var(--ink);font-weight:600}
+tr.dim td{color:var(--ink-3)}
+
+.tag{display:inline-block;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;padding:2.5px 8px;border-radius:2px;white-space:nowrap;font-weight:600}
+.t-keep{background:var(--keep-soft);color:var(--keep)}
+.t-drop{background:var(--drop-soft);color:var(--drop)}
+.t-acc{background:var(--accent-soft);color:var(--accent)}
+
+figure{margin:0 0 22px}
+figcaption{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--ink-3);margin-top:9px;line-height:1.5}
+pre{margin:0;background:var(--card);border:1px solid var(--rule);padding:20px;overflow-x:auto;
+    font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:12.5px;line-height:1.62;color:var(--ink-2)}
+pre b{color:var(--accent);font-weight:600}
+pre i{color:var(--keep);font-style:normal}
+
+blockquote{margin:0 0 20px;padding:14px 0 14px 22px;border-left:3px solid var(--accent);color:var(--ink-2);font-size:17px}
+blockquote p:last-child{margin:0}
+
+.note{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--drop);padding:18px 22px;margin:0 0 22px}
+.note .h{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--drop);margin-bottom:8px;font-weight:600}
+.note p:last-child{margin:0}
+.note.ok{border-left-color:var(--keep)}
+.note.ok .h{color:var(--keep)}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:0 0 22px}
+.card{background:var(--card);border:1px solid var(--rule);padding:20px 22px}
+.card h4{margin:0 0 8px;font-size:17px}
+.card p{margin:0;font-size:15.5px;color:var(--ink-2)}
+.card .k{font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-weight:600}
+
+.refs{font-size:15px}
+.refs h4{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:500;margin:26px 0 10px}
+.refs ul{list-style:none;padding:0}
+.refs li{padding:7px 0;border-bottom:1px solid var(--rule);color:var(--ink-3)}
+.refs li em{font-style:italic;display:block;font-size:14px;margin-top:3px;color:var(--ink-3)}
+
+footer{border-top:2px solid var(--ink);margin-top:64px;padding-top:20px;font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--ink-3);line-height:1.7}
+@media(max-width:640px){
+  body{font-size:16px}
+  .rec{grid-template-columns:1fr;gap:4px}
+  .id{padding-top:0}
+  .slab{padding:28px 22px}
+  .slab p{font-size:21px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow">
+    <span>Master's Major Project</span><span>Direction Locked 2026-08-16</span><span>Supersedes Phase 8</span>
+  </div>
+  <h1>Sufficiency Router Charter</h1>
+  <p class="standfirst">Routing stops asking <b>which model is best</b> and starts asking <b>whether the cheap one is good enough</b> — then learns to answer that for models it has never seen.</p>
+  <div class="metaline">
+    <span>65-task web-dev benchmark</span><span>5 models · 325 runs</span><span>H4 refuted, repurposed as motivation</span>
+  </div>
+</header>
+
+<section>
+  <h2><span>The goal</span><span class="n">00</span></h2>
+  <div class="slab">
+    <div class="k">One sentence</div>
+    <p>Build a constraint-aware LLM router for code generation that predicts <em>whether a cheap model is sufficient</em>, generalises to unseen models via a bounded measurement probe, and accepts the user's own API keys.</p>
+  </div>
+  <p class="col lead">The unit of success is <strong>cost per accepted task</strong> — not cost per token, and not benchmark pass rate.</p>
+</section>
+
+<section>
+  <h2><span>Why this, why now</span><span class="n">01</span></h2>
+  <div class="grid2">
+    <div class="card">
+      <div class="k">Market</div>
+      <h4>The bill arrived</h4>
+      <p>Enterprise LLM API spend passed $8.4B, projected $15B by end of 2026, driven by agentic workloads. The pattern is: give every engineer a coding agent, discover the bill, restrict access. Gateways report 40–60% cost reductions.</p>
+    </div>
+    <div class="card">
+      <div class="k">Research</div>
+      <h4>The field moved</h4>
+      <p>2026 shifted routing from one-shot prompts to execution-aware decisions, and the metric from cost-per-token to cost-per-accepted-task. The named open problem: routers are trained per-pool and die when the pool changes.</p>
+    </div>
+    <div class="card">
+      <div class="k">Our evidence</div>
+      <h4>We measured the premise</h4>
+      <p>Phases 5–6 independently confirmed that prompt-level selection saturates. Oracle selection ceiling is +8.6% over always-best-single; the pre-registered H4 (&gt;15%) is unreachable by construction.</p>
+    </div>
+  </div>
+  <blockquote class="col"><p>That refutation is now the <strong>motivation</strong>, not damage. It is a stronger opening than H4 passing would have been.</p></blockquote>
+</section>
+
+<section>
+  <h2><span>Decisions — locked</span><span class="n">02</span></h2>
+  <p class="col">Re-opening any of these requires a new decision record, not a conversation.</p>
+
+  <div class="rec"><div class="id">D1</div><div>
+    <h4>The claim is sufficiency, not selection</h4>
+    <p>Not "which model is best for this task" but <strong>"is the cheap model good enough, and if not, what do I spend next?"</strong> Selection is refuted on nested pools. Sufficiency is not.</p>
+  </div></div>
+
+  <div class="rec"><div class="id">D2</div><div>
+    <h4>Never learn model identity</h4>
+    <p>The router learns <code>f(task_features, model_descriptor) → outcome</code>, never <code>f(task) → model_id</code>. Identity-based routers cannot accept a model they weren't trained on. This single constraint is what makes BYOK possible at all.</p>
+  </div></div>
+
+  <div class="rec"><div class="id">D3</div><div>
+    <h4>Descriptors are measured, not described</h4>
+    <p>A capability vector comes from <strong>executing a bounded probe set</strong> against the endpoint and observing outcomes — not from an LLM writing a description of the model. This is the novelty.</p>
+  </div></div>
+
+  <div class="rec"><div class="id">D4</div><div>
+    <h4>Black-box only</h4>
+    <p>Computable from ordinary chat-completion responses. No logprobs, no hidden states, no provider-specific fields — an arbitrary OpenAI-compatible endpoint may expose none of them.</p>
+  </div></div>
+
+  <div class="rec"><div class="id">D5</div><div>
+    <h4>Every learning signal is automated</h4>
+    <p>Test outcomes, compile/typecheck/lint. <strong>No hypothesis depends on recruiting human evaluators.</strong> Phase 7 is the standing proof: apparatus fully built, zero votes collected across multiple sessions.</p>
+  </div></div>
+
+  <div class="rec"><div class="id">D6</div><div>
+    <h4>Constraints are set by the user, not learned</h4>
+    <p><code>w_cost</code>, <code>w_latency</code>, <code>w_quality</code> are a weight vector the user supplies. Personalisation is <strong>out of scope</strong> — a cold-start problem with no data. "Self-correcting" means the route policy improves from pooled execution outcomes, never that the system learns individual taste.</p>
+  </div></div>
+
+  <div class="rec"><div class="id">D7</div><div>
+    <h4>Cost is modelled, with a mandatory sensitivity sweep</h4>
+    <p>All five models are free-tier; <code>estimated_cost_usd</code> is <code>0.000000</code> in all 325 rows. Published $/M rates are defensible <em>only if</em> every headline number carries a price-sensitivity analysis.</p>
+  </div></div>
+
+  <div class="rec"><div class="id">D8</div><div>
+    <h4>Nesting is a feature now</h4>
+    <p>"Do not swap in stronger models to rescue H4" <strong>stands</strong>. Selection needs complementarity; cascade and sufficiency-thresholding want nesting. Changing the pool would weaken the new design.</p>
+  </div></div>
+
+  <div class="rec"><div class="id">D9</div><div>
+    <h4>Two research components, everything else thin</h4>
+    <p><strong>C2 (probe profiling) and C4 (sufficiency predictor) carry the contribution.</strong> Ingress, policy engine, and feedback plumbing are features LiteLLM, Bifrost and Portkey already ship. Demo-grade. No chapters.</p>
+  </div></div>
+
+  <div class="rec"><div class="id">D10</div><div>
+    <h4>Disclose, never repair</h4>
+    <p>Nothing is written back to the <code>runs</code> table. Phase 5 rows stay as published. Corrections are disclosed and re-run, never silently amended.</p>
+  </div></div>
+</section>
+
+<section>
+  <h2><span>Explicitly not doing</span><span class="n">03</span></h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Not doing</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>A "which model is best" recommender UI</td><td>Refuted. +8.6% ceiling; the Phase 6 recommender scored 36.9% against a 53.8% baseline.</td></tr>
+      <tr><td>Per-user preference learning</td><td>No data volume per user. Cold start with nothing to start from.</td></tr>
+      <tr><td>Beating frontier models on quality</td><td>Not the claim. The claim is cost per accepted task.</td></tr>
+      <tr><td>Human-preference-gated results</td><td>D5. H3 becomes an optional external-validity note.</td></tr>
+      <tr><td>A general-purpose chat router</td><td>Verification is unsolved outside executable domains. Scope to code.</td></tr>
+      <tr><td>Budget / quota / failover as a contribution</td><td>Commodity. Ships in LiteLLM. Demo only.</td></tr>
+      <tr><td>Swapping in stronger models</td><td>D8. Deepens nesting, shrinks headroom.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2><span>Hypotheses</span><span class="n">04</span></h2>
+  <p class="col">Replaces H1–H4 as the active set. H1/RQ1 (specialization exists) and H4 (selection refuted) are retained as established background.</p>
+
+  <h3>H-A · Is cheap-model sufficiency predictable?</h3>
+  <blockquote class="col"><p>Task features plus a measured descriptor predict whether a cheap model produces a passing solution, materially better than chance. <strong>Target: held-out AUC ≥ 0.70.</strong></p></blockquote>
+  <figure>
+    <pre>cheap-model sufficiency, measured on the existing matrix
+
+  by difficulty     easy  <b>80%</b>   medium  30%   hard  <b>8%</b>
+  by category     bugfix  <b>69%</b>   api/css/ts 31%   frontend  23%</pre>
+    <figcaption>A strong exploitable gradient. The enabler this needs is a difficulty estimator — at runtime there is no ground-truth label, and recommender.py:214 currently hardcodes difficulty="medium". Highest-value missing component.</figcaption>
+  </figure>
+
+  <h3>H-B · Does the policy transfer to unseen models?</h3>
+  <blockquote class="col"><p>A router trained on pool A, given only a k-task probe descriptor of an unseen model M, retains most of the routing gain of a router that had M in-pool. <strong>Target: ≥80% of in-pool improvement retained.</strong></p></blockquote>
+
+  <h3>H-C · Measured descriptors vs. generated ones <span class="tag t-acc">the novelty</span></h3>
+  <p class="col">GraphRouter (ICLR 2025) already generalises to new LLMs — by using <em>"a generative LLM such as GPT-4o to generate a descriptive text for each LLM, outlining key details such as its strengths, token pricing, and context length,"</em> embedded with BERT.</p>
+  <p class="col">That is <strong>reputation, not measurement</strong>. It has four failure modes, and all four are exactly the BYOK case:</p>
+  <div class="grid2">
+    <div class="card"><div class="k">Failure 1</div><p>A user's <strong>private fine-tune</strong> — no describer has heard of it.</p></div>
+    <div class="card"><div class="k">Failure 2</div><p>A model <strong>released after</strong> the describer's knowledge cutoff.</p></div>
+    <div class="card"><div class="k">Failure 3</div><p>A <strong>self-hosted or quantized</strong> endpoint that behaves unlike its model card.</p></div>
+    <div class="card"><div class="k">Failure 4</div><p><strong>Two models with similar descriptions</strong> and different real behaviour.</p></div>
+  </div>
+  <p class="col">Design: same router, two descriptor sources, head-to-head — stratified by whether the model sits inside or outside the describer's knowledge. <strong>This is the contribution nobody owns.</strong></p>
+
+  <h3>H-D · Does it actually pay?</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Strategy</th><th class="num">Pass</th><th class="num">$/task</th><th class="num">vs baseline</th></tr></thead>
+    <tbody>
+      <tr class="dim"><td>Phase 6 selection recommender</td><td class="num">36.9%</td><td class="num">—</td><td class="num">refuted</td></tr>
+      <tr><td>Always GPT-OSS-120B <em>(baseline)</em></td><td class="num">53.8%</td><td class="num">0.000422</td><td class="num">—</td></tr>
+      <tr class="hi"><td>Fixed cascade · Llama-3.1-8B → GPT-OSS-120B</td><td class="num">56.9%</td><td class="num">0.000377</td><td class="num">−10.8%</td></tr>
+      <tr><td>Fixed cascade · Llama-4-Scout → GPT-OSS-120B</td><td class="num">58.5%</td><td class="num">0.000433</td><td class="num">+2.5%</td></tr>
+      <tr class="dim"><td>Oracle · cheapest model that solves it</td><td class="num">58.5%</td><td class="num">0.000089</td><td class="num">−78.8%</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note">
+    <div class="h">The oracle figure is inflated — decompose it</div>
+    <p>68.4% of that −78.8% comes from the oracle clairvoyantly <em>declining to attempt</em> the 27 tasks (42%) no model solves. A real router does not get that free.</p>
+  </div>
+
+  <div class="scroll"><table>
+    <thead><tr><th>Task class</th><th class="num">n</th><th class="num">share of oracle saving</th><th>capturable?</th></tr></thead>
+    <tbody>
+      <tr><td>Unsolvable — no model solves it</td><td class="num">27 · 42%</td><td class="num">68.4%</td><td>only via abstention</td></tr>
+      <tr class="hi"><td>Cheap-sufficient — 8B alone solves it</td><td class="num">24 · 37%</td><td class="num">20.8%</td><td>yes</td></tr>
+      <tr class="hi"><td>Mid-tier needed</td><td class="num">9 · 14%</td><td class="num">10.8%</td><td>yes</td></tr>
+      <tr class="dim"><td>Top-tier only</td><td class="num">5 · 8%</td><td class="num">0.0%</td><td>no saving exists</td></tr>
+    </tbody>
+  </table></div>
+  <p class="col"><strong>Realistic target: ≈ −25% cost</strong>, against fixed cascade's already-banked −10.8%. Claim −25%, not −79%.</p>
+
+  <h3>H-E · Is "don't spend at all" a useful action?</h3>
+  <p class="col">Unsolvable rate is <strong>5% on easy, 60% on medium, 56% on hard</strong> — difficulty separates it strongly. Claim discipline: abstention reduces spend, it does <strong>not</strong> raise pass rate. Report as "N tasks flagged out-of-pool," never folded into a pass-rate number.</p>
+</section>
+
+<section>
+  <h2><span>Architecture</span><span class="n">05</span></h2>
+  <figure>
+<pre>        user's existing tooling
+                 │  OpenAI-compatible request
+                 ▼
+    ┌────────────────────────────┐
+    │ C1  INGRESS                │  /v1/chat/completions
+    │     + constraint profile   │  w_cost, w_latency, w_quality
+    │     + user id / budget     │
+    └────────────┬───────────────┘
+                 ▼
+    ┌────────────────────────────┐        ┌─────────────────────────┐
+    │ C3  REQUEST UNDERSTANDING  │        │ C2  MODEL REGISTRY      │
+    │     category classifier    │        │     user adds API key   │
+    │     <b>DIFFICULTY ESTIMATOR ★</b> │        │     → k-task PROBE RUN  │
+    │     complexity features    │        │     → <b>MEASURED</b>          │
+    └────────────┬───────────────┘        │       <b>DESCRIPTOR ★</b>      │
+                 │                        └───────────┬─────────────┘
+                 │      task features                 │ descriptor
+                 └──────────────┬─────────────────────┘
+                                ▼
+                 ┌──────────────────────────────┐
+                 │ <b>C4  SUFFICIENCY PREDICTOR ★</b>  │
+                 │   P(pass | task, descriptor) │
+                 │   E[cost], E[latency]        │
+                 └──────────────┬───────────────┘
+                                ▼
+                 ┌──────────────────────────────┐
+                 │ C5  POLICY ENGINE            │
+                 │   utility = f(preds, weights)│
+                 │   action ∈ { answer cheap,   │
+                 │     cascade, parallel pair,  │
+                 │     <i>abstain &amp; flag</i> }        │
+                 └──────────────┬───────────────┘
+                                ▼
+                 ┌──────────────────────────────┐
+                 │ C6  VERIFICATION &amp; FEEDBACK  │
+                 │   execute → verify → update  │
+                 └──────────────┬───────────────┘
+                                │ outcome
+                 ┌──────────────┴──────────────┐
+                 ▼                             ▼
+          update descriptor (C2)      update predictor (C4)</pre>
+    <figcaption>★ marks the two research components. Everything else is deliberately thin (D9).</figcaption>
+  </figure>
+
+  <h3>C2 · Probe profiling <span class="tag t-acc">research core</span></h3>
+  <p class="col">User supplies endpoint and key. System runs the probe set — k tasks, executed and verified — and emits a measured descriptor: pass rate per category × difficulty cell with marginal backoff, verbosity, latency, truncation rate, format compliance, price. <strong>Bounded, disclosed upfront, charged to the user's own account.</strong></p>
+  <figure>
+<pre>probe-size sweep, 200 resampling trials on the 65-task matrix
+
+  k probe   descriptor accuracy   argmax-routed pass
+       3          63.8%                52.7%
+      10          66.8%                52.4%
+      20          70.4%                52.7%
+      40          <b>74.4%</b>                <b>51.7%</b>
+                  ^ still climbing     ^ FLAT, below best-single 53.8%</pre>
+    <figcaption>Two load-bearing findings. Descriptor accuracy is still improving at k=40, so probe economics is a real research question, not a footnote. And argmax-over-descriptor never beats best-single at any k — the descriptor is not for picking a winner, it is for thresholding sufficiency. H4 reappearing at the descriptor level, confirming D1.</figcaption>
+  </figure>
+  <p class="col">The descriptor wants 5 categories × 3 difficulties = <strong>15 cells</strong>, so k in the 12–15 range gives roughly one sample per cell — almost certainly too noisy. Let experiment E4 set k; do not assume it.</p>
+
+  <h3>C6 · Verification ladder</h3>
+  <div class="scroll"><table>
+    <thead><tr><th class="num">Rung</th><th>Signal</th><th>Quality</th><th>Availability</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td class="num">1</td><td>User's own test suite</td><td>best</td><td>when the repo has tests</td></tr>
+      <tr><td class="num">2</td><td>Generated tests</td><td>noisy</td><td>always</td></tr>
+      <tr><td class="num">3</td><td>Compile / typecheck / lint</td><td>weak</td><td>always</td></tr>
+      <tr><td class="num">4</td><td>Explicit accept / reject</td><td>clean</td><td>sparse</td></tr>
+    </tbody>
+  </table></div>
+  <p class="col">Every rung is automated (D5). <strong>Use the graded signal, not the binary one</strong> — on the existing 325 runs, <strong>128 (39%) sit between 1% and 99%</strong> of tests passing, and every published number binarises them to "fail." A rich continuous quality signal already paid for and never spent.</p>
+
+  <div class="note">
+    <div class="h">The honest hard part</div>
+    <p>For a general BYOK app on an arbitrary user prompt there is <strong>no test suite</strong>, so rungs 2–3 are all you get and they are weak. The self-correcting loop is strongest where executable verification exists. State this boundary explicitly and scope the evaluation inside it — a committee will respect a stated boundary and will not respect a claim that it works everywhere.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span>Data strategy</span><span class="n">06</span></h2>
+  <p class="col">The 65-task benchmark is too small to train a transferable predictor. It doesn't need to be.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Corpus</th><th>Shape</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td>RouterBench</td><td>11 models × 7 tasks · 405k inferences, with cost</td><td>training + LOMO transfer</td></tr>
+      <tr><td>LLMRouterBench</td><td>33 models · 21+ datasets · 400k+ instances</td><td>training + baseline comparison</td></tr>
+      <tr><td>TwinRouterBench</td><td>970 router-visible prefixes · SWE-bench Verified harness</td><td>step-level comparison point</td></tr>
+      <tr class="hi"><td>Our web-dev benchmark</td><td>65 tasks × 5 models · authored test suites · Docker</td><td>held-out cross-domain test</td></tr>
+    </tbody>
+  </table></div>
+  <blockquote class="col"><p><strong>Split pool shift from domain shift.</strong> E2 shifts the pool only. E5 shifts the domain. If both shift together and it fails, you cannot say which broke.</p></blockquote>
+</section>
+
+<section>
+  <h2><span>Experiments</span><span class="n">07</span></h2>
+  <div class="scroll"><table>
+    <thead><tr><th>#</th><th>Experiment</th><th>Tests</th><th>Docker?</th><th>New data?</th></tr></thead>
+    <tbody>
+      <tr><td>E1</td><td>Sufficiency predictor, held-out within pool</td><td>H-A</td><td><span class="tag t-keep">no</span></td><td>no</td></tr>
+      <tr><td>E2</td><td>Leave-one-model-out transfer, public corpus</td><td>H-B</td><td><span class="tag t-keep">no</span></td><td>public download</td></tr>
+      <tr class="hi"><td>E3</td><td>Measured vs. generated descriptors, head-to-head</td><td>H-C</td><td>no</td><td>describer API calls</td></tr>
+      <tr><td>E4</td><td>Probe-size / cost curve — how big must k be?</td><td>C2 design</td><td><span class="tag t-keep">no</span></td><td>no</td></tr>
+      <tr><td>E5</td><td>Cross-domain: public-trained router on web-dev benchmark</td><td>H-B, H-D</td><td><span class="tag t-keep">no</span></td><td>no</td></tr>
+      <tr><td>E6</td><td>Full economics: cost per accepted task</td><td>H-D</td><td><span class="tag t-keep">no</span></td><td>no</td></tr>
+      <tr><td>E7</td><td>Abstention precision / recall</td><td>H-E</td><td><span class="tag t-keep">no</span></td><td>no</td></tr>
+      <tr class="dim"><td>E8</td><td>Live BYOK validation on new authored tasks</td><td>product</td><td><span class="tag t-drop">yes</span></td><td>~15–20 tasks</td></tr>
+      <tr class="dim"><td>E9</td><td>Backfill failure_mode, eslint, compiler_errors</td><td>feature family</td><td><span class="tag t-drop">yes</span></td><td>re-run</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note ok">
+    <div class="h">The whole thesis is reachable offline</div>
+    <p>E1–E7 need no Docker and no new collection. E8–E9 are strengthening, not gating. Scope accordingly — Docker has been down across at least four sessions.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span>Metrics</span><span class="n">08</span></h2>
+  <figure>
+<pre><b>CPAT  =  total spend  /  tasks passing verification</b></pre>
+    <figcaption>The metric the field converged on in 2026. Cheap inference that fails and retries is not cheap.</figcaption>
+  </figure>
+  <p class="col"><strong>Secondary:</strong> pass rate · p50/p95 latency · escalation rate · abstention precision and recall · descriptor accuracy · regret vs. oracle as feedback accumulates (the learning curve).</p>
+  <p class="col">Latency is not free: on the existing matrix <code>8B → GPT-OSS</code> costs <strong>+21% latency</strong> for its −10.8% cost. That trade gets shown, not hidden.</p>
+  <p class="col"><strong>Reporting discipline —</strong> every cost number carries a price-sensitivity sweep (D7); abstained tasks are reported as flagged, never folded into pass rate; the oracle is always decomposed, never quoted as a single headline.</p>
+</section>
+
+<section>
+  <h2><span>Phases</span><span class="n">09</span></h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Phase</th><th>Deliverable</th><th>Gates on</th></tr></thead>
+    <tbody>
+      <tr><td>P8</td><td>Foundation — public corpus ingest, descriptor schema, probe-set construction, difficulty estimator</td><td>—</td></tr>
+      <tr><td>P9</td><td>C4 sufficiency predictor + E1, E4</td><td>P8</td></tr>
+      <tr><td>P10</td><td>E2 leave-one-model-out transfer</td><td>P9</td></tr>
+      <tr class="hi"><td>P11</td><td>E3 measured vs. generated — the novelty experiment</td><td>P9</td></tr>
+      <tr><td>P12</td><td>C5 policy engine + E5, E6, E7 (full economics)</td><td>P10</td></tr>
+      <tr><td>P13</td><td>C1/C2/C6 BYOK gateway, end-to-end demo</td><td>P12</td></tr>
+      <tr><td>P14</td><td>Governance chapter + write-up</td><td>P13</td></tr>
+    </tbody>
+  </table></div>
+  <p class="col">P11 is the highest-value phase. If time runs short: <strong>P11 &gt; P12 &gt; P13</strong>.</p>
+</section>
+
+<section>
+  <h2><span>Threats to validity</span><span class="n">10</span></h2>
+  <div class="scroll"><table>
+    <thead><tr><th>#</th><th>Threat</th><th>Severity</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td>T1</td><td><code>run_number</code> = 1 in all 325 rows. A learner trained on single samples fits noise as signal — and unlike selection, it <em>acts on</em> the failure signal, so a stochastic failure triggers a paid escalation.</td><td>highest</td><td>Public corpora carry repeated sampling. Any collection budget buys more here than anywhere else.</td></tr>
+      <tr><td>T2</td><td>No measured cost signal — <code>estimated_cost_usd</code> = 0 everywhere.</td><td>high</td><td>D7: modelled prices + mandatory sensitivity sweep.</td></tr>
+      <tr><td>T3</td><td>65 tasks → short, noisy learning curves.</td><td>high</td><td>Public corpora carry training; our benchmark is held-out domain only.</td></tr>
+      <tr><td>T4</td><td>Docker down across ≥4 sessions.</td><td>medium</td><td>E1–E7 need no Docker.</td></tr>
+      <tr><td>T5</td><td>Post-failure signal is weak here: escalation success by bucket is 27% (no tests ran) vs 35% (partial) against 32% blind, n=41 — barely separated.</td><td>medium</td><td>Design pre-execution-first. Report as a contrast with CodeRescue, which found post-failure signal strong on frontier models.</td></tr>
+      <tr><td>T6</td><td>Four schema columns never populated: <code>eslint_warnings</code> 0/325, <code>compiler_errors</code> 0/325, <code>failure_mode</code> 0/325, <code>ts_any_count</code> 19/325.</td><td>medium</td><td>E9. The strongest concrete argument for getting Docker up — it unlocks a whole feature family.</td></tr>
+      <tr class="dim"><td>T7</td><td>63 zero-test rows (19%).</td><td>resolved-ish</td><td>Derived taxonomy: 10 defective-task, 10 truncated, 43 undifferentiable. Middle treatment gives χ² p = 2.6e-4; RQ1 survives.</td></tr>
+      <tr class="dim"><td>T8</td><td>Classifier is 80% on paraphrases, not 100%.</td><td>low</td><td>Use 80% in all downstream error budgets.</td></tr>
+      <tr><td>T9</td><td>Public corpora are QA/reasoning, not code.</td><td>medium</td><td>Precisely why E2 and E5 are separate experiments.</td></tr>
+      <tr><td>T10</td><td>The probe run spends the user's money on their own account.</td><td>product</td><td>Bound it, disclose before running, cap it. Black-box only (D4).</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2><span>What carries over</span><span class="n">11</span></h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Asset</th><th>New role</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>65-task benchmark + test suites + Docker</td><td>Held-out cross-domain test (E5) <em>and</em> the probe instrument (C2)</td><td><span class="tag t-keep">kept</span></td></tr>
+      <tr><td><code>pipeline/</code> collection, DB, <code>analysis/</code></td><td>Unchanged infrastructure</td><td><span class="tag t-keep">kept</span></td></tr>
+      <tr><td>Category classifier</td><td>C3</td><td><span class="tag t-keep">kept</span></td></tr>
+      <tr><td>H4 refutation (+8.6% ceiling)</td><td>The motivation for the entire redesign</td><td><span class="tag t-keep">promoted</span></td></tr>
+      <tr><td>Fixed cascade 56.9% @ −10.8%</td><td>The day-one baseline H-D must beat</td><td><span class="tag t-keep">promoted</span></td></tr>
+      <tr><td><code>failure_taxonomy.py</code>, <code>zero_test_treatment</code></td><td>Data-quality handling — needs merging from the unmerged branch</td><td><span class="tag t-keep">kept</span></td></tr>
+      <tr><td><code>human_eval/</code> + Bradley-Terry + sampler</td><td>Optional external-validity note in the discussion chapter</td><td><span class="tag t-acc">demoted</span></td></tr>
+      <tr><td>H3 — automated ≈ human ranking</td><td>No longer gates anything (D5)</td><td><span class="tag t-acc">demoted</span></td></tr>
+      <tr><td>Phase 8 as originally planned — React "which model" demo</td><td>Superseded. Nothing to demonstrate at a +8.6% ceiling.</td><td><span class="tag t-drop">retired</span></td></tr>
+      <tr><td>The selection recommender as a product</td><td>Its refutation is a finding; its implementation is not the deliverable.</td><td><span class="tag t-drop">retired</span></td></tr>
+      <tr><td>The uncross-validated 55.4% routing figure</td><td>Held out properly it is 53.8% — a +0.0 gain. Correct wherever it appears.</td><td><span class="tag t-drop">retired</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2><span>Open items</span><span class="n">12</span></h2>
+  <div class="grid2">
+    <div class="card">
+      <div class="k">Decide early — blocks nothing yet</div>
+      <p>1 · Confirm RouterBench / LLMRouterBench licences permit thesis use and that per-instance cost fields exist as documented.<br>
+      2 · Choose the describer model for E3 and fix its knowledge cutoff — the "outside knowledge" stratum depends on it.<br>
+      3 · Decide whether E8 (live BYOK) is thesis scope or future work.</p>
+    </div>
+    <div class="card">
+      <div class="k">Standing blockers, carried forward</div>
+      <p>Docker not running — gates E8, E9, and the API-013 / CSS-012 defective-task check.<br>
+      <code>pytest</code> is not in <code>pipeline/venv</code>; use a scratch venv.<br>
+      No pandoc — reports render Markdown → HTML → headless Chrome; <code>Report_6.pdf</code> is stale.<br>
+      Branch <code>worktree-phase6-7-data-sufficiency</code> is unmerged and unpushed.</p>
+    </div>
+  </div>
+</section>
+
+<section class="refs">
+  <h2><span>References</span><span class="n">13</span></h2>
+
+  <h4>Prior art this project contests or builds on</h4>
+  <ul>
+    <li><a href="https://arxiv.org/abs/2410.03834">GraphRouter: A Graph-based Router for LLM Selections</a> · ICLR 2025 · <a href="https://github.com/ulab-uiuc/GraphRouter">code</a>
+      <em>Generalises to new LLMs via LLM-generated descriptions. H-C contests this directly.</em></li>
+    <li><a href="https://github.com/ulab-uiuc/LLMRouter">LLMRouter</a> — open-source routing library</li>
+    <li><a href="https://github.com/ulab-uiuc/Router-R1">Router-R1</a> · NeurIPS 2025 — multi-round routing via RL</li>
+    <li>RouteLLM — preference-data routing with a cost-quality threshold</li>
+    <li>FrugalGPT — cascade-through-cheaper-first</li>
+  </ul>
+
+  <h4>Benchmarks and corpora</h4>
+  <ul>
+    <li><a href="https://arxiv.org/abs/2403.12031">RouterBench: A Benchmark for Multi-LLM Routing System</a></li>
+    <li><a href="https://arxiv.org/html/2601.07206v1">LLMRouterBench</a> · Findings@ACL 2026 · <a href="https://github.com/ynulihao/LLMRouterBench">code</a></li>
+    <li><a href="https://arxiv.org/abs/2605.18859">TwinRouterBench: Fast Static and Live Dynamic Evaluation for Realistic Agentic LLM Routing</a></li>
+    <li>RouterArena · ICLR 2026 — open platform for router evaluation</li>
+  </ul>
+
+  <h4>The 2026 execution-aware turn</h4>
+  <ul>
+    <li><a href="https://arxiv.org/abs/2607.19338">CodeRescue: Budget-Calibrated Recovery Routing for Coding Agents</a>
+      <em>Post-failure recovery routing with conformal risk control; exceeds always-escalate solve rate at 35% of its mean recovery cost. Our T5 finds the opposite signal strength on a cheap open pool — that contrast is reportable.</em></li>
+    <li><a href="https://arxiv.org/abs/2606.22902">Agent-as-a-Router: Agentic Model Routing for Coding Tasks</a></li>
+    <li><a href="https://arxiv.org/html/2607.11399">Agentic Routing: The Harness-Native Data Flywheel</a></li>
+    <li><a href="https://arxiv.org/pdf/2605.25424">SeqRoute: Global Budget-Aware Sequential LLM Routing via Offline RL</a></li>
+    <li><a href="https://pakodas.substack.com/p/llm-routers">State of LLM Routers in 2026</a></li>
+  </ul>
+
+  <h4>Market and practitioner context</h4>
+  <ul>
+    <li><a href="https://www.getmaxim.ai/articles/5-enterprise-ai-gateways-for-llm-cost-control-in-2026/">Enterprise AI gateways for LLM cost control in 2026</a></li>
+    <li><a href="https://www.truefoundry.com/blog/ai-cost-optimization-strategies">AI cost optimization strategies for 2026</a></li>
+    <li><a href="https://www.braintrust.dev/articles/best-llm-routers-2026">Best LLM routers and model routing platforms in 2026</a></li>
+    <li><a href="https://www.cloudzero.com/blog/groq-pricing/">Groq per-model pricing, 2026</a></li>
+  </ul>
+</section>
+
+<footer>
+  Every new figure here was computed 2026-08-16 against pipeline/exports/results_full.csv — 325 rows, 5 models × 65 tasks — under Groq published list prices.<br>
+  Reproduce with pipeline/analysis/exploratory/{cascade_economics, oracle_decomposition, probe_size_curve, feature_availability}.py<br>
+  Prices are a modelling assumption (D7). Llama-4-Scout and Qwen3-32B rates were not directly confirmed and are approximate. Single run per cell (T1) — no variance estimate.<br>
+  Carried from earlier phases: +8.6% ceiling · Cramér's V 0.515 · 80% classifier accuracy · zero-test taxonomy.
+</footer>
+
+</div>
