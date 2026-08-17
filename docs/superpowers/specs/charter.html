@@ -258,7 +258,8 @@ footer{border-top:2px solid var(--ink);margin-top:64px;padding-top:20px;font-fam
   </figure>
 
   <h3>H-B · Does the policy transfer to unseen models?</h3>
-  <blockquote class="col"><p>A router trained on pool A, given only a k-task probe descriptor of an unseen model M, retains most of the routing gain of a router that had M in-pool. <strong>Target: ≥80% of in-pool improvement retained.</strong></p></blockquote>
+  <blockquote class="col"><p>A router trained on pool A, given only a k-task probe descriptor of an unseen model M, retains most of the <strong>CPAT reduction</strong> achieved by an otherwise-identical router that had M in-pool. <strong>Target: ≥80% retained.</strong></p></blockquote>
+  <p class="col"><strong>Measured on a public corpus (E2), not on our 65-task matrix</strong> — and that distinction matters. Our pool is nested, so there is no in-pool <em>routing gain</em> here to retain 80% of; C2's probe sweep below shows argmax-over-descriptor flat at ~52% for every k. H-B is defined against <strong>cost reduction at held pass rate</strong>, the quantity D1 actually optimises, and evaluated where a measurable in-pool gain exists.</p>
 
   <h3>H-C · Measured descriptors vs. generated ones <span class="tag t-acc">the novelty</span></h3>
   <p class="col">GraphRouter (ICLR 2025) already generalises to new LLMs — by using <em>"a generative LLM such as GPT-4o to generate a descriptive text for each LLM, outlining key details such as its strengths, token pricing, and context length,"</em> embedded with BERT.</p>
@@ -278,10 +279,15 @@ footer{border-top:2px solid var(--ink);margin-top:64px;padding-top:20px;font-fam
       <tr class="dim"><td>Phase 6 selection recommender</td><td class="num">36.9%</td><td class="num">—</td><td class="num">refuted</td></tr>
       <tr><td>Always GPT-OSS-120B <em>(baseline)</em></td><td class="num">53.8%</td><td class="num">0.000422</td><td class="num">—</td></tr>
       <tr class="hi"><td>Fixed cascade · Llama-3.1-8B → GPT-OSS-120B</td><td class="num">56.9%</td><td class="num">0.000377</td><td class="num">−10.8%</td></tr>
-      <tr><td>Fixed cascade · Llama-4-Scout → GPT-OSS-120B</td><td class="num">58.5%</td><td class="num">0.000433</td><td class="num">+2.5%</td></tr>
+      <tr><td>Fixed cascade · Llama-4-Scout → GPT-OSS-120B <span class="tag t-drop">† unconfirmed price</span></td><td class="num">58.5%</td><td class="num">0.000433</td><td class="num">+2.5%</td></tr>
       <tr class="dim"><td>Oracle · cheapest model that solves it</td><td class="num">58.5%</td><td class="num">0.000089</td><td class="num">−78.8%</td></tr>
     </tbody>
   </table></div>
+
+  <div class="note">
+    <div class="h">Price provenance</div>
+    <p>Groq list rates are <strong>confirmed</strong> for Llama-3.1-8B ($0.05/$0.08), Llama-3.3-70B ($0.59/$0.79) and GPT-OSS-120B ($0.15/$0.60). Rates for <strong>Llama-4-Scout (~$0.11/$0.34) and Qwen3-32B (~$0.29/$0.59) are unconfirmed</strong> — †-marked rows rest on them and must be re-checked before publication. <strong>The headline result — Llama-3.1-8B → GPT-OSS-120B at 56.9% / −10.8% — uses only confirmed prices and stands regardless.</strong> Six decimals reflect arithmetic precision, not measurement precision; the prices themselves are modelled (D7).</p>
+  </div>
 
   <div class="note">
     <div class="h">The oracle figure is inflated — decompose it</div>
@@ -491,10 +497,11 @@ footer{border-top:2px solid var(--ink);margin-top:64px;padding-top:20px;font-fam
   <h2><span>Open items</span><span class="n">12</span></h2>
   <div class="grid2">
     <div class="card">
-      <div class="k">Decide early — blocks nothing yet</div>
-      <p>1 · Confirm RouterBench / LLMRouterBench licences permit thesis use and that per-instance cost fields exist as documented.<br>
-      2 · Choose the describer model for E3 and fix its knowledge cutoff — the "outside knowledge" stratum depends on it.<br>
-      3 · Decide whether E8 (live BYOK) is thesis scope or future work.</p>
+      <div class="k">Decide early</div>
+      <p>1 · <strong>Choose the describer model for E3</strong> and fix its knowledge cutoff — the "outside knowledge" stratum, and so the whole novelty experiment, depends on being able to state it. Gates P11.<br>
+      2 · Confirm RouterBench / LLMRouterBench licences permit thesis use and that per-instance cost fields exist as documented.<br>
+      3 · Confirm Groq rates for Llama-4-Scout and Qwen3-32B, or drop the †-marked rows.<br>
+      4 · Decide whether E8 (live BYOK) is thesis scope or future work.</p>
     </div>
     <div class="card">
       <div class="k">Standing blockers, carried forward</div>

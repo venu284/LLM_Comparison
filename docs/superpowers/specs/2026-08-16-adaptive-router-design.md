@@ -152,10 +152,17 @@ ground-truth difficulty label — `recommender.py:214` currently hardcodes
 ### 4.2 RQ-B — Does the policy transfer to unseen models?
 
 > **H-B.** A router trained on model pool A, given only a k-task probe descriptor
-> of an unseen model M, retains most of the routing gain of a router that had M
-> in its training pool.
+> of an unseen model M, retains most of the **CPAT reduction** achieved by an
+> otherwise-identical router that had M in its training pool.
 
-**Target:** ≥ 80% of in-pool cost-per-accepted-task improvement retained.
+**Target:** ≥ 80% of the in-pool CPAT reduction retained.
+
+**Measured on a public corpus (E2), not on the 65-task matrix.** This matters:
+our pool is nested, so there is no in-pool *routing gain* here to retain 80% of —
+§5/C2 shows argmax-over-descriptor flat at ~52% for every k. H-B is defined
+against **cost reduction at held pass rate**, which is the quantity D1 actually
+optimises, and it is evaluated where a measurable in-pool gain exists.
+
 **Design:** leave-one-model-out within a public corpus. Isolates the *pool* shift.
 
 ### 4.3 RQ-C — Are measured descriptors better than generated ones? ← the novelty
@@ -196,8 +203,17 @@ post-dating the describer).
 | Phase 6 selection recommender | 36.9% | — | refuted |
 | Always GPT-OSS-120B (baseline) | 53.8% | 0.000422 | — |
 | **Fixed cascade** Llama-3.1-8B → GPT-OSS-120B | **56.9%** | **0.000377** | **−10.8%, +3.1pp** |
-| Fixed cascade Llama-4-Scout → GPT-OSS-120B | 58.5% | 0.000433 | +2.5% |
+| Fixed cascade Llama-4-Scout → GPT-OSS-120B † | 58.5% | 0.000433 | +2.5% |
 | Oracle (cheapest model that solves it) | 58.5% | 0.000089 | −78.8% |
+
+**Price provenance.** Groq list rates were confirmed for **Llama-3.1-8B
+($0.05/$0.08), Llama-3.3-70B ($0.59/$0.79), and GPT-OSS-120B ($0.15/$0.60)**.
+Rates for **Llama-4-Scout (~$0.11/$0.34) and Qwen3-32B (~$0.29/$0.59) are
+unconfirmed** and were taken from recall — rows marked **†** rest on them and must
+be re-checked before publication. **The headline result — Llama-3.1-8B →
+GPT-OSS-120B at 56.9% / −10.8% — uses only confirmed prices and stands
+regardless.** Six-decimal figures reflect arithmetic precision, not measurement
+precision; the underlying prices are modelled (D7).
 
 **Honest headroom, decomposed.** The −78.8% oracle figure is inflated: 68.4% of it
 comes from the oracle clairvoyantly *declining to attempt* the 27 tasks (42%) no
@@ -498,12 +514,15 @@ P11 is the highest-value phase. If time runs short, P11 > P12 > P13.
 
 ## 12. Open items
 
-**Blocking nothing, but decide early:**
-1. Confirm RouterBench / LLMRouterBench licences permit thesis use, and that the
+**Decide early:**
+1. **Choose the describer model for E3** and fix its knowledge cutoff — the
+   "outside knowledge" stratum, and therefore the entire novelty experiment,
+   depends on being able to state it. This gates P11, the highest-value phase.
+2. Confirm RouterBench / LLMRouterBench licences permit thesis use, and that the
    per-instance cost fields are present as documented.
-2. Choose the describer model for E3 (the GPT-4o-equivalent writing descriptions)
-   and fix its knowledge cutoff — the "outside knowledge" stratum depends on it.
-3. Decide whether E8 (live BYOK) is in scope for the thesis or is future work.
+3. Confirm Groq list rates for Llama-4-Scout and Qwen3-32B, or drop the †-marked
+   rows from any published table (§4.4).
+4. Decide whether E8 (live BYOK) is in scope for the thesis or is future work.
 
 **Standing blockers, carried forward:**
 - Docker not running. Gates E8, E9, and the API-013 / CSS-012 defective-task check.
