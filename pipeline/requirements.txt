@@ -21,5 +21,12 @@ scipy>=1.11.0
 matplotlib>=3.8.0
 seaborn>=0.13.0
 
+# Router (router/; see docs/IMPLEMENTATION_PLAN.md). huggingface_hub is installed for M1;
+# sentence-transformers (pulls torch) and fastapi/uvicorn are installed at M3 and M7.
+huggingface_hub>=0.24.0
+sentence-transformers>=3.0.0
+fastapi>=0.110.0
+uvicorn>=0.29.0
+
 # Tests (run from the repo root: python -m pytest; config in pyproject.toml)
 pytest>=8.0
