@@ -227,6 +227,18 @@ class TestFailureTaxonomy:
         assert set(labels).issubset(set(failure_taxonomy.LABELS))
         assert labels.iloc[2] == failure_taxonomy.EXTRACTION_FAILED
 
+    def test_extraction_failure_with_a_recorded_test_total_is_still_extraction_failed(self):
+        """The run_eval failure builders store tests_total=task.test_count when no
+        code was extracted, as on FE-010 / Llama-3.3-70B (13 tests, 0 output
+        tokens). The label must not depend on tests_total being zero."""
+        frame = self._frame([
+            self._row("FE-010", "Llama-3.3-70B", tests_total=13, tokens=0, extracted=False),
+            self._row("FE-010", "GPT-OSS-120B", passed=True, tests_total=13),
+        ])
+        labels = failure_taxonomy.classify(frame, max_tokens=4096)
+        assert labels.iloc[0] == failure_taxonomy.EXTRACTION_FAILED
+        assert failure_taxonomy.artifactual_mask(frame, max_tokens=4096).iloc[0]
+
     def test_summary_reports_absent_labels_as_zero(self):
         frame = self._frame([
             self._row("T-001", "A", passed=True),

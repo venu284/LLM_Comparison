@@ -99,7 +99,10 @@ def classify(frame: pd.DataFrame, max_tokens: Optional[int] = None) -> pd.Series
 
     labels = pd.Series(TESTS_FAILED, index=frame.index, dtype=object)
     labels[passed] = PASSED
-    labels[zero_tests & extraction_failed] = EXTRACTION_FAILED
+    # Not gated on zero_tests: the run_eval failure builders record
+    # tests_total=task.test_count even when no code was extracted, so an
+    # extraction failure can carry a non-zero test total (FE-010 / Llama-3.3-70B).
+    labels[~passed & extraction_failed] = EXTRACTION_FAILED
     labels[zero_tests & truncated] = TRUNCATED_OUTPUT
     labels[zero_tests & defective] = DEFECTIVE_TASK
     labels[zero_tests & ~defective & ~truncated & ~extraction_failed] = NO_TESTS_RUN
