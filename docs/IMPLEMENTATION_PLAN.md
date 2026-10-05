@@ -8,10 +8,10 @@
 
 | Field | Value |
 |---|---|
-| Current milestone | **M0 — Setup and novelty check** (not started) |
-| Next action | M0.1: confirm Docker runs; M0.2: create the `router/` package skeleton |
-| Overall progress | Design 100% · Implementation 0% · Experiments 0% · Write-up 0% |
-| Last updated | 2026-10-04 |
+| Current milestone | **M0 — Setup and novelty check** (in progress: repo cleanup done) |
+| Next action | User starts Docker Desktop, then M0.1; M0.2: create the `router/` package skeleton; M0.4 novelty check |
+| Overall progress | Design 100% · Repo prep 100% · Implementation 0% · Experiments 0% · Write-up 0% |
+| Last updated | 2026-10-05 |
 | Final deadline | December 2026 (exact submission and defence dates: **TBD — user to fill in**) |
 
 ---
@@ -72,7 +72,7 @@ possible.
 ```
 router/
   __init__.py
-  config.py              # paths, price tables, τ, k, seeds
+  settings.py            # paths, price tables, τ, k, seeds (not `config.py`: pipeline/ owns bare `config`)
   data/
     schema.py            # OutcomeMatrix: task_id, dimension, model, score, cost_usd, tokens, exec_scored
     coderouterbench.py   # loader for HF Lance1573/CodeRouterBench
@@ -100,17 +100,24 @@ router/
     wrap.py              # `router wrap -- <test cmd>` verification mode
   dashboard/             # static page or Streamlit: models, onboarding curve, decisions, $ saved
   cli.py                 # router add-model | probe | run | serve | wrap | replay
-tests/router/            # pytest, mirrors router/
+tests/router/            # pytest, mirrors router/ (add "tests/router" to testpaths in pyproject.toml)
 ```
+
+**Import rule:** `pyproject.toml` puts the repo root, `pipeline/` and `human_eval/` on the test path,
+matching their bare imports. Router code imports pipeline modules by those bare names
+(`from components.llm_gateway import LLMGateway`). It must never define a top-level module called
+`config`, `models`, `analysis` or `db`. Run tests from the repo root with
+`pipeline/venv/bin/python -m pytest`.
 
 **Existing code to reuse; do not rewrite it:**
 - `pipeline/components/llm_gateway.py` (`LLMGateway`, an async LiteLLM wrapper with retry)
 - `pipeline/components/test_runner.py` (`TestRunner`, the Docker test execution)
 - `pipeline/components/code_extractor.py` (`CodeExtractor`)
 - `pipeline/components/task_loader.py` (`TaskLoader`, for the 65 tasks in `benchmark/tasks/`)
-- `pipeline/analysis/data.py` (`load_experiment_data(zero_test_treatment=...)`)
-- `pipeline/analysis/failure_taxonomy.py`. This lives only on branch
-  `worktree-phase6-7-data-sufficiency`; see M0.
+- `pipeline/analysis/data.py` (`load_experiment_data(csv_path="data/phase5_results.csv",
+  prefer_database=False, zero_test_treatment=...)`)
+- `pipeline/analysis/failure_taxonomy.py` (derived failure labels; on `main` since 2026-10-05)
+- `data/phase5_results.csv`, the frozen 325-run snapshot (SHA-256 in `data/README.md`). Never edit it.
 
 ---
 
@@ -120,17 +127,18 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[-]` dropped (say why 
 Every milestone has an **exit gate**. Do not start the next milestone's core work until the gate passes.
 
 ### M0 — Setup and novelty check (target: Oct 5–11)
-- [ ] M0.1 Confirm Docker runs. Run `cd benchmark && ./docker-run.sh task API-013` against the reference solution
+- [ ] M0.1 **Blocked: the Docker daemon is not running; the user must start Docker Desktop.** Confirm Docker runs. Run `cd benchmark && ./docker-run.sh task API-013` against the reference solution
       to settle the suspected defective tasks (API-013, CSS-012).
-- [ ] M0.2 Create the `router/` skeleton and `tests/router/`. Add `pytest`, `sentence-transformers`,
-      `fastapi`, `uvicorn` and `huggingface_hub` to requirements. Install `pytest` into the venv
-      (it is currently missing).
-- [ ] M0.3 Decide with the user whether to merge `worktree-phase6-7-data-sufficiency` into `main`.
-      It holds `failure_taxonomy.py` and the zero-test treatment.
+- [~] M0.2 Create the `router/` skeleton and `tests/router/`. Add `sentence-transformers`,
+      `fastapi`, `uvicorn` and `huggingface_hub` to requirements. *Done 2026-10-05:* pytest is installed
+      and declared, root `pyproject.toml` holds the test config, and all 73 tests pass.
+- [x] M0.3 Merge every worktree branch into `main` (done 2026-10-05: data-sufficiency, goal-lock and
+      progress-report-7, all `--no-ff`; see the log).
 - [ ] M0.4 Novelty check (about 1 day). Read FlyRoute, MonoRouter, "Routing with Generated Data:
       Annotation-Free LLM Skill Estimation", and papers that cite ACRouter (2606.22902). Record the
       verdict in the log.
 - [ ] M0.5 Check that the unverified ids in Report 7's references ([26], [28]–[31]) resolve.
+- [ ] M0.6 Repo-audit backlog: see §4a. Nothing there blocks M1–M5.
 - **Gate:** Docker works, `pytest` runs, and the novelty verdict is recorded. If a paper already
   does onboarding-k-vs-regret, reframe the contribution before M3.
 
@@ -141,7 +149,8 @@ Every milestone has an **exit gate**. Do not start the next milestone's core wor
       dimension as exec-scored or LLM-judged; the primary evidence uses exec-scored only.
 - [ ] M1.3 Write `llmrouterbench.py` for the code subsets (livecodebench, swe-bench/verified,
       humaneval, mbpp). Drop the zero-cost models from all economic metrics.
-- [ ] M1.4 Write `phase5.py` over our 325 runs. Never write to the `runs` table (D10).
+- [ ] M1.4 Write `phase5.py` over `data/phase5_results.csv`. Never write to the `runs` table (D10);
+      evaluation runs now need `--db` to touch the database at all.
 - [ ] M1.5 Write `prices.py`. Use the CodeRouterBench Table 6 prices, plus published list prices for the
       free-tier models in the live pool, with the source URL and access date for each.
 - [ ] M1.6 Unit tests: row counts match the published stats (CodeRouterBench probe 7,080 /
@@ -231,6 +240,47 @@ Every milestone has an **exit gate**. Do not start the next milestone's core wor
 - [ ] M8.3 Resolve or mark all unverified citations.
 - [ ] M8.4 Slides and a recorded demo as a backup for the defence.
 
+
+### 4a. Repo-audit backlog (from the 2026-10-05 pre-implementation audit)
+
+These items were found while auditing the reused components. Each is a **prerequisite of the
+milestone named**, so do it at the start of that milestone, not earlier.
+
+**Before M6 (live layer):**
+- [ ] Derive and persist `failure_mode`, `runner_error`, `llm_error` and `extraction_method` when
+      writing runs (`results_storage.py:213-221`, `run_eval.py` failure builders). Plan step M6.5
+      depends on this.
+- [ ] Failure builders in `run_eval.py` record `tests_total=task.test_count` even when no code was
+      extracted. Record 0, or the real collected count, for new runs.
+- [ ] Strip `<think>…</think>` in `CodeExtractor` before code extraction (reasoning models are in the live pool).
+- [ ] Give each attempt its own temp file and folder in `CodeExtractor` (`code_extractor.py:76`), and
+      have `cleanup()` delete only its own files.
+- [ ] `TestRunner`:
+  - take `model_name` as a parameter (it is always `"unknown"`);
+  - wrap its call in `asyncio.to_thread`;
+  - run with `docker run --name` and `docker kill` on timeout;
+  - build the image before timing starts.
+- [ ] Rebuild the Docker image when `tests/` or `tasks/` change (content-hash tag). It currently
+      only builds if the image is missing.
+- [ ] Sandbox untrusted model code: `--network none --memory --cpus --pids-limit` in `docker-run.sh:70`.
+
+**Before M7 (proxy):**
+- [ ] Add `LLMGateway.query_messages()` for chat message lists, make the retry backoff
+      configurable, and narrow the `"rate"` substring check (`llm_gateway.py:73,123,127`).
+
+**During M1:**
+- [ ] `router/data/prices.py` becomes the single source of prices. The hardcoded Groq prices in
+      `pipeline/analysis/exploratory/*.py` and the all-zero `config.yaml` `cost_rates` stay as
+      Phase 5 provenance only.
+
+**Backlog (not blocking):**
+- [ ] `TestRunner._count_any_usage` counts `any` inside comments and strings. Count type positions only.
+- [ ] Remove the dead `.env.example` keys (`MAX_TOKENS`, `TEMPERATURE`, `WARMUP_REQUESTS`, `RUNS_PER_TASK`).
+- [ ] Remove the unused requirements (`sqlalchemy`, `aiohttp`, `asyncio-pool`, `pydantic`) and pin a lockfile.
+- [ ] Move `configure_logging()` in `run_eval.py` out of import time.
+- [ ] `config.yaml` `runs_per_task: 3` disagrees with the data (Phase 5 ran 1); add a comment.
+- [ ] Add a LICENSE before vendoring third-party code under `external/`.
+
 ---
 
 ## 5. Timeline
@@ -316,9 +366,40 @@ The full list is in `Reports/Research_Progress_Report_7.md` §10.
 
 ## 10. Progress log
 
-| Date | Session summary |
-|---|---|
-| 2026-08-16 | Direction reset to a sufficiency router; charter D1–D10 (branch `worktree-phase8-goal-lock`). |
-| 2026-08-18 | Adversarial review: H-C is prior art, CPAT needs a floor, nesting holds, −33 to −50% CPAT prize. |
-| Sep 2026 | Literature review; PROBE-CASCADE designed; Report 7 written and submitted (branch `worktree-progress-report-7`). |
-| 2026-10-04 | This plan created. User decisions: code in a `router/` package in this repo; free-tier APIs only; demo as an OpenAI-compatible proxy plus dashboard; Docker available. Next: M0. |
+Newest entries go at the bottom. One `###` heading per session.
+
+### 2026-08-16
+
+Direction reset to a sufficiency router; charter D1–D10 (branch `worktree-phase8-goal-lock`).
+
+### 2026-08-18
+
+Adversarial review: H-C is prior art, CPAT needs a floor, nesting holds, −33 to −50% CPAT prize.
+
+### Sep 2026
+
+Literature review; PROBE-CASCADE designed; Report 7 written and submitted (branch `worktree-progress-report-7`).
+
+### 2026-10-04
+
+This plan created. User decisions: code in a `router/` package in this repo; free-tier APIs only; demo as an OpenAI-compatible proxy plus dashboard; Docker available. Next: M0.
+
+### 2026-10-05
+
+Repo cleanup before implementation (branch `worktree-repo-cleanup`, pushed to `main`).
+
+- **Git:**
+  - added a root `.gitignore` (`.claude/` ignored and untracked, `.DS_Store` untracked, `.env*` ignored);
+  - merged data-sufficiency, goal-lock and progress-report-7 with `--no-ff`;
+  - moved the 5 handover notes to `docs/history/handover/`.
+- **Data and tests:**
+  - froze the Phase 5 data at `data/phase5_results.csv`;
+  - repointed the exploratory scripts to it;
+  - added root `pyproject.toml` pytest config (73 tests pass);
+  - made DB writes opt-in (`--db`).
+- **Fix and erratum:** `failure_taxonomy` now labels extraction failures whatever the test total, which affects FE-010 / Llama-3.3-70B only. `drop_artifactual` drops 21 rows, not 20.
+  - RQ1 under `drop_artifactual` moves from p = 2.6e-4, V = 0.265 to p = 2.4e-4, V = 0.267.
+  - `keep` is unchanged (p = 1.9e-5), and the conclusion holds.
+  - Report 7 (submitted) quotes the old taxonomy counts. The thesis must use the corrected ones.
+- **Analysis reproduced:** oracle 58.5%, best single 53.8%, recommender 36.9%.
+- **Blocker:** the Docker daemon is not running.
