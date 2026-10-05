@@ -1,4 +1,6 @@
-# Phase 4 Evaluation Pipeline
+# Evaluation Pipeline
+
+Built in Phase 4; produced the 325 Phase 5 runs. Database writes are opt-in (`--db`); see the root README.
 
 This module builds the automated evaluation pipeline on top of the Phase 3 benchmark in [`../benchmark`](../benchmark).
 
@@ -59,11 +61,11 @@ cd ../benchmark && ./docker-run.sh build && ./docker-run.sh validate && cd ../pi
 # Warm up model connections
 python scripts/warmup.py
 
-# Dry run: one task, one run, no DB writes
-python run_eval.py --task FE-001 --runs 1 --no-db
+# Dry run: one task, one run (no DB writes unless --db is passed)
+python run_eval.py --task FE-001 --runs 1
 
 # Single task with selected models
-python run_eval.py --task FE-001 --models "Llama-3.3-70B" "GPT-OSS-120B" --runs 1 --no-db
+python run_eval.py --task FE-001 --models "Llama-3.3-70B" "GPT-OSS-120B" --runs 1
 
 # Category batch
 python run_eval.py --category frontend --runs 3

@@ -7,6 +7,19 @@ The project is organized around two main modules:
 - `benchmark/` - a web-development benchmark with tasks, tests, fixtures, and reference solutions.
 - `pipeline/` - a Python evaluation pipeline that runs LLM experiments against the benchmark and stores the results.
 
+## Project Status
+
+Phases 1–6 are complete: benchmark, pipeline, 325 evaluation runs, and statistical analysis.
+Phase 6 found that routing between these five models has little headroom (+8.6% oracle ceiling),
+because their successes are nested. The project has therefore moved on to **PROBE-CASCADE**: a
+cost-aware router for coding tasks that onboards newly added models with a small measured probe.
+The 65 web-dev tasks here serve as its showcase domain.
+
+- Current plan, status and next steps: [docs/IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md)
+- Design rationale and literature: [Reports/Research_Progress_Report_7.md](Reports/Research_Progress_Report_7.md)
+- Phase 5–7 results: [Reports/Research_Progress_Report_6.md](Reports/Research_Progress_Report_6.md)
+- Frozen Phase 5 data: [data/phase5_results.csv](data/README.md)
+
 ## Project Objectives
 
 The goal of this project is to evaluate how well different LLMs can solve realistic development tasks across common web engineering areas:
@@ -181,12 +194,16 @@ Evaluate a candidate solution file against one task:
 
 ## Running LLM Evaluations
 
-Run a single task against all configured models without database writes:
+Results are **not** written to the database unless `--db` is passed. The Phase 5 `runs` table is
+the published record, and database writes upsert on `(task, model, run_number)`, so a new run
+could overwrite a Phase 5 row. Store new runs in a separate table or database.
+
+Run a single task against all configured models:
 
 ```bash
 cd pipeline
 source venv/bin/activate
-python run_eval.py --task FE-001 --runs 1 --no-db
+python run_eval.py --task FE-001 --runs 1
 ```
 
 Run one task against selected models:
@@ -201,7 +218,7 @@ Run a full category:
 python run_eval.py --category frontend --runs 3
 ```
 
-Run the full experiment:
+Run the full experiment (Phase 5 used one run per task):
 
 ```bash
 python run_eval_all.py --runs 3
@@ -242,27 +259,31 @@ These runtime artifacts are ignored by Git except for placeholder files.
 ```text
 LLM_Comparison/
 |-- README.md
-|-- benchmark/
-|   |-- tasks/
-|   |-- tests/
-|   |-- solutions/
-|   |-- fixtures/
+|-- CLAUDE.md              # pointer for Claude Code sessions
+|-- pyproject.toml         # pytest configuration
+|-- benchmark/             # 65 web-dev tasks, tests, solutions, Docker harness
+|-- data/                  # frozen Phase 5 results snapshot
+|-- docs/
+|   |-- IMPLEMENTATION_PLAN.md   # living plan for the router
+|   |-- history/handover/        # session handover notes
+|   `-- superpowers/specs/       # design specs and the router charter
+|-- human_eval/            # Phase 7 pairwise voting app and Bradley-Terry
+|-- pipeline/
+|   |-- analysis/          # Phase 6 statistics, recommender, failure taxonomy
+|   |   `-- exploratory/   # Phase 8 cost and probe exploration scripts
+|   |-- components/        # LLM gateway, code extractor, test runner, storage
+|   |-- db/
+|   |-- models/
 |   |-- scripts/
-|   |-- Dockerfile
-|   |-- docker-run.sh
-|   `-- README.md
-`-- pipeline/
-    |-- components/
-    |-- db/
-    |-- models/
-    |-- scripts/
-    |-- tests/
-    |-- config.py
-    |-- config.yaml
-    |-- run_eval.py
-    |-- run_eval_all.py
-    `-- README.md
+|   |-- tests/
+|   |-- config.py
+|   |-- config.yaml
+|   |-- run_eval.py
+|   `-- run_eval_all.py
+`-- Reports/               # progress reports and figures
 ```
+
+Tests run from the repository root with `pipeline/venv/bin/python -m pytest`.
 
 ## Key Metrics
 
@@ -279,7 +300,7 @@ The pipeline captures the following metrics for each run:
 - TypeScript `any` usage count for TypeScript tasks
 - Compiler error count
 - Estimated cost in USD
-- Failure mode and notes, when available
+- Failure mode (defined in the schema but not yet populated: it is empty in all Phase 5 rows, and `pipeline/analysis/failure_taxonomy.py` derives it at analysis time instead)
 
 ## Notes and Limitations
 
