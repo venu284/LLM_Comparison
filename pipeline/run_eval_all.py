@@ -25,7 +25,8 @@ def main() -> None:
         help="Number of runs per task per model",
     )
     parser.add_argument("--warmup", action="store_true", help="Run warm-up requests first")
-    parser.add_argument("--no-db", action="store_true", help="Skip database storage")
+    parser.add_argument("--db", action="store_true", help="Store results in the database. Off by default: the Phase 5 runs table is the published record and upserts on (task, model, run_number) would overwrite it.")
+    parser.add_argument("--no-db", action="store_true", help="Deprecated; database storage is already off by default")
     args = parser.parse_args()
 
     if args.warmup:
@@ -39,7 +40,7 @@ def main() -> None:
         evaluate_all(
             model_names=args.models,
             runs=args.runs,
-            store_results=not args.no_db,
+            store_results=args.db,
         )
     )
 

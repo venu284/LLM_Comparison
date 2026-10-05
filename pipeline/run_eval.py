@@ -111,7 +111,7 @@ async def evaluate_task(
     task_id: str,
     model_names: Optional[List[str]] = None,
     runs: Optional[int] = None,
-    store_results: bool = True,
+    store_results: bool = False,
 ) -> List[RunResult]:
     experiment = get_experiment_settings()
     run_count = runs or int(experiment.get("runs_per_task", 3))
@@ -234,7 +234,7 @@ async def evaluate_task(
 async def evaluate_all(
     model_names: Optional[List[str]] = None,
     runs: Optional[int] = None,
-    store_results: bool = True,
+    store_results: bool = False,
 ) -> None:
     loader = TaskLoader()
     tasks = loader.load_all()
@@ -262,7 +262,8 @@ def main() -> None:
         help="Number of runs per task per model",
     )
     parser.add_argument("--warmup", action="store_true", help="Run warm-up requests first")
-    parser.add_argument("--no-db", action="store_true", help="Skip database storage")
+    parser.add_argument("--db", action="store_true", help="Store results in the database. Off by default: the Phase 5 runs table is the published record and upserts on (task, model, run_number) would overwrite it.")
+    parser.add_argument("--no-db", action="store_true", help="Deprecated; database storage is already off by default")
     args = parser.parse_args()
 
     if args.warmup:
@@ -274,7 +275,7 @@ def main() -> None:
         if not any([args.task, args.category, args.all]):
             return
 
-    store_results = not args.no_db
+    store_results = args.db
 
     if args.task:
         asyncio.run(
