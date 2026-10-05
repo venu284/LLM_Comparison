@@ -1,0 +1,12 @@
+# Test configuration only; the project is not packaged.
+#
+# Import strategy: pipeline/ and human_eval/ modules use bare imports
+# (`from config import ...`, `from bradley_terry import ...`), so both
+# directories go on the path. New code under router/ must import pipeline
+# modules by those same bare names and must never define a top-level module
+# called `config`, `models`, `analysis` or `db`.
+
+[tool.pytest.ini_options]
+testpaths = ["pipeline/tests", "human_eval"]
+pythonpath = [".", "pipeline", "human_eval"]
+addopts = "--import-mode=importlib"
