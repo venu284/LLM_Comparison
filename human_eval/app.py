@@ -20,17 +20,23 @@ import argparse
 import json
 import random
 import secrets
+import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Dict, Optional, Tuple
 from urllib.parse import parse_qs, urlparse
 
 import db
+from sampler import ComparisonScheduler
 
 # Server-side map from an opaque comparison id to the models behind each side.
 # Keeping it on the server is what makes the blinding real: a determined voter
 # cannot read the answer out of the page source.
 _PENDING: Dict[str, Tuple[str, str, str]] = {}
 _MAX_PENDING = 5000
+
+# ThreadingHTTPServer serves each request on its own thread, and the scheduler
+# keeps mutable coverage counts, so every touch of it is serialized.
+_SCHEDULER_LOCK = threading.Lock()
 
 PAGE = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
@@ -81,7 +87,7 @@ const evaluator = localStorage.getItem('evaluator_id') ||
 
 async function load(){
   document.getElementById('status').textContent='';
-  const r = await fetch('/api/pair');
+  const r = await fetch('/api/pair?evaluator='+encodeURIComponent(evaluator));
   if(!r.ok){document.getElementById('status').textContent='Error loading comparison.';return;}
   const d = await r.json(); current = d.comparison_id;
   document.getElementById('taskmeta').textContent =
@@ -133,8 +139,10 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if route == "/api/pair":
+            query = parse_qs(urlparse(self.path).query)
+            evaluator_id = (query.get("evaluator", ["anonymous"])[0] or "anonymous")[:50]
             try:
-                self._send_json(self._build_pair())
+                self._send_json(self._build_pair(evaluator_id))
             except Exception as exc:  # noqa: BLE001
                 self._send_json({"error": str(exc)}, 500)
             return
@@ -171,21 +179,28 @@ class Handler(BaseHTTPRequestHandler):
 
             task_id, model_a, model_b = entry
             db.record_vote(task_id, model_a, model_b, winner, evaluator_id)
+            with _SCHEDULER_LOCK:
+                self.server.scheduler.record(  # type: ignore[attr-defined]
+                    task_id, model_a, model_b, evaluator_id
+                )
             self._send_json({"ok": True, "total_votes": db.vote_counts()["total"]})
         except Exception as exc:  # noqa: BLE001
             self._send_json({"error": str(exc)}, 500)
 
-    def _build_pair(self) -> dict:
-        tasks = self.server.tasks  # type: ignore[attr-defined]
-        if not tasks:
-            raise RuntimeError("no tasks with two or more extractable solutions")
+    def _build_pair(self, evaluator_id: str) -> dict:
+        scheduler: ComparisonScheduler = self.server.scheduler  # type: ignore[attr-defined]
+        metadata = self.server.task_metadata  # type: ignore[attr-defined]
 
-        task = random.choice(tasks)
-        submissions = db.fetch_submissions(str(task["task_id"]))
-        if len(submissions) < 2:
-            raise RuntimeError(f"task {task['task_id']} has fewer than two solutions")
+        with _SCHEDULER_LOCK:
+            comparison = scheduler.next_comparison(evaluator_id)
 
-        first, second = random.sample(submissions, 2)
+        task_id = comparison.task_id
+        model_a, model_b = comparison.models
+        code = {entry["model_name"]: entry["code"] for entry in db.fetch_submissions(task_id)}
+        if model_a not in code or model_b not in code:
+            raise RuntimeError(f"task {task_id} is missing code for the scheduled pair")
+
+        first, second = (model_a, model_b)
         # Randomize which model is shown on the left, independently of anything
         # about the models themselves.
         if random.random() < 0.5:
@@ -194,20 +209,17 @@ class Handler(BaseHTTPRequestHandler):
         comparison_id = secrets.token_urlsafe(16)
         if len(_PENDING) > _MAX_PENDING:
             _PENDING.clear()
-        _PENDING[comparison_id] = (
-            str(task["task_id"]),
-            first["model_name"],
-            second["model_name"],
-        )
+        _PENDING[comparison_id] = (task_id, first, second)
 
+        task = metadata.get(task_id, {})
         return {
             "comparison_id": comparison_id,
-            "task_id": task["task_id"],
-            "title": task["title"],
-            "category": task["category"],
-            "difficulty": task["difficulty"],
-            "code_a": first["code"],
-            "code_b": second["code"],
+            "task_id": task_id,
+            "title": task.get("title", task_id),
+            "category": task.get("category", ""),
+            "difficulty": task.get("difficulty", ""),
+            "code_a": code[first],
+            "code_b": code[second],
         }
 
     def _results(self) -> dict:
@@ -215,12 +227,19 @@ class Handler(BaseHTTPRequestHandler):
 
         votes = db.fetch_votes()
         counts = db.vote_counts()
+        with _SCHEDULER_LOCK:
+            coverage = self.server.scheduler.coverage()  # type: ignore[attr-defined]
         if len(votes) < 10:
-            return {"counts": counts, "message": "need at least 10 votes to fit"}
+            return {
+                "counts": counts,
+                "coverage": coverage,
+                "message": "need at least 10 votes to fit",
+            }
 
         result = bradley_terry.fit(votes)
         return {
             "counts": counts,
+            "coverage": coverage,
             "converged": result.converged,
             "ranking": [
                 {"model": model, "rating": round(rating, 1)}
@@ -241,11 +260,21 @@ def main() -> None:
     args = parser.parse_args()
 
     tasks = db.fetch_comparable_tasks()
+    task_models = db.fetch_task_models()
+    scheduler = ComparisonScheduler(task_models, outcomes=db.fetch_run_outcomes())
+    scheduler.load_votes(db.fetch_vote_cells())
+
+    coverage = scheduler.coverage()
     print(f"Loaded {len(tasks)} tasks with two or more extractable solutions")
+    print(f"Comparison cells: {coverage['cells_total']} ({coverage['anchor_cells']} anchors)")
     print(f"Existing votes: {db.vote_counts()}")
 
     server = ThreadingHTTPServer((args.host, args.port), Handler)
     server.tasks = tasks  # type: ignore[attr-defined]
+    server.scheduler = scheduler  # type: ignore[attr-defined]
+    server.task_metadata = {  # type: ignore[attr-defined]
+        str(task["task_id"]): task for task in tasks
+    }
     print(f"Voting interface on http://{args.host}:{args.port}  (Ctrl-C to stop)")
     try:
         server.serve_forever()

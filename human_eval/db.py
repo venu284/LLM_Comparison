@@ -101,6 +101,66 @@ def fetch_submissions(task_id: str) -> List[Dict[str, str]]:
         return [{"model_name": row[0], "code": row[1]} for row in cursor.fetchall()]
 
 
+def fetch_task_models() -> Dict[str, List[str]]:
+    """Task id -> the models that produced extractable code for it.
+
+    The scheduler needs the full task/model grid, not just a task list, because
+    a comparison cell is a task *and* a model pair.
+    """
+    query = """
+        SELECT t.task_id, m.name
+        FROM runs r
+        JOIN tasks t ON t.id = r.task_id
+        JOIN models m ON m.id = r.model_id
+        WHERE r.extracted_code IS NOT NULL AND r.extracted_code <> ''
+        ORDER BY t.task_id, m.name
+    """
+    grid: Dict[str, List[str]] = {}
+    with connect() as connection:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        for task_id, model_name in cursor.fetchall():
+            grid.setdefault(task_id, []).append(model_name)
+    return {task_id: models for task_id, models in grid.items() if len(models) >= 2}
+
+
+def fetch_run_outcomes() -> Dict[Tuple[str, str], bool]:
+    """(task_id, model) -> whether that Phase 5 run passed its tests.
+
+    Used only to label a comparison's outcome stratum. Nothing about the outcome
+    reaches the browser -- that would break the blinding.
+    """
+    query = """
+        SELECT t.task_id, m.name, r.pass_fail
+        FROM runs r
+        JOIN tasks t ON t.id = r.task_id
+        JOIN models m ON m.id = r.model_id
+    """
+    with connect() as connection:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        return {(task_id, name): bool(passed) for task_id, name, passed in cursor.fetchall()}
+
+
+def fetch_vote_cells() -> List[Tuple[str, str, str, str]]:
+    """Existing votes as (task_id, model_a, model_b, evaluator_id).
+
+    Seeds the scheduler's coverage counts at startup so a restarted server does
+    not re-offer cells that are already well covered.
+    """
+    query = """
+        SELECT t.task_id, ma.name, mb.name, v.evaluator_id
+        FROM human_votes v
+        JOIN tasks t ON t.id = v.task_id
+        JOIN models ma ON ma.id = v.model_a
+        JOIN models mb ON mb.id = v.model_b
+    """
+    with connect() as connection:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        return [(row[0], row[1], row[2], row[3]) for row in cursor.fetchall()]
+
+
 def fetch_task_prompt(task_id: str) -> Optional[str]:
     query = "SELECT title FROM tasks WHERE task_id = %s"
     with connect() as connection:
