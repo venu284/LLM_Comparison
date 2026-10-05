@@ -8,9 +8,9 @@
 
 | Field | Value |
 |---|---|
-| Current milestone | **M0 — Setup and novelty check** (in progress: repo cleanup done) |
-| Next action | User starts Docker Desktop, then M0.1; M0.2: create the `router/` package skeleton; M0.4 novelty check |
-| Overall progress | Design 100% · Repo prep 100% · Implementation 0% · Experiments 0% · Write-up 0% |
+| Current milestone | **M1 — Data layer** (M0 gate passed 2026-10-05, with the contribution reframed; see §1 and the log) |
+| Next action | M1.1: download CodeRouterBench and clone the ACRouter repo into `external/` |
+| Overall progress | Design 100% · Repo prep 100% · Implementation 5% · Experiments 0% · Write-up 0% |
 | Last updated | 2026-10-05 |
 | Final deadline | December 2026 (exact submission and defence dates: **TBD — user to fill in**) |
 
@@ -30,6 +30,18 @@ Build a router for code-generation tasks that:
 **The research question:** how many probe tasks does a new model need before the router
 routes to it correctly? We measure that cold-start regret curve against k, and compare it with
 using a text description and with no probe at all.
+
+**Contribution (reframed 2026-10-05 after the M0.4 novelty check).** A curve of routing quality
+against the size of the onboarding set already exists: UniRoute (2502.08773, Fig. 2) and
+ICL-Router (2510.09719, §4.6, 100–1000 exemplars). Our claim is therefore narrower:
+- the **small-k regime** (k ∈ 5…50);
+- **IRT/Fisher-selected anchors** compared with random anchors and with a UniRoute-style
+  cluster representation;
+- measured as **stream regret and CPAT@floor inside a run-time-verified cascade**, not as
+  static routing accuracy;
+- including **live, unseen free-tier endpoints**.
+
+UniRoute and ICL-Router are related work and E1 comparators. They are not the gap.
 
 The background and design rationale are in `Reports/Research_Progress_Report_7.md`. The
 literature, method families, and the design-evidence table are in §3–§5 of that report.
@@ -109,6 +121,10 @@ matching their bare imports. Router code imports pipeline modules by those bare 
 `config`, `models`, `analysis` or `db`. Run tests from the repo root with
 `pipeline/venv/bin/python -m pytest`.
 
+**Worktrees:** the venv lives only in the main checkout. A worktree session symlinks it in, with
+`ln -s ../../../../pipeline/venv pipeline/venv` run from the worktree root. The `venv` ignore
+pattern covers that symlink.
+
 **Existing code to reuse; do not rewrite it:**
 - `pipeline/components/llm_gateway.py` (`LLMGateway`, an async LiteLLM wrapper with retry)
 - `pipeline/components/test_runner.py` (`TestRunner`, the Docker test execution)
@@ -127,20 +143,24 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[-]` dropped (say why 
 Every milestone has an **exit gate**. Do not start the next milestone's core work until the gate passes.
 
 ### M0 — Setup and novelty check (target: Oct 5–11)
-- [ ] M0.1 **Blocked: the Docker daemon is not running; the user must start Docker Desktop.** Confirm Docker runs. Run `cd benchmark && ./docker-run.sh task API-013` against the reference solution
-      to settle the suspected defective tasks (API-013, CSS-012).
-- [~] M0.2 Create the `router/` skeleton and `tests/router/`. Add `sentence-transformers`,
-      `fastapi`, `uvicorn` and `huggingface_hub` to requirements. *Done 2026-10-05:* pytest is installed
-      and declared, root `pyproject.toml` holds the test config, and all 73 tests pass.
+- [x] M0.1 Confirm Docker runs. Run `cd benchmark && ./docker-run.sh task API-013` against the reference solution
+      to settle the suspected defective tasks (API-013, CSS-012). *Done 2026-10-05:* both reference
+      solutions pass, so the tasks are not defective (see the log).
+- [x] M0.2 Create the `router/` skeleton and `tests/router/`. Add `sentence-transformers`,
+      `fastapi`, `uvicorn` and `huggingface_hub` to requirements. *Done 2026-10-05:* 84 tests pass.
+      Only `huggingface_hub` is installed so far; the other three are installed at M3 and M7.
 - [x] M0.3 Merge every worktree branch into `main` (done 2026-10-05: data-sufficiency, goal-lock and
       progress-report-7, all `--no-ff`; see the log).
-- [ ] M0.4 Novelty check (about 1 day). Read FlyRoute, MonoRouter, "Routing with Generated Data:
+- [x] M0.4 Novelty check (about 1 day). Read FlyRoute, MonoRouter, "Routing with Generated Data:
       Annotation-Free LLM Skill Estimation", and papers that cite ACRouter (2606.22902). Record the
-      verdict in the log.
-- [ ] M0.5 Check that the unverified ids in Report 7's references ([26], [28]–[31]) resolve.
+      verdict in the log. *Done 2026-10-05:* the gate tripped partially, and the contribution is reframed in §1.
+- [x] M0.5 Check that the unverified ids in Report 7's references ([26], [28]–[31]) resolve.
+      *Done 2026-10-05:* all ids resolve, and 7 titles need correcting in the thesis (see the log).
 - [ ] M0.6 Repo-audit backlog: see §4a. Nothing there blocks M1–M5.
 - **Gate:** Docker works, `pytest` runs, and the novelty verdict is recorded. If a paper already
   does onboarding-k-vs-regret, reframe the contribution before M3.
+  **Passed 2026-10-05.** Docker 29.2.0 ran both tasks, 84 tests pass, and the verdict is recorded.
+  The contribution was reframed (§1) because UniRoute and ICL-Router already publish k-vs-quality curves.
 
 ### M1 — Data layer (target: Oct 8–15)
 - [ ] M1.1 Download CodeRouterBench from HF (`Lance1573/CodeRouterBench`) and clone
@@ -194,7 +214,9 @@ Every milestone has an **exit gate**. Do not start the next milestone's core wor
 
 ### M5 — Offline experiments E1–E3 (target: Nov 3–16)
 - [ ] M5.1 **E1 onboarding (core):** leave each model out in turn and add it at task t. Conditions:
-      k ∈ {0,5,10,25,50}, a text description only (LLM-written card), and an oracle (full data).
+      k ∈ {0,5,10,25,50}, a text description only (LLM-written card, or RouteProfile-style
+      metadata profile, 2605.00180), random anchors vs Fisher anchors, a UniRoute-style cluster
+      representation over the same k probes (2502.08773), and an oracle (full data).
       Metric: regret over the next N tasks and the number of tasks to recover. 5 seeds. Run on
       CodeRouterBench and on the LLMRouterBench livecodebench pool.
 - [ ] M5.2 **E2 cost:** cost at matched pass rate and CPAT@floor against all baselines and ACRouter.
@@ -247,6 +269,10 @@ These items were found while auditing the reused components. Each is a **prerequ
 milestone named**, so do it at the start of that milestone, not earlier.
 
 **Before M6 (live layer):**
+- [ ] Find out why every Phase 5 model output for API-013 and CSS-012 collected 0 tests
+      (`extraction_success=True`, `tests_total=0`), when the reference solutions pass 12/12 and 8/8.
+      The `defective_task` label for these two is unsupported. Recheck whether `drop_artifactual`
+      should still drop them, and whether the RQ1 numbers change.
 - [ ] Derive and persist `failure_mode`, `runner_error`, `llm_error` and `extraction_method` when
       writing runs (`results_storage.py:213-221`, `run_eval.py` failure builders). Plan step M6.5
       depends on this.
@@ -324,7 +350,7 @@ milestone named**, so do it at the start of that milestone, not earlier.
 
 | Risk | Mitigation |
 |---|---|
-| A 2026 paper already does the onboarding-k study | M0.4 novelty check; reframe as a replication plus cost study if needed |
+| A 2026 paper already does the onboarding-k study | **Partly happened** (UniRoute, ICL-Router). Reframed in §1 to the small-k, anchor-selection, cascade-regret and CPAT setting. Re-run the citation sweep at M8 |
 | The M2 gate fails (can't reproduce ACRouter) | Use their released scripts as the reference; report the discrepancy |
 | The IRT fit is poor on 8 models | Add the LLMRouterBench pool (more models); fall back to a 1PL or per-dimension θ |
 | Free-tier rate limits slow E4 | Batch runs overnight, cache every response, drop to 2 runs if needed |
@@ -403,3 +429,52 @@ Repo cleanup before implementation (branch `worktree-repo-cleanup`, pushed to `m
   - Report 7 (submitted) quotes the old taxonomy counts. The thesis must use the corrected ones.
 - **Analysis reproduced:** oracle 58.5%, best single 53.8%, recommender 36.9%.
 - **Blocker:** the Docker daemon is not running.
+
+### 2026-10-05 (M0 session)
+
+M0 completed on branch `worktree-m0-setup`. Context came from the peer session that wrote this plan.
+
+- **M0.1 Docker.**
+  - Docker 29.2.0 is running. The image was force-rebuilt with `./docker-run.sh build`.
+  - The reference solutions pass: API-013 12/12 (jest), CSS-012 8/8 (playwright).
+  - In Phase 5, all 10 runs on these two tasks had `extraction_success=True` and `tests_total=0`,
+    so the suite never collected tests on *model* code. The tasks are not defective. A §4a item
+    tracks the real cause and its effect on `drop_artifactual`.
+- **M0.2 skeleton** (commit `5cb8635`):
+  - `router/` has its 8 subpackages and `settings.py`;
+  - `tests/router/test_skeleton.py` checks the import rule (`router.data` is not shadowed by the
+    repo's `data/`; pipeline modules import by bare name);
+  - `tests/router` is added to `testpaths`;
+  - router dependencies are declared in `pipeline/requirements.txt`, and `huggingface_hub`
+    1.9.0 is installed;
+  - **84 tests pass** (73 before).
+- **M0.5 references.** Every id checked resolves on the arXiv API to the cited paper: [3], [5],
+  [6], [13]–[17], [19], [23], [25], [26] 2410.03834, [28] 2409.19886, [29] 2502.18482,
+  [30] 2305.05176, [31] 2310.12963, plus EmbedLLM 2410.02223.
+  - The arXiv comments confirm the venues of [28] (NeurIPS 2024), [29] (NAACL 2025) and
+    [31] (NeurIPS 2024). The ICLR 2025 venue of [26] is not in the arXiv metadata.
+  - Seven titles are wrong. Fix them in the thesis (M8.3), not in the submitted Report 7:
+    - [3] "RouterEval: A Comprehensive Benchmark for Routing LLMs to Explore Model-level Scaling Up in LLMs";
+    - [14] "Learning to Route LLMs from Bandit Feedback: One Policy, Many Trade-offs";
+    - [15] "Learning to Route and Schedule LLMs from User Retrials via Contextual Queueing Bandits";
+    - [16] "The Routing Plateau: Understanding the Accuracy Limits of LLM Routers";
+    - [17] "Most of the LLM Routing Gap Is Task Type";
+    - [19] "RouteProfile: Graph-Based Profiling for Cold-Start LLM Routing";
+    - [25] (Avengers-Pro) "Beyond GPT-5: Making LLMs Cheaper and Better via Performance-Efficiency Optimized Routing".
+- **M0.4 novelty verdict: the gate tripped partially, so the contribution is reframed** (§1).
+  The sources are abstracts, plus the cited full-text sections for UniRoute and ICL-Router.
+  - UniRoute (2502.08773, Fig. 2) plots deferral AUC for unseen LLMs against the number of
+    validation samples. It is cost-aware and includes LiveCodeBench.
+  - ICL-Router (2510.09719, §4.6) reports routing accuracy for 100/300/500/1000 profile exemplars:
+    74.94% at 100, peaking at 76.30% at 500. It covers MBPP and HumanEval, with no cost, no
+    cascade and no online update.
+  - These are not threats:
+    - RouteProfile 2605.00180 builds metadata profiles without probing; it is now the E1
+      text-only comparator;
+    - FlyRoute 2605.22057 is an agent-profiling flywheel with an LLM router and proprietary data;
+    - RGD/CASCAL 2601.09692 uses generated data and has no k curve;
+    - none of ACRouter's 11 Semantic Scholar citers measures a k curve; they cover agentic,
+      harness and VLM routing.
+  - MonoRouter was not found on arXiv or the web.
+  - E1 now adds random-vs-Fisher anchors and a UniRoute-style cluster representation.
+- **Decision needed from the user:** confirm the reframe. Submission and defence dates are still TBD.
