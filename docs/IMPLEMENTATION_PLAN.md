@@ -33,10 +33,12 @@ using a text description and with no probe at all.
 
 **Contribution (reframed 2026-10-05 after the M0.4 novelty check).** A curve of routing quality
 against the size of the onboarding set already exists: UniRoute (2502.08773, Fig. 2) and
-ICL-Router (2510.09719, §4.6, 100–1000 exemplars). Our claim is therefore narrower:
-- the **small-k regime** (k ∈ 5…50);
+ICL-Router (2510.09719, §4.6, 100–1000 exemplars). Our claim is therefore narrower. The k
+regime (5…50) is not itself new: UniRoute's sample sizes appear only in the figure, and its
+K-NN grid starts at 5. The claim rests on:
 - **IRT/Fisher-selected anchors** compared with random anchors and with a UniRoute-style
-  cluster representation;
+  cluster representation. IRT-Router (2506.01048, §6.3) onboards a new LLM from its text
+  profile only (ACC 0.67) and names few-shot LLM cold-start as future work;
 - measured as **stream regret and CPAT@floor inside a run-time-verified cascade**, not as
   static routing accuracy;
 - including **live, unseen free-tier endpoints**.
@@ -350,7 +352,7 @@ milestone named**, so do it at the start of that milestone, not earlier.
 
 | Risk | Mitigation |
 |---|---|
-| A 2026 paper already does the onboarding-k study | **Partly happened** (UniRoute, ICL-Router). Reframed in §1 to the small-k, anchor-selection, cascade-regret and CPAT setting. Re-run the citation sweep at M8 |
+| A 2026 paper already does the onboarding-k study | **Partly happened** (UniRoute, ICL-Router). Reframed in §1 to IRT anchor selection, cascade regret and CPAT, and live endpoints. Re-run the citation sweep at M8 |
 | The M2 gate fails (can't reproduce ACRouter) | Use their released scripts as the reference; report the discrepancy |
 | The IRT fit is poor on 8 models | Add the LLMRouterBench pool (more models); fall back to a 1PL or per-dimension θ |
 | Free-tier rate limits slow E4 | Batch runs overnight, cache every response, drop to 2 runs if needed |
@@ -477,4 +479,16 @@ M0 completed on branch `worktree-m0-setup`. Context came from the peer session t
       harness and VLM routing.
   - MonoRouter was not found on arXiv or the web.
   - E1 now adds random-vs-Fisher anchors and a UniRoute-style cluster representation.
+  - Follow-up checks on the raw arXiv HTML:
+    - the ICL-Router numbers (74.94%, 76.30%) are confirmed in the text;
+    - UniRoute's validation sizes appear only in the Fig. 2 image. Its K-NN grid starts at
+      {5,10,25,…} and it runs 100–1000 trials, so small k is probably covered. "Small k" is
+      therefore dropped as a differentiator;
+    - IRT-Router 2506.01048 §6.3 onboards a new LLM (Claude 3.5 Haiku) from its text profile
+      only, reaching ACC 0.67, and names few-shot LLM cold-start as future work. This supports
+      the IRT-anchor claim;
+    - the abstracts of all 11 ACRouter citers were read, and none measures a k curve. ORACLE
+      (2607.22465, verifier-feedback routing) is related work for the verified cascade.
+  - The Phase 5 tests for API-013 and CSS-012 were last changed on 2026-04-05, and Phase 5 ran
+    on 2026-04-27. So "not defective" refers to the same tests the models were scored on.
 - **Decision needed from the user:** confirm the reframe. Submission and defence dates are still TBD.
