@@ -1,5 +1,5 @@
 import csv, itertools
-rows=list(csv.DictReader(open("/Users/venu/Downloads/Major Project/LLM_Comparison/LLM_Comparison/pipeline/exports/results_full.csv")))
+rows=list(csv.DictReader(open(__import__("pathlib").Path(__file__).resolve().parents[3]/"data"/"phase5_results.csv")))
 PRICE={"Llama-3.1-8B":(0.05,0.08),"GPT-OSS-120B":(0.15,0.60),"Llama-4-Scout":(0.11,0.34),"Qwen3-32B":(0.29,0.59),"Llama-3.3-70B":(0.59,0.79)}
 models=sorted(PRICE); tasks=sorted({r["task_id"] for r in rows})
 P={};C={};CAT={};DIF={}

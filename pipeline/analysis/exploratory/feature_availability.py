@@ -1,6 +1,6 @@
 import csv
 from collections import defaultdict
-rows=list(csv.DictReader(open("/Users/venu/Downloads/Major Project/LLM_Comparison/LLM_Comparison/pipeline/exports/results_full.csv")))
+rows=list(csv.DictReader(open(__import__("pathlib").Path(__file__).resolve().parents[3]/"data"/"phase5_results.csv")))
 cols=["tests_passed","tests_total","eslint_warnings","ts_any_count","compiler_errors","extraction_success","failure_mode","tokens_output","latency_total_ms"]
 print("== column fill rate (non-empty, non-zero) over 325 rows ==")
 for c in cols:

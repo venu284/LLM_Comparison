@@ -1,5 +1,5 @@
 import csv, random, statistics
-rows=list(csv.DictReader(open("/Users/venu/Downloads/Major Project/LLM_Comparison/LLM_Comparison/pipeline/exports/results_full.csv")))
+rows=list(csv.DictReader(open(__import__("pathlib").Path(__file__).resolve().parents[3]/"data"/"phase5_results.csv")))
 models=sorted({r["model_name"] for r in rows}); tasks=sorted({r["task_id"] for r in rows})
 P={};CAT={};DIF={}
 for r in rows:

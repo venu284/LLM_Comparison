@@ -1,5 +1,5 @@
 import csv, itertools
-rows=list(csv.DictReader(open("/Users/venu/Downloads/Major Project/LLM_Comparison/LLM_Comparison/pipeline/exports/results_full.csv")))
+rows=list(csv.DictReader(open(__import__("pathlib").Path(__file__).resolve().parents[3]/"data"/"phase5_results.csv")))
 models=sorted({r["model_name"] for r in rows}); tasks=sorted({r["task_id"] for r in rows})
 # Groq published $/M tokens (in,out). * = approximate, needs confirming.
 PRICE={"Llama-3.1-8B":(0.05,0.08),"GPT-OSS-120B":(0.15,0.60),
