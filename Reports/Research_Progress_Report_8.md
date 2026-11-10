@@ -4,7 +4,7 @@
 
 **Student:** Venu Dattathreya Vemuru (811776500)<br>
 **Course:** CSCI 7200, Master's Project<br>
-**Report period:** 1 October to 30 October 2026 (since Research Progress Report 7)<br>
+**Covers:** progress since Research Progress Report 7<br>
 **GitHub:** https://github.com/venu284/LLM_Comparison.git
 
 ---
@@ -227,11 +227,11 @@ test. The real-data numbers above were unchanged by the fix.
 
 ## 6. Next Steps
 
-| Dates | Work |
-|---|---|
-| November, first half | M4: per-dimension IRT router with exploration and verified escalation; stratified anchors; ablations |
-| November, second half | E1 (onboarding curve inside the cascade) and E2 (cost against DimensionBest, LinUCB and ACRouter) |
-| December | Live onboarding of free-tier models on the 65 web-development tasks if time allows; thesis |
+1. M4: a per-dimension IRT router with exploration and verified escalation; Fisher selection within
+   each dimension; ablations.
+2. E1 (the onboarding curve inside the cascade) and E2 (cost against DimensionBest, LinUCB and
+   ACRouter).
+3. Live onboarding of free-tier models on our 65 web-development tasks, if time allows; thesis.
 
 The prompt-dependent baselines (kNN on embeddings) will be rerun once prompt recovery covers all
 sources. Code clean-up and the remaining unit tests continue alongside M4.
@@ -248,5 +248,5 @@ sources. Code clean-up and the remaining unit tests continue alongside M4.
 As in Report 7, plus:
 ICL-Router, arXiv:2510.09719; FlyRoute, arXiv:2605.22057; Routing with Generated Data
 (CASCAL), arXiv:2601.09692; ORACLE, arXiv:2607.22465.
-Data: CodeRouterBench, Hugging Face `Lance1573/CodeRouterBench`, revision 2026-06-23 (MIT).
+Data: CodeRouterBench, Hugging Face `Lance1573/CodeRouterBench`, release snapshot used for all results (MIT licence).
 Prompt sources: DS-1000, CRUXEval, MBPP, HumanEval and BigCodeBench v0.1.4 (Hugging Face).
