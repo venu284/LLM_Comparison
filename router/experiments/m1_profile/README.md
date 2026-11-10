@@ -29,6 +29,7 @@ hf download Lance1573/CodeRouterBench --repo-type dataset --local-dir external/C
 | `oracle.py` | Max-score and reward oracles at several cost weights; Always-Opus metrics |
 | `check.py` | Scores the released ACRouter decisions; oracle on the uncleaned matrix; dimension-best and source-best rules |
 | `ragged.py` | Missing task-model cells in the uncleaned matrix on the ID test split |
+| `ragged_zero.py` | Oracle, Always-Opus, released ACRouter decisions and DimensionBest on the uncleaned matrix, with missing cells skipped and scored 0 |
 
 Each script takes the snapshot directory as its only argument. The outputs captured on
 2026-11-10 are in `out/`.

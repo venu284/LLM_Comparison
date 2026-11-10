@@ -34,12 +34,12 @@ What happened in the period:
    requirements before any code was written (§3):
    - the in-distribution tasks ship without prompt text, which the difficulty model needs;
    - 41% of scores are continuous, which the binary IRT model does not handle as designed;
-   - the paper's tables were computed on an older matrix with 881 missing cells;
+   - the paper's scores come from an older matrix with 881 missing cells, scored as 0;
    - the ACRouter GitHub repository no longer resolves, so we cannot use its scripts.
 5. **Reproduction, first pass.** From the released files alone we reproduce three published
    numbers exactly: Always-Opus (43.83 AvgPerf, 1.29 Perf/$), the released ACRouter decisions
-   (50.14, $22.31), and the paper's oracle (57.00, on the older matrix). One number does not
-   reproduce: DimensionBest. It stays open for M2.
+   (50.14, $22.31), and the paper's oracle (57.00). One number does not reproduce:
+   DimensionBest. It stays open for M2.
 
 The schedule has slipped. The plan had M1 to M3 finished by 2 November. Only M0 is done, and no
 implementation work happened between 5 October and 10 November. Section 10 gives a revised
@@ -214,14 +214,25 @@ text-similarity metrics. Report 7 said three dimensions were judged by an LLM. W
 confirmed which ones, and Rule R4 (primary evidence from execution-scored data only) depends on
 it. M1.2 will settle the mapping from the source benchmarks' own scoring rules.
 
-**R-c. The paper's tables use a different matrix than the release.** The released CSV files are
-complete: every task has a score for all eight models. The paper's Table 3 was computed on the
-raw file `raw_matrices/phase1_acrouter_v2/obs_matrix.json`. On the ID test split, that file has
-22,471 of 23,352 cells. 502 tasks are missing at least one model, and GLM-5 is missing 404 of
-them. The difference explains the oracle: 57.00 on the ragged matrix, the paper's number exactly,
-and 60.02 on the complete one. The cells present in both files are identical. M2 must therefore
-report every baseline on both matrices: the ragged one to check against the paper, and the
-complete one for our experiments.
+**R-c. The paper's scores come from an older, incomplete matrix.** The released CSV files are
+complete: every task has a score for all eight models. The release also keeps the raw file
+`raw_matrices/phase1_acrouter_v2/obs_matrix.json`. On the ID test split, that file has 22,471 of
+23,352 cells. 502 tasks are missing at least one model, and GLM-5 is missing 404 of them. Where
+both files have a score, the scores are identical.
+
+The paper's AvgPerf numbers match the raw file with every missing cell scored as 0. On that view
+the oracle is 57.00, Always-Opus 43.83 and the released ACRouter decisions 50.14, all as
+published. If missing cells are skipped instead, Always-Opus is 43.85, so the zero rule is the
+one that fits. On the complete CSVs the oracle rises to 60.02, because many filled-in cells are
+successes. Always-Opus and the ACRouter decisions stay at 43.83 and 50.14 there.
+
+Costs behave differently. The paper's Perf/$ figures (1.29 for Always-Opus, 2.25 for the ACRouter
+release) match the costs in the complete CSVs. The costs stored in the raw file give 0.43 and
+1.01. So the published numbers combine scores from the incomplete matrix with costs from the
+released ones. The check is in `router/experiments/m1_profile/ragged_zero.py`.
+
+M2 must therefore report every baseline on both views: the incomplete one, with missing cells
+scored 0, to check against the paper, and the complete one for our own experiments.
 
 **R-d. The ACRouter code repository is gone.** `github.com/LanceZPF/agent-as-a-router` returned
 404 on 10 November, and the account lists no public repositories. The Hugging Face release still
@@ -233,10 +244,10 @@ released decision and metric files, and re-implements the baselines from the pap
 
 | Number | Published | Ours, from released files | Status |
 |---|---:|---:|---|
-| Always-Opus AvgPerf / Perf/$ (ID test) | 43.83 / 1.29 | 43.83 / 1.29 | Reproduced |
+| Always-Opus AvgPerf / Perf/$ (ID test) | 43.83 / 1.29 | 43.83 / 1.29 | Reproduced on both views |
 | ACRouter release, ID (AvgPerf / $Total / Perf/$) | 50.14 / 22.31 / 2.25 | 50.14 / 22.31 / 2.25 | Reproduced by scoring their decision file |
-| Oracle, ID test | 57.00 | 57.00 on the ragged matrix; 60.02 on the complete one | Explained (R-c) |
-| DimensionBest, ID test | 47.50 | 51.68 (our rule: best model per dimension on probing, applied to test, complete matrix) | **Open** |
+| Oracle, ID test | 57.00 | 57.00 on the incomplete matrix (missing = 0); 60.02 on the complete one | Explained (R-c) |
+| DimensionBest, ID test | 47.50 | 50.10 on the incomplete matrix (missing = 0); 51.68 on the complete one. Our rule: best model per dimension on probing, applied to test | **Open** |
 
 Scoring the released decisions tells us how Perf/$ is computed (AvgPerf divided by total dollars).
 The decision file also says what the released ID router does: every decision is labelled
@@ -245,11 +256,12 @@ three id tokens (961) or its dimension (4) to a model, choosing Opus for 61.3% o
 not found where this policy is described in the paper, and it is not the LoRA orchestrator Report
 7 summarised.
 
-**The DimensionBest gap is open. It is not a finding.** Our simple rule scores 4.2 points above
-the paper's DimensionBest and 1.7 points above ACRouter's 49.98. Before reading anything into that,
-M2 has to rule out the ordinary explanations. The paper's table may use a different definition (a
-cost-aware choice, or the ragged matrix), and the baseline table notes that its ID column was
-"copied unchanged from the provided table" rather than recomputed. The M2 gate covers this number.
+**The DimensionBest gap is open. It is not a finding.** On the paper's own view of the data our
+simple rule scores 50.10, which is 2.6 points above the paper's DimensionBest and 0.1 above
+ACRouter's 49.98. Before reading anything into that, M2 has to rule out the ordinary
+explanations. The paper may define DimensionBest differently (for example a cost-aware choice
+or a different fitting split), and the baseline table notes that its ID column was "copied
+unchanged from the provided table" rather than recomputed. The M2 gate covers this number.
 
 ---
 
@@ -307,7 +319,7 @@ experiments E1 to E3 are M5.
 | ID | Requirement | Milestone | Acceptance test |
 |---|---|---|---|
 | FR1 | Load CodeRouterBench probing, ID test and OOD176 into one `OutcomeMatrix` (task, dimension, source, model, score, cost, tokens, latency, scoring type) | M1 | Row counts 56,640 / 23,352 / 1,408; no NaN scores; 148 zero-token rows flagged |
-| FR2 | Load the ragged paper matrix as a second view of the same tasks | M1 | 22,471 cells on ID test; identical values where both have a cell |
+| FR2 | Load the incomplete paper matrix as a second view of the same tasks, with missing cells scored 0 and costs taken from the release CSVs | M1 | 22,471 cells on ID test; identical scores where both have a cell; oracle 57.00 |
 | FR3 | Rebuild ID prompt text from the 11 source datasets | M1 | Join rate per source reported; overall ≥ 95%, or the shortfall documented and the tasks excluded from M3.2 |
 | FR4 | Tag each dimension as execution-scored, similarity-scored or LLM-judged, with the source of the tag | M1 | Every dimension tagged; tag cites the source benchmark's scoring rule |
 | FR5 | Load the LLMRouterBench code subsets, dropping zero-cost models from economic metrics | M1 | Counts match the published statistics; zero-cost models listed |
@@ -350,7 +362,7 @@ The rules from Report 7 and the plan apply unchanged. The ones M1 to M3 touch mo
 | Gate | Original (Report 7 plan) | Revised |
 |---|---|---|
 | M1 | All three corpora load and tests pass | Same, plus: prompt join rate reported (FR3), every dimension tagged by scoring type (FR4), both matrix views load (FR2) |
-| M2 | Our harness reproduces the paper's kNN, DimensionBest and Always-Opus within ±1.0 AvgPerf point, using their released scripts | On the ragged matrix, our harness reproduces Always-Opus, the oracle and the released ACRouter decisions exactly, and kNN, LinUCB and DimensionBest within ±1.0. If a baseline misses, we document why and the gate passes only if the cause is a stated definition difference |
+| M2 | Our harness reproduces the paper's kNN, DimensionBest and Always-Opus within ±1.0 AvgPerf point, using their released scripts | On the incomplete matrix (missing = 0), the harness itself reproduces Always-Opus, the oracle and the released ACRouter decisions exactly, as the profile scripts already did, and kNN, LinUCB and DimensionBest within ±1.0. If a baseline misses, we document why, and the gate passes only if the cause is a stated definition difference |
 | M3 | θ from k = 50 anchors ranks the 8 models like their full-data pass rate (Spearman ρ ≥ 0.8), and the ability error falls as k grows | Same, measured per held-out model (leave-one-model-out), plus a scoring rule chosen for the continuous dimensions (R-b) |
 
 With eight models, Spearman's ρ moves in coarse steps. ρ ≥ 0.8 means the squared rank differences
@@ -498,18 +510,19 @@ The last column says what each outcome changes.
 
 ### A2. Baseline reproduction (M2 gate)
 
-| Router | Paper | Ours, ragged matrix | Ours, complete matrix | Δ (ragged) |
+| Router | Paper | Ours, incomplete matrix (missing = 0) | Ours, complete matrix | Δ (incomplete) |
 |---|---:|---:|---:|---:|
 | Oracle | 57.00 | 57.00 (§3.4) | 60.02 (§3.4) | 0.00 |
-| ACRouter (released decisions) | 49.98 / 50.14 | | 50.14 (§3.4) | |
-| DimensionBest | 47.50 | | | |
+| ACRouter (released decisions) | 49.98 / 50.14 | 50.14 (§3.4) | 50.14 (§3.4) | 0.00 vs release |
+| DimensionBest | 47.50 | 50.10 (§3.4, open) | 51.68 (§3.4) | +2.60 |
 | kNN retrieval | 47.18 | | | |
 | LinUCB | 46.84 | | | |
 | Random (10 seeds) | 38.75 | | | |
-| Always-Opus | 43.83 | | 43.83 (§3.4) | |
+| Always-Opus | 43.83 | 43.83 (§3.4) | 43.83 (§3.4) | 0.00 |
 
-The figures already filled are the profile results from §3.4. The rest come from the M2 harness.
-Gate: Δ within ±1.0 for every row, or a documented definition difference.
+The figures already filled come from the profile scripts (§3.4). M2 recomputes all of them with
+the replay harness. Gate: Δ within ±1.0 for every row, or a documented definition difference.
+The paper reports 49.98 for ACRouter and its release reports 50.14; we reproduce the release.
 
 ### A3. Cost at the best-single floor (M2, previews E2)
 
@@ -590,8 +603,9 @@ the scoring rule, the anchor method and the baseline numbers.
 
 - **Prompt reconstruction.** If the join fails for whole sources, the difficulty model is trained
   on a biased subset of dimensions. A1 reports the join rate per source so this stays visible.
-- **Two matrices.** Results on the complete matrix are not comparable with the paper's tables,
-  which use the ragged one. Every table says which matrix it uses.
+- **Two matrices.** The paper's scores count 881 missing cells as failures, and its costs come
+  from the complete release. Results on the complete matrix are therefore not directly comparable
+  with the paper's tables. Every table says which view it uses.
 - **Lost reference code.** Without the ACRouter scripts, a mismatch could be our bug or their
   undocumented choice. Scoring their released decision files separates the two, because it
   removes the router from the comparison.

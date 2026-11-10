@@ -201,10 +201,11 @@ Every milestone has an **exit gate**. Do not start the next milestone's core wor
 - [ ] M2.4 Reproduce the ACRouter paper's Table 3 (ID split) with our harness, on both matrix views.
       Their scripts are no longer available, so check against the released decision and metric
       files (`outputs/current/id_decisions.jsonl`, `outputs/baselines_ood176/`).
-- **Gate (revised 2026-11-10):** on the ragged matrix, reproduce Always-Opus, the oracle and the
-  released ACRouter decisions exactly (all three already done in the profile, see the log), and kNN,
-  LinUCB and DimensionBest within ±1.0 AvgPerf point. A miss passes only with a documented
-  definition difference. Open: our DimensionBest gives 51.68 vs the paper's 47.50.
+- **Gate (revised 2026-11-10):** on the incomplete matrix with missing cells scored 0 (costs from
+  the release CSVs), the harness reproduces Always-Opus, the oracle and the released ACRouter
+  decisions exactly (the profile scripts already match all three, see the log), and kNN, LinUCB and
+  DimensionBest within ±1.0 AvgPerf point. A miss passes only with a documented definition
+  difference. Open: our DimensionBest gives 50.10 on that view vs the paper's 47.50.
   Report 8 §8 A2–A3 are the tables to fill.
 
 ### M3 — IRT core and onboarding (target: Nov 24–Dec 2; was Oct 20–Nov 2)
@@ -536,9 +537,12 @@ M3, with no router results. Branch `worktree-progress-report-8`, built on `workt
   - Always-Opus 43.83 AvgPerf, Perf/$ 1.29;
   - released ACRouter ID decisions 50.14, $22.31, 2.25. The policy is labelled
     `hierarchical_group_model_map`: a source / first3 / dimension lookup, with Opus on 61.3% of tasks;
-  - oracle 57.00 on the ragged matrix.
-  - **Open:** DimensionBest gives 51.68 (probing to test, complete matrix) vs the paper's 47.50.
-    Do not cite this as a finding until M2 resolves it.
+  - oracle 57.00 on the ragged matrix with missing cells scored 0. The paper's AvgPerf numbers fit
+    this view (Always-Opus 43.83 needs missing = 0; skipping gives 43.85). Its Perf/$ numbers use the
+    release CSV costs; the costs inside `obs_matrix.json` give Opus 0.43, not 1.29
+    (`m1_profile/ragged_zero.py`).
+  - **Open:** DimensionBest gives 50.10 on that view and 51.68 on the complete matrix, vs the
+    paper's 47.50. Do not cite this as a finding until M2 resolves it.
 - **Report 7 corrections recorded in Report 8 §4:**
   - the released OOD run *does* escalate, with a fixed-order cascade;
   - the release's OOD176 table gives ACRouter 73.30 and Opus 63.64, not 62.50 and 57.14.
