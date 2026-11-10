@@ -1,0 +1,2 @@
+test tasks 2919 cells 22471 of 23352 tasks with <8 models 502
+Counter({'claude-sonnet-4-6': 2919, 'gpt-5.4': 2919, 'claude-opus-4-6': 2918, 'kimi-k2.5': 2899, 'Qwen3-Max': 2877, 'MiniMax-M2.7': 2776, 'qwen3.5-plus': 2648, 'glm-5': 2515})

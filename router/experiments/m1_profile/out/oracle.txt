@@ -1,0 +1,5 @@
+reward oracle lam=0.0: AvgPerf 60.02  $Total 13.39  Perf/$ 4.48
+reward oracle lam=0.1: AvgPerf 60.02  $Total 5.62  Perf/$ 10.68
+reward oracle lam=1.0: AvgPerf 60.02  $Total 5.43  Perf/$ 11.06
+reward oracle lam=10.0: AvgPerf 59.83  $Total 4.26  Perf/$ 14.04
+Always-Opus $Total 34.02 Perf/$ 1.29

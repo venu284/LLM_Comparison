@@ -9,9 +9,9 @@
 | Field | Value |
 |---|---|
 | Current milestone | **M1 — Data layer** (M0 gate passed 2026-10-05, with the contribution reframed; see §1 and the log) |
-| Next action | M1.1: download CodeRouterBench and clone the ACRouter repo into `external/` |
-| Overall progress | Design 100% · Repo prep 100% · Implementation 5% · Experiments 0% · Write-up 0% |
-| Last updated | 2026-10-05 |
+| Next action | M1.1: download CodeRouterBench into `external/` (the ACRouter GitHub repo is gone; see the 2026-11-10 log), then M1.7 prompt join |
+| Overall progress | Design 100% · Repo prep 100% · Implementation 5% · Experiments 0% · Write-up: Report 8 (requirements and design through M3) written |
+| Last updated | 2026-11-10 |
 | Final deadline | December 2026 (exact submission and defence dates: **TBD — user to fill in**) |
 
 ---
@@ -93,6 +93,8 @@ router/
     llmrouterbench.py    # loader for HF NPULH/LLMRouterBench (code subsets, priced only)
     phase5.py            # loader for our 325 runs (wraps pipeline/analysis/data.py)
     prices.py            # published $/M-token tables (D7); free tier → modelled price
+    prompts.py           # task_id → prompt join over the 11 source datasets (added 2026-11-10)
+    scoring.py           # per-dimension scoring type and acceptance rule (added 2026-11-10)
   core/
     irt.py               # 1PL/2PL fit, ability posterior (Laplace), Fisher-information anchor selection
     difficulty.py        # embedding → b_q regressor (local sentence-transformers / BGE)
@@ -100,6 +102,7 @@ router/
     policy.py            # Thompson sampling + cheapest-above-τ + escalation ladder
     verifier.py          # run-time signals: prompt tests, sandbox, AST; noisy-verifier simulator for E3
     onboarding.py        # probe runner: k anchors → θ_m (replay or live)
+    anchors.py           # Fisher vs random anchor selection, split out of irt.py (Report 8 §7)
   baselines/             # always-best, random, fixed cascade, kNN, DimensionBest, LinUCB, ACRouter (wrapped)
   sim/
     stream.py            # task-stream replay engine, leave-one-model-out, model-arrival events
@@ -164,11 +167,16 @@ Every milestone has an **exit gate**. Do not start the next milestone's core wor
   **Passed 2026-10-05.** Docker 29.2.0 ran both tasks, 84 tests pass, and the verdict is recorded.
   The contribution was reframed (§1) because UniRoute and ICL-Router already publish k-vs-quality curves.
 
-### M1 — Data layer (target: Oct 8–15)
-- [ ] M1.1 Download CodeRouterBench from HF (`Lance1573/CodeRouterBench`) and clone
-      `github.com/LanceZPF/agent-as-a-router` (MIT) into `external/`, which is git-ignored.
-- [ ] M1.2 Write `router/data/schema.py` (`OutcomeMatrix`) and `coderouterbench.py`. Flag each
-      dimension as exec-scored or LLM-judged; the primary evidence uses exec-scored only.
+### M1 — Data layer (target: Nov 11–16; was Oct 8–15)
+- [ ] M1.1 Download CodeRouterBench from HF (`Lance1573/CodeRouterBench`, revision 2026-06-23) into
+      `external/`, which is git-ignored. **`github.com/LanceZPF/agent-as-a-router` returned 404 on
+      2026-11-10**; the HF release has data, decision files and metrics but no scripts.
+- [ ] M1.2 Write `router/data/schema.py` (`OutcomeMatrix`) and `coderouterbench.py`. Load two views:
+      the complete release CSVs and the ragged `raw_matrices/phase1_acrouter_v2/obs_matrix.json`
+      that the paper's tables use (22,471 of 23,352 ID-test cells). Write `data/scoring.py`: tag each
+      of the 9 dimensions as exec-, similarity- or judge-scored from the source benchmark's rule
+      (41% of scores are continuous; continuous does not imply judged). Primary evidence uses
+      exec-scored only.
 - [ ] M1.3 Write `llmrouterbench.py` for the code subsets (livecodebench, swe-bench/verified,
       humaneval, mbpp). Drop the zero-cost models from all economic metrics.
 - [ ] M1.4 Write `phase5.py` over `data/phase5_results.csv`. Never write to the `runs` table (D10);
@@ -177,21 +185,32 @@ Every milestone has an **exit gate**. Do not start the next milestone's core wor
       free-tier models in the live pool, with the source URL and access date for each.
 - [ ] M1.6 Unit tests: row counts match the published stats (CodeRouterBench probe 7,080 /
       ID test 2,919 / OOD 176); no NaN scores; prices present for every model.
-- **Gate:** all three corpora load into `OutcomeMatrix`, and the tests pass.
+- [ ] M1.7 `data/prompts.py`: the ID task files have **no prompt text**. Rebuild prompts by joining
+      `task_id` to the 11 public source families (DS-1000, CodeXGLUE, Bugs2Fix, DebugBench, CRUXEval,
+      BigCodeBench, LiveCodeBench, MBPP, HumanEval, HumanEval-X, CanItEdit). Report the join rate per source.
+- **Gate:** all three corpora load into `OutcomeMatrix`, and the tests pass. Prompt join rate
+  reported (target ≥ 95%), every dimension tagged by scoring type, both matrix views load.
+  Report 8 §8 A1 is the table to fill.
 
-### M2 — Replay harness and baseline reproduction (target: Oct 13–22)
+### M2 — Replay harness and baseline reproduction (target: Nov 17–23; was Oct 13–22)
 - [ ] M2.1 `sim/stream.py`: deterministic task-stream replay with seeds, a leave-one-model-out
       mode, and model-arrival events (a model joins at task t).
 - [ ] M2.2 `sim/metrics.py`: cumulative regret (ACRouter reward r = s − 0.1·USD), CPAT with an
       acceptance floor, cost at matched pass rate, and bootstrap 95% CIs.
 - [ ] M2.3 Baselines: always-best, random, fixed cheap→strong cascade, kNN, DimensionBest, LinUCB.
-- [ ] M2.4 Reproduce the ACRouter paper's Table 3 (ID split) with their released scripts
-      (`scripts/run_id.py`, `run_baselines_ood176.py`) and with our harness.
-- **Gate:** our harness reproduces the paper's kNN, DimensionBest and Always-Opus numbers within
-  ±1.0 AvgPerf point. If it doesn't, stop and find out why before going further.
+- [ ] M2.4 Reproduce the ACRouter paper's Table 3 (ID split) with our harness, on both matrix views.
+      Their scripts are no longer available, so check against the released decision and metric
+      files (`outputs/current/id_decisions.jsonl`, `outputs/baselines_ood176/`).
+- **Gate (revised 2026-11-10):** on the ragged matrix, reproduce Always-Opus, the oracle and the
+  released ACRouter decisions exactly (all three already done in the profile, see the log), and kNN,
+  LinUCB and DimensionBest within ±1.0 AvgPerf point. A miss passes only with a documented
+  definition difference. Open: our DimensionBest gives 51.68 vs the paper's 47.50.
+  Report 8 §8 A2–A3 are the tables to fill.
 
-### M3 — IRT core and onboarding (target: Oct 20–Nov 2)
+### M3 — IRT core and onboarding (target: Nov 24–Dec 2; was Oct 20–Nov 2)
 - [ ] M3.1 `core/irt.py`: fit 1PL and 2PL on the probing split. Choose by held-out log-likelihood.
+      Choose a rule for continuous scores first: binarise at 0.5, binary-like dimensions only, or a
+      continuous variant (Report 8 §8 A4). The choice also fixes CPAT's acceptance rule.
 - [ ] M3.2 `core/difficulty.py`: embedding → b_q regressor, using local BGE / MiniLM so it costs
       nothing. Report held-out correlation.
 - [ ] M3.3 Anchor selection by Fisher information (tinyBenchmarks style), compared against random anchors.
@@ -315,15 +334,16 @@ milestone named**, so do it at the start of that milestone, not earlier.
 
 | Weeks | Milestones |
 |---|---|
-| Oct 5–11 | M0, start M1 |
-| Oct 12–18 | M1, M2 |
-| Oct 19–25 | M2 gate, M3 |
-| Oct 26–Nov 1 | M3, M4 |
-| Nov 2–8 | M4 gate, M5 (E1 first) |
-| Nov 9–15 | M5, M6 |
-| Nov 16–22 | M6 (E4), M7 |
-| Nov 23–29 | M7, buffer |
-| Dec 1 → deadline | M8 |
+| Oct 5 | M0 (done) |
+| Oct 6–Nov 10 | No implementation; Report 8 written on Nov 10 |
+| Nov 11–16 | M1 |
+| Nov 17–23 | M2 and its gate |
+| Nov 24–Dec 2 | M3 and its gate |
+| December | M4 and E1 in minimal form; E2 reduced; M8 write-up |
+
+Revised 2026-11-10 (Report 8 §10). The original plan had M3 done by Nov 2. Expected cuts, in the
+priority order below: E4 at risk; E3 down to two noise levels; dashboard to a static HTML report;
+proxy to a CLI demo. Re-plan once the submission and defence dates are known.
 
 **Priority when short of time:** E1 > E2 > M6/E4 > E3 > M7 dashboard > M7 proxy.
 
@@ -492,3 +512,35 @@ M0 completed on branch `worktree-m0-setup`. Context came from the peer session t
   - The Phase 5 tests for API-013 and CSS-012 were last changed on 2026-04-05, and Phase 5 ran
     on 2026-04-27. So "not defective" refers to the same tests the models were scored on.
 - **Decision needed from the user:** confirm the reframe. Submission and defence dates are still TBD.
+
+### 2026-11-10 (Report 8 session)
+
+No implementation work happened between 2026-10-05 and today. This session wrote Report 8
+(`Reports/Research_Progress_Report_8.md`): requirements, repo design and planned analyses through
+M3, with no router results. Branch `worktree-progress-report-8`, built on `worktree-m0-setup`.
+
+- **CodeRouterBench profile** (HF revision 2026-06-23; scripts and outputs in
+  `router/experiments/m1_profile/`). No model calls.
+  - 9 ID dimensions (Report 7 said 10); 11 source families. ID test model means range from
+    35.62 (MiniMax-M2.7) to 43.83 (Opus). Qwen3-Max scores 39.67 at $0.00052/task vs Opus $0.01165.
+  - Clairvoyant bounds (R1): oracle 60.02 on the complete matrix; 24.3% of tasks unsolved by any
+    model; cheapest-max-score cost −82% vs Always-Opus. Nesting: 78–90% of each model's solves
+    (score ≥ 0.5) are also Opus solves.
+- **Requirement changes:**
+  - ID tasks have no prompt text (new M1.7 prompt join);
+  - 41% of scores are continuous (M1.2 scoring tags, M3.1 rule);
+  - the paper's tables use the ragged `obs_matrix.json`, with 881 missing ID-test cells and
+    GLM-5 missing 404 tasks (M1.2 two views);
+  - the ACRouter GitHub repo returns 404 (M2.4 and its gate rewritten).
+- **Reproduced from released files:**
+  - Always-Opus 43.83 AvgPerf, Perf/$ 1.29;
+  - released ACRouter ID decisions 50.14, $22.31, 2.25. The policy is labelled
+    `hierarchical_group_model_map`: a source / first3 / dimension lookup, with Opus on 61.3% of tasks;
+  - oracle 57.00 on the ragged matrix.
+  - **Open:** DimensionBest gives 51.68 (probing to test, complete matrix) vs the paper's 47.50.
+    Do not cite this as a finding until M2 resolves it.
+- **Report 7 corrections recorded in Report 8 §4:**
+  - the released OOD run *does* escalate, with a fixed-order cascade;
+  - the release's OOD176 table gives ACRouter 73.30 and Opus 63.64, not 62.50 and 57.14.
+- **Assumed, not confirmed by the user:** the narrowed contribution in §1. Report 8 §5 states it.
+  Submission and defence dates are still TBD.

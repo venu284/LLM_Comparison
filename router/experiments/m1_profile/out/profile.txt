@@ -1,0 +1,28 @@
+                    binary_frac  nuniq   mean
+dimension                                    
+algorithm                  0.98     10  0.330
+bug_fixing                 0.29   3351  0.621
+code_completion            0.75      3  0.633
+code_generation            1.00      2  0.280
+code_refactoring           0.00   4601  0.498
+code_understanding         0.00   2450  0.168
+data_science               1.00      2  0.105
+multi_language             0.42   3200  0.370
+test_generation            0.91      9  0.491
+DimBest choice {'algorithm': 'qwen3.5-plus', 'bug_fixing': 'claude-opus-4-6', 'code_completion': 'claude-opus-4-6', 'code_generation': 'claude-opus-4-6', 'code_refactoring': 'gpt-5.4', 'code_understanding': 'kimi-k2.5', 'data_science': 'kimi-k2.5', 'multi_language': 'claude-opus-4-6', 'test_generation': 'Qwen3-Max'}
+DimBest probing->test 51.68 cost/task 0.00448
+MiniMax-M2.7 solves 1012 also-by-opus 0.82
+Qwen3-Max solves 1078 also-by-opus 0.78
+claude-opus-4-6 solves 1270 also-by-opus 1.0
+claude-sonnet-4-6 solves 1228 also-by-opus 0.9
+glm-5 solves 1079 also-by-opus 0.82
+gpt-5.4 solves 1265 also-by-opus 0.81
+kimi-k2.5 solves 1001 also-by-opus 0.84
+qwen3.5-plus solves 1021 also-by-opus 0.8
+best-single solves 1270 any solves 1771 of 2919
+cheapest-max-score oracle cost/task 0.00205 vs opus 0.01165
+id task keys ['dimension', 'source_split', 'split', 'task_id']
+{'ds1000': 1000, 'codexglue': 1000, 'bugs2fix': 980, 'debugbench': 929, 'cruxeval': 800, 'lcb': 422, 'lcb_testgen': 369, 'mbpp': 225, 'he_testgen_HumanEval': 131, 'mbpp_completion': 124, 'debugbench_sup': 111, 'bugs2fix_sup': 111, 'codexglue_sup': 111, 'mbpp_testgen': 111, 'humaneval_HumanEval': 100, 'he_completion_HumanEval': 98, 'canitedit': 20, 'bcb_BigCodeBench/767': 1, 'bcb_BigCodeBench/21': 1, 'bcb_BigCodeBench/976': 1, 'bcb_BigCodeBench/966': 1, 'bcb_BigCodeBench/843': 1, 'bcb_BigCodeBench/974': 1, 'bcb_BigCodeBench/667': 1, 'bcb_BigCodeBench/574': 1, 'bcb_BigCodeBench/690': 1, 'bcb_BigCodeBench/492': 1, 'bcb_BigCodeBench/924': 1, 'bcb_BigCodeBench/788': 1, 'bcb_BigCodeBench/607': 1, 'bcb_BigCodeBench/317': 1, 'bcb_BigCodeBench/1127': 1, 'bcb_BigCodeBench/894': 1, 'bcb_BigCodeBench/377': 1, 'bcb_BigCodeBench/887': 1, 'bcb_BigCodeBench/154': 1, 'bcb_BigCodeBench/323': 1, 'bcb_BigCodeBench/1021': 1, 'bcb_BigCodeBench/1105': 1, 'bcb_BigCodeBench/1130': 1}
+['task_id', 'source_split', 'bench', 'original_task_id', 'dimension', 'model', 'source_model', 'resolved', 'apply_ok', 'graded', 'in_tok', 'out_tok', 'calls', 'cost_usd', 'source_status', 'cost_source']
+{'MiniMax-M2.7': 0.352, 'Qwen3-Max': 0.33, 'claude-opus-4-6': 0.636, 'claude-sonnet-4-6': 0.432, 'glm-5': 0.449, 'gpt-5.4': 0.642, 'kimi-k2.5': 0.199, 'qwen3.5-plus': 0.273}
+{'bug_fixing': 162, 'code_generation': 14}
