@@ -4,7 +4,7 @@
 
 **Student:** Venu Dattathreya Vemuru (811776500)<br>
 **Course:** CSCI 7200, Master's Project<br>
-**Report period:** 1 October to 10 November 2026 (since Research Progress Report 7)<br>
+**Report period:** 1 October to 30 October 2026 (since Research Progress Report 7)<br>
 **GitHub:** https://github.com/venu284/LLM_Comparison.git
 
 ---
@@ -30,7 +30,7 @@ What happened in the period:
    the first such measurement and narrow the contribution (§5).
 3. **Two suspected defective tasks are not defective.** The reference solutions for API-013 and
    CSS-012 pass 12/12 and 8/8 tests. Report 7's "defective task" bucket is therefore unsupported.
-4. **CodeRouterBench profile (10 November).** Profiling the released data changed four
+4. **CodeRouterBench profile.** Profiling the released data changed four
    requirements before any code was written (§3):
    - the in-distribution tasks ship without prompt text, which the difficulty model needs;
    - 41% of scores are continuous, which the binary IRT model does not handle as designed;
@@ -41,8 +41,8 @@ What happened in the period:
    (50.14, $22.31), and the paper's oracle (57.00). One number does not reproduce:
    DimensionBest. It stays open for M2.
 
-The schedule has slipped. The plan had M1 to M3 finished by 2 November. Only M0 is done, and no
-implementation work happened between 5 October and 10 November. Section 10 gives a revised
+The schedule has slipped. The plan had M1 and M2 finished by 22 October and M3 due by 2 November.
+Only M0 is done, and no implementation work happened after 5 October. Section 10 gives a revised
 timeline and says what gets cut.
 
 ---
@@ -120,7 +120,7 @@ not be found on arXiv or the web.
 
 The verdict and the narrowed claim are in §5.
 
-### 2.5 CodeRouterBench profile (10 November)
+### 2.5 CodeRouterBench profile
 
 We downloaded the public CodeRouterBench release (Hugging Face `Lance1573/CodeRouterBench`, last
 modified 23 June 2026) and profiled it with four short scripts. These scripts and their captured
@@ -235,7 +235,7 @@ M2 must therefore report every baseline on both views: the incomplete one, with 
 scored 0, to check against the paper, and the complete one for our own experiments.
 
 **R-d. The ACRouter code repository is gone.** `github.com/LanceZPF/agent-as-a-router` returned
-404 on 10 November, and the account lists no public repositories. The Hugging Face release still
+404 when we checked it, and the account lists no public repositories. The Hugging Face release still
 has the data, the decision files and the metric files, but not the scripts. The M2 gate can no
 longer say "reproduce with their released scripts". It now checks our harness against their
 released decision and metric files, and re-implements the baselines from the paper's description.
@@ -275,7 +275,7 @@ unchanged from the provided table" rather than recomputed. The M2 gate covers th
 | C4 | CodeRouterBench has "10 coding dimensions" | The ID data has 9 dimensions. OOD176 covers bug fixing and code generation |
 | C5 | ACRouter limitation 4: "no escalation" | True of the ID system. The released OOD run uses a fixed-order verify-and-escalate cascade: MiniMax, Kimi, GPT-5.4, GLM-5, then Opus only if two cheap attempts apply cleanly |
 | C6 | ACRouter OOD: 62.50 vs Always-Opus 57.14 (n = 176) | The release's own table gives 73.30 vs 63.64 on OOD176, with an oracle of 78.98. Its README reports 66.96 on an older 112-task set. M2 records which is canonical |
-| C7 | "Code and data are released" | The data is. The code repository returned 404 on 10 November (§3.3, R-d) |
+| C7 | "Code and data are released" | The data is. The code repository returned 404 when checked (§3.3, R-d) |
 | C8 | Three dimensions are LLM-judged | Unconfirmed. Four dimensions are mostly continuous, and similarity metrics may explain them. To confirm in M1.2 (§3.3, R-b) |
 | C9 | Seven reference titles | Corrected in §12: [3], [14], [15], [16], [17], [19], [25] |
 | C10 | Open items: Docker unavailable, `pytest` missing, data-sufficiency branch unmerged | All three resolved (§2.1, §2.2) |
@@ -621,8 +621,8 @@ the scoring rule, the anchor method and the baseline numbers.
 | Dates | Work | Status |
 |---|---|---|
 | 5 Oct | M0 setup and novelty check | Done |
-| 6 Oct to 10 Nov | Planned M1 to M3 | Not done |
-| 10 Nov | Data profile, requirements, design (this report) | Done |
+| 6 to 30 Oct | Planned M1 and M2 (M3 due 2 Nov) | Not done |
+| 30 Oct | Data profile, requirements, design (this report) | Done |
 | 11 to 16 Nov | M1 data layer, prompt join, scoring tags | Planned |
 | 17 to 23 Nov | M2 replay, metrics, baselines, reproduction gate | Planned |
 | 24 Nov to 2 Dec | M3 IRT, difficulty, anchors, onboarding | Planned |
@@ -676,6 +676,6 @@ New references from the novelty check:
 [36] "ORACLE: Agentic AI Orchestrator Routing Via Adaptive Verifier Calibration Feedback," arXiv:2607.22465, 2026.
 
 Data: CodeRouterBench, Hugging Face dataset `Lance1573/CodeRouterBench`, revision of
-2026-06-23, MIT licence, accessed 10 November 2026.
+2026-06-23, MIT licence. Every number in this report uses that revision.
 
-Titles [33] to [36] were checked against the arXiv API on 10 November 2026.
+Titles [33] to [36] were checked against the arXiv API.
