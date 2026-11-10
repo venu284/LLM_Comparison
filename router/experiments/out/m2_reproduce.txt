@@ -38,8 +38,3 @@ Cascade Qwen3-Max > gpt-5.4 > claude-opus-4-6, eps=0.0   50.440      48.976     
 Cascade Qwen3-Max > gpt-5.4 > claude-opus-4-6, eps=0.1   48.543      46.934      49.965      51.278  21.680 0.014        True         -36.275
 Cascade Qwen3-Max > gpt-5.4 > claude-opus-4-6, eps=0.2   46.710      45.290      48.197      48.585  20.360 0.014        True         -40.153
                                          DimensionBest   51.679      50.170      53.237      52.518  13.085 0.009        True         -61.538
-pipeline/venv/bin/python -m router.experiments.m2_reproduce 2>&1  1125.62s user 8.36s system 133% cpu 14:09.63 total
-tee router/experiments/out/m2_reproduce.txt  0.00s user 0.00s system 0% cpu 14:09.63 total
-tail -60  0.00s user 0.00s system 0% cpu 14:09.63 total
-
-[exited with code 0]

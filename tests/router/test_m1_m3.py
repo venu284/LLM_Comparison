@@ -70,6 +70,21 @@ def test_onboarding_sd_shrinks_and_is_deterministic():
     assert onboard(params, 10, lambda i: y[i], "fisher", seed=3)[2] == onboard(params, 10, lambda i: y[i], "fisher", seed=3)[2]
 
 
+def test_fisher_beats_random_with_true_parameters():
+    """Regression test: undamped Newton once made Fisher anchors diverge."""
+    rng = np.random.default_rng(1)
+    q = 2000
+    b, a = rng.normal(0, 1.5, q), np.exp(rng.normal(0, 0.4, q))
+    params = irt.IRTParams(list(range(q)), ["m"], b, a, np.zeros(1), "2pl")
+    errs = {"fisher": [], "random": []}
+    for r in range(30):
+        th = rng.normal()
+        y = (rng.random(q) < 1 / (1 + np.exp(-a * (th - b)))).astype(float)
+        for method in errs:
+            errs[method].append(abs(onboard(params, 25, lambda i: y[i], method, seed=r)[0] - th))
+    assert np.mean(errs["fisher"]) < 0.8 * np.mean(errs["random"])
+
+
 @pytest.mark.skipif(not HAVE_DATA, reason="CodeRouterBench not downloaded to external/")
 def test_crb_counts_and_published_numbers():
     test = crb.load("id_test")

@@ -6,4 +6,4 @@ id_test rows,23352,23352.0
 id_test NaN scores,0,0.0
 id_test zero-token cost rows,42,42.0
 id_test missing cells in paper matrix,881,881.0
-"prompt join rate, all ID tasks",>=0.95,0.451
+"prompt join rate, all ID tasks",>=0.95,0.48

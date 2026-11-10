@@ -75,12 +75,14 @@ def ability_posterior(params: IRTParams, idx: np.ndarray, y: np.ndarray,
         return 0.0, prior_sd
     a, b = params.a[idx], params.b[idx]
     th = 0.0
-    for _ in range(50):                          # Newton steps on a concave objective
+    # Damped Newton on a concave objective. Undamped steps overshoot when the anchors are
+    # highly discriminating items close to the current estimate (the Fisher case).
+    for _ in range(200):
         p = expit(a * (th - b))
         g = (a * (y - p)).sum() - th / prior_sd ** 2
         h = -(a ** 2 * p * (1 - p)).sum() - 1 / prior_sd ** 2
-        step = g / h
-        th -= step
+        step = float(np.clip(g / h, -0.5, 0.5))
+        th = float(np.clip(th - step, -6.0, 6.0))
         if abs(step) < 1e-8:
             break
     p = expit(a * (th - b))

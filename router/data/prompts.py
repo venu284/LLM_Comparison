@@ -45,7 +45,8 @@ def _tables(root: Path = SRC) -> dict[str, dict]:
 def prompt_for(task_id: str) -> str | None:
     t = _tables()
     body = re.sub(r"^dim\d+_", "", task_id)
-    m = re.search(r"(\d+)$", body)
+    he = re.search(r"HumanEval_(\d+)", body)      # multiple_rs_HumanEval_162_string_to_md5
+    m = he or re.search(r"(\d+)$", body)
     if not m:
         return None
     n = int(m.group(1))

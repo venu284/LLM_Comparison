@@ -554,13 +554,13 @@ M3, with no router results. Branch `worktree-progress-report-8`, built on `workt
 Implemented and ran M1–M3 on CodeRouterBench (offline, no API calls). Code is in `router/data`,
 `router/sim`, `router/baselines` and `router/core`. Scripts are in `router/experiments/`
 (`m2_reproduce.py`, `m3_irt.py`, `m3_difficulty.py`), with outputs in `router/experiments/out/`.
-18 router tests pass, including the reproduced published numbers. Report 8 was rewritten as a short
+19 router tests pass, including the reproduced published numbers and a Fisher-on-synthetic-data regression test. Report 8 was rewritten as a short
 results report.
 
 - **M1:**
   - row counts, NaN checks and zero-token rows all match the release;
   - the paper matrix has 881 missing test cells;
-  - prompt join reached **45%** (DS-1000, CRUXEval, MBPP, HumanEval, BigCodeBench; 4,509 tasks), against the 95% target;
+  - prompt join reached **48%** (DS-1000, CRUXEval, MBPP, HumanEval, BigCodeBench; 4,797 tasks after fixing the `multiple_*` id parse), against the 95% target;
   - the gate is partial.
 - **M2 (paper view, missing = 0):** three numbers reproduce exactly:
   - oracle 57.00;
@@ -582,10 +582,14 @@ results report.
   - 1PL −0.373;
   - 2PL −0.366;
   - **per-dimension θ 1PL −0.307**.
-- **A5:** MiniLM + source one-hot ridge reaches Spearman 0.78 with fitted b and pass AUC 0.88. Source mean gives 0.63 / 0.82.
+- **A5 (5-fold CV grouped by prompt, 2,990 distinct problems):** MiniLM + source one-hot ridge reaches Spearman 0.77 with fitted b and pass AUC 0.89. Source mean gives 0.58 / 0.81, and the embedding alone 0.57 / 0.78. The first run used random folds, which leaked shared prompts; it was fixed.
 - **A6/A7:** random anchors **beat** adaptive Fisher anchors at every k:
   - at k = 50, ability error is 0.27 vs 0.35 and the log-likelihood gain recovered is 84% vs 71%;
   - Spearman is 0.81 (1PL) / 0.88 (2PL) with random anchors, passing the gate, and 0.62 / 0.50 with Fisher.
   - The Fisher-anchor contribution is unsupported as built. M4 tests stratified anchors and per-dimension θ.
   - The test-task AUC in `a6_*.csv` is uninformative for the 1PL, because item ranking does not depend on θ. Use `ll`.
-
+- **Fisher check (`m3_fisher_synthetic.py`):**
+  - Building the check exposed a bug: the undamped Newton step in `irt.ability_posterior` diverged with Fisher anchors on true 2PL parameters. It is now damped and clipped, with a regression test.
+  - After the fix, on synthetic 1-D data at k = 50, Fisher beats random: 0.09 vs 0.28 with true parameters, and 0.24 vs 0.32 with parameters fitted from 7 respondents.
+  - The real-data A6/A7 numbers are unchanged by the fix, so the real-data loss is genuine. The likely cause is multidimensionality (A4).
+  - Next: per-dimension Fisher with per-dimension θ.

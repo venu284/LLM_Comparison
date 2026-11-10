@@ -2,7 +2,7 @@
 
 Run from the repo root:  pipeline/venv/bin/python -m router.experiments.m3_difficulty
 Target b_q comes from a 1PL fit on all 9,999 ID tasks x 8 models (binarised at 0.5).
-Evaluation: 5-fold cross-validation over joined tasks, grouped by nothing (random folds).
+Evaluation: 5-fold cross-validation over joined tasks, grouped by prompt text.
 """
 
 from __future__ import annotations
@@ -13,7 +13,7 @@ from scipy.special import expit
 from scipy.stats import spearmanr
 from sklearn.linear_model import RidgeCV
 from sklearn.metrics import roc_auc_score
-from sklearn.model_selection import KFold
+from sklearn.model_selection import GroupKFold
 
 from router.core import irt
 from router.data import coderouterbench as crb
@@ -47,7 +47,12 @@ def main() -> None:
     yb = b.loc[tasks].to_numpy()
     preds = {k: np.zeros(len(tasks)) for k in ("dimension mean", "source mean", "MiniLM + ridge",
                                                "MiniLM + source one-hot + ridge")}
-    for tr, te in KFold(5, shuffle=True, random_state=0).split(tasks):
+    # Variants of one problem (e.g. HumanEval, its completion and test-generation versions, and
+    # the HumanEval-X languages) share prompt text. Group folds by prompt so no problem appears
+    # in both the training and the test fold.
+    groups = pd.factorize(prompts.to_numpy())[0]
+    print("distinct prompts:", groups.max() + 1)
+    for tr, te in GroupKFold(5).split(tasks, groups=groups):
         t_tr = tasks[tr]
         dm = b.loc[t_tr].groupby(dim.loc[t_tr]).mean()
         sm = b.loc[t_tr].groupby(src.loc[t_tr]).mean()
