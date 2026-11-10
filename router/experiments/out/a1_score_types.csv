@@ -1,0 +1,10 @@
+dim,binary_share,distinct,type
+algorithm,0.984511889862328,9,mostly-binary
+bug_fixing,0.29897567221510885,2581,continuous
+code_completion,0.7459729381443299,3,mostly-binary
+code_generation,1.0,2,binary
+code_refactoring,0.003685897435897436,3612,continuous
+code_understanding,0.002349624060150376,2150,continuous
+data_science,1.0,2,binary
+multi_language,0.4227185089974293,2451,continuous
+test_generation,0.9166149068322982,9,mostly-binary

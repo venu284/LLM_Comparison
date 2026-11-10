@@ -1,0 +1,45 @@
+                                check expected  observed
+                         probing rows    56640 56640.000
+                   probing NaN scores        0     0.000
+         probing zero-token cost rows      106   106.000
+                         id_test rows    23352 23352.000
+                   id_test NaN scores        0     0.000
+         id_test zero-token cost rows       42    42.000
+id_test missing cells in paper matrix      881   881.000
+       prompt join rate, all ID tasks   >=0.95     0.451
+    view                        router  paper  AvgPerf  $Total  Perf/$  CumReg  AcceptRate  CPAT
+   paper                        Oracle  57.00    57.00   13.53    4.21    0.82       57.73  0.01
+   paper ACRouter (released decisions)  49.98    50.14   22.31    2.25  201.98       51.04  0.01
+   paper                 DimensionBest  47.50    50.10   12.47    4.02  202.31       51.04  0.01
+   paper                    SourceBest    NaN    46.85   18.66    2.51  297.76       47.45  0.01
+   paper                 kNN retrieval  47.18    48.45   10.26    4.72  250.08       49.10  0.01
+   paper                        LinUCB  46.84    50.32   17.14    2.94  196.43       51.33  0.01
+   paper             Random (10 seeds)  38.75    38.35   14.12    2.72  545.46       37.26  0.01
+   paper                   Always-Opus  43.83    43.83   34.02    1.29  387.37       43.51  0.03
+complete                        Oracle  57.00    60.02   13.39    4.48    0.78       60.67  0.01
+complete ACRouter (released decisions)  49.98    50.14   22.31    2.25  290.08       51.04  0.01
+complete                 DimensionBest  47.50    51.68   13.08    3.95  244.35       52.52  0.01
+complete                    SourceBest    NaN    48.50   19.06    2.54  337.77       48.99  0.01
+complete                 kNN retrieval  47.18    50.39   10.65    4.73  281.69       50.94  0.01
+complete                        LinUCB  46.84    51.92   17.62    2.95  237.69       52.83  0.01
+complete             Random (10 seeds)  38.75    39.28   14.12    2.78  606.47       38.19  0.01
+complete                   Always-Opus  43.83    43.83   34.02    1.29  475.48       43.51  0.03
+floor (Always-Opus accept rate %): 43.51
+                                                policy  AvgPerf  AvgPerf_lo  AvgPerf_hi  AcceptRate  $Total  CPAT  MeetsFloor  cost_vs_opus_%
+                                           Always-Opus   43.832      42.349      45.326      43.508  34.020 0.027        True           0.000
+                                        Always-GPT-5.4   42.213      40.784      43.731      43.337  16.571 0.013       False         -51.290
+          Cascade Qwen3-Max > claude-opus-4-6, eps=0.0   49.414      47.908      50.894      51.764  19.136 0.013        True         -43.750
+          Cascade Qwen3-Max > claude-opus-4-6, eps=0.1   47.670      46.568      49.512      49.215  19.104 0.013        True         -43.846
+          Cascade Qwen3-Max > claude-opus-4-6, eps=0.2   46.163      45.159      48.115      46.838  19.123 0.014        True         -43.788
+                  Cascade Qwen3-Max > gpt-5.4, eps=0.0   46.261      44.783      47.781      48.887   8.985 0.006        True         -73.588
+                  Cascade Qwen3-Max > gpt-5.4, eps=0.1   45.045      43.708      46.691      46.913   9.175 0.007        True         -73.032
+                  Cascade Qwen3-Max > gpt-5.4, eps=0.2   43.963      42.676      45.632      45.098   9.353 0.007        True         -72.508
+Cascade Qwen3-Max > gpt-5.4 > claude-opus-4-6, eps=0.0   50.440      48.976      51.966      54.299  24.130 0.015        True         -29.071
+Cascade Qwen3-Max > gpt-5.4 > claude-opus-4-6, eps=0.1   48.543      46.934      49.965      51.278  21.680 0.014        True         -36.275
+Cascade Qwen3-Max > gpt-5.4 > claude-opus-4-6, eps=0.2   46.710      45.290      48.197      48.585  20.360 0.014        True         -40.153
+                                         DimensionBest   51.679      50.170      53.237      52.518  13.085 0.009        True         -61.538
+pipeline/venv/bin/python -m router.experiments.m2_reproduce 2>&1  1125.62s user 8.36s system 133% cpu 14:09.63 total
+tee router/experiments/out/m2_reproduce.txt  0.00s user 0.00s system 0% cpu 14:09.63 total
+tail -60  0.00s user 0.00s system 0% cpu 14:09.63 total
+
+[exited with code 0]

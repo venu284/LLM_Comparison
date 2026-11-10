@@ -8,9 +8,9 @@
 
 | Field | Value |
 |---|---|
-| Current milestone | **M1 — Data layer** (M0 gate passed 2026-10-05, with the contribution reframed; see §1 and the log) |
-| Next action | M1.1: download CodeRouterBench into `external/` (the ACRouter GitHub repo is gone; see the 2026-11-10 log), then M1.7 prompt join |
-| Overall progress | Design 100% · Repo prep 100% · Implementation 5% · Experiments 0% · Write-up: Report 8 (requirements and design through M3) written |
+| Current milestone | **M4 — Policy** (M1–M3 analyses run 2026-11-10; M2 gate partial, M3 gate passed with random anchors; see the log) |
+| Next action | M4 with per-dimension θ and the embedding+source difficulty predictor; test dimension-stratified anchors vs random; recover prompts for the 6 remaining sources |
+| Overall progress | Design 100% · Repo prep 100% · Implementation ~35% (M1–M3 research code) · Experiments: M1–M3 analyses done · Write-up: Report 8 |
 | Last updated | 2026-11-10 |
 | Final deadline | December 2026 (exact submission and defence dates: **TBD — user to fill in**) |
 
@@ -171,7 +171,7 @@ Every milestone has an **exit gate**. Do not start the next milestone's core wor
 - [ ] M1.1 Download CodeRouterBench from HF (`Lance1573/CodeRouterBench`, revision 2026-06-23) into
       `external/`, which is git-ignored. **`github.com/LanceZPF/agent-as-a-router` returned 404 on
       2026-11-10**; the HF release has data, decision files and metrics but no scripts.
-- [ ] M1.2 Write `router/data/schema.py` (`OutcomeMatrix`) and `coderouterbench.py`. Load two views:
+- [~] M1.2 Write `router/data/schema.py` (`OutcomeMatrix`) and `coderouterbench.py`. Load two views:
       the complete release CSVs and the ragged `raw_matrices/phase1_acrouter_v2/obs_matrix.json`
       that the paper's tables use (22,471 of 23,352 ID-test cells). Write `data/scoring.py`: tag each
       of the 9 dimensions as exec-, similarity- or judge-scored from the source benchmark's rule
@@ -181,9 +181,9 @@ Every milestone has an **exit gate**. Do not start the next milestone's core wor
       humaneval, mbpp). Drop the zero-cost models from all economic metrics.
 - [ ] M1.4 Write `phase5.py` over `data/phase5_results.csv`. Never write to the `runs` table (D10);
       evaluation runs now need `--db` to touch the database at all.
-- [ ] M1.5 Write `prices.py`. Use the CodeRouterBench Table 6 prices, plus published list prices for the
+- [~] M1.5 Write `prices.py`. Use the CodeRouterBench Table 6 prices, plus published list prices for the
       free-tier models in the live pool, with the source URL and access date for each.
-- [ ] M1.6 Unit tests: row counts match the published stats (CodeRouterBench probe 7,080 /
+- [~] M1.6 Unit tests: row counts match the published stats (CodeRouterBench probe 7,080 /
       ID test 2,919 / OOD 176); no NaN scores; prices present for every model.
 - [ ] M1.7 `data/prompts.py`: the ID task files have **no prompt text**. Rebuild prompts by joining
       `task_id` to the 11 public source families (DS-1000, CodeXGLUE, Bugs2Fix, DebugBench, CRUXEval,
@@ -193,12 +193,12 @@ Every milestone has an **exit gate**. Do not start the next milestone's core wor
   Report 8 §8 A1 is the table to fill.
 
 ### M2 — Replay harness and baseline reproduction (target: Nov 17–23; was Oct 13–22)
-- [ ] M2.1 `sim/stream.py`: deterministic task-stream replay with seeds, a leave-one-model-out
+- [~] M2.1 `sim/stream.py`: deterministic task-stream replay with seeds, a leave-one-model-out
       mode, and model-arrival events (a model joins at task t).
-- [ ] M2.2 `sim/metrics.py`: cumulative regret (ACRouter reward r = s − 0.1·USD), CPAT with an
+- [~] M2.2 `sim/metrics.py`: cumulative regret (ACRouter reward r = s − 0.1·USD), CPAT with an
       acceptance floor, cost at matched pass rate, and bootstrap 95% CIs.
-- [ ] M2.3 Baselines: always-best, random, fixed cheap→strong cascade, kNN, DimensionBest, LinUCB.
-- [ ] M2.4 Reproduce the ACRouter paper's Table 3 (ID split) with our harness, on both matrix views.
+- [~] M2.3 Baselines: always-best, random, fixed cheap→strong cascade, kNN, DimensionBest, LinUCB.
+- [~] M2.4 Reproduce the ACRouter paper's Table 3 (ID split) with our harness, on both matrix views.
       Their scripts are no longer available, so check against the released decision and metric
       files (`outputs/current/id_decisions.jsonl`, `outputs/baselines_ood176/`).
 - **Gate (revised 2026-11-10):** on the incomplete matrix with missing cells scored 0 (costs from
@@ -209,14 +209,14 @@ Every milestone has an **exit gate**. Do not start the next milestone's core wor
   Report 8 §8 A2–A3 are the tables to fill.
 
 ### M3 — IRT core and onboarding (target: Nov 24–Dec 2; was Oct 20–Nov 2)
-- [ ] M3.1 `core/irt.py`: fit 1PL and 2PL on the probing split. Choose by held-out log-likelihood.
+- [~] M3.1 `core/irt.py`: fit 1PL and 2PL on the probing split. Choose by held-out log-likelihood.
       Choose a rule for continuous scores first: binarise at 0.5, binary-like dimensions only, or a
       continuous variant (Report 8 §8 A4). The choice also fixes CPAT's acceptance rule.
-- [ ] M3.2 `core/difficulty.py`: embedding → b_q regressor, using local BGE / MiniLM so it costs
+- [~] M3.2 `core/difficulty.py`: embedding → b_q regressor, using local BGE / MiniLM so it costs
       nothing. Report held-out correlation.
-- [ ] M3.3 Anchor selection by Fisher information (tinyBenchmarks style), compared against random anchors.
-- [ ] M3.4 `core/onboarding.py`: k anchor outcomes → θ_m posterior (mean, sd).
-- [ ] M3.5 Sanity check: θ_m from k = 50 anchors ranks the 8 models the same way as their full-data
+- [~] M3.3 Anchor selection by Fisher information (tinyBenchmarks style), compared against random anchors.
+- [~] M3.4 `core/onboarding.py`: k anchor outcomes → θ_m posterior (mean, sd).
+- [~] M3.5 Sanity check: θ_m from k = 50 anchors ranks the 8 models the same way as their full-data
       pass rate (Spearman ρ ≥ 0.8).
 - **Gate:** the M3.5 sanity check passes, and the ability-estimation error falls as k grows.
 - Papers: IRT-Router (2506.01048), tinyBenchmarks (2402.14992), UniRoute (2502.08773).
@@ -548,3 +548,44 @@ M3, with no router results. Branch `worktree-progress-report-8`, built on `workt
   - the release's OOD176 table gives ACRouter 73.30 and Opus 63.64, not 62.50 and 57.14.
 - **Assumed, not confirmed by the user:** the narrowed contribution in §1. Report 8 §5 states it.
   Submission and defence dates are still TBD.
+
+### 2026-11-10 (M1–M3 analyses session)
+
+Implemented and ran M1–M3 on CodeRouterBench (offline, no API calls). Code is in `router/data`,
+`router/sim`, `router/baselines` and `router/core`. Scripts are in `router/experiments/`
+(`m2_reproduce.py`, `m3_irt.py`, `m3_difficulty.py`), with outputs in `router/experiments/out/`.
+18 router tests pass, including the reproduced published numbers. Report 8 was rewritten as a short
+results report.
+
+- **M1:**
+  - row counts, NaN checks and zero-token rows all match the release;
+  - the paper matrix has 881 missing test cells;
+  - prompt join reached **45%** (DS-1000, CRUXEval, MBPP, HumanEval, BigCodeBench; 4,509 tasks), against the 95% target;
+  - the gate is partial.
+- **M2 (paper view, missing = 0):** three numbers reproduce exactly:
+  - oracle 57.00;
+  - Always-Opus 43.83 / 1.29;
+  - ACRouter release 50.14.
+
+  Random gives 38.35 against 38.75, within ±1. Three do not:
+  - DimensionBest 50.10 against 47.50;
+  - kNN 48.45 against 47.18 (metadata features);
+  - LinUCB 50.32 against 46.84 (metadata features, warm-started).
+
+  Gate partial: the paper's code is unavailable and we use metadata features.
+- **A3 (complete matrix, floor = Always-Opus accept rate 43.5%):**
+  - Qwen3-Max→Opus scores 49.4 at −44% cost, and 46.2 at ε = 0.2;
+  - Qwen3-Max→GPT-5.4 scores 46.3 at −74%;
+  - DimensionBest scores 51.7 at −62%;
+  - verifier cost is not counted.
+- **A4:** held-out log-likelihood per cell:
+  - 1PL −0.373;
+  - 2PL −0.366;
+  - **per-dimension θ 1PL −0.307**.
+- **A5:** MiniLM + source one-hot ridge reaches Spearman 0.78 with fitted b and pass AUC 0.88. Source mean gives 0.63 / 0.82.
+- **A6/A7:** random anchors **beat** adaptive Fisher anchors at every k:
+  - at k = 50, ability error is 0.27 vs 0.35 and the log-likelihood gain recovered is 84% vs 71%;
+  - Spearman is 0.81 (1PL) / 0.88 (2PL) with random anchors, passing the gate, and 0.62 / 0.50 with Fisher.
+  - The Fisher-anchor contribution is unsupported as built. M4 tests stratified anchors and per-dimension θ.
+  - The test-task AUC in `a6_*.csv` is uninformative for the 1PL, because item ranking does not depend on θ. Use `ll`.
+

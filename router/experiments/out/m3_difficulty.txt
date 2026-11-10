@@ -1,0 +1,9 @@
+W1110 12:53:08.479000 60068 torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+joined tasks: 4509 dimensions: {'code_generation': 1111, 'code_completion': 1111, 'data_science': 1111, 'multi_language': 823, 'test_generation': 242, 'algorithm': 111}
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 23914.38it/s]
+                      predictor  spearman_b  mae_b  pass_auc
+                 dimension mean       0.503  1.337     0.762
+                    source mean       0.625  1.056     0.820
+                 MiniLM + ridge       0.634  1.221     0.803
+MiniLM + source one-hot + ridge       0.777  0.910     0.883
+   fitted b (in-sample ceiling)       1.000  0.000     0.967
