@@ -1,0 +1,12 @@
+== missing skipped
+  oracle 57.00
+  Always-Opus 43.85  Perf/$ 0.43
+  ACRouter release decisions 50.16  $Total 49.55  Perf/$ 1.01
+  DimensionBest (probing->test) 50.92  $Total 22.75  Perf/$ 2.24
+  DimensionBest choices {'algorithm': 'glm-5', 'bug_fixing': 'glm-5', 'code_completion': 'claude-opus-4-6', 'code_generation': 'claude-opus-4-6', 'code_refactoring': 'gpt-5.4', 'code_understanding': 'kimi-k2.5', 'data_science': 'kimi-k2.5', 'multi_language': 'claude-opus-4-6', 'test_generation': 'Qwen3-Max'}
+== missing = 0
+  oracle 57.00
+  Always-Opus 43.83  Perf/$ 0.43
+  ACRouter release decisions 50.14  $Total 49.55  Perf/$ 1.01
+  DimensionBest (probing->test) 50.10  $Total 36.18  Perf/$ 1.38
+  DimensionBest choices {'algorithm': 'Qwen3-Max', 'bug_fixing': 'claude-opus-4-6', 'code_completion': 'claude-opus-4-6', 'code_generation': 'claude-opus-4-6', 'code_refactoring': 'gpt-5.4', 'code_understanding': 'kimi-k2.5', 'data_science': 'kimi-k2.5', 'multi_language': 'claude-opus-4-6', 'test_generation': 'Qwen3-Max'}

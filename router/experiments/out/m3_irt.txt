@@ -1,0 +1,68 @@
+== A4 held-out log-likelihood per cell (10% of cells held out, 3 seeds)
+                subset                          model    mean    std
+        all dimensions                            1pl -0.3733 0.0122
+        all dimensions        1pl per-dimension theta -0.3070 0.0127
+        all dimensions                            2pl -0.3664 0.0127
+        all dimensions per-model pass rate (no items) -0.6619    NaN
+binary-like dimensions                            1pl -0.3830 0.0073
+binary-like dimensions        1pl per-dimension theta -0.3379 0.0089
+binary-like dimensions                            2pl -0.3811 0.0066
+binary-like dimensions per-model pass rate (no items) -0.6108    NaN
+
+== A6 (1pl): |theta_k - theta_full| and test-task AUC, mean over 8 held-out models x 10 seeds
+                         err                                         auc                      
+method                fisher                random                fisher                random
+k                                                                                             
+5       0.607 [0.506, 0.704]  0.546 [0.465, 0.634]  0.913 [0.908, 0.918]  0.913 [0.908, 0.918]
+10      0.558 [0.467, 0.653]  0.437 [0.371, 0.509]  0.913 [0.908, 0.918]  0.913 [0.908, 0.918]
+25      0.432 [0.363, 0.501]  0.335 [0.281, 0.394]  0.913 [0.908, 0.918]  0.913 [0.908, 0.918]
+50      0.354 [0.296, 0.412]  0.270 [0.225, 0.313]  0.913 [0.908, 0.918]  0.913 [0.908, 0.918]
+100     0.295 [0.246, 0.342]  0.191 [0.164, 0.220]  0.913 [0.908, 0.918]  0.913 [0.908, 0.918]
+                  abs_err    auc
+method                          
+full probing set    0.000  0.913
+prior only          0.791  0.913
+
+== A7 (1pl) ranking
+                   pass_rate_probing  theta_full  theta_k50_fisher  theta_k50_random
+model                                                                               
+MiniMax-M2.7                  34.590      -1.023            -0.495            -1.021
+Qwen3-Max                     36.158      -0.906            -0.594            -0.660
+claude-opus-4-6               42.288      -0.431            -0.311            -0.532
+claude-sonnet-4-6             40.734      -0.548            -0.441            -0.519
+glm-5                         35.805      -0.938            -0.961            -0.903
+gpt-5.4                       41.907      -0.456            -0.208            -0.240
+kimi-k2.5                     34.492      -1.033            -0.554            -0.898
+qwen3.5-plus                  35.113      -0.996            -1.074            -0.876
+theta_full Spearman vs pass rate: 1.0
+theta_k50_fisher Spearman vs pass rate: 0.619
+theta_k50_random Spearman vs pass rate: 0.81
+
+== A6 (2pl): |theta_k - theta_full| and test-task AUC, mean over 8 held-out models x 10 seeds
+                         err                                         auc                      
+method                fisher                random                fisher                random
+k                                                                                             
+5       0.643 [0.543, 0.753]  0.512 [0.430, 0.595]  0.915 [0.911, 0.920]  0.915 [0.910, 0.920]
+10      0.566 [0.472, 0.666]  0.430 [0.366, 0.497]  0.915 [0.911, 0.921]  0.915 [0.909, 0.920]
+25      0.519 [0.431, 0.615]  0.310 [0.259, 0.366]  0.916 [0.911, 0.921]  0.915 [0.910, 0.920]
+50      0.463 [0.376, 0.555]  0.253 [0.211, 0.296]  0.916 [0.911, 0.921]  0.915 [0.910, 0.920]
+100     0.494 [0.415, 0.578]  0.179 [0.152, 0.208]  0.916 [0.911, 0.921]  0.915 [0.910, 0.920]
+                  abs_err    auc
+method                          
+full probing set    0.000  0.914
+prior only          0.728  0.915
+
+== A7 (2pl) ranking
+                   pass_rate_probing  theta_full  theta_k50_fisher  theta_k50_random
+model                                                                               
+MiniMax-M2.7                  34.590      -0.973             0.176            -0.964
+Qwen3-Max                     36.158      -0.862            -0.957            -0.634
+claude-opus-4-6               42.288      -0.348             0.487            -0.464
+claude-sonnet-4-6             40.734      -0.452             0.500            -0.429
+glm-5                         35.805      -0.870            -0.746            -0.846
+gpt-5.4                       41.907      -0.408            -0.346            -0.212
+kimi-k2.5                     34.492      -0.977            -0.820            -0.850
+qwen3.5-plus                  35.113      -0.935            -1.047            -0.838
+theta_full Spearman vs pass rate: 1.0
+theta_k50_fisher Spearman vs pass rate: 0.5
+theta_k50_random Spearman vs pass rate: 0.881

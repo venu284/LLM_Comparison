@@ -1,0 +1,9 @@
+subset,model,mean,std
+all dimensions,1pl,-0.37332147160562607,0.01215518405785376
+all dimensions,1pl per-dimension theta,-0.3070436874578067,0.012730547254693747
+all dimensions,2pl,-0.3663630931412996,0.012723266900768058
+all dimensions,per-model pass rate (no items),-0.6618842104174878,
+binary-like dimensions,1pl,-0.38303172587033424,0.0072792036977538084
+binary-like dimensions,1pl per-dimension theta,-0.33788884811816083,0.008911546042029135
+binary-like dimensions,2pl,-0.3810863940303355,0.006606791406506415
+binary-like dimensions,per-model pass rate (no items),-0.6108142384212977,
