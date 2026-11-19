@@ -4,14 +4,20 @@
 > built, what is done, and what comes next. Update the status block, the checkboxes and the
 > progress log at the end of each session (see §9, Session protocol).
 
+> **Plan v2 (2026-11-19).** This version replaces the goal framing and milestones M1–M8 of plan v1
+> after an independent review whose numbers were rerun against the data (progress log,
+> 2026-11-19). Plan v1 is at commit `b8edb5f` on branch `worktree-progress-report-8`. The M1–M3
+> code and numbers from 2026-11-10 were quick checks written for Report 8, not validated
+> infrastructure. M1 and M2 are rebuilt here as engineering milestones.
+
 ## Status
 
 | Field | Value |
 |---|---|
-| Current milestone | **M4 — Policy** (M1–M3 analyses run 2026-11-10; M2 gate partial, M3 gate passed with random anchors; see the log) |
-| Next action | M4 with per-dimension θ and the embedding+source difficulty predictor; test dimension-stratified anchors vs random; recover prompts for the 6 remaining sources |
-| Overall progress | Design 100% · Repo prep 100% · Implementation ~35% (M1–M3 research code) · Experiments: M1–M3 analyses done · Write-up: Report 8 |
-| Last updated | 2026-11-10 |
+| Current milestone | **M1 — Data layer (rebuild under plan v2)** |
+| Next action | M1.1: replace the regex `source_of` with an explicit task-to-family table (zero singleton families). Then M1.6: the audit module and the frozen artefact list |
+| Overall progress | Design v2 100% · Quick checks for M1–M3 done (Report 8) · Validated v2 milestones: none yet · Write-up: Report 8 |
+| Last updated | 2026-11-19 |
 | Final deadline | December 2026 (exact submission and defence dates: **TBD — user to fill in**) |
 
 ---
@@ -20,104 +26,140 @@
 
 Build a router for code-generation tasks that:
 
-1. **reaches the best single model's pass rate at clearly lower cost.** The metric is cost per
-   accepted task (CPAT), always with an acceptance floor;
-2. **keeps working when a new LLM is added, without retraining,** by onboarding it with a
-   small measured probe of k anchor tasks;
-3. **is usable day-to-day** as an OpenAI-compatible proxy with a dashboard, with web
-   development as the showcase domain.
+1. **reaches the best single model's acceptance rate at clearly lower cost.** The metric is cost
+   per accepted task (CPAT), always with an acceptance floor (R3);
+2. **brings in a newly added LLM from a small number of measured outcomes, without retraining;**
+3. **is usable** as a CLI and static report, with an OpenAI-compatible proxy as an optional extra.
+   Web development (the 65 Docker-tested tasks) is the showcase domain.
 
-**The research question:** how many probe tasks does a new model need before the router
-routes to it correctly? We measure that cold-start regret curve against k, and compare it with
-using a text description and with no probe at all.
+**Research questions (v2).**
 
-**Contribution (reframed 2026-10-05 after the M0.4 novelty check).** A curve of routing quality
-against the size of the onboarding set already exists: UniRoute (2502.08773, Fig. 2) and
-ICL-Router (2510.09719, §4.6, 100–1000 exemplars). Our claim is therefore narrower. The k
-regime (5…50) is not itself new: UniRoute's sample sizes appear only in the figure, and its
-K-NN grid starts at 5. The claim rests on:
-- **IRT/Fisher-selected anchors** compared with random anchors and with a UniRoute-style
-  cluster representation. IRT-Router (2506.01048, §6.3) onboards a new LLM from its text
-  profile only (ACC 0.67) and names few-shot LLM cold-start as future work;
-- measured as **stream regret and CPAT@floor inside a run-time-verified cascade**, not as
-  static routing accuracy;
-- including **live, unseen free-tier endpoints**.
+- **RQ-A (main).** How many verified outcomes does a new model need before routing to it is at
+  least as good as a per-group lookup table built from the same outcomes? Do a pooled prior
+  and in-stream learning shorten that?
+- **RQ-B.** How much of a cascade's cost comes from tasks that no model solves, and how much of
+  it can a "stop or escalate" prediction recover?
+- **RQ-C.** How often does a run-time verifier that sees only part of a task's tests accept wrong
+  code, and what does that do to a cascade's cost and acceptance rate?
 
-UniRoute and ICL-Router are related work and E1 comparators. They are not the gap.
+**Why v1's framing changed.** These findings were confirmed on 2026-11-19 (log entry):
+- k = 0 was scored at θ = 0. A zero-probe prior at the pool's mean ability already matches 50
+  random probes on ability error (0.268 vs 0.270).
+- The M3 ranking gate averaged θ over 10 seeds. A single 50-probe draw ranks the models at
+  Spearman 0.51 on average, with 1 of 10 draws reaching 0.8.
+- With 7 known models and complete binary data, a 1PL item bank has only 8 distinct difficulty
+  levels, so Fisher anchor selection cannot be tested on CodeRouterBench.
+- With a perfect verifier, trying Qwen3-Max before Opus pays off at P(pass) > 4.5%, so a
+  predicted-pass threshold rarely binds. The real cost lever is the 39.3% of test tasks that no
+  model solves.
 
-The background and design rationale are in `Reports/Research_Progress_Report_7.md`. The
-literature, method families, and the design-evidence table are in §3–§5 of that report.
+### Contributions (ranked) and what the thesis says if each fails
 
-### Success criteria for December
+| # | Contribution | Minimal evidence | If it fails |
+|---|---|---|---|
+| C1 | **Probes-to-decision.** Onboarding measured in routing quality, not ability error. A pooled hierarchical prior plus in-stream verified outcomes, with a per-group stopping rule, against a lookup table built from the same k | E1: four onboarding arms against k-matched DimensionBest on both corpora, with CIs | Report the number of shared probes a lookup table needs (currently about 250 to reach 50.7) as the measured answer to RQ-A |
+| C2 | **Stop or escalate.** Predict tasks no model solves and cut the ladder early | E2: cost at matched acceptance rate on exec-scored tasks, against cost-aware DimensionBest and the fixed cascade | Report how far a realistic predictor falls short of the perfect-truncation bound ($6.0 vs $41.0, Always-Opus $34.0) |
+| C3 | **Measured verifier strength.** False-pass rate of a verifier that sees a fraction f of each web-dev task's tests, and its effect on cascade cost | E4: visible vs held-out tests, 3 runs per task | Report that test-suite verifiers are effectively exact on this benchmark; E3's simulated noise becomes a bound |
+| C4 | **Headroom audit (guaranteed floor).** How much published routing gain survives artefact removal and run noise | M1.6 audit plus the three data views; noise-corrected oracle on web-dev | If headroom survives, CodeRouterBench is cleared as primary data, which strengthens C1 and C2 |
+
+**Novelty status.** UniRoute (2502.08773) and ICL-Router (2510.09719) publish quality against
+onboarding-set size with fixed offline sets and static accuracy; IRT-Router (2506.01048) onboards
+from text only; ACRouter (2606.22902) uses a fixed pool. No paper found in the M0.4 check measures
+outcomes until the routing decision stabilises, or compares dedicated probes with in-stream
+learning under a verifier. **Not yet checked:** the full text of ORACLE (2607.22465) for C3, and of
+"The Routing Plateau" (2606.07587) and "Most of the LLM Routing Gap Is Task Type" for C4. Read
+them before claiming C3 or C4 (M8.3).
+
+### Decision points
+
+| DP | Where | Test | Consequence |
+|---|---|---|---|
+| DP1 | End of M1 | Headroom of the oracle and of DimensionBest over the best single model, on the artefact-filtered, exec-scored binary view | Below about 3 AvgPerf points: C4 becomes the lead claim and LLMRouterBench becomes the primary corpus for C1 |
+| DP2 | End of M3 | Does the hierarchical model beat k-matched DimensionBest on AvgPerf at any k ≤ 100? | No: the routing model is the shrunk lookup table, and IRT is reported as an ablation |
+| DP3 | M6 pilot | Is routing headroom on the free-tier pool larger than run-to-run noise? | No: E4 is reported as a verifier study and a transfer test, not as a routing win |
+
+### Success criteria
 
 | # | Criterion | Measured by |
 |---|---|---|
-| S1 | The onboarding curve exists: regret recovery as a function of k ∈ {0,5,10,25,50} vs text-only, with CIs | E1 |
-| S2 | PROBE-CASCADE matches ACRouter's pass rate at lower cost, or this is honestly shown not to hold | E2 |
-| S3 | Results stay stable under 0–30% verifier error, or the degradation is quantified | E3 |
-| S4 | Free-tier models the router has never seen are onboarded live and routed on the 65 web-dev tasks | E4 |
-| S5 | A working proxy and dashboard demo | M7 |
-| S6 | Thesis and defence | M8 |
+| S1 | E1 onboarding curves in routing units (AvgPerf, cost) for four arms against k-matched DimensionBest, on both corpora, with CIs | M4 |
+| S2 | Cascade with truncation against cost-aware DimensionBest and the fixed cascade at matched acceptance rate, exec-scored tasks, paired CIs; or an honest negative | M5 |
+| S3 | Verifier noise results: simulated one-sided noise (E3) and the measured false-pass curve on web-dev (E4) | M5, M6 |
+| S4 | Headroom audit in three data views | M1, M2 |
+| S5 | At least 3 free-tier models × 65 tasks × 3 runs, stored with per-test results; transfer test | M6 |
+| S6 | CLI and static-report demo; proxy optional | M7 |
+| S7 | Thesis and defence | M8 |
 
 ---
 
-## 2. The method, briefly (PROBE-CASCADE)
+## 2. The method, briefly (v2)
 
-1. **Onboard:** a new model runs k IRT-selected anchor tasks, and its ability θ_m is fitted
-   with an uncertainty.
-2. **Predict:** the task's difficulty b_q is predicted from its embedding. P(pass) = σ(θ_m − b_q),
-   plus a memory-kNN residual correction.
-3. **Explore:** Thompson-sample P(pass) for each model.
-4. **Decide:** pick the cheapest model whose sampled P(pass) ≥ τ, where τ is the user's
-   quality/cost dial.
-5. **Verify and escalate:** check the answer with run-time signals only (tests, sandbox, AST).
-   On failure, escalate to the next model up.
-6. **Learn:** each verified outcome updates θ_m and the memory.
+1. **Ability model.** P(model m passes task q) = σ(μ_g + δ_m + γ_{m,g} − b_q), where g is the
+   task's group (dimension or family), μ_g is the pool's group mean, δ_m a model shift, and
+   γ_{m,g} a model-by-group offset shrunk toward 0 with variances estimated from the known
+   models. The plain 1PL is the special case with μ_g and γ removed.
+2. **New model.** It starts at δ_m = 0, γ = 0, i.e. the pool prior. This is the k = 0 baseline,
+   never θ = 0 (R11).
+3. **Evidence.** Either k dedicated probes (random or stratified by group and difficulty band) or
+   verified outcomes from the live stream, with a per-group stopping rule on the posterior.
+4. **Difficulty.** b_q is predicted from the prompt embedding. The source-benchmark label is not
+   available at decision time, so it is not a feature; the group may be predicted from the prompt.
+5. **Decide.** Cheap-first, using each step's break-even ratio (cost of the cheaper model over the
+   next one). Stop the ladder when the predicted P(any model passes) falls below t.
+6. **Verify and escalate.** Run-time signals only (tests, sandbox), on exec-scored tasks only.
+   Each verified outcome updates the model's posterior.
 
-There is no LLM in the routing decision.
+Deferred until there is evidence they help: Thompson sampling (only if the pass threshold binds)
+and the kNN memory residual (only once prompts cover ≥ 95% of tasks). There is no LLM in the
+routing decision.
 
 ---
 
 ## 3. Architecture and repo layout
 
-The new code lives in `router/` at the repo root (new). It reuses `pipeline/components/` where
-possible.
+The new code lives in `router/` at the repo root. It reuses `pipeline/components/` where
+possible. Items marked *(quick check)* exist from 2026-11-10 and must be rebuilt or validated in
+their milestone before any result from them is cited.
 
 ```
 router/
   __init__.py
-  settings.py            # paths, price tables, τ, k, seeds (not `config.py`: pipeline/ owns bare `config`)
+  settings.py            # paths, price tables, seeds (not `config.py`: pipeline/ owns bare `config`)
   data/
-    schema.py            # OutcomeMatrix: task_id, dimension, model, score, cost_usd, tokens, exec_scored
-    coderouterbench.py   # loader for HF Lance1573/CodeRouterBench
-    llmrouterbench.py    # loader for HF NPULH/LLMRouterBench (code subsets, priced only)
-    phase5.py            # loader for our 325 runs (wraps pipeline/analysis/data.py)
-    prices.py            # published $/M-token tables (D7); free tier → modelled price
-    prompts.py           # task_id → prompt join over the 11 source datasets (added 2026-11-10)
-    scoring.py           # per-dimension scoring type and acceptance rule (added 2026-11-10)
+    schema.py            # OutcomeMatrix: score, cost, dimension, family, score_type, run, eligible  (quick check, extend)
+    sources.py           # explicit task id -> source family table (replaces the regex source_of)
+    coderouterbench.py   # two views: complete release, paper matrix with missing = 0  (quick check)
+    llmrouterbench.py    # code subsets (livecodebench, swe-bench verified, humaneval, mbpp)
+    phase5.py            # read-only loader for data/phase5_results.csv
+    prices.py            # single source of published $/M-token prices  (quick check)
+    prompts.py           # task -> prompt join for all 11 families  (quick check, 48%)
+    scoring.py           # score type per family from the source benchmark's rule  (quick check)
+    audit.py             # per family x model anomaly table; writes the frozen artefact list
+    artefacts.yaml       # frozen artefact list, committed before any router result
   core/
-    irt.py               # 1PL/2PL fit, ability posterior (Laplace), Fisher-information anchor selection
-    difficulty.py        # embedding → b_q regressor (local sentence-transformers / BGE)
-    memory.py            # kNN store of verified outcomes, residual correction
-    policy.py            # Thompson sampling + cheapest-above-τ + escalation ladder
-    verifier.py          # run-time signals: prompt tests, sandbox, AST; noisy-verifier simulator for E3
-    onboarding.py        # probe runner: k anchors → θ_m (replay or live)
-    anchors.py           # Fisher vs random anchor selection, split out of irt.py (Report 8 §7)
-  baselines/             # always-best, random, fixed cascade, kNN, DimensionBest, LinUCB, ACRouter (wrapped)
+    irt.py               # 1PL/2PL fit and damped ability solver  (quick check, keep)
+    ability.py           # hierarchical ability model with shrinkage
+    difficulty.py        # prompt embedding -> b_q, no source label
+    onboarding.py        # four onboarding arms
+    stopping.py          # per-group posterior stopping rule
+    policy.py            # cheap-first by break-even ratio, ladder truncation, budget cap
+    anchors.py           # random / stratified / Fisher selection  (quick check)
+  baselines/             # always-X, random, DimensionBest (full, k-matched, cost-aware), SourceBest,
+                         # fixed cascade, released ACRouter decisions, LinUCB, kNN on prompt embeddings
   sim/
-    stream.py            # task-stream replay engine, leave-one-model-out, model-arrival events
-    metrics.py           # cumulative regret, CPAT@floor, cost at matched pass rate, bootstrap CIs
-  experiments/           # e1_onboarding.py, e2_cost.py, e3_verifier_noise.py, e4_webdev_live.py
+    stream.py            # seeded replay, model arrivals, bandit feedback only  (quick check)
+    metrics.py           # AvgPerf, cost, accept rate, CPAT@floor, cost at matched accept, regret incl. probe cost
+    stats.py             # paired bootstrap over tasks, cluster bootstrap over problems
+    verifier.py          # uniform, one-sided and difficulty-linked false passes  (quick check, extend)
   live/
-    registry.py          # BYOK model registry (SQLite)
-    gateway.py           # thin wrapper over pipeline/components/llm_gateway.py (LiteLLM)
-    sandbox.py           # wraps pipeline/components/test_runner.py (Docker)
-  proxy/
-    server.py            # FastAPI, OpenAI-compatible /v1/chat/completions
-    wrap.py              # `router wrap -- <test cmd>` verification mode
-  dashboard/             # static page or Streamlit: models, onboarding curve, decisions, $ saved
-  cli.py                 # router add-model | probe | run | serve | wrap | replay
-tests/router/            # pytest, mirrors router/ (add "tests/router" to testpaths in pyproject.toml)
+    registry.py          # free-tier model registry (SQLite, keys from env)
+    gateway.py           # thin wrapper over pipeline/components/llm_gateway.py
+    sandbox.py           # wraps TestRunner; records per-test results
+    testsplit.py         # visible vs held-out test split per web-dev task
+  experiments/           # e0_audit.py, e1_onboarding.py, e2_cost.py, e3_verifier.py, e4_webdev.py
+  report/                # static HTML report generator
+  cli.py                 # router audit | replay | probe | run | report  (proxy optional, M7)
+tests/router/            # pytest, mirrors router/
 ```
 
 **Import rule:** `pyproject.toml` puts the repo root, `pipeline/` and `human_eval/` on the test path,
@@ -132,7 +174,8 @@ pattern covers that symlink.
 
 **Existing code to reuse; do not rewrite it:**
 - `pipeline/components/llm_gateway.py` (`LLMGateway`, an async LiteLLM wrapper with retry)
-- `pipeline/components/test_runner.py` (`TestRunner`, the Docker test execution)
+- `pipeline/components/test_runner.py` (`TestRunner`, the Docker test execution; it already parses
+  per-test assertions)
 - `pipeline/components/code_extractor.py` (`CodeExtractor`)
 - `pipeline/components/task_loader.py` (`TaskLoader`, for the 65 tasks in `benchmark/tasks/`)
 - `pipeline/analysis/data.py` (`load_experiment_data(csv_path="data/phase5_results.csv",
@@ -145,143 +188,138 @@ pattern covers that symlink.
 ## 4. Milestones
 
 Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[-]` dropped (say why in the log).
-Every milestone has an **exit gate**. Do not start the next milestone's core work until the gate passes.
+Every milestone has an **exit gate**. Do not start the next milestone's core work until the gate
+passes, or until a waiver is written in the log with its reason.
 
-### M0 — Setup and novelty check (target: Oct 5–11)
-- [x] M0.1 Confirm Docker runs. Run `cd benchmark && ./docker-run.sh task API-013` against the reference solution
-      to settle the suspected defective tasks (API-013, CSS-012). *Done 2026-10-05:* both reference
-      solutions pass, so the tasks are not defective (see the log).
-- [x] M0.2 Create the `router/` skeleton and `tests/router/`. Add `sentence-transformers`,
-      `fastapi`, `uvicorn` and `huggingface_hub` to requirements. *Done 2026-10-05:* 84 tests pass.
-      Only `huggingface_hub` is installed so far; the other three are installed at M3 and M7.
-- [x] M0.3 Merge every worktree branch into `main` (done 2026-10-05: data-sufficiency, goal-lock and
-      progress-report-7, all `--no-ff`; see the log).
-- [x] M0.4 Novelty check (about 1 day). Read FlyRoute, MonoRouter, "Routing with Generated Data:
-      Annotation-Free LLM Skill Estimation", and papers that cite ACRouter (2606.22902). Record the
-      verdict in the log. *Done 2026-10-05:* the gate tripped partially, and the contribution is reframed in §1.
-- [x] M0.5 Check that the unverified ids in Report 7's references ([26], [28]–[31]) resolve.
-      *Done 2026-10-05:* all ids resolve, and 7 titles need correcting in the thesis (see the log).
-- [ ] M0.6 Repo-audit backlog: see §4a. Nothing there blocks M1–M5.
-- **Gate:** Docker works, `pytest` runs, and the novelty verdict is recorded. If a paper already
-  does onboarding-k-vs-regret, reframe the contribution before M3.
-  **Passed 2026-10-05.** Docker 29.2.0 ran both tasks, 84 tests pass, and the verdict is recorded.
-  The contribution was reframed (§1) because UniRoute and ICL-Router already publish k-vs-quality curves.
+### M0 — Setup and novelty check
+- [x] Done 2026-10-05: Docker verified, `router/` skeleton, worktree branches merged, novelty
+      check (contribution reframed), reference ids checked. See the log.
+- [ ] M0.6 Repo-audit backlog: see §4a.
 
-### M1 — Data layer (target: Nov 11–16; was Oct 8–15)
-- [ ] M1.1 Download CodeRouterBench from HF (`Lance1573/CodeRouterBench`, revision 2026-06-23) into
-      `external/`, which is git-ignored. **`github.com/LanceZPF/agent-as-a-router` returned 404 on
-      2026-11-10**; the HF release has data, decision files and metrics but no scripts.
-- [~] M1.2 Write `router/data/schema.py` (`OutcomeMatrix`) and `coderouterbench.py`. Load two views:
-      the complete release CSVs and the ragged `raw_matrices/phase1_acrouter_v2/obs_matrix.json`
-      that the paper's tables use (22,471 of 23,352 ID-test cells). Write `data/scoring.py`: tag each
-      of the 9 dimensions as exec-, similarity- or judge-scored from the source benchmark's rule
-      (41% of scores are continuous; continuous does not imply judged). Primary evidence uses
-      exec-scored only.
-- [ ] M1.3 Write `llmrouterbench.py` for the code subsets (livecodebench, swe-bench/verified,
-      humaneval, mbpp). Drop the zero-cost models from all economic metrics.
-- [ ] M1.4 Write `phase5.py` over `data/phase5_results.csv`. Never write to the `runs` table (D10);
-      evaluation runs now need `--db` to touch the database at all.
-- [~] M1.5 Write `prices.py`. Use the CodeRouterBench Table 6 prices, plus published list prices for the
-      free-tier models in the live pool, with the source URL and access date for each.
-- [~] M1.6 Unit tests: row counts match the published stats (CodeRouterBench probe 7,080 /
-      ID test 2,919 / OOD 176); no NaN scores; prices present for every model.
-- [ ] M1.7 `data/prompts.py`: the ID task files have **no prompt text**. Rebuild prompts by joining
-      `task_id` to the 11 public source families (DS-1000, CodeXGLUE, Bugs2Fix, DebugBench, CRUXEval,
-      BigCodeBench, LiveCodeBench, MBPP, HumanEval, HumanEval-X, CanItEdit). Report the join rate per source.
-- **Gate:** all three corpora load into `OutcomeMatrix`, and the tests pass. Prompt join rate
-  reported (target ≥ 95%), every dimension tagged by scoring type, both matrix views load.
-  Report 8 §8 A1 is the table to fill.
+### M1 — Data layer (engineering)
+- [ ] M1.1 `data/sources.py`: an explicit task-id-to-family table covering every id in the
+      probing, ID-test and OOD splits. It replaces `coderouterbench.source_of`, which yields 600
+      "families" in the probing split, 572 of them with a single task (`multiple_*`,
+      `lcb_testgen_*`, `bcb_BigCodeBench/*` ids). Unit test: every task maps to one of a fixed
+      list of about 20 families, with no singleton families.
+- [ ] M1.2 Extend `data/schema.py`: `OutcomeMatrix` gains `family`, `score_type`, `run` and
+      `eligible` (binary, exec-scored, verifiable at run time).
+- [ ] M1.3 `data/coderouterbench.py`: two views, complete and paper (missing = 0). Tests: 56,640
+      probing cells (7,080 × 8), 23,352 ID-test cells (2,919 × 8), 881 missing paper-view test
+      cells, no NaN scores.
+- [ ] M1.4 `data/scoring.py`: score type per family from the source benchmark's documented rule
+      (exec, similarity or judge), not from the observed score distribution. On the test split, 41%
+      of cells are continuous and 67% of tasks sit in dimensions that contain continuous scores;
+      record which families are cascade-eligible.
+- [ ] M1.5 `data/prompts.py`: adapters for the six missing families (CodeXGLUE, Bugs2Fix,
+      DebugBench, LiveCodeBench, HumanEval-X, CanItEdit). Report the join rate per family. Tag
+      variants that share one prompt (test generation, completion and generation on the same
+      HumanEval problem) with a common problem id.
+- [ ] M1.6 `data/audit.py` and `experiments/e0_audit.py`: a family × model table flagging
+      all-zero families, flagship models below the pool median, and the share of oracle and
+      DimensionBest gain per family. Write `data/artefacts.yaml` and commit it **before** any
+      router result is computed (R10). Known candidates from 2026-11-19: `mbpp_testgen` (all
+      models 0.00, n=31), `he_testgen` (Sonnet and GPT-5.4 0.00, n=39), `lcb_testgen` (Opus 0.47
+      vs Qwen3-Max 0.96, n=236), `lcb` (Opus 0.27 vs qwen3.5-plus 0.57, n=279).
+- [ ] M1.7 `data/llmrouterbench.py`: code subsets; drop zero-cost models from economic metrics.
+- [ ] M1.8 `data/phase5.py`: read-only loader (R5).
+- [ ] M1.9 `data/prices.py` as the single source of prices, with source URL and access date.
+- **Gate:** the M1.3 count tests pass; zero singleton families; prompt join ≥ 95%, or the gap is
+  documented per family and every embedding result is restricted to joined tasks; both matrix
+  views load; `artefacts.yaml` committed; the three data views (all tasks, exec-scored binary,
+  artefact-filtered) can be built from `OutcomeMatrix`.
+- **DP1** (see §1).
 
-### M2 — Replay harness and baseline reproduction (target: Nov 17–23; was Oct 13–22)
-- [~] M2.1 `sim/stream.py`: deterministic task-stream replay with seeds, a leave-one-model-out
-      mode, and model-arrival events (a model joins at task t).
-- [~] M2.2 `sim/metrics.py`: cumulative regret (ACRouter reward r = s − 0.1·USD), CPAT with an
-      acceptance floor, cost at matched pass rate, and bootstrap 95% CIs.
-- [~] M2.3 Baselines: always-best, random, fixed cheap→strong cascade, kNN, DimensionBest, LinUCB.
-- [~] M2.4 Reproduce the ACRouter paper's Table 3 (ID split) with our harness, on both matrix views.
-      Their scripts are no longer available, so check against the released decision and metric
-      files (`outputs/current/id_decisions.jsonl`, `outputs/baselines_ood176/`).
-- **Gate (revised 2026-11-10):** on the incomplete matrix with missing cells scored 0 (costs from
-  the release CSVs), the harness reproduces Always-Opus, the oracle and the released ACRouter
-  decisions exactly (the profile scripts already match all three, see the log), and kNN, LinUCB and
-  DimensionBest within ±1.0 AvgPerf point. A miss passes only with a documented definition
-  difference. Open: our DimensionBest gives 50.10 on that view vs the paper's 47.50.
-  Report 8 §8 A2–A3 are the tables to fill.
+### M2 — Replay harness and baselines (engineering)
+- [ ] M2.1 `sim/stream.py`: seeded task order, model-arrival events, bandit feedback only (the
+      router sees only the outcome of the model it called).
+- [ ] M2.2 `sim/metrics.py`: AvgPerf, cost, acceptance rate, CPAT@floor, cost at matched
+      acceptance rate, and regret that includes probe cost in dollars and in probe count.
+- [ ] M2.3 `sim/stats.py`: paired bootstrap over tasks; cluster bootstrap over problems (variants
+      of one problem resampled together); leave-one-model-out results shown as per-model points,
+      never pooled into one CI over models.
+- [ ] M2.4 Baselines: Always-X, Random, DimensionBest, SourceBest (on the M1.1 families),
+      cost-aware DimensionBest (argmax of score − λ·cost), k-matched DimensionBest (table built
+      from the same k probes), fixed cascade, released ACRouter decisions, LinUCB with stated
+      features, kNN on prompt embeddings (joined tasks only). The metadata "kNN" is dropped: with
+      one-hot features it returns random tasks from the same group.
+- [ ] M2.5 Tests: oracle 57.00, Always-Opus 43.83 and released ACRouter 50.14 reproduced on the
+      paper view; a shuffled-label test in which each learned baseline falls to Random.
+- **Gate:** M2.5 passes; every comparison table carries a paired CI; baselines that would need
+  the paper's unavailable code are labelled "our definition", with the definition difference
+  documented instead of a ±1.0 requirement. Reference points from 2026-11-19: DimensionBest
+  vs ACRouter is +1.54 on the complete view and −0.05 [−0.31, 0.23] on the paper view.
 
-### M3 — IRT core and onboarding (target: Nov 24–Dec 2; was Oct 20–Nov 2)
-- [~] M3.1 `core/irt.py`: fit 1PL and 2PL on the probing split. Choose by held-out log-likelihood.
-      Choose a rule for continuous scores first: binarise at 0.5, binary-like dimensions only, or a
-      continuous variant (Report 8 §8 A4). The choice also fixes CPAT's acceptance rule.
-- [~] M3.2 `core/difficulty.py`: embedding → b_q regressor, using local BGE / MiniLM so it costs
-      nothing. Report held-out correlation.
-- [~] M3.3 Anchor selection by Fisher information (tinyBenchmarks style), compared against random anchors.
-- [~] M3.4 `core/onboarding.py`: k anchor outcomes → θ_m posterior (mean, sd).
-- [~] M3.5 Sanity check: θ_m from k = 50 anchors ranks the 8 models the same way as their full-data
-      pass rate (Spearman ρ ≥ 0.8).
-- **Gate:** the M3.5 sanity check passes, and the ability-estimation error falls as k grows.
-- Papers: IRT-Router (2506.01048), tinyBenchmarks (2402.14992), UniRoute (2502.08773).
+### M3 — Outcome model
+- [ ] M3.1 `core/ability.py`: the hierarchical model of §2; `core/irt.py` kept as the 1PL case.
+- [ ] M3.2 `core/difficulty.py`: prompt-embedding predictor without the source label; optional
+      group classifier from the prompt; CV grouped by problem.
+- [ ] M3.3 Evaluation under leave-one-model-out (not random-cell holdout): held-out
+      log-likelihood; k = 0 scored at the pool prior; rankings reported per single draw.
+- [ ] M3.4 Reference curve: k-matched DimensionBest (2026-11-19: 44.4 ± 2.6 at k = 25,
+      47.9 ± 2.1 at 50, 49.3 ± 0.9 at 100, 50.7 ± 0.6 at 250, 51.4 ± 0.3 at 1000; full table 51.7).
+- **Gate:** the hierarchical model beats per-dimension 1PL on leave-one-model-out
+  log-likelihood (recompute the per-dimension 1PL figure under the same split; −0.307 was
+  random-cell); single-draw results reported.
+- **DP2** (see §1).
 
-### M4 — Policy: memory, exploration, cascade (target: Oct 27–Nov 9)
-- [ ] M4.1 `core/memory.py`: kNN residual correction on top of the IRT prediction (ACRouter idea).
-- [ ] M4.2 `core/policy.py`: Thompson sampling, then the cheapest model with P ≥ τ, then an
-      escalation ladder with a budget cap.
-- [ ] M4.3 `core/verifier.py`: during replay, escalation is driven by a **simulated run-time
-      verifier** (ground truth flipped at error rate ε), **never by the raw ground-truth
-      score** (see Rule R1).
-- [ ] M4.4 Online update of θ_m and memory after each verified outcome.
-- [ ] M4.5 Ablations: no memory, no exploration, no escalation, and DimensionBest in place of IRT.
-- **Gate:** on the ID split with all 8 models known, PROBE-CASCADE matches or beats kNN on CPAT
-  at the best-single acceptance floor. If it doesn't, record it and investigate before running E1/E2.
-- Papers: Dekoninck et al. (2410.10347), ACRouter (2606.22902), PILOT (2508.21141).
+### M4 — Onboarding policies (C1)
+- [ ] M4.1 `core/onboarding.py`: four arms — zero-probe pool prior, k random probes, k
+      stratified probes, in-stream learning with stopping.
+- [ ] M4.2 `core/stopping.py`: per-group posterior stopping rule.
+- [ ] M4.3 Non-transductive evaluation: test-item difficulty is never fitted from the other
+      models' outcomes on those same items (fixes `router/experiments/m3_irt.py:67-74`).
+- [ ] M4.4 `experiments/e1_onboarding.py` on CodeRouterBench and LLMRouterBench; 5 seeds; report
+      the distribution of probes the stopping rule uses.
+- [ ] M4.5 Fisher anchors: run once on LLMRouterBench if its item bank has enough respondents;
+      otherwise report them as untestable here.
+- **Gate:** E1 curves in routing units against k-matched DimensionBest, with CIs, on both corpora.
 
-### M5 — Offline experiments E1–E3 (target: Nov 3–16)
-- [ ] M5.1 **E1 onboarding (core):** leave each model out in turn and add it at task t. Conditions:
-      k ∈ {0,5,10,25,50}, a text description only (LLM-written card, or RouteProfile-style
-      metadata profile, 2605.00180), random anchors vs Fisher anchors, a UniRoute-style cluster
-      representation over the same k probes (2502.08773), and an oracle (full data).
-      Metric: regret over the next N tasks and the number of tasks to recover. 5 seeds. Run on
-      CodeRouterBench and on the LLMRouterBench livecodebench pool.
-- [ ] M5.2 **E2 cost:** cost at matched pass rate and CPAT@floor against all baselines and ACRouter.
-      5 seeds, with CIs.
-- [ ] M5.3 **E3 verifier noise:** ε ∈ {0, 0.1, 0.2, 0.3}.
-- [ ] M5.4 Figures: onboarding curve, Pareto (cost vs pass), regret curves, and noise sensitivity.
-      Save to `router/experiments/out/` and keep the generating script beside each figure.
-- **Gate:** E1 and E2 are complete with CIs. The results feed the thesis, whatever their direction.
+### M5 — Cascade with stop or escalate (C2)
+- [ ] M5.1 `core/policy.py`: cheap-first by break-even ratio, ladder truncation from predicted
+      P(any model passes), budget cap.
+- [ ] M5.2 `sim/verifier.py`: uniform, one-sided (false passes only) and difficulty-linked noise.
+- [ ] M5.3 `experiments/e2_cost.py`: exec-scored binary tasks only; against cost-aware
+      DimensionBest, fixed cascade, always-best and released ACRouter; cost at matched
+      acceptance rate.
+- [ ] M5.4 `experiments/e3_verifier.py`: ε ∈ {0, 0.1, 0.2, 0.3} for each noise type.
+- [ ] M5.5 Optional: Thompson sampling and the kNN memory residual, only under the conditions
+      in §2.
+- **Gate:** paired CIs on every comparison; an explicit answer to whether truncation recovers
+  the cost of unsolvable tasks (reference: full cheapest-first ladder $41.0, Always-Opus $34.0,
+  perfect truncation $6.0).
 
-### M6 — Live layer and E4 web-dev (target: Nov 10–23)
-- [ ] M6.1 `live/registry.py`: BYOK model registry (SQLite, keys from env, never committed).
-- [ ] M6.2 `live/gateway.py` over `LLMGateway`. The live pool is **free-tier only**: Groq, OpenRouter
-      `:free` models, and Gemini free. These are models the offline router has never seen, which
-      makes them a true new-model test.
-- [ ] M6.3 Live onboarding. The anchor tasks must be executable locally, so pick anchors from
-      CodeRouterBench's exec-scored dimensions whose tests run in our sandbox. Check this first.
-- [ ] M6.4 `live/sandbox.py` over `TestRunner` (Docker) for the 65 web-dev tasks.
-- [ ] M6.5 **E4:** run the free-tier pool on the 65 tasks, **3 runs each** to fix the old
-      `run_number = 1` defect. Record `failure_mode`. Cost uses modelled published prices, since
-      the real free-tier cost is $0.
-- [ ] M6.6 Respect rate limits (back-off, overnight batch runs). Log every call.
-- **Gate:** at least 3 free-tier models are onboarded live and routed on the 65 tasks, with
-  results stored.
+### M6 — Live web-dev (C3 and the transfer test)
+- [ ] M6.1 The §4a "before M6" fixes (sandbox limits, `<think>` stripping, true `tests_total`,
+      `failure_mode`, per-attempt temp files, TestRunner fixes).
+- [ ] M6.2 Store per-test results for every new run, and `live/testsplit.py`: a fixed visible vs
+      held-out split per task. Tasks average about 7.5 tests, so record the achievable
+      fractions f per task.
+- [ ] M6.3 `live/registry.py`, `live/gateway.py`: free-tier pool (Groq, OpenRouter `:free`,
+      Gemini free). Record which models are siblings.
+- [ ] M6.4 Pilot on about 20 tasks, then **DP3**.
+- [ ] M6.5 E4: at least 3 models × 65 tasks × 3 runs, stored in new tables or files (R5).
+- [ ] M6.6 Analysis: false-pass rate against f by category; cascade cost and accept rate read
+      from that curve; noise-corrected oracle (choose on run 1, score on run 2); transfer test
+      of benchmark-derived ability to web-dev ranking.
+- **Gate:** the E4 data is stored with per-test results; the false-pass curve and the
+  noise-corrected oracle are reported.
 
-### M7 — Proxy and dashboard (target: Nov 17–30)
-- [ ] M7.1 `proxy/server.py`: FastAPI `/v1/chat/completions`, OpenAI-compatible. Adds an
-      `x-router-model` / `x-router-reason` response header.
-- [ ] M7.2 Verification modes:
-  - (a) the request supplies a test command or tests in its metadata, so verify and escalate;
-  - (b) `router wrap -- pytest`, which wraps an agent loop;
-  - (c) no tests at all, so prediction-only routing with no escalation, and the dashboard says so.
-- [ ] M7.3 `router add-model --name --provider --key-env`, which triggers live onboarding.
-- [ ] M7.4 Dashboard: registered models with θ ± sd, the onboarding progress of a new model, a
-      decision log, escalations, and $ saved vs always-best (modelled prices).
-- [ ] M7.5 Demo script: add an unseen model, watch it get onboarded, then route the web-dev tasks.
-- **Gate:** the demo runs end-to-end from a clean start in under 10 minutes.
-- **Fallback if behind:** dashboard → a static HTML report; proxy → CLI only. Never cut E1.
+### M7 — Demo
+- [ ] M7.1 `cli.py`: `router audit | replay | probe | run | report`.
+- [ ] M7.2 `report/`: static HTML report (onboarding curves, cost and accept rate, decision log,
+      verifier curve).
+- [ ] M7.3 Optional, only after the M4–M6 gates pass: FastAPI `/v1/chat/completions` proxy with
+      `x-router-model` and `x-router-reason` headers.
+- **Gate:** the CLI and report run end to end from a clean start.
 
-### M8 — Thesis, report and defence (target: Dec 1 → deadline)
-- [ ] M8.1 Thesis chapters: problem, Phase 1–6 recap, literature, method, experiments, demo,
+### M8 — Thesis, report and defence
+- [ ] M8.1 Chapters: problem, Phase 1–6 recap, literature, method, data audit, experiments, demo,
       limitations.
-- [ ] M8.2 Results must report the simple baselines and every negative result (Rule R2).
-- [ ] M8.3 Resolve or mark all unverified citations.
+- [ ] M8.2 Report every simple baseline, every negative result and all three data views (R2).
+- [ ] M8.3 Novelty re-sweep: full text of ORACLE (2607.22465), "The Routing Plateau"
+      (2606.07587) and "Most of the LLM Routing Gap Is Task Type"; fix the seven reference
+      titles listed in the 2026-10-05 log.
 - [ ] M8.4 Slides and a recorded demo as a backup for the defence.
 
 
@@ -333,39 +371,36 @@ milestone named**, so do it at the start of that milestone, not earlier.
 
 ## 5. Timeline
 
-| Weeks | Milestones |
-|---|---|
-| Oct 5 | M0 (done) |
-| Oct 6–Nov 10 | No implementation; Report 8 written on Nov 10 |
-| Nov 11–16 | M1 |
-| Nov 17–23 | M2 and its gate |
-| Nov 24–Dec 2 | M3 and its gate |
-| December | M4 and E1 in minimal form; E2 reduced; M8 write-up |
-
-Revised 2026-11-10 (Report 8 §10). The original plan had M3 done by Nov 2. Expected cuts, in the
-priority order below: E4 at risk; E3 down to two noise levels; dashboard to a static HTML report;
-proxy to a CLI demo. Re-plan once the submission and defence dates are known.
-
-**Priority when short of time:** E1 > E2 > M6/E4 > E3 > M7 dashboard > M7 proxy.
+Dates are not planned in v2: on 2026-11-17 the user asked to set the plan without a timeline.
+Submission and defence dates are still TBD. If time runs short, cut in this order (last item is
+cut first): M1 > M2 > C4 audit > M3 and M4 (C1) > M5 (C2) > M6 (C3) > M7 report > M7 proxy. A
+decision point may reorder this; record any reordering in the log.
 
 ---
 
 ## 6. Rules (do not break)
 
 - **R1 — No clairvoyant escalation.** During replay, never escalate on the benchmark's ground
-  truth. Use the simulated run-time verifier only.
-- **R2 — Always report the simple baselines:** kNN, DimensionBest, fixed cascade and always-best.
-  A result without them is not a result.
+  truth; use the simulated run-time verifier only. In live runs, the verifier's tests and the
+  grader's tests must be disjoint.
+- **R2 — Always report the simple baselines:** DimensionBest (full and k-matched), cost-aware
+  DimensionBest, fixed cascade and always-best. A result without them is not a result.
 - **R3 — CPAT always carries an acceptance floor.** Never quote unconstrained CPAT; it picks a
   16.8%-accuracy model.
-- **R4 — Primary evidence comes from execution-scored data only.** LLM-judged dimensions are
-  reported separately.
+- **R4 — Primary evidence comes from execution-scored data only.** Cascade claims use
+  exec-scored binary tasks only. Other dimensions are reported separately.
 - **R5 (D10) — Never write to or repair the Phase 5 `runs` table.** New live runs go to new tables or files.
 - **R6 (D5) — No hypothesis may depend on human raters.**
 - **R7 — Cost comes from modelled published prices,** with the source and date recorded, plus a
   price-sensitivity sweep (D7).
-- **R8 — Multiple seeds and bootstrap CIs on every headline number.**
+- **R8 — Multiple seeds and bootstrap CIs on every headline number.** Use paired bootstrap over
+  tasks and cluster bootstrap over problems. Never pool leave-one-model-out results into one CI.
 - **R9 — Keys and secrets live in `.env` only.** Never commit them.
+- **R10 — The artefact list is frozen before results.** `data/artefacts.yaml` is committed before
+  any router result is computed, and every headline number is reported in all three data views.
+- **R11 — The k = 0 baseline is the pool prior,** never θ = 0.
+- **R12 — No gate on seed-averaged estimates.** Gates use single-draw results; averages are
+  reported only alongside them.
 
 ---
 
@@ -373,12 +408,14 @@ proxy to a CLI demo. Re-plan once the submission and defence dates are known.
 
 | Risk | Mitigation |
 |---|---|
-| A 2026 paper already does the onboarding-k study | **Partly happened** (UniRoute, ICL-Router). Reframed in §1 to IRT anchor selection, cascade regret and CPAT, and live endpoints. Re-run the citation sweep at M8 |
-| The M2 gate fails (can't reproduce ACRouter) | Use their released scripts as the reference; report the discrepancy |
-| The IRT fit is poor on 8 models | Add the LLMRouterBench pool (more models); fall back to a 1PL or per-dimension θ |
+| CodeRouterBench headroom is mostly harness artefacts | DP1; C4 becomes the lead claim; LLMRouterBench as primary corpus for C1 |
+| C1 is incremental over UniRoute / ICL-Router | Measure in routing units against k-matched DimensionBest; in-stream learning with stopping is the differentiator; re-sweep at M8.3 |
+| ORACLE (2607.22465) or the task-type papers already cover C3 or C4 | Read their full text before claiming (M8.3); narrow the claim if needed |
+| The hierarchical model does not beat the lookup table | DP2; report the lookup table as the routing model and IRT as an ablation |
+| The prompt join stays below 95% | Restrict embedding results to joined tasks and state the coverage |
+| About 7.5 tests per web-dev task makes the visible-test split coarse | Report the achievable f per task; pool by category |
+| The free-tier pool is nested again (Phase 6 found +8.6%) | DP3 pilot before the full E4 run |
 | Free-tier rate limits slow E4 | Batch runs overnight, cache every response, drop to 2 runs if needed |
-| The anchor tasks don't run in our sandbox | Choose anchors only from tasks verified to run locally (M6.3) |
-| The proxy has no tests for open-ended prompts | Mode (c) is prediction-only, stated honestly in the demo |
 | Docker breaks again | Subprocess sandbox fallback, flagged as less isolated |
 
 ---
@@ -390,7 +427,8 @@ proxy to a CLI demo. Re-plan once the submission and defence dates are known.
 | Agent-as-a-Router / ACRouter (2606.22902) | the base system, data and baselines |
 | UniRoute (2502.08773), EmbedLLM (2410.02223), RouteProfile (2605.00180) | new-model representation (M3, E1) |
 | IRT-Router (2506.01048), tinyBenchmarks (2402.14992) | IRT and anchors (M3) |
-| Dekoninck et al. (2410.10347) | cascade optimality (M4) |
+| Dekoninck et al. (2410.10347) | cascade optimality (M5) |
+| ORACLE (2607.22465) | verifier-feedback routing; related work for C3 (full text not yet read) |
 | PILOT (2508.21141), BaRP (2510.07429), LLM Bandit (2502.02743) | exploration and online learning (M4) |
 | LLMRouterBench (2601.07206), kNN baseline (2505.12601), Routing Plateau (2606.07587), 2608.23023 | evaluation honesty (M2, M5) |
 
@@ -593,3 +631,49 @@ results report.
   - After the fix, on synthetic 1-D data at k = 50, Fisher beats random: 0.09 vs 0.28 with true parameters, and 0.24 vs 0.32 with parameters fitted from 7 respondents.
   - The real-data A6/A7 numbers are unchanged by the fix, so the real-data loss is genuine. The likely cause is multidimensionality (A4).
   - Next: per-dimension Fisher with per-dimension θ.
+
+### 2026-11-19 (plan v2)
+
+The plan was rewritten as v2 (this file; v1 is at `b8edb5f`). The user clarified that the M1 and M2
+work of 2026-11-10 was a set of quick checks for Report 8, not finished infrastructure, and asked
+for a plan without a timeline. An independent reviewer (Fable) audited the plan and code in two
+rounds; its numeric claims were rerun with the repo's own loaders
+(`router.data.coderouterbench.load`, `router.baselines.static.group_best`) before adopting it.
+
+- **Confirmed:**
+  - zero-probe pool-mean prior ability error 0.268 vs random k = 50 0.270 (θ = 0 prior: 0.791);
+  - single-draw Spearman at k = 50: mean 0.51, min −0.31, 1 of 10 draws ≥ 0.8; at k = 10: 0.02;
+  - 8 distinct pass counts across items with 7 models, so a 1PL bank has 8 difficulty levels;
+  - `source_of` yields 600 probing-split families, 572 of them singletons;
+  - DimensionBest's 7.85-point gain over Always-Opus (complete view): test_generation +4.20,
+    algorithm +2.80, code_refactoring +0.45, data_science +0.45, the rest −0.05;
+  - within test_generation, Opus scores 0.47 on lcb_testgen (n=236), 0.18 on he_testgen (n=39) and
+    0.00 on mbpp_testgen (n=31, all models 0.00); within algorithm, Opus 0.27 on lcb (n=279) vs
+    qwen3.5-plus 0.57. (A check earlier in the same session reported Opus 0.86 on lcb_testgen;
+    it used the broken `source_of` and was wrong.);
+  - cheap-first break-even P(pass) for Qwen3-Max before Opus: 4.50% (mean cost $0.00052 vs
+    $0.01165 per task);
+  - full cheapest-first ladder with a perfect verifier (pass = score ≥ 0.5) costs $41.0 on the
+    ID test split vs $34.0 for Always-Opus; 39.3% of tasks are solved by no model; stopping after
+    the first rung on those tasks would cost $6.0 (perfect-predictor bound);
+  - k-matched DimensionBest (20 draws): 44.4 ± 2.6 (k=25), 47.9 ± 2.1 (50), 49.3 ± 0.9 (100),
+    50.7 ± 0.6 (250), 51.4 ± 0.3 (1000); full table 51.7.
+- **Partly confirmed:** DimensionBest vs released ACRouter is +1.54 on the complete view but
+  −0.05 [−0.31, 0.23] on the paper view (paired bootstrap, n = 2,919). The share of test tasks
+  without a run-time verifier is larger than the reviewer's 45%: 41% of cells are continuous and
+  67% of tasks sit in dimensions with continuous scores.
+- **Web-dev per-test data:** the frozen Phase 5 CSV stores test counts only; the database schema
+  has a `test_results` JSONB column and `TestRunner` parses assertions; 515 tests over 69 test
+  files (about 7.5 per task).
+- **Decisions:** Fisher anchors dropped as the headline (untestable with 7 respondents); goal
+  reframed around RQ-A to RQ-C and contributions C1 to C4 (§1); decision points DP1 to DP3 added;
+  rules R1, R2, R4 and R8 tightened and R10 to R12 added; Thompson sampling, the memory residual
+  and the proxy deferred; metadata kNN dropped. C2 (stop or escalate) was added by the main
+  session on the strength of the $41.0 vs $6.0 result; the reviewer listed it as an alternative
+  approach.
+- **The 2026-11-10 numbers above this entry are quick checks.** Cite them only after the M1–M3
+  rebuild reproduces them.
+- **Open questions for the user:** submission and defence dates; whether the committee accepts the
+  audit (C4) as the lead result if DP1 trips; whether the scope is formally limited to
+  test-verifiable tasks; which free-tier models are available now; whether raw outputs for
+  `lcb` and `lcb_testgen` exist anywhere (the release holds scores and tokens only).
