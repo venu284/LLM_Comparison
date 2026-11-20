@@ -17,17 +17,21 @@ DOCUMENTED = {
     "VERIFIER_RUN_S": 0.074,                  # S0.2
     "VERIFIER_RUN_USD": 1e-6,                 # S0.2
     "VERIFIER_COST_SWEEP": (1, 10, 100),      # S0.2
+    "PRICE_SWEEP": (0.5, 2.0),                # S0.2 (O13)
     "GATE_SAVING": 20.0,                      # S0.3(a)
     "GATE_GAP": -2.0,                         # S0.3(b)
     "C_SAVING": 0.0,                          # S0.3(c)
     "C_GAP": -2.0,                            # S0.3(c)
     "CI_LEVEL": 0.95,                         # S0.3, S0.8
     "DEV_FRACTION": 0.20,                     # S0.6
+    "DEV_SEED": 0,                            # S0.6 (O6)
     "N_FOLDS": 5,                             # S0.6
+    "N_INNER_FOLDS": 4,                       # S0.6 (O7)
     "N_SEEDS": 5,                             # S0.8
     "AT_THRESHOLD_MARGIN": 0.1,               # S0.8
-    "GATE_SEED": 0,                           # S0.8 (pending sign-off)
-    "N_BOOT": 1000,                           # S0.8 (pending sign-off)
+    "GATE_SEED": 0,                           # S0.8 (O5)
+    "N_BOOT": 1000,                           # S0.8 (O4)
+    "N_BOOT_GATE": 2000,                      # S0.8 (O4)
     "LIVE_BUDGET_USD": 20.0,                  # S0.9
     "PAID_TOP_MODEL": "claude-opus-4-6",      # S0.9
     "PAID_TOP_PRICE_USD_PER_MTOK": (5.0, 25.0),  # S0.9
@@ -37,7 +41,7 @@ DOCUMENTED = {
     "LIVE_HELD_OUT_MODELS": (1, 2),           # S0.9
     "MAX_PROBES_PER_GROUP": 5,                # S0.13
     "MAX_PROBES_PER_MODEL": 100,              # S0.13
-    "EXPLORATION_SHARE": 0.10,                # S0.13 (pending sign-off: "about 10%")
+    "EXPLORATION_SHARE": 0.10,                # S0.13 (O8)
     "STOP_POSTERIOR_SD": 0.5,                 # S0.13
     "MIN_FAMILY_TASKS": 30,                   # S0.13
     "DP1A_MIN_LOWER": 3.0,                    # DP1a
@@ -73,3 +77,8 @@ def test_claims_table_names_exist_in_settings():
     ("VERIFIER_RUN_USD", rc), ("C_SAVING", cb), ("C_GAP", cb)])
 def test_p0_5_and_p0_6_used_the_same_constants(name, module):
     assert getattr(module, name) == getattr(S, name)
+
+
+def test_e0_power_used_the_signed_off_development_seed():
+    from router.experiments import e0_power
+    assert e0_power.DEV_SEED_PROVISIONAL == S.DEV_SEED

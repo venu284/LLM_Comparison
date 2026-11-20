@@ -14,10 +14,10 @@
 
 | Field | Value |
 |---|---|
-| Current stage | **Pre-S0 — requirements before S0** (§4) |
-| Next action | P0.4: write `docs/CLAIMS.md` (S0.1–S0.14), the constants in `router/settings.py`, and port the power scripts. P0.1–P0.3, P0.5 and P0.6 done |
-| Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: none yet · Write-up: Report 8 |
-| Last updated | 2026-11-19 |
+| Current stage | **S1 — Validate data** (§4). Pre-S0 and S0 done; `docs/CLAIMS.md` signed off 2026-11-20 |
+| Next action | S1.1 `data/sources.py` (family table), then S1.2–S1.11 in order. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0 · Write-up: Report 8 |
+| Last updated | 2026-11-20 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
 | Budget | $20 for the paid top-rung model in live runs (S0.9) |
 
@@ -54,7 +54,8 @@ Build a router for code-generation tasks that:
   levels, so Fisher anchor selection cannot be tested on CodeRouterBench.
 - With a perfect verifier, trying Qwen3-Max before Opus pays off at P(pass) > 4.5%, so a
   predicted-pass threshold rarely binds. The real cost lever is the 39.3% of ID-test tasks (all dimensions, pass = score ≥ 0.5) that no
-  model solves.
+  model solves. (Historical figure under the old pass rule; S0.1 now sets success = score 1.0, and
+  S3.3 recomputes it.)
 
 **Two separate gates.** Finishing the research and reaching the goal are judged separately:
 - the **research gate** (S0.4) passes when every decision point and contribution has a verdict
@@ -67,7 +68,7 @@ Build a router for code-generation tasks that:
 | # | Contribution | Minimal evidence | If it fails |
 |---|---|---|---|
 | C1 | **Probes-to-decision for a new model, from verified outcomes in one pass.** How many outcomes a new model needs before routing to it matches a lookup table built from the same k outcomes (k-matched DimensionBest, same label source), and whether a pooled hierarchical prior, in-stream outcomes from a partial verifier (PASS/FAIL/UNKNOWN) and a per-group stopping rule shorten that. Scored on a single pass over the stream with no repeated problem (S0.5). Quality against onboarding-set size is already published (UniRoute Fig. 2); the in-stream, stopping-rule and same-label-source comparison is not | E1: four onboarding arms against k-matched DimensionBest on both corpora, with CIs | Report the number of shared probes a lookup table needs (currently about 250 to reach 50.7) as the measured answer to RQ-A |
-| C2 | **Give up or escalate, per task, under partial verification.** A calibrated per-task classifier of P(a later rung passes \| earlier rungs failed), with a give-up action for tasks predicted to be unsolvable, under the real visible-test verifier, where about four-fifths of headline tasks (80.0% of the 1,907 complete-case tasks, provisional, P0.5) give no signal (S0.11). The stop-or-escalate rule on post-failure histories (Route Anything Prop. 8) and cell-level truncation under an oracle verifier (Route Anything X10) are prior work that C2 uses | E2: cost at matched acceptance on exec-scored tasks, against cost-aware DimensionBest, the fixed cascade and Route Anything's 21-cell zero-loss direct-dispatch route (R2) | Report how far a realistic predictor falls short of the perfect-truncation bound ($6.0 vs $41.0, Always-Opus $34.0) |
+| C2 | **Give up or escalate, per task, under partial verification.** A calibrated per-task classifier of P(a later rung passes \| earlier rungs failed), with a give-up action for tasks predicted to be unsolvable, under the real visible-test verifier, where about four-fifths of headline tasks (80.0% of the 1,907 complete-case tasks, provisional, P0.5) give no signal (S0.11). The stop-or-escalate rule on post-failure histories (Route Anything Prop. 8) and cell-level truncation under an oracle verifier (Route Anything X10) are prior work that C2 uses | E2: cost at matched acceptance on exec-scored tasks, against cost-aware DimensionBest, the fixed cascade, Route Anything's 21-cell zero-loss direct-dispatch route and **per-cell Rule A with no-signal cells escalated** (R2), which C2 must beat (`CLAIMS.md` O19) | C2 counts as failed if it does not beat per-cell Rule A escalated at matched acceptance, whatever the S0.3 result. Report how far a realistic predictor falls short of the perfect-truncation bound ($6.0 vs $41.0, Always-Opus $34.0) |
 | C3 | **Verifier strength on web-dev, by visible fraction.** False-pass rate of a verifier that sees a fraction f of each web-dev task's tests, against a disjoint hidden grader, measured live (E4), and its effect on cascade cost and acceptance. On CodeRouterBench the verifier profile is a re-analysis of Route Anything's released X13 verdicts (visible-test verifier: 15% false-pass and 27% false-reject on cells with visible tests; cells without visible tests give no signal under S0.11, and the X13 syntax/quality heuristic, which S0.11 does not use, false-passes 66.5% there; measured 2026-11-19), and the with/without-examples split and its cascade effect are already in Route Anything's X7b and X8 | E4: visible vs held-out tests on web-dev, false-pass curve over f with a task-level Clopper-Pearson bound; CodeRouterBench replay with the real X13 verdicts as context | Report the web-dev false-pass curve as a characterisation; the CodeRouterBench profile is cited as Route Anything's data. If E4 cannot be run, C3 counts as covered and S0.14 is re-applied |
 | C4 | **Headroom audit of CodeRouterBench (fallback contribution).** How much of the oracle's and DimensionBest's gain over the best single model survives the raw-response audit of the suspected families and run noise. Builds on Route Anything's BigCodeBench grading diagnostic and on the run-noise methods of 2608.23023 and the Routing Plateau; suspected anomalies without execution evidence are reported as sensitivity analyses, not as confirmed defects | S1.7 audit plus the three data views; noise-corrected oracle on web-dev | If headroom survives, CodeRouterBench is cleared as primary data, which strengthens C1 and C2 |
 
@@ -98,17 +99,17 @@ C1–C4 are each **partly covered**; none is fully covered. Under S0.14 the orde
 
 | DP | Where | Test | Consequence |
 |---|---|---|---|
-| DP1a | End of S3 | **Accuracy:** headroom of the oracle and of cross-fitted DimensionBest over the best single model, on the **full** artefact-filtered eligible pool (not the development split: the oracle needs no fitting and a cross-fitted lookup table is not router development, so no leak; the development split alone, about 690 tasks, would leave the test weak). Passes if the lower end of the 95% cluster-bootstrap CI is ≥ 3.0 AvgPerf points | No: C4 leads the accuracy story |
+| DP1a | End of S3 | **Accuracy:** headroom of the oracle and of cross-fitted DimensionBest over the best single model, on the **full** artefact-filtered eligible pool (not the development split: the oracle needs no fitting and a cross-fitted lookup table is not router development, so no leak; the development split alone, about 690 tasks, would leave the test weak). Passes if the lower end of the 95% cluster-bootstrap CI of **cross-fitted DimensionBest's** headroom is ≥ 3.0 AvgPerf points; the oracle is reported as the ceiling (`CLAIMS.md` O18). AvgPerf = acceptance rate under S0.1, in points (O10). Provisional (P0.4): oracle +12.66 [11.55, 13.91], DimensionBest +1.45 [0.68, 2.23] | No: C4 leads the accuracy story |
 | DP1b | End of S3 (S3.2) | **Cost (feasibility upper bound):** does the **oracle-on-no-signal bound** meet S0.3 on point estimates on the headline set, with verifier cost included: saving ≥ 20% and acceptance gap ≥ −2 points against the best single model, **and** saving > 0 and gap ≥ −2 points against CellBest with predicted cells (S0.3(c))? In the bound, cascades use the real verifier where visible tests exist and an oracle accept-or-escalate decision on cells with no verifier signal. Fixed ladders cannot pass by construction (S3.2), so they are not the test. Also report the gap the learned router must close (provisional: about 11 points against the best single model, P0.5; against CellBest with predicted cells (P0.6, seed 0): the bound meets (c) on point estimates (per-cell Rule A: 36.6% saving, +1.6 points; Rule B: 16.4%, +8.1). The best policy without an oracle (per-cell Rule A, no-signal cells escalated) reaches 3.3%, +0.3. The learned no-signal decision must recover the difference, about 33 points of saving at similar acceptance) | No: the bound misses the gate, so stop and bring it to the user before S4 (LLMRouterBench becomes a candidate primary corpus for C1 and C2). A failed DP1b means the tested policies have not shown economic feasibility; it does not prove a learned policy cannot succeed, so the pause is a reassessment, not a verdict. This half decides the economic claim |
 | DP2 | During S5 | Does the hierarchical model beat k-matched DimensionBest **in routing units** (AvgPerf, cost) at a k in the fixed grid {10, 25, 50, 100}, on the development split? | No: the routing model is the shrunk lookup table, and IRT is reported as an ablation |
-| DP3 | S6 pilot | Is the routing gap on the live pool (free models plus the paid top model) more than twice the run-to-run standard deviation, measured on the pilot's ≥ 2 runs per task? | No: live work is reported as a verifier study and a transfer test, not as a routing win |
+| DP3 | S6 pilot | Is the routing gap on the live pool (free models plus the paid top model) more than twice the run-to-run standard deviation, measured on the pilot's ≥ 2 runs per task? The routing gap is the noise-corrected oracle headroom over the best single model: choose on run 1, score on run 2 (`CLAIMS.md` O14) | No: live work is reported as a verifier study and a transfer test, not as a routing win |
 
 ### Success criteria
 
 | # | Criterion | Measured by |
 |---|---|---|
 | SC1 | E1 onboarding curves in routing units (AvgPerf, cost) for the onboarding arms against k-matched DimensionBest, with CIs | S5, S7 |
-| SC2 | Cascade with stop-or-escalate against cost-aware DimensionBest and the fixed cascade at matched acceptance rate, exec-scored tasks, paired CIs; or an honest negative | S5, S7 |
+| SC2 | Cascade with stop-or-escalate against cost-aware DimensionBest, the fixed cascade and per-cell Rule A escalated (`CLAIMS.md` O19) at matched acceptance rate, exec-scored tasks, paired CIs; or an honest negative | S5, S7 |
 | SC3 | Verifier noise results: simulated noise (E3) and the measured false-pass curve on web-dev (E4), with an upper bound when no false pass is seen | S5, S7 |
 | SC4 | Headroom audit in three data views | S1, S3 |
 | SC5 | At least 3 free-tier models plus the paid top model × 65 tasks, stored with per-test results; transfer test reported as exploratory | S6, S7 |
@@ -277,10 +278,16 @@ before P0.4); S0 cannot be signed off until P0.1–P0.6 are done.
       fetches nothing and a corrupted file is re-fetched alone; only `external/CHECKSUMS` is
       tracked. The data-file paths in `router/data/coderouterbench.py` and three `m1_profile`
       scripts were corrected to the repo layout. Tests: 100 passed.
-- [ ] **P0.4 Write `docs/CLAIMS.md`** from S0.1–S0.14 below, with the constants in
-      `router/settings.py`, and move the power-calculation scripts into
-      `router/experiments/e0_power.py` as the evidence for S0.3 and S0.6. The original scripts
-      are committed in `router/experiments/e0_power/`; its README lists what the port must change.
+- [x] **P0.4 Claim contract, constants and power port.** Done 2026-11-20 (merged `88a425f`):
+      `docs/CLAIMS.md` (drafted with 18 open items, plus O19 from the reviewer; signed off by the
+      user on 2026-11-20), the claim constants in `router/settings.py`
+      (`tests/router/test_claims_constants.py`), and `router/experiments/e0_power.py` (output
+      `router/experiments/out/e0_power.json`; `docs/research/P0.4_power.md`). The original
+      `power4.py` reproduces the plan's 0.85–1.4-point half-widths. On the current definitions,
+      the no-oracle per-cell policies' gap CI half-width against the best single model is 1.4–1.5
+      points on the 1,907-task complete case and 1.8–1.9 on the evaluation population (development
+      split removed), giving 55–77% power at −2 for a true gap of 0. Against CellBest it is 0.3–0.6
+      points. CellBest's own saving depends on the development-split draw (15.4% to 32.9%).
 - [x] **P0.5 Provisional recount (before P0.4).** Done 2026-11-19 (merged `dcf50ad`):
       `docs/research/P0.5_recount.md`, script `router/experiments/p0_5_recount.py` (output
       `router/experiments/out/p0_5_recount.json`). The 2026-11-19 numbers reproduce exactly.
@@ -306,8 +313,8 @@ before P0.4); S0 cannot be signed off until P0.1–P0.6 are done.
       in-sample pick, saves 24.7% at −0.6 against CellBest) and with per-cell choice fitted in
       training folds (Rule A: 36.6%, +1.6; Rule B: 16.4%, +8.1), on all five seeds. Per-cell
       choice without an oracle also meets (c) on point estimates (1.7% to 3.3%, gap −0.3 to
-      +0.3) and is now an R2 baseline. Gap CI half-width against CellBest: 0.3 to 2.3 points
-      depending on the policy.
+      +0.3) and is now an R2 baseline. Gap CI half-width against CellBest: 0.3–1.8 points for
+      per-cell policies, 2.3 for fixed ladders.
 
 The remaining requirements are placed in the stage that needs them, in priority order:
 
@@ -332,7 +339,10 @@ The remaining requirements are placed in the stage that needs them, in priority 
 ### S0 — Claim definitions
 
 Purpose: fix what is measured and what counts as success before any S1 code is written, so that no
-result can be reinterpreted after it is seen. S0.3, S0.6 and S0.10 were approved by the user on
+result can be reinterpreted after it is seen. **Signed off by the user on 2026-11-20 as
+`docs/CLAIMS.md`, the contract; where `CLAIMS.md` is more specific than the items below (its
+sign-off decisions O1–O19: populations, seeds, resamples, inner folds, exploration, groups,
+AvgPerf, DP1a, DP3, the C2 bar), `CLAIMS.md` wins.** S0.3, S0.6 and S0.10 were approved by the user on
 2026-11-19 on the evidence of the power calculation; the third and fourth reviews of that day
 added the population, observation and nesting rules below (progress log).
 
@@ -341,7 +351,7 @@ counts that cannot change (release row counts, the X13 coverage of 2,911 tasks) 
 every count that depends on eligibility (S0.12) or on the audit (S0.10) is frozen in
 `data/artefacts.yaml` only after S1.4 and S1.7 run.
 
-- [ ] **S0.1 Acceptance.** A task is accepted only when the ground truth passes it. **In replay the
+- [x] **S0.1 Acceptance.** A task is accepted only when the ground truth passes it. **In replay the
       ground truth is the benchmark's released score**: it covers every task and is what the
       baselines and the paper use. For execution-scored families with partial credit (scores
       such as 0.2–0.8 are fractions of tests passed), **success means all tests pass (score =
@@ -349,7 +359,7 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       on 87.7% of cells and has 2,051 harness-mismatch and 2,718 extraction-failure cells, so it is
       reported only as a sensitivity check. In live runs the ground truth is the reserved hidden
       test pool. The router's own verifier decides escalation but never counts as acceptance.
-- [ ] **S0.2 Cost.** Cost = model tokens × published price (source URL and access date in
+- [x] **S0.2 Cost.** Cost = model tokens × published price (source URL and access date in
       `router/data/prices.py`) + verifier runs + retries + probe calls, spread over the stream.
       Actual spend is not the metric. Verifier runs are reported as a count and in dollars at a
       stated per-run rate: the X13 measured mean run time (0.074 s per visible-test run) priced at a
@@ -358,10 +368,10 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       ×100. The stream length over which probe cost is spread is the number of tasks scored
       (reported with the break-even stream length). A price-sensitivity sweep is run on every
       headline number.
-- [ ] **S0.3 Performance gate.** The router passes if, over the nested cross-fitted evaluation
+- [x] **S0.3 Performance gate.** The router passes if, over the nested cross-fitted evaluation
       scores (S0.6):
-      - (a) the lower end of the 95% cluster-bootstrap CI of its cost saving against the best
-        single model is at least **20%**;
+      - (a) the lower end of the paired 95% cluster-bootstrap CI of its cost saving against the
+        best single model is at least **20%**;
       - (b) the lower end of the paired 95% cluster-bootstrap CI of its acceptance gap against the
         best single model is **at least −2 points**;
       - (c) **it beats the strongest lookup baseline.** Against CellBest with predicted cells
@@ -378,14 +388,18 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       population as the scored fold** (for cascade claims: the training folds' S0.11 headline
       tasks), never on the scored fold. Provisional example (P0.5, success = 1.0): on the
       complete-case headline set Opus scores 67.3%, gpt-5.4 53.2% and qwen3.5-plus 42.2%; Opus is
-      the best model in every training fold. Power: recomputed in S3.7 on the final population;
-      the user chose on 2026-11-19 to keep −2 and report the power with the result, even if it is
-      about 60–70%. First estimate for (c) (P0.6): gap CI half-width 0.3–1.8 points against
-      CellBest; a router that departs from CellBest as much as the bound policies needs a point
-      gap of about −0.2 or better.
-- [ ] **S0.4 Research gate.** Every decision point and contribution ends in a verdict (holds,
+      the best model in every training fold. Power (P0.4, provisional): on the evaluation
+      population, a router routing like the no-oracle per-cell policies is measured against the
+      best single model to about ±1.8–1.9 points, which gives about 55–60% power at −2 for a true
+      gap of 0 (±1.4–1.5 and 72–77% on the full complete-case headline set). Routers that change
+      more cells are measured less precisely (±1.9–2.6 for the oracle-bound policies). Against
+      CellBest with predicted cells the half-width is 0.3–0.6 points for policies close to
+      CellBest and 1.3–2.0 for policies that depart from it as much as the bound. The user chose
+      on 2026-11-19 to keep −2 and report the power with the result; S3.7 recomputes it on the
+      final population with `e0_power.py`.
+- [x] **S0.4 Research gate.** Every decision point and contribution ends in a verdict (holds,
       fails, not reached) with quoted evidence. A negative verdict passes this gate.
-- [ ] **S0.5 k and label source.** k is the number of calls made to the new model. Every
+- [x] **S0.5 k and label source.** k is the number of calls made to the new model. Every
       onboarding arm and baseline with the same k, including k-matched DimensionBest, receives
       exactly the same k outcomes **from the same label source**. E1 is reported in two pairings:
       ground-truth labels for all arms, and verifier-only labels (PASS/FAIL/UNKNOWN) for all arms,
@@ -394,7 +408,7 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       E1 is scored on a **single pass** over the stream with **no repeated problem** (the R13
       problem id, not the task id), so in-stream learning cannot recall its own or a sibling
       task's verdict (ORACLE E.6 and E.8); a test checks this.
-- [ ] **S0.6 Development split and nested cross-fitting** (option (a), chosen by the user on
+- [x] **S0.6 Development split and nested cross-fitting** (option (a), chosen by the user on
       2026-11-19).
       - **Task pool:** CodeRouterBench ID probing and ID-test splits pooled, eligible tasks only
         (S0.12). Problems (variants of one problem kept together) are the unit of every split.
@@ -411,11 +425,11 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       - The original ACRouter split is used only to reproduce the paper's numbers.
       - Cost of the development split: about 20% of the headline tasks (provisional: about 1,970
         to about 1,580).
-- [ ] **S0.7 Iteration rule.** Router changes are made and judged on the development split only.
+- [x] **S0.7 Iteration rule.** Router changes are made and judged on the development split only.
       The nested evaluation and the live hidden tests are run once, with the frozen candidate
       list and selection rule. Every version tried on the development split is logged and
       reported.
-- [ ] **S0.8 Statistics.** Paired bootstrap over tasks and cluster bootstrap over problems, 95%
+- [x] **S0.8 Statistics.** Paired bootstrap over tasks and cluster bootstrap over problems, 95%
       CIs; the cluster bootstrap is the one used for the gates. Repeated live outputs of one task
       are resampled together (cluster by task). A seed means the fold assignment plus the stream
       order plus the probe draw; gates use a single pre-registered seed, and the other four seeds
@@ -424,7 +438,7 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       threshold** when it falls to the threshold or below on another seed, when its CI lower
       bound is at or below the threshold, or when its margin is under 0.1 points (adopted from
       P0.6 on 2026-11-19).
-- [ ] **S0.9 Live pool and budget.** The live ladder needs steps in both price and ability, and
+- [x] **S0.9 Live pool and budget.** The live ladder needs steps in both price and ability, and
       models the router has not seen:
 
       | Tier | Size / type | Expected web-dev pass rate | Role |
@@ -442,14 +456,14 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       window, and terms that allow benchmark use. Budget **$20** with a hard cap in the provider
       console (Opus 4.6 estimate: about $4 for 65 tasks × 3 runs without extended thinking). Every
       response is cached; the model id and date are recorded on every call.
-- [ ] **S0.10 Headline data view.** The headline is the **artefact-filtered** view; the all-tasks
+- [x] **S0.10 Headline data view.** The headline is the **artefact-filtered** view; the all-tasks
       view is always reported next to it. Rule, fixed before any result: the S1.7 audit decides
       each suspected family on evidence from the raw responses. A family proven defective is
       excluded; a family proven sound is kept; a family the audit cannot decide stays out of the
       headline and appears in the sensitivity view. The headline is therefore a **restricted
       population** (runnable, audited, test-checkable tasks); its results do not establish
       performance across all executable coding tasks.
-- [ ] **S0.11 Replay verifier and the headline set for cascade claims.**
+- [x] **S0.11 Replay verifier and the headline set for cascade claims.**
       - **Verdict source:** the real visible-test verdicts from route-anything-data X13, not
         simulated noise. X13 covers 2,911 tasks × 8 models drawn from both splits (2,044 probing,
         867 ID-test). They are the tasks Route Anything could make runnable (2,911 of the 2,912
@@ -486,13 +500,13 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
         qwen3.5-plus 2) and none of the Qwen3-Max rows; 1,479 of the 1,551 empty rows are LCB
         (P0.5).
       - Simulated noise (E3) is a sensitivity analysis only.
-- [ ] **S0.12 Scope and eligibility.** Router claims cover execution-scored, test-checkable tasks
+- [x] **S0.12 Scope and eligibility.** Router claims cover execution-scored, test-checkable tasks
       only (consistent with R4). **Eligibility is decided by each source benchmark's documented
       scoring rule (S1.4), never by the scores observed** — an unseen model's outcomes must not
       decide which tasks enter its evaluation. Partial-credit execution families are kept, with
       success defined by S0.1; a family whose scoring is not execution-based is excluded as a
       whole. Similarity- and judge-scored tasks are reported separately.
-- [ ] **S0.13 Observations, probes and pinned thresholds.**
+- [x] **S0.13 Observations, probes and pinned thresholds.**
       - **In-stream observations** are PASS, FAIL or UNKNOWN, from the visible-test verifier only.
         UNKNOWN (no verifier signal) is never turned into a training label. Replay must never pass
         the released score to the router (a test checks this; the quick-check
@@ -514,12 +528,13 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
         UNKNOWN, including false rejections), not on the true failures.
       - Families (S1.1): no family under 30 tasks; the final list with counts is frozen in
         `sources.py`. DP1a, DP1b and DP3 thresholds as stated in §1.
-- [ ] **S0.14 Fallback lead claim, fixed in advance.** If P0.1 finds C2 and C3 already covered, C1
+- [x] **S0.14 Fallback lead claim, fixed in advance.** If P0.1 finds C2 and C3 already covered, C1
       becomes the lead contribution. If C1 is also covered, the lead becomes C4 together with the
       real-verifier economics (cost of a verified cascade under a measured weak verifier).
 - **Deliverable:** `docs/CLAIMS.md` with S0.1–S0.14, plus their constants in `router/settings.py`.
 - **Gate:** the user signs off on `docs/CLAIMS.md` and it is committed before any S1 code. A later
   change needs a log entry giving the reason, and every result already computed is re-scored.
+  **Passed 2026-11-20.**
 
 ### S1 — Validate data
 - [ ] S1.1 `data/sources.py` [M1.1]: an explicit task-id-to-family table covering every id in the
@@ -1393,3 +1408,34 @@ Two further reviews were checked against the data; all fixes approved by the use
   per-cell choice without an oracle; S0.3 adds the power note for (c); S0.8 adopts the "at the
   threshold" rule; S1.6 merges byte-identical prompts into one problem (three pairs found);
   S1.7 checks the identical-prompt bcb tasks; S3.2 adds the CellBest results. Next: P0.4.
+
+### 2026-11-20 (P0.4 claim contract, constants, power port; S0 signed off)
+
+- **P0.4** merged (`88a425f`): `docs/CLAIMS.md` drafted from S0.1–S0.14, §1 and §6 at `1921063`,
+  with 18 open items; the claim constants in `router/settings.py` (a test pins each value, checks
+  it against the `CLAIMS.md` table and against the P0.5/P0.6 scripts); `e0_power.py` ports the four
+  power scripts onto the current definitions. A reviewer re-run reproduced every number (only the
+  runtime field differs).
+- **Power (provisional):** the originals reproduce the plan's 0.85 and 1.38. Ported: no-oracle
+  per-cell policies ±1.8–1.9 points against the best single model on the evaluation population
+  (power at −2 about 55–60%), ±0.3–0.6 against CellBest. CellBest's saving against the best single
+  model ranges from 15.4% to 32.9% across development-split seeds (`code_generation|bcb` flips
+  between Opus and qwen3.5-plus). DP1a pool: oracle headroom +12.66 [11.55, 13.91], cross-fitted
+  DimensionBest +1.45 [0.68, 2.23] against 3.0.
+- **Reviewer finding (O19):** per-cell Rule A with no-signal cells escalated, a buildable policy
+  with nothing learned, passes all of S0.3 on the evaluation population (development seed 0). The
+  gate stays; C2 and SC2 must beat that policy at matched acceptance.
+- **S0 signed off by the user**, accepting the reviewer's recommendation on every open item
+  (O1–O19, recorded in `CLAIMS.md`): baselines fitted on the scored population's training folds,
+  the router may also use the pool's; gate scored on the complete case; S2.5 predictor frozen
+  before evaluation, CellBest's argmax rule kept; 2,000 resamples for gates, 1,000 elsewhere; gate
+  seed 0; development-split seed 0; 4 inner folds; exploration exactly 10% until the stopping rule
+  or k; group = S1.1 family; AvgPerf = acceptance; verifier rate basis recorded in S1.10; "at the
+  threshold" is a label only; price sweep ×0.5 / ×2 per model; DP3 gap = noise-corrected oracle
+  headroom; (a) paired; DP1a decided on cross-fitted DimensionBest (provisionally it would fail and
+  C4 would lead the accuracy story); C2 must beat per-cell Rule A escalated.
+- **Plan changes:** Status moved to S1; P0.4 and S0.1–S0.14 checked; S0 states that `CLAIMS.md`
+  wins where more specific; S0.3 power note and paired (a); DP1a, DP3, C2, SC2 updated; §1's
+  "score ≥ 0.5" figure marked historical; the P0.6 half-width wording fixed. New constants:
+  `DEV_SEED`, `N_INNER_FOLDS`, `N_BOOT_GATE`, `PRICE_SWEEP`.
+- **Next:** S1.1.

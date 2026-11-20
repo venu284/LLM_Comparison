@@ -27,18 +27,21 @@ BENCHMARK_DIR = REPO_ROOT / "benchmark"
 # docs/IMPLEMENTATION_PLAN.md. A change needs a progress-log entry giving the
 # reason, and every result already computed is re-scored (S0 Gate).
 #
-# Constants marked "pending sign-off" are used by the P0.5/P0.6 scripts but are
-# not fixed by the plan text; they are listed as open items in docs/CLAIMS.md.
+# Values the plan text left open (open items O1-O19 of the draft) were decided
+# by the user when docs/CLAIMS.md was signed off on 2026-11-20.
 # =============================================================================
 
 # S0.1 Acceptance: success means all tests pass (released score = 1.0).
 SUCCESS_SCORE = 1.0
 
 # S0.2 Cost: verifier runs priced at the X13 mean visible-test run time on a
-# published on-demand vCPU-hour rate (about $1e-6 per run), swept x1, x10, x100.
+# published on-demand rate (about $1e-6 per run; the rate basis is recorded with
+# its source and date in router/data/prices.py in S1.10, O11), swept x1, x10, x100.
 VERIFIER_RUN_S = 0.074
 VERIFIER_RUN_USD = 1e-6
 VERIFIER_COST_SWEEP = (1, 10, 100)
+# S0.2 price-sensitivity sweep (O13): each model's price x0.5 and x2, one model at a time.
+PRICE_SWEEP = (0.5, 2.0)
 
 # S0.3 Performance gate, judged on CI lower bounds of the cross-fitted scores.
 GATE_SAVING = 20.0      # (a) saving vs the best single model, percent, lower bound >= this
@@ -49,13 +52,16 @@ CI_LEVEL = 0.95         # S0.3, S0.8: 95% cluster-bootstrap CIs
 
 # S0.6 Development split and nested cross-fitting (option (a)).
 DEV_FRACTION = 0.20     # share of problems in the development split
+DEV_SEED = 0            # seed of the one development-split draw (O6)
 N_FOLDS = 5             # outer folds over the evaluation population, by problem
+N_INNER_FOLDS = 4       # inner folds: one per remaining outer fold (O7)
 
 # S0.8 Statistics.
 N_SEEDS = 5             # the gate seed plus "the other four seeds"
-AT_THRESHOLD_MARGIN = 0.1  # points: a point estimate within this of its threshold is "at the threshold"
-GATE_SEED = 0           # pending sign-off: S0.8 says "a single pre-registered seed"; 0 is P0.5/P0.6's choice
-N_BOOT = 1000           # pending sign-off: resample count not set in S0.8; P0.5/P0.6 used 1,000
+AT_THRESHOLD_MARGIN = 0.1  # points (percentage points for savings); a reporting label only (O12)
+GATE_SEED = 0           # the single pre-registered gate seed (O5)
+N_BOOT = 1000           # cluster-bootstrap resamples outside gate scoring (O4)
+N_BOOT_GATE = 2000      # cluster-bootstrap resamples for gate scoring (O4)
 
 # S0.9 Live pool and budget.
 LIVE_BUDGET_USD = 20.0
@@ -69,7 +75,7 @@ LIVE_HELD_OUT_MODELS = (1, 2)               # models held out of calibration, ar
 # S0.13 Observations, probes and pinned thresholds.
 MAX_PROBES_PER_GROUP = 5
 MAX_PROBES_PER_MODEL = 100
-EXPLORATION_SHARE = 0.10   # pending sign-off: the plan says "about 10% per group"
+EXPLORATION_SHARE = 0.10   # exactly 10% of each group's requests (a group is an S1.1 family, O8, O9)
 STOP_POSTERIOR_SD = 0.5    # stop exploring a group when the posterior SD of its offset (logit) <= this
 MIN_FAMILY_TASKS = 30      # no family under 30 tasks
 

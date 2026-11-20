@@ -2,17 +2,18 @@
 
 | Field | Value |
 |---|---|
-| Status | **Draft for user sign-off** (P0.4). Not in force until the user signs it off (S0 Gate) |
-| Date | 2026-11-20 |
+| Status | **Signed off by the user on 2026-11-20** (S0 Gate). In force |
+| Date | Drafted 2026-11-20 (P0.4); signed off 2026-11-20 with the decisions in [Sign-off decisions](#sign-off-decisions-2026-11-20) |
 | Written from | `docs/IMPLEMENTATION_PLAN.md` at commit `1921063` (§1, §2, S0.1–S0.14, §6) |
 | Constants | `router/settings.py`, section "Claim constants (docs/CLAIMS.md)"; checked by `tests/router/test_claims_constants.py` |
 | Change rule | After sign-off, a change needs a progress-log entry giving the reason, and every result already computed is re-scored (S0 Gate) |
 
 This document states what is measured, how, against what, and what counts as success or failure,
 so that no result can be reinterpreted after it is seen. It records decisions already in the plan;
-it does not make new ones. Each rule cites its source. Where the plan is silent, vague or
-inconsistent, the item is listed under [Open items for sign-off](#open-items-for-sign-off) and is
-not decided here.
+it does not make new ones. Each rule cites its source. Where the plan was silent, vague or
+inconsistent, the draft listed an open item (O1–O19); the user decided each at sign-off, and the
+decisions are written into the rules below and listed under
+[Sign-off decisions](#sign-off-decisions-2026-11-20).
 
 All task counts are provisional (S0): they come from a prototype that has not passed S1, and every
 count that depends on eligibility (S0.12) or the audit (S0.10) is frozen in `data/artefacts.yaml`
@@ -34,19 +35,32 @@ Scored on the nested cross-fitted evaluation scores (S0.6), on the headline set 
 
 | | Comparator | Quantity | Rule on the 95% CI lower bound |
 |---|---|---|---|
-| (a) | Best single model | Cost saving, % | **≥ 20%** (`GATE_SAVING`) |
+| (a) | Best single model | Cost saving, % (paired; O17) | **≥ 20%** (`GATE_SAVING`) |
 | (b) | Best single model | Acceptance gap, points (paired) | **≥ −2 points** (`GATE_GAP`) |
 | (c) | CellBest with predicted cells, fitted in the same training folds (R2) | Cost saving, % (paired) | **> 0** (`C_SAVING`, strict) |
 | (c) | CellBest with predicted cells, fitted in the same training folds (R2) | Acceptance gap, points (paired) | **≥ −2 points** (`C_GAP`) |
 
-- Cost and acceptance are both judged on CI lower bounds (S0.3; user decision 2026-11-19).
+- Cost and acceptance are both judged on CI lower bounds (S0.3; user decision 2026-11-19), on
+  **2,000** cluster-bootstrap resamples over problems (`N_BOOT_GATE`; O4).
+- **Scoring population:** the complete case of the headline set. A task with any unavailable cell
+  (S0.11) is dropped for every policy and counted; all headline tasks with unavailable rungs
+  skipped are a sensitivity check (O2).
+- **Training population:** the best single model and every fitted baseline (CellBest,
+  DimensionBest, the per-cell rules) are fitted on the training folds of the population being
+  scored. The router may also learn from the full S0.6 pool's training folds; no problem of the
+  scored fold enters either (O1).
 - **Best single model** is chosen inside each training set, on the same eligibility and population
   as the scored fold (for cascade claims: the training folds' S0.11 headline tasks), never on the
   scored fold (S0.3).
 - **The S0.3(c) comparator is fixed now and is not changed after results are seen** (S0.3).
   CellBest with true source cells is reported next to it as a reference, not as a gate (S0.3, R2).
-- The gate uses one pre-registered seed; the other four seeds are reported next to it (S0.8). No
-  gate on seed-averaged estimates (R12).
+  The cell predictor is built in S2.5 on the development split and frozen with the candidate list
+  before the evaluation population is touched; CellBest keeps its argmax rule (highest training
+  acceptance, ties to the cheaper model) with no near-tie rule. Its strength depends on the
+  development-split draw (15.4% to 32.9% saving against the best single model across draws,
+  P0.4); this is recorded, not corrected (O3).
+- The gate uses one pre-registered seed, **0** (`GATE_SEED`; O5); the other four seeds are reported
+  next to it (S0.8). No gate on seed-averaged estimates (R12).
 - Power is reported with the result; the −2 margin is kept even if power is about 60–70% (S0.3,
   S3.7; user decision 2026-11-19).
 
@@ -75,9 +89,12 @@ this gate (S0.4, §1).
 - **Verifier runs** are reported as a count and in dollars: the X13 mean visible-test run time,
   **0.074 s per run** (`VERIFIER_RUN_S`), priced at a published on-demand cloud vCPU-hour rate,
   about **$10⁻⁶ per run** (`VERIFIER_RUN_USD`), swept at **×1, ×10, ×100**
-  (`VERIFIER_COST_SWEEP`). The rate's source and date are an open item (O11).
+  (`VERIFIER_COST_SWEEP`). Rate basis: on-demand serverless pricing as used by Route Anything
+  (AWS Lambda; 2611.05275 C.4). The URL, access date and the recomputed per-run value are recorded
+  in `router/data/prices.py` in S1.10 (O11).
 - Probe cost is spread over the number of tasks scored; the break-even stream length is reported.
-- A price-sensitivity sweep is run on every headline number (multipliers: open item O13).
+- A price-sensitivity sweep is run on every headline number: each model's price ×0.5 and ×2, one
+  model at a time, and the range is reported (`PRICE_SWEEP`; O13).
 
 ### S0.3 Performance gate
 See §1.1.
@@ -99,13 +116,14 @@ See §1.2.
 ### S0.6 Development split and nested cross-fitting (option (a))
 - **Task pool:** CodeRouterBench ID probing and ID-test splits pooled, eligible tasks only (S0.12).
   Problems (variants of one problem kept together) are the unit of every split.
-- **Development split:** **20% of problems** (`DEV_FRACTION`), drawn once with a recorded seed (seed:
-  open item O6). All open-ended, human-directed iteration happens here and nowhere else (S0.7).
+- **Development split:** **20% of problems** (`DEV_FRACTION`), drawn once with seed **0** (`DEV_SEED`;
+  O6), fixed before any router result exists. All open-ended, human-directed iteration happens here and nowhere else (S0.7).
 - **Evaluation population:** the other 80% of problems, in **5 outer folds** (`N_FOLDS`).
 - Before the evaluation population is touched, the candidate list (router versions v1–v4 and their
   hyperparameter grids) and the selection rule are frozen and tagged in git.
 - For each outer fold: the configuration is chosen automatically on inner folds formed within the
-  other four outer folds (number of inner folds: open item O7), fitted on those four, and the
+  other four outer folds (**4** inner folds, one per remaining outer fold, `N_INNER_FOLDS`; O7),
+  fitted on those four, and the
   held-out fold is scored once.
 - Every evaluation task is scored once, by a configuration that never saw its problem and was
   chosen without it. Onboarding probes are drawn from the training folds only.
@@ -122,13 +140,16 @@ See §1.2.
   cluster bootstrap is the one used for the gates.** Repeated live outputs of one task are resampled
   together (cluster by task).
 - A seed = fold assignment + stream order + probe draw. **5 seeds** (`N_SEEDS`): one
-  pre-registered gate seed (value: open item O5) plus four reported next to it.
+  pre-registered gate seed (**0**, `GATE_SEED`; O5) plus four reported next to it.
 - Leave-one-model-out results are shown per model, never pooled (R8).
 - **At the threshold:** a point estimate that clears its threshold on the gate seed is reported as
   "at the threshold" when it falls to the threshold or below on another seed, when its CI lower
   bound is at or below the threshold, or when its margin is under **0.1 points**
-  (`AT_THRESHOLD_MARGIN`; units and interaction with S0.3: open item O12).
-- Number of bootstrap resamples: open item O4.
+  (`AT_THRESHOLD_MARGIN`; percentage points for savings). It is a **reporting label only** and
+  never changes a verdict: a lower bound exactly at a threshold that S0.3 accepts ("at least")
+  passes (O12).
+- Bootstrap resamples: **2,000** for gate scoring (`N_BOOT_GATE`), **1,000** elsewhere (`N_BOOT`)
+  (O4).
 
 ### S0.9 Live pool and budget
 | Tier | Size / type | Expected web-dev pass rate | Role |
@@ -163,7 +184,8 @@ See §1.2.
 - **Verdict source:** the real visible-test verdicts from route-anything-data X13 (2,911 tasks × 8
   models, both splits), not simulated noise (R1).
 - **Headline set for cascade claims (E2, C2):** eligible, filtered tasks with X13 verdicts. Training
-  uses the full S0.6 pool; only cascade scoring is restricted (conflict with S0.3: open item O1).
+  uses the full S0.6 pool for the router; baselines and the best single model are fitted on the
+  scored population's training folds; only cascade scoring is restricted (O1, §1.1).
   Tasks without verdicts are not scored for cascade claims.
 - Cascade results are worded as holding for runnable tasks; S3 reports the headline set's family
   mix, pass rates and unsolved share next to the pool's.
@@ -172,8 +194,8 @@ See §1.2.
   heuristic-accept variant is a sensitivity check.
 - **Missing responses are missing, not failures.** Empty X13 responses and the zero-score,
   zero-cost Qwen3-Max rows mark the model as unavailable for that task: the rung is skipped in
-  replay, the cell is not scored, and the counts are reported. S2 fixes how a baseline that needs
-  such a cell is scored (open item O2). Route Anything's derived X13 tables, which impute the
+  replay, the cell is not scored, and the counts are reported. Gate scoring uses the complete
+  case (§1.1; O2). Route Anything's derived X13 tables, which impute the
   released truth on empty cells, are not reused.
 - Simulated noise (E3) is a sensitivity analysis only.
 
@@ -191,9 +213,11 @@ See §1.2.
   router (a test checks this; R16).
 - **Calibration probes:** separate, charged calls on training-pool tasks whose answers are known;
   the only observations labelled with ground truth. Limits: **5 per group** and **100 per new
-  model** (`MAX_PROBES_PER_GROUP`, `MAX_PROBES_PER_MODEL`; "group": open item O9).
-- **Exploration traffic:** live requests routed to the new model, "about 10% per group"
-  (`EXPLORATION_SHARE`, open item O8), returning PASS, FAIL or UNKNOWN from the verifier only. A
+  model** (`MAX_PROBES_PER_GROUP`, `MAX_PROBES_PER_MODEL`). A **group is an S1.1 family** (O9).
+- **Exploration traffic:** live requests routed to the new model, **exactly 10%** of each group's
+  requests (`EXPLORATION_SHARE`), until the group's stopping rule fires or the new model's total
+  calls (probes plus exploration) reach k (S0.5, DP2 grid) (O8). It returns PASS, FAIL or UNKNOWN
+  from the verifier only. A
   live request never becomes a ground-truth-labelled probe.
 - Sensitivity check: probe labels from the visible-test verifier only (also the second E1 pairing).
 - **Stopping:** stop exploring a group when the posterior SD of its offset is **≤ 0.5 on the logit
@@ -215,10 +239,10 @@ See §1.2.
 
 | DP | When | Question and threshold | On "no" |
 |---|---|---|---|
-| DP1a | End of S3 | Headroom of the oracle and of cross-fitted DimensionBest over the best single model, on the **full** artefact-filtered eligible pool. Passes if the 95% cluster-bootstrap CI lower bound is **≥ 3.0 AvgPerf points** (`DP1A_MIN_LOWER`; "AvgPerf": open item O10; which headroom must clear: open item O18) | C4 leads the accuracy story |
+| DP1a | End of S3 | Headroom of the oracle and of cross-fitted DimensionBest over the best single model, on the **full** artefact-filtered eligible pool. Passes if the 95% cluster-bootstrap CI lower bound is **≥ 3.0 AvgPerf points** (`DP1A_MIN_LOWER`). **Cross-fitted DimensionBest must clear it; the oracle is reported as the ceiling** (O18). AvgPerf = acceptance rate under S0.1 (score = 1.0), in points; the mean released score is a sensitivity check (O10) | C4 leads the accuracy story |
 | DP1b | End of S3 (S3.2) | Does the **oracle-on-no-signal bound** meet S0.3 on **point estimates** on the headline set, verifier cost included: saving ≥ 20% and gap ≥ −2 points against the best single model, **and** saving > 0 and gap ≥ −2 points against CellBest with predicted cells? The bound uses the real verifier where visible tests exist and an oracle accept-or-escalate decision on no-signal cells. Fixed ladders are not the test. Also report the gap the learned router must close | Stop and bring it to the user before S4 (LLMRouterBench becomes a candidate primary corpus for C1 and C2). A reassessment, not a verdict that a learned policy cannot succeed. This half decides the economic claim |
 | DP2 | During S5 | Does the hierarchical model beat k-matched DimensionBest in routing units (AvgPerf, cost) at a k in **{10, 25, 50, 100}** (`DP2_K_GRID`), on the development split? | The routing model is the shrunk lookup table; IRT is reported as an ablation |
-| DP3 | S6 pilot | Is the routing gap on the live pool (free models plus the paid top model) **more than 2 ×** the run-to-run SD (`DP3_GAP_SD_MULTIPLE`), measured on **≥ 2 runs per task** (`DP3_MIN_RUNS_PER_TASK`)? ("routing gap": open item O14) | Live work is reported as a verifier study and a transfer test, not as a routing win |
+| DP3 | S6 pilot | Is the routing gap on the live pool (free models plus the paid top model) **more than 2 ×** the run-to-run SD (`DP3_GAP_SD_MULTIPLE`), measured on **≥ 2 runs per task** (`DP3_MIN_RUNS_PER_TASK`)? The routing gap is the noise-corrected oracle headroom over the best single model: choose on run 1, score on run 2 (O14) | Live work is reported as a verifier study and a transfer test, not as a routing win |
 
 ---
 
@@ -227,7 +251,7 @@ See §1.2.
 | # | Claim | Minimal evidence | If it fails |
 |---|---|---|---|
 | C1 | How many verified outcomes a new model needs before routing to it matches a lookup table built from the same k outcomes (k-matched DimensionBest, same label source), and whether a pooled hierarchical prior, in-stream outcomes from a partial verifier and a per-group stopping rule shorten that; single pass, no repeated problem (S0.5) | E1: four onboarding arms against k-matched DimensionBest on both corpora, with CIs | Report the number of shared probes a lookup table needs as the measured answer to RQ-A |
-| C2 | A calibrated per-task classifier of P(a later rung passes \| earlier rungs failed), with a give-up action, under the real visible-test verifier (S0.11) | E2: cost at matched acceptance on exec-scored tasks, against cost-aware DimensionBest, the fixed cascade and Route Anything's zero-loss direct-dispatch route (R2) | Report how far a realistic predictor falls short of the perfect-truncation bound |
+| C2 | A calibrated per-task classifier of P(a later rung passes \| earlier rungs failed), with a give-up action, under the real visible-test verifier (S0.11) | E2: cost at matched acceptance on exec-scored tasks, against cost-aware DimensionBest, the fixed cascade, Route Anything's zero-loss direct-dispatch route and **per-cell Rule A with no-signal cells escalated** (R2), which C2 must beat (O19) | C2 counts as failed if it does not beat per-cell Rule A escalated at matched acceptance, whatever the S0.3 result. Report how far a realistic predictor falls short of the perfect-truncation bound |
 | C3 | False-pass rate of a verifier that sees a fraction f of each web-dev task's tests, against a disjoint hidden grader, measured live (E4), and its effect on cascade cost and acceptance | E4: visible vs held-out tests on web-dev, false-pass curve over f with a task-level Clopper-Pearson bound; CodeRouterBench replay with the X13 verdicts as context | Report the web-dev curve as a characterisation; if E4 cannot be run, C3 counts as covered and S0.14 is re-applied |
 | C4 | How much of the oracle's and DimensionBest's gain over the best single model survives the raw-response audit of the suspected families and run noise (fallback). Suspected anomalies without execution evidence are sensitivity analyses, not confirmed defects | S1.7 audit plus the three data views; noise-corrected oracle on web-dev | If headroom survives, CodeRouterBench is cleared as primary data |
 
@@ -238,7 +262,7 @@ See §1.2.
 | # | Criterion | Measured by |
 |---|---|---|
 | SC1 | E1 onboarding curves in routing units (AvgPerf, cost) for the onboarding arms against k-matched DimensionBest, with CIs | S5, S7 |
-| SC2 | Cascade with stop-or-escalate against cost-aware DimensionBest and the fixed cascade at matched acceptance, exec-scored tasks, paired CIs; or an honest negative | S5, S7 |
+| SC2 | Cascade with stop-or-escalate against cost-aware DimensionBest, the fixed cascade and per-cell Rule A escalated (O19) at matched acceptance, exec-scored tasks, paired CIs; or an honest negative | S5, S7 |
 | SC3 | Verifier noise results: simulated noise (E3) and the measured false-pass curve on web-dev (E4), with an upper bound when no false pass is seen | S5, S7 |
 | SC4 | Headroom audit in three data views | S1, S3 |
 | SC5 | At least **3** free-tier models (`SC5_MIN_FREE_MODELS`) plus the paid top model × **65** tasks (`WEBDEV_N_TASKS`), stored with per-test results; transfer test exploratory | S6, S7 |
@@ -269,26 +293,30 @@ population is scored once (R14).
 
 ## Constants
 
-Every number above, its name in `router/settings.py` and its source. "Pending sign-off" marks a
-value the plan does not set; P0.5 and P0.6 used it, and it is listed as an open item.
+Every number above, its name in `router/settings.py` and its source. Values the plan did not set
+were decided at sign-off (O-numbers in the note column).
 
 | Name | Value | Source | Note |
 |---|---|---|---|
 | `SUCCESS_SCORE` | 1.0 | S0.1 | Success = all tests pass |
 | `VERIFIER_RUN_S` | 0.074 s | S0.2 | X13 mean visible-test run time |
-| `VERIFIER_RUN_USD` | $10⁻⁶ | S0.2 | Rate source and date: O11 |
+| `VERIFIER_RUN_USD` | $10⁻⁶ | S0.2 | Rate basis recorded in S1.10 (O11) |
 | `VERIFIER_COST_SWEEP` | ×1, ×10, ×100 | S0.2 | |
+| `PRICE_SWEEP` | ×0.5, ×2 | S0.2 | Each model's price, one at a time (O13) |
 | `GATE_SAVING` | 20% | S0.3(a) | Lower bound ≥ |
 | `GATE_GAP` | −2 points | S0.3(b) | Lower bound ≥ |
 | `C_SAVING` | 0% | S0.3(c) | Lower bound > (strict) |
 | `C_GAP` | −2 points | S0.3(c) | Lower bound ≥ |
 | `CI_LEVEL` | 0.95 | S0.3, S0.8 | |
 | `DEV_FRACTION` | 0.20 of problems | S0.6 | |
+| `DEV_SEED` | 0 | S0.6 | Development-split draw (O6) |
 | `N_FOLDS` | 5 | S0.6 | Outer folds, by problem |
+| `N_INNER_FOLDS` | 4 | S0.6 | One per remaining outer fold (O7) |
 | `N_SEEDS` | 5 | S0.8 | Gate seed + four |
-| `AT_THRESHOLD_MARGIN` | 0.1 points | S0.8 | O12 |
-| `GATE_SEED` | 0 | S0.8 | Pending sign-off (O5) |
-| `N_BOOT` | 1,000 | S0.8 | Pending sign-off (O4) |
+| `AT_THRESHOLD_MARGIN` | 0.1 points | S0.8 | Percentage points for savings; label only (O12) |
+| `GATE_SEED` | 0 | S0.8 | O5 |
+| `N_BOOT` | 1,000 | S0.8 | Outside gate scoring (O4) |
+| `N_BOOT_GATE` | 2,000 | S0.3, S0.8 | Gate scoring (O4) |
 | `LIVE_BUDGET_USD` | $20 | S0.9 | Hard cap in the provider console |
 | `PAID_TOP_MODEL` | `claude-opus-4-6` | S0.9 | |
 | `PAID_TOP_PRICE_USD_PER_MTOK` | $5 / $25 | S0.9 | Input / output, per M tokens |
@@ -296,12 +324,12 @@ value the plan does not set; P0.5 and P0.6 used it, and it is listed as an open 
 | `MIN_LIVE_FAMILIES` | 2 | S0.9 | |
 | `MIN_LIVE_PROVIDERS` | 2 | S0.9 | |
 | `LIVE_HELD_OUT_MODELS` | 1–2 | S0.9 | |
-| `MAX_PROBES_PER_GROUP` | 5 | S0.13 | "Group": O9 |
+| `MAX_PROBES_PER_GROUP` | 5 | S0.13 | Group = S1.1 family (O9) |
 | `MAX_PROBES_PER_MODEL` | 100 | S0.13 | |
-| `EXPLORATION_SHARE` | 0.10 | S0.13 | Plan says "about 10%": pending sign-off (O8) |
+| `EXPLORATION_SHARE` | 0.10 | S0.13 | Exactly 10% of each group's requests (O8) |
 | `STOP_POSTERIOR_SD` | 0.5 (logit) | S0.13 | |
 | `MIN_FAMILY_TASKS` | 30 | S0.13, S1.1 | |
-| `DP1A_MIN_LOWER` | 3.0 points | DP1a | "AvgPerf": O10 |
+| `DP1A_MIN_LOWER` | 3.0 points | DP1a | Cross-fitted DimensionBest must clear it; AvgPerf = acceptance (O10, O18) |
 | `DP2_K_GRID` | 10, 25, 50, 100 | DP2 | |
 | `DP3_GAP_SD_MULTIPLE` | 2 | DP3 | |
 | `DP3_MIN_RUNS_PER_TASK` | 2 | DP3 | |
@@ -329,95 +357,30 @@ These motivate the rules above. They are not claims; S1–S3 recompute them on t
 
 ---
 
-## Open items for sign-off
+## Sign-off decisions (2026-11-20)
 
-Each item quotes the plan text (commit `1921063`). None is decided here.
+The draft (P0.4, commit `d87e8b7`) listed open items O1–O18, each quoting the plan text it came
+from; the reviewer added O19 from the P0.4 power results. The user accepted the reviewer's
+recommendation on every item on 2026-11-20. The draft's quotes are in git history.
 
-**O1. Training population.** S0.3: "'Best single model' is chosen inside each training set, on the
-same eligibility and population as the scored fold (for cascade claims: the training folds' S0.11
-headline tasks)". S0.11: "Folds still cover the full S0.6 pool and training uses all of it; only
-cascade scoring is restricted." P0.5 and P0.6 fitted everything on the headline set's training
-folds (P0.5 open question 3; P0.6 open question 4). Which population trains routes, baselines and
-the best-single choice?
-
-**O2. Scoring population for unavailable cells.** S0.11: unavailable cells mean "the rung is
-skipped in replay, the cell is not scored, and the counts are reported. S2 fixes how a baseline
-that needs such a cell is scored." The provisional set has 1,971 tasks; P0.5, P0.6 and E0 use the
-1,907-task complete case. Is the gate scored on all headline tasks with rungs skipped, or on the
-complete case?
-
-**O3. The S0.3(c) comparator's predictor.** S0.3(c): "Against CellBest with predicted cells (R2),
-fitted in the same training folds". R2: "predicted cells as the S0.3(c) comparator". The comparator
-is defined: a CellBest table fitted on the true cells of the training folds, with each task routed
-by its predicted cell. The cell predictor is built in S2.5; P0.6's TF-IDF predictor is a prototype.
-To decide: is the predictor's specification frozen before the evaluation population is touched,
-and is it the P0.6 prototype or the S2.5 build? Related evidence (E0, [P0.4 power](research/P0.4_power.md),
-provisional): CellBest's own saving against the best single model is 18.2% on the 1,907-task
-complete case, but 15.4% to 32.9% on the five evaluation populations left after removing a 20%
-development split (gate seed, development seeds 0–4). On development seed 0 it passes S0.3 (a) and
-(b) by itself: its `code_generation|bcb` cell flips from Opus to qwen3.5-plus, which are close in
-that cell. CellBest picks the highest training acceptance per cell, ties to the cheaper model
-(P0.5); there is no rule for near-ties. The comparator's definition is unchanged by this; the
-item records how much its strength depends on the population draw.
-
-**O4. Number of bootstrap resamples.** S0.8 fixes the CI type and level but not the number of
-resamples. P0.5, P0.6 and E0 used 1,000 (`N_BOOT`).
-
-**O5. Gate seed.** S0.8: "gates use a single pre-registered seed". No value is given. P0.5 and P0.6
-used seed 0 (`GATE_SEED`).
-
-**O6. Development-split seed and pool.** S0.6: "20% of problems, drawn once with a recorded seed."
-No seed is recorded. E0 uses a provisional seed (0) and draws 20% of the problems of the
-artefact-filtered pool.
-
-**O7. Number of inner folds.** S0.6: "the configuration is chosen automatically on inner folds
-formed within the other four outer folds". The number of inner folds is not set.
-
-**O8. Exploration share and budget.** S0.13: "about 10% per group" and "when its probe and
-exploration budget is used". The share is approximate and the exploration budget has no number.
-
-**O9. Meaning of "group".** S0.13: "up to 5 probes per group"; "stop exploring a group when the
-posterior SD of its offset is ≤ 0.5". §2: "g is the task's group (dimension or family)". Which one
-is the group for the probe limits and the stopping rule?
-
-**O10. AvgPerf.** DP1a: "≥ 3.0 AvgPerf points"; DP2 and SC1: "routing units (AvgPerf, cost)". S2.3
-lists "AvgPerf, cost (S0.2), acceptance rate (S0.1)" as separate metrics. AvgPerf is not defined.
-If it is the mean released score, partial credit counts, unlike S0.1 (success = score 1.0). E0
-reports both readings on the DP1a pool.
-
-**O11. Verifier rate source.** S0.2: "priced at a published on-demand cloud vCPU-hour rate, with its
-source and date in `CLAIMS.md` (about $10⁻⁶ per run…)". No source or date is recorded in the plan,
-P0.5 or P0.6. $10⁻⁶ per 0.074 s run implies about $0.049 per vCPU-hour. A source and access date
-are needed.
-
-**O12. "At the threshold" units and effect.** S0.8: "when its CI lower bound is at or below the
-threshold, or when its margin is under 0.1 points". S0.3(a): "the lower end … is at least 20%".
-(i) Savings are in percent, so "0.1 points" is ambiguous for (a) and (c). (ii) A lower bound
-exactly at a threshold passes S0.3 ("at least") but is labelled "at the threshold" by S0.8. Is
-"at the threshold" a reporting label only, or does it change the verdict?
-
-**O13. Price-sensitivity sweep.** S0.2: "A price-sensitivity sweep is run on every headline
-number." The multipliers or price scenarios are not set (the verifier sweep, ×1/×10/×100, is).
-
-**O14. DP3 "routing gap".** DP3: "Is the routing gap on the live pool … more than twice the
-run-to-run standard deviation". Which gap is meant (oracle over the best single model, or the
-router over the best single model) is not stated.
-
-**O15. Stale pass rule in §1.** §1, "Why v1's framing changed": "39.3% of ID-test tasks (all
-dimensions, pass = score ≥ 0.5) that no model solves". S0.1 sets success = score 1.0. This document
-follows S0.1; the §1 figure is historical.
-
-**O16. Half-width wording for (c).** S0.3: "gap CI half-width 0.3–1.8 points against CellBest".
-The P0.6 checkbox and log entry: "0.3 to 2.3 points". The difference is whether the fixed ladders
-(2.33) are included. Wording only.
-
-**O17. "Paired" in S0.3(a).** S0.3(a): "the lower end of the 95% cluster-bootstrap CI of its cost
-saving"; (b) and (c) say "paired". P0.5, P0.6 and E0 compute the saving on the same paired cluster
-resamples as the gap. Confirm that (a) is paired too.
-
-**O18. DP1a: which headroom must clear 3.0.** DP1a: "headroom of the oracle and of cross-fitted
-DimensionBest over the best single model … Passes if the lower end of the 95% cluster-bootstrap CI
-is ≥ 3.0 AvgPerf points". The text names two quantities and one CI. Does DP1a pass when both clear
-3.0, when either does, or only when DimensionBest does (the oracle being the upper bound)? The
-reading decides the verdict on the provisional numbers (E0, [P0.4 power](research/P0.4_power.md)
-§3.4): the oracle's headroom is +12.66 [11.55, 13.91] and DimensionBest's is +1.45 [0.68, 2.23].
+| # | Item | Decision |
+|---|---|---|
+| O1 | Training population | Baselines and the best single model: training folds of the scored population. The router may also use the full pool's training folds |
+| O2 | Scoring population | Complete case; all headline tasks with unavailable rungs skipped as a sensitivity check |
+| O3 | Comparator predictor and stability | S2.5 predictor built on the development split, frozen with the candidate list; argmax rule kept, no near-tie rule; draw dependence recorded, not corrected |
+| O4 | Bootstrap resamples | 2,000 for gate scoring, 1,000 elsewhere |
+| O5 | Gate seed | 0 |
+| O6 | Development-split seed | 0, fixed before any router result |
+| O7 | Inner folds | 4, one per remaining outer fold |
+| O8 | Exploration | Exactly 10% of each group's requests, until the stopping rule fires or the model's total calls reach k |
+| O9 | Group | The S1.1 family |
+| O10 | AvgPerf | Acceptance rate under S0.1, in points; mean released score as a sensitivity check |
+| O11 | Verifier rate | Route Anything's serverless pricing basis (AWS Lambda); URL, date and per-run value recorded in S1.10 |
+| O12 | "At the threshold" | Reporting label only; percentage points for savings |
+| O13 | Price sweep | Each model's price ×0.5 and ×2, one at a time; range reported |
+| O14 | DP3 routing gap | Noise-corrected oracle headroom over the best single model (choose on run 1, score on run 2) |
+| O15 | Stale "score ≥ 0.5" figure in §1 | Marked historical in the plan; this document follows S0.1 |
+| O16 | (c) half-width wording | "0.3–1.8 points for per-cell policies, 2.3 for fixed ladders" in the plan |
+| O17 | Paired (a) | Yes |
+| O18 | DP1a headroom | Cross-fitted DimensionBest must clear 3.0; the oracle is the ceiling. Provisionally (P0.4) DimensionBest is +1.45 [0.68, 2.23], so DP1a would fail and C4 would lead the accuracy story; the verdict is taken at the end of S3 |
+| O19 | Bar for C2 | S0.3 unchanged. C2 and SC2 must beat per-cell Rule A with no-signal cells escalated at matched acceptance, because that buildable policy passes all of S0.3 on the evaluation population (P0.4 §3.2) |
