@@ -15,7 +15,7 @@
 | Field | Value |
 |---|---|
 | Current stage | **S1 — Validate data** (§4). Pre-S0 and S0 done; `docs/CLAIMS.md` signed off 2026-11-20 |
-| Next action | Finish S1.5 (in progress on `s1-b-prompts`), then S1.6 (order under S1 in §4). A1, A2 and S1.4 are merged. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Next action | S1.6 `data/splits.py` (problem ids, development split, folds), then batch C (S1.7). A1, A2, S1.4 and S1.5 are merged. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
 | Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0 · Write-up: Report 8 |
 | Last updated | 2026-11-20 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
@@ -322,7 +322,7 @@ The remaining requirements are placed in the stage that needs them, in priority 
 |---|---|---|
 | P1 | Problem ids from source ids, linking `lcb` to `lcb_testgen` through `tasks.jsonl`; split-integrity test | S1.6 |
 | P1 | Long-format `OutcomeMatrix` (task, model, run, problem_id, family, score_type, eligible) | S1.2 |
-| P1 | Prompt join extended with `tasks.jsonl` (3,297 prompts, including 888 `lcb`) | S1.5 |
+| P1 | Prompt join extended with `tasks.jsonl` (3,297 prompts, including 888 with `source = lcb`: 776 `lcb`, 112 `lcb_testgen`) | S1.5 |
 | P1 | Audit of the suspected families using the raw responses; `artefacts.yaml` frozen | S1.7 |
 | P1 | Real-verifier loader (X13 verdicts) for replay | S1.11 |
 | P1 | `prices.py` with source URLs and dates; reference prices for the live models | S1.10 |
@@ -622,14 +622,42 @@ edit them.
       decisions (2026-11-20): `bcb_completion` and `mbpp_completion` stay eligible on the
       dimension-level rule; DebugBench stays ineligible; the hex and all-zero findings go to
       S1.7, not to an amendment.
-- [ ] S1.5 `data/prompts.py` [M1.5]: add route-anything `tasks.jsonl` (3,297 prompts, including 888
-      `lcb`) to the existing join, then adapters for families still missing. Report the join rate
-      per family.
+- [x] S1.5 `data/prompts.py` [M1.5]: add route-anything `tasks.jsonl` (3,297 prompts, including 888
+      with `source = lcb`: 776 `lcb` and 112 `lcb_testgen`) to the existing join, then adapters for
+      families still missing. Report the join rate per family. **Done 2026-11-20 (merged
+      `0474330`; report `router/experiments/s1_5_prompt_join.py`):**
+      - **Sources:** `tasks.jsonl` first, then six pinned upstream extracts (DS-1000,
+        BigCodeBench v0.1.4, HumanEval-X, HumanEval+, MultiPL-E rs/ts, LiveCodeBench), streamed
+        from pinned revisions keeping only task-text fields, hashed in `external/CHECKSUMS` (193
+        files). No solution, test or expected-output field is read.
+      - **The `tasks.jsonl` prompts are Route Anything reconstructions** (`inventory.json`); the
+        CodeRouterBench ID prompt template is unpublished. `prompt` is `raw_prompt` plus a
+        per-family instruction wrapper; the builders rebuild all 3,297 prompts byte for byte.
+      - **Router field (user, 2026-11-20): `content_text`**, the raw task text plus its task
+        payload (CRUXEval's `f(...)` call, LiveCodeBench's starter code, MBPP completion's `def`
+        header), with no instruction sentence or label. `join()` returns it. `raw_text` and
+        `wrapped_prompt` are kept as columns; the wrapped prompt is used only to reproduce P0.6,
+        whose 96.2% cell-predictor accuracy may be inflated by the wrapper. No task-kind field
+        (it would be the dimension label).
+      - **Join (gate measured on the eligible pool, user 2026-11-20):** 5,555 / 5,626 eligible
+        tasks (98.7%; every eligible family 100% except `swebench`, 0 / 71, no source). All ID
+        tasks: 6,555 / 9,999 (65.6%); the gaps are dimensions 3, 5 and 8 (3,333 tasks) and
+        `mbpp_testgen`, each with the evidence that would close it.
+      - **Shared content:** across eligible families, 830 tasks share content, all of them
+        BigCodeBench cross-dimension prompts or HumanEval variants of the same problem (a test
+        fails on any other group); within families, 5 pairs (P0.6's three plus
+        `ds1000_515`/`516` and `ds1000_621`/`622`). P0.6's pairs and 63 / 67 bcb result reproduce
+        on all three fields; all 1,907 P0.6 tasks join.
+      - Open notes: which MultiPL-E prompt variant CodeRouterBench used cannot be checked (no
+        overlap); all six LiveCodeBench release files are pinned (no minimal set computed).
 - [ ] S1.6 `data/splits.py` (new): `problem_id` taken from the source-benchmark ids in the S1.1
       table (HumanEval, MBPP and BigCodeBench variants linked; `lcb` linked to `lcb_testgen` through
       `tasks.jsonl`), with prompt matching as a cross-check only. Tasks with byte-identical
-      prompts are merged into one problem even when their source ids differ (P0.6 found three
-      pairs: `ds1000_138`/`180`, `ds1000_137`/`179`, `mbpp_141`/`71`). Translations are linked to
+      `content_sha256` (S1.5) are merged into one problem even when their source ids differ, **for
+      splits only; they are never deduplicated for scoring** (user, 2026-11-20). S1.5 found five
+      within-family pairs (`ds1000_138`/`180`, `ds1000_137`/`179`, `mbpp_141`/`71`,
+      `ds1000_515`/`516`, `ds1000_621`/`622`) and 830 eligible tasks in cross-family groups, all
+      BigCodeBench cross-dimension prompts or HumanEval variants of one problem. Translations are linked to
       their HumanEval problem: `hex_<lang>_<Lang>/<n>` (HumanEval-X; the provisional regex misses
       it) and `multiple_<lang>_HumanEval_<n>_<function>`. Every `_sup` family is checked against
       its base family for shared problems. The development split and the five outer folds by
@@ -699,7 +727,7 @@ edit them.
       mismatches); X13 `truth` equals the released score on all 23,288 cells.
 - **Gate:** the S1.3 count tests pass; zero singleton ID families (OOD families are exempt, as
   from the 30-task minimum; user, 2026-11-20); the split-integrity test passes;
-  eligibility comes from S1.4 rules only; prompt join ≥ 95%, or the gap is documented per family
+  eligibility comes from S1.4 rules only; prompt join ≥ 95% on the eligible pool (S1.5: 98.7%), or the gap is documented per family
   and every embedding result is restricted to joined tasks; both matrix views load; the verdict
   loader passes its count tests; `artefacts.yaml` committed with every audit-dependent count; the
   three data views (all eligible tasks, artefact-filtered, headline set) can be built from
@@ -719,8 +747,10 @@ quick-check code.
       of S0.6, including automatic per-fold selection from a frozen candidate list.
 - [ ] S2.5 Baselines [M2.4]: Always-X, Random, DimensionBest (full, k-matched, cost-aware),
       CellBest with true source cells (reference) and with predicted cells (the S0.3(c)
-      comparator), using a cell predictor that infers dimension × source from the prompt (Route
-      Anything Table 11) with its accuracy reported, Route Anything's zero-loss direct-dispatch
+      comparator), using a cell predictor that infers dimension × source from the task content
+      (`content_text`, the router's field; S1.5) (Route Anything Table 11) with its accuracy
+      reported, and its accuracy on the wrapped prompt reported as a sensitivity (P0.6's 96.2%
+      used the wrapped prompt), Route Anything's zero-loss direct-dispatch
       route,
       SourceBest (on the S1.1 families), fixed cascade, released ACRouter decisions, LinUCB with
       stated features, kNN on prompt embeddings (joined tasks only). Baselines that use labels the
@@ -789,7 +819,9 @@ All fitting uses the training folds only (S0.6).
 - [ ] S4.2 `core/exploration.py` and `core/stopping.py` [M4.1, M4.2]: bounded forced exploration
       (share per group, maximum probe calls, stopping tolerance, noisy-verifier handling). Router v2.
 - [ ] S4.3 `core/ability.py` [M3.1]: the hierarchical model of §2; `core/irt.py` kept as the 1PL case.
-- [ ] S4.4 `core/difficulty.py` [M3.2]: prompt-embedding predictor without the source label;
+- [ ] S4.4 `core/difficulty.py` [M3.2]: prompt-embedding predictor without the source label,
+      on `content_text` (S1.5; never the wrapped prompt, whose instruction wording identifies the
+      family);
       optional group classifier from the prompt; CV grouped by problem.
 - [ ] S4.5 `core/rescue.py` (new): calibrated classifier for P(later rung passes | earlier rungs
       failed); `core/policy.py` [M5.1]: cheap-first by break-even ratio, ladder truncation, budget cap.
@@ -1612,3 +1644,18 @@ Two further reviews were checked against the data; all fixes approved by the use
   adapters, join report and Outcome are not done.
 - Fixed the stale `DEFERRED_COLUMNS` comment in `router/data/schema.py`.
 - **Next:** finish S1.5, then S1.6.
+
+### 2026-11-20 (S1.5 merged)
+
+- **S1.5** merged from `s1-b-prompts` (`0474330`), including addendum A. Reviewer check: 326
+  tests pass on the branch, 327 on `main`; the join report reproduces its JSON; the new source
+  extracts hold only task-text fields; the content field contains no builder instruction text and
+  CRUXEval content carries its call; the eligible join (5,555 / 5,626) and the 830 cross-family
+  shared-content tasks re-derived independently. `fetch_data.py` run once in the main checkout
+  (6 new extracts; 193 verified).
+- **User decisions:** the router field is `content_text` (raw task text plus task payload, no
+  wrapper), refining the earlier raw-text decision, which dropped CRUXEval's call and
+  LiveCodeBench's starter code; no task-kind field; identical content is merged for splits only;
+  the gate's 95% is measured on the eligible pool. Written into S1.5, S1.6, the S1 gate, S2.5 and
+  S4.4. The "888 `lcb`" figure is corrected (776 `lcb` plus 112 `lcb_testgen`).
+- **Next:** S1.6.
