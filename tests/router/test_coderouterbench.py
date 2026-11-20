@@ -61,7 +61,7 @@ def test_paper_view_zero_fills_the_cells_obs_lacks(mats, split, n_missing):
     absent = pd.DataFrame([[mdl not in obs.get(t, {}) for mdl in m.models] for t in m.tasks],
                           index=m.tasks, columns=m.models)
     assert int(absent.sum().sum()) == n_missing
-    assert (m.score[absent].stack() == 0.0).all()
+    assert (m.score.to_numpy()[absent.to_numpy(dtype=bool)] == 0.0).all()
 
 
 def test_unavailable_cells_are_inside_the_paper_missing_cells(mats):
