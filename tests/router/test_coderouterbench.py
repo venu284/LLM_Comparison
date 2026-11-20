@@ -54,6 +54,16 @@ def test_missing_token_record_cells_are_unavailable_not_rescored(mats, split, vi
         assert m.score.loc[t, mdl] == s and m.cost.loc[t, mdl] == c
 
 
+@pytest.mark.parametrize("split, n_missing", [("probing", 2417), ("id_test", 881)])
+def test_paper_view_zero_fills_the_cells_obs_lacks(mats, split, n_missing):
+    obs = pd.read_json(crb.CRB_DIR / crb.OBS_MATRIX, typ="series")
+    m = mats[split, "paper"]
+    absent = pd.DataFrame([[mdl not in obs.get(t, {}) for mdl in m.models] for t in m.tasks],
+                          index=m.tasks, columns=m.models)
+    assert int(absent.sum().sum()) == n_missing
+    assert (m.score[absent].stack() == 0.0).all()
+
+
 def test_unavailable_cells_are_inside_the_paper_missing_cells(mats):
     obs = pd.read_json(crb.CRB_DIR / crb.OBS_MATRIX, typ="series")
     for split in CELLS:

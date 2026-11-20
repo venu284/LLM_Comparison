@@ -72,6 +72,12 @@ def test_ood_families_are_listed_and_exempt():
     assert ood == {"featurebench": 49, "longcli": 14, "old112": 112, "swe_ci": 1}
 
 
+def test_old112_is_a_batch_label_over_two_repos(table):
+    ids = table.task_id[table.family == "old112"]
+    repos = ids.str.extract(r"^old112::([^_]+)__")[0].value_counts().to_dict()
+    assert repos == {"django": 97, "astropy": 15}
+
+
 def test_singleton_families_are_only_the_reported_gate_fail():
     singletons = {k for k, f in sources.FAMILIES.items() if f.n_tasks == 1}
     assert singletons == KNOWN_SINGLETON_GATE_FAIL
