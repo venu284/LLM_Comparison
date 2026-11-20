@@ -1,4 +1,7 @@
-# E0 power scripts (originals, not yet ported)
+# E0 power scripts (originals)
+
+Ported in P0.4 to `router/experiments/e0_power.py` (results: `docs/research/P0.4_power.md`; the
+originals' output on the pinned data: `router/experiments/out/e0_power_originals.txt`).
 
 These are the scripts behind the power and margin numbers in S0.3 and S0.6 of
 `docs/IMPLEMENTATION_PLAN.md`, committed as they were run on 2026-11-19 so the numbers can be
