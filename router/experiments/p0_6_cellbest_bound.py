@@ -132,6 +132,20 @@ def predict_cells(prompts: np.ndarray, cells: np.ndarray, fold: np.ndarray) -> n
     return pred
 
 
+def prompt_overlap(cc: rc.Pop, cells: np.ndarray, prompts: np.ndarray, cell_names):
+    """Can the cell be read from the prompt at all? Per cell: tasks whose problem id also occurs in
+    another cell, and tasks whose prompt text is identical to a prompt in another cell."""
+    df = pd.DataFrame({"cell": cells, "problem": cc.problem.values, "prompt": prompts})
+    prob_cells = df.groupby("problem").cell.nunique()
+    prompt_cells = df.groupby("prompt").cell.nunique()
+    df["problem_in_other_cell"] = df.problem.map(prob_cells) > 1
+    df["prompt_in_other_cell"] = df.prompt.map(prompt_cells) > 1
+    return {x: {"tasks": int((df.cell == x).sum()),
+                "problem_also_in_other_cell": int(df.problem_in_other_cell[df.cell == x].sum()),
+                "identical_prompt_in_other_cell": int(df.prompt_in_other_cell[df.cell == x].sum())}
+            for x in cell_names}
+
+
 def predictor_report(true: np.ndarray, pred: np.ndarray, cell_names):
     conf = pd.crosstab(pd.Series(true, name="true"), pd.Series(pred, name="pred")).reindex(
         index=cell_names, columns=cell_names, fill_value=0)
@@ -284,9 +298,17 @@ def run_seed(cc: rc.Pop, s: int, prompts: np.ndarray, cells: np.ndarray, cell_na
             best = R.sort_values("gap_vs_cellbest_pred", ascending=False).iloc[0]
             how = "no ladder has point gap >= -2 against CellBest; the ladder with the largest gap"
         pol[f"ladder_{m}"] = (A[:, int(best.col)], C[:, int(best.col)])
+        # Counterpart of P0.5's "best gap at >= 20% saving": the best gap against CellBest among
+        # ladders whose point saving against CellBest is above 0.
+        pos = R[R.saving_vs_cellbest_pred > C_SAVING].sort_values("gap_vs_cellbest_pred", ascending=False)
+        if len(pos):
+            pol[f"ladderpos_{m}"] = (A[:, int(pos.iloc[0].col)], C[:, int(pos.iloc[0].col)])
         lad[m] = {"n_ladders": len(R), "n_meet_ab_point": int(ab.sum()), "n_meet_c_point": int(cc_ok.sum()),
                   "n_meet_both_point": int((ab & cc_ok).sum()), "best_ladder": best.ladder, "best_ladder_selection": how,
-                  "top5_vs_c": ok_gap.head(5).drop(columns="col").round(4).to_dict("records")}
+                  "n_saving_gt0_vs_cellbest_pred": int(len(pos)),
+                  "best_gap_at_positive_saving_ladder": pos.iloc[0].ladder if len(pos) else None,
+                  "top5_vs_c": ok_gap.head(5).drop(columns="col").round(4).to_dict("records"),
+                  "all_ladders_point": R.drop(columns="col").round(4).to_dict("records")}
 
     cols = {f"a_{k}": a for k, (a, _) in pol.items()} | {f"c_{k}": c for k, (_, c) in pol.items()} | {"n": np.ones(n)}
     Bt = rc.cluster_boot(cc.problem.values, cols, n_boot, seed=1000 + s)
@@ -294,6 +316,7 @@ def run_seed(cc: rc.Pop, s: int, prompts: np.ndarray, cells: np.ndarray, cell_na
     metrics = {k: boot_metrics(Bt, k, {r: v for r, v in refs.items() if v != k}) for k in pol}
     for m in MODES:
         lad[m]["best_ladder_metrics"] = metrics.pop(f"ladder_{m}")
+        lad[m]["best_gap_at_positive_saving_metrics"] = metrics.pop(f"ladderpos_{m}", None)
     return {"predictor": predictor_report(cells, pred, cell_names),
             "misrouted_tasks_cellbest": int((pol["cellbest_pred"][1] != pol["cellbest_true"][1]).sum()),
             "metrics": metrics, "fixed_ladders": lad, "fold_picks": picks_out}
@@ -325,7 +348,12 @@ def summarise(per_seed):
                "n_meet_both_point": [ps["fixed_ladders"][m]["n_meet_both_point"] for ps in per_seed],
                "best_ladder": [ps["fixed_ladders"][m]["best_ladder"] for ps in per_seed],
                "best_saving_vs_cellbest_pred_point": rng([ps["fixed_ladders"][m]["best_ladder_metrics"]["vs_cellbest_pred"]["saving_pct"][0] for ps in per_seed]),
-               "best_gap_vs_cellbest_pred_point": rng([ps["fixed_ladders"][m]["best_ladder_metrics"]["vs_cellbest_pred"]["gap_points"][0] for ps in per_seed])}
+               "best_gap_vs_cellbest_pred_point": rng([ps["fixed_ladders"][m]["best_ladder_metrics"]["vs_cellbest_pred"]["gap_points"][0] for ps in per_seed]),
+               "n_saving_gt0_vs_cellbest_pred": [ps["fixed_ladders"][m]["n_saving_gt0_vs_cellbest_pred"] for ps in per_seed],
+               "best_gap_at_positive_saving_ladder": [ps["fixed_ladders"][m]["best_gap_at_positive_saving_ladder"] for ps in per_seed],
+               "best_gap_at_positive_saving_point": rng([ps["fixed_ladders"][m]["best_gap_at_positive_saving_metrics"]["vs_cellbest_pred"]["gap_points"][0]
+                                                         for ps in per_seed if ps["fixed_ladders"][m]["best_gap_at_positive_saving_metrics"]])
+               if any(ps["fixed_ladders"][m]["best_gap_at_positive_saving_metrics"] for ps in per_seed) else None}
            for m in MODES}
     return {"predictor_accuracy_by_seed": [ps["predictor"]["accuracy"] for ps in per_seed],
             "misrouted_tasks_cellbest_by_seed": [ps["misrouted_tasks_cellbest"] for ps in per_seed],
@@ -385,7 +413,8 @@ def main(argv=None):
                        "cell_tasks": {x: int((cells == x).sum()) for x in cell_names},
                        "n_candidates": len(mats[MODES[0]][0]), "n_ladders": len(mats[MODES[0]][0]) - len(cc.models)},
         "reproduction": rep,
-        "prompts": {"tasks_jsonl_rows": n_jsonl, "joined": join, "of": len(cc)},
+        "prompts": {"tasks_jsonl_rows": n_jsonl, "joined": join, "of": len(cc),
+                    "overlap_by_cell": prompt_overlap(cc, cells, prompts.values, cell_names)},
         "cellbest_true_matches_p0_5": check_cellbest_true(rep, per_seed),
         "ladder_ab_counts_match_p0_5": check_ladder_counts(rep, per_seed),
         "seed0": per_seed[rc.GATE_SEED],
