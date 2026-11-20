@@ -15,7 +15,7 @@
 | Field | Value |
 |---|---|
 | Current stage | **Pre-S0 — requirements before S0** (§4) |
-| Next action | P0.1: read "Route Anything" and the three novelty papers; then P0.3–P0.4 (pinned data fetch, `docs/CLAIMS.md`); P0.2 done |
+| Next action | P0.5: provisional recount with empty responses and missing Qwen3-Max runs treated as missing, plus the IRT-Router read; then P0.4 (`docs/CLAIMS.md`). P0.1–P0.3 done. Open user decision after P0.5: whether S0.3 also requires beating the strongest R2 lookup baseline |
 | Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: none yet · Write-up: Report 8 |
 | Last updated | 2026-11-19 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
@@ -64,20 +64,32 @@ Build a router for code-generation tasks that:
 
 | # | Contribution | Minimal evidence | If it fails |
 |---|---|---|---|
-| C1 | **Probes-to-decision.** Onboarding measured in routing quality, not ability error. A pooled hierarchical prior plus in-stream verified outcomes, with a per-group stopping rule, against a lookup table built from the same k | E1: four onboarding arms against k-matched DimensionBest on both corpora, with CIs | Report the number of shared probes a lookup table needs (currently about 250 to reach 50.7) as the measured answer to RQ-A |
-| C2 | **Stop or escalate, predictive with partial verification.** Predict when a cheap answer is enough and when no model will solve the task, and cut the ladder early. About four-fifths of headline tasks (79.2%, provisional) give no verifier signal, so the decision is mostly predictive, with a thin verified layer on the rest (S0.11) | E2: cost at matched acceptance rate on exec-scored tasks, against cost-aware DimensionBest and the fixed cascade | Report how far a realistic predictor falls short of the perfect-truncation bound ($6.0 vs $41.0, Always-Opus $34.0) |
-| C3 | **Measured verifier strength.** False-pass rate of a verifier that sees a fraction f of each web-dev task's tests, and its effect on cascade cost | E4: visible vs held-out tests on web-dev; replay with the real X13 verdicts on CodeRouterBench (visible-test verifier: 15% false-pass where visible tests exist, 66.5% where none exist; measured 2026-11-19) | Report the measured verifier profile as a characterisation; overlap with Route Anything (P0.1) may narrow this claim |
-| C4 | **Headroom audit (fallback contribution).** How much published routing gain survives artefact removal and run noise. Suspected anomalies without execution evidence are reported as sensitivity analyses, not as confirmed defects | S1.7 audit plus the three data views; noise-corrected oracle on web-dev | If headroom survives, CodeRouterBench is cleared as primary data, which strengthens C1 and C2 |
+| C1 | **Probes-to-decision for a new model, from verified outcomes in one pass.** How many outcomes a new model needs before routing to it matches a lookup table built from the same k outcomes (k-matched DimensionBest, same label source), and whether a pooled hierarchical prior, in-stream outcomes from a partial verifier (PASS/FAIL/UNKNOWN) and a per-group stopping rule shorten that. Scored on a single pass over the stream with no repeated problem (S0.5). Quality against onboarding-set size is already published (UniRoute Fig. 2); the in-stream, stopping-rule and same-label-source comparison is not | E1: four onboarding arms against k-matched DimensionBest on both corpora, with CIs | Report the number of shared probes a lookup table needs (currently about 250 to reach 50.7) as the measured answer to RQ-A |
+| C2 | **Give up or escalate, per task, under partial verification.** A calibrated per-task classifier of P(a later rung passes \| earlier rungs failed), with a give-up action for tasks predicted to be unsolvable, under the real visible-test verifier, where about four-fifths of headline tasks (79.2%, provisional; includes empty responses, recounted in P0.5) give no signal (S0.11). The stop-or-escalate rule on post-failure histories (Route Anything Prop. 8) and cell-level truncation under an oracle verifier (Route Anything X10) are prior work that C2 uses | E2: cost at matched acceptance on exec-scored tasks, against cost-aware DimensionBest, the fixed cascade and Route Anything's 21-cell zero-loss direct-dispatch route (R2) | Report how far a realistic predictor falls short of the perfect-truncation bound ($6.0 vs $41.0, Always-Opus $34.0) |
+| C3 | **Verifier strength on web-dev, by visible fraction.** False-pass rate of a verifier that sees a fraction f of each web-dev task's tests, against a disjoint hidden grader, measured live (E4), and its effect on cascade cost and acceptance. On CodeRouterBench the verifier profile is a re-analysis of Route Anything's released X13 verdicts (visible-test verifier: 15% false-pass and 27% false-reject on cells with visible tests; cells without visible tests give no signal under S0.11, and the X13 syntax/quality heuristic, which S0.11 does not use, false-passes 66.5% there; measured 2026-11-19), and the with/without-examples split and its cascade effect are already in Route Anything's X7b and X8 | E4: visible vs held-out tests on web-dev, false-pass curve over f with a task-level Clopper-Pearson bound; CodeRouterBench replay with the real X13 verdicts as context | Report the web-dev false-pass curve as a characterisation; the CodeRouterBench profile is cited as Route Anything's data. If E4 cannot be run, C3 counts as covered and S0.14 is re-applied |
+| C4 | **Headroom audit of CodeRouterBench (fallback contribution).** How much of the oracle's and DimensionBest's gain over the best single model survives the raw-response audit of the suspected families and run noise. Builds on Route Anything's BigCodeBench grading diagnostic and on the run-noise methods of 2608.23023 and the Routing Plateau; suspected anomalies without execution evidence are reported as sensitivity analyses, not as confirmed defects | S1.7 audit plus the three data views; noise-corrected oracle on web-dev | If headroom survives, CodeRouterBench is cleared as primary data, which strengthens C1 and C2 |
 
-**Novelty status.** UniRoute (2502.08773) and ICL-Router (2510.09719) publish quality against
-onboarding-set size with fixed offline sets and static accuracy; IRT-Router (2506.01048) onboards
-from text only; ACRouter (2606.22902) uses a fixed pool. No paper found in the M0.4 check measures
-outcomes until the routing decision stabilises, or compares dedicated probes with in-stream
-learning under a verifier. **Not yet checked:** the full text of ORACLE (2607.22465) for C3, and of
-"The Routing Plateau" (2606.07587) and "Most of the LLM Routing Gap Is Task Type" for C4. Read
-them before S0 sign-off (Pre-S0 P0.1), together with "Route Anything: A Theory of Inference Routers", whose released data overlaps C2 and C3. The second review reports that ORACLE Appendix E.8 has a cold-start
-experiment where the steady-state advantage disappears; check this, since it affects how C1 is
-framed.
+**Novelty status (P0.1, 2026-11-19; details in `docs/research/P0.1_novelty_read.md`).**
+C1–C4 are each **partly covered**; none is fully covered. Under S0.14 the order stands.
+- **C1.** UniRoute (2502.08773) reports routing quality on unseen LLMs against validation-set size
+  (area under the deferral curve, K-NN comparator). ICL-Router (2510.09719) onboards from a fixed
+  query set. IRT-Router (2506.01048) was not opened in P0.1; earlier notes say it onboards from
+  text only, which is checked before P0.4. ACRouter (2606.22902) uses a fixed pool. None of the
+  papers read measures in-stream verified outcomes with a pooled prior and a stopping rule against
+  a k-matched lookup table. Two published cases show in-stream feedback failing in one pass:
+  ORACLE (2607.22465) Appendix E.8 matches random mixing in one cold pass, and its gain needs eight
+  passes; Route Anything C.6 has a verified-write memory scoring 0.116 below DimensionBest.
+- **C2.** Route Anything (2611.05275; code `InfRec-Cardinal/route-anything`) publishes the
+  stop-or-escalate rule on post-failure histories (Prop. 8, Finding 7) and cell-level truncation
+  under an oracle verifier (X10). It has no give-up action and no per-task classifier, and it does
+  not work under a partial verifier.
+- **C3.** Route Anything's repository publishes the visible-test verifier's false accepts with and
+  without prompt examples and their effect on cascade cost (X7b C5, X8, X13). C3's own evidence is
+  therefore E4 on web-dev.
+- **C4.** Route Anything documents BigCodeBench grader failures (`experiments/grading_diagnostic`).
+  2608.23023 and "The Routing Plateau" (2606.07587) measure run noise against routing headroom
+  (both read in part). C4 is new only as a raw-response audit of the CodeRouterBench
+  test-generation and LCB families, plus the noise-corrected web-dev oracle.
 
 ### Decision points
 
@@ -237,31 +249,44 @@ automatically on **inner folds** inside them, from a candidate list frozen befor
 
 ### Pre-S0 — Requirements to complete before S0
 
-Found in the 2026-11-19 repo and data audit. Work through them in this order; S0 cannot be signed
-off until P0.1–P0.4 are done.
+Found in the 2026-11-19 repo and data audit. Work through them in this order (P0.5 runs before
+P0.4); S0 cannot be signed off until P0.1–P0.5 are done.
 
-- [ ] **P0.1 Novelty read: "Route Anything: A Theory of Inference Routers".** Its released data
-      (`Lance1573/route-anything-data`) uses CodeRouterBench and studies retry with verifier
-      feedback (X7b), verifier operating points (X8), paid forecasts (X12) and memory with real
-      verifier verdicts (X13). That overlaps C2 and C3. Read the paper and the code repository
-      (`InfRec-Cardinal/route-anything`), record in the log what each of C1–C4 adds beyond it, and
-      reword the contributions in §1 before S0 is signed off. Read ORACLE (2607.22465, Appendix
-      E.8), "The Routing Plateau" (2606.07587) and "Most of the LLM Routing Gap Is Task Type" in the
-      same pass (moved here from the old analysis stage).
+- [x] **P0.1 Novelty read: "Route Anything" (arXiv 2611.05275), ORACLE (2607.22465, Appendix
+      E.8), "The Routing Plateau" (2606.07587) and "Most of the LLM Routing Gap Is Task Type"
+      (2608.23023).** Done 2026-11-19: `docs/research/P0.1_novelty_read.md` (merged `0a4f40b`).
+      C1–C4 are each partly covered and none is covered; under S0.14 the order stands and only the
+      §1 wording changed. **Still open:** IRT-Router (2506.01048) was not opened; read it before
+      P0.4, because C1 leads. The Routing Plateau and 2608.23023 were read in part, which is enough
+      while C4 is the fallback.
 - [x] **P0.2 Branch state.** Commit plan v3 on `worktree-revised-plan`, rebase it onto the new
       `main`, and merge it, so that one branch carries the plan and the code. Done 2026-11-19:
-      v3 committed and the branch rebased onto `main` (`6065c3d`); the fast-forward of `main` to
-      this branch is left to the user, since agent sessions do not merge.
-- [ ] **P0.3 Data fetch with pinned versions.** `scripts/fetch_data.py` downloads
+      merged to `main` through PR #2 (`8a2be1e`).
+- [x] **P0.3 Data fetch with pinned versions.** `scripts/fetch_data.py` downloads
       `Lance1573/CodeRouterBench` (revision `e567d89b`) and `Lance1573/route-anything-data`
       (revision `bd361209`) into `external/`, and checks SHA-256 hashes written in
-      `external/CHECKSUMS`. Today the data sits in one worktree only, unpinned. Files needed from
+      `external/CHECKSUMS`. Files needed from
       route-anything-data: `response_matrix.json` (raw responses), `experiments_x/common/tasks.jsonl`
       (prompts), `experiments_x/X13_memory/cache/verdicts.jsonl` (real verifier verdicts), and the
-      X7b, X8 and X12 records for comparison.
+      X7b, X8 and X12 records for comparison. Done 2026-11-19 (merged `b933171`): both repos
+      pinned to full commit SHAs; 187 files hashed, all checked against the Hub's own hashes;
+      `cd external && shasum -a 256 -c CHECKSUMS` works without the script; an offline re-run
+      fetches nothing and a corrupted file is re-fetched alone; only `external/CHECKSUMS` is
+      tracked. The data-file paths in `router/data/coderouterbench.py` and three `m1_profile`
+      scripts were corrected to the repo layout. Tests: 100 passed.
 - [ ] **P0.4 Write `docs/CLAIMS.md`** from S0.1–S0.14 below, with the constants in
       `router/settings.py`, and move the power-calculation scripts into
-      `router/experiments/e0_power.py` as the evidence for S0.3 and S0.6.
+      `router/experiments/e0_power.py` as the evidence for S0.3 and S0.6. The original scripts
+      are committed in `router/experiments/e0_power/`; its README lists what the port must change.
+- [ ] **P0.5 Provisional recount (before P0.4).** On the provisional 1,971-task headline set,
+      rebuilt in a committed script (the 2026-11-19 feasibility numbers were computed inline and
+      were not saved), treat the 1,551 empty X13 cells and the 148 zero-score, zero-cost Qwen3-Max
+      rows as missing (S0.11) and report their counts. Then recompute: (a) the no-signal shares of
+      tasks and cells; (b) the S3.2 feasibility table; (c) Route Anything's 21-cell lookup
+      (CellBest) and its zero-loss direct-dispatch route against both S0.3 thresholds, fitted on
+      training folds, with cost-aware DimensionBest next to them. Output: the numbers for S0.11,
+      S3.2 and C2, and the evidence for the open S0.3 decision. Provisional only; S1–S3 redo it on
+      the final population.
 
 The remaining requirements are placed in the stage that needs them, in priority order:
 
@@ -330,6 +355,9 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       ground-truth labels for all arms, and verifier-only labels (PASS/FAIL/UNKNOWN) for all arms,
       so that a probe-versus-in-stream difference cannot come from label quality alone. In E1 the held-out model's outcomes are absent from
       every fitting and selection step, except the probes and online feedback it is allowed.
+      E1 is scored on a **single pass** over the stream with **no repeated problem** (the R13
+      problem id, not the task id), so in-stream learning cannot recall its own or a sibling
+      task's verdict (ORACLE E.6 and E.8); a test checks this.
 - [ ] **S0.6 Development split and nested cross-fitting** (option (a), chosen by the user on
       2026-11-19).
       - **Task pool:** CodeRouterBench ID probing and ID-test splits pooled, eligible tasks only
@@ -395,14 +423,22 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
         no model, against 48.4%. Its family mix also differs (more MBPP, less BigCodeBench and
         DS-1000). Cascade results are worded as holding for runnable tasks, and S3 reports the
         headline set's family mix, pass rates and unsolved share next to the pool's.
-      - **No visible tests means no verifier signal**, decided per cell (on 611 tasks the
-        visible-test count differs between models). Provisional share on the 1,971-task headline
-        set: 79.2% of tasks (1,562) have no signal for any model and 79.4% of cells have none, so
+      - **No visible tests means no verifier signal**, decided per cell. Provisional share on the
+        1,971-task headline set: 79.2% of tasks (1,562) have no signal for any model and 79.4% of
+        cells have none (both include empty responses; recounted in P0.5), so
         C2 relies on prediction for about four-fifths of the headline tasks, with a thin verified
         layer on the rest. Where a cell has visible tests the
         recorded verdict is used (false-pass 15%, false-reject 27%). The X13 syntax/quality
         heuristic (false-pass 66.5%) is **not** used; the heuristic-accept variant is reported as
         a sensitivity check.
+      - **Missing responses are missing, not failures.** 1,551 X13 rows are empty responses
+        (glm-5 554, qwen3.5-plus 538, MiniMax-M2.7 379, kimi-k2.5 79, gpt-5.4 1), all with
+        `w1_n = 0`; 877 of them carry a passing released score. They, and the 148 zero-score,
+        zero-cost Qwen3-Max rows, mark the model as unavailable for that task: the rung is skipped
+        in replay, the cell is not scored, and the counts are reported. S2 fixes how a baseline
+        that needs such a cell is scored. The earlier note that the visible-test count differs
+        between models on 611 tasks is caused entirely by these empty rows. Route Anything's
+        derived X13 tables impute the released truth on empty cells and are not reused.
       - Simulated noise (E3) is a sensitivity analysis only.
 - [ ] **S0.12 Scope and eligibility.** Router claims cover execution-scored, test-checkable tasks
       only (consistent with R4). **Eligibility is decided by each source benchmark's documented
@@ -474,7 +510,10 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       (R10). Suspected families (all ID tasks, 2026-11-19): `lcb_testgen` (n=869; Opus 0.48,
       Sonnet 0.51, Qwen3-Max 0.95), `lcb` (Opus 0.37 vs Qwen3-Max 0.63), `mbpp_testgen` (n=111;
       every model 0.00), `he_testgen` (n=131; Opus 0.17, Sonnet 0.00, Qwen3-Max 0.46). Opus and
-      Sonnet responses exist for every one of these tasks.
+      Sonnet responses exist for every one of these tasks. Also audit the all-zero tasks Route
+      Anything excludes (X12b: BigCodeBench 750, DS-1000 703, LCB 224, MBPP 281, HumanEval 16).
+      For BigCodeBench there is execution evidence already: Route Anything's local re-run passed
+      91 of 318 recorded responses (`experiments/grading_diagnostic`).
 - [ ] S1.8 `data/llmrouterbench.py` [M1.7]: code subsets; drop zero-cost models from economic
       metrics. Validate the loader early, so it is ready if DP1b makes it the primary corpus.
 - [ ] S1.9 `data/phase5.py` [M1.8]: read-only loader (R5), including the stored raw responses
@@ -485,7 +524,7 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       (S0.11), joined to CodeRouterBench task ids. Tests cover only counts that cannot change: the
       23,288-row count, 2,911 tasks, and the 2,044/867 split coverage. Headline counts are derived
       after S1.4 and S1.7 and frozen in `artefacts.yaml`. Cells with `w1_n = 0` are marked "no
-      signal" (S0.11).
+      signal" (S0.11); `empty` cells are counted separately and marked unavailable (S0.11).
 - **Gate:** the S1.3 count tests pass; zero singleton families; the split-integrity test passes;
   eligibility comes from S1.4 rules only; prompt join ≥ 95%, or the gap is documented per family
   and every embedding result is restricted to joined tasks; both matrix views load; the verdict
@@ -542,6 +581,9 @@ not used for any S3 number that feeds a decision.
       at which the higher rung passes when the lower one failed, and the rate observable from
       verifier histories (S0.13). Recompute the $41.0 full-ladder, $34.0 Always-Opus and $6.0
       perfect-stop figures (all ID-test tasks, pass = score ≥ 0.5) on the eligible population.
+      Report how much a post-failure classifier captures against its perfect-information bound,
+      so the gap is visible before S4 (Route Anything C.5: pre-attempt signals capture −0.013 to
+      +0.078 within a cell).
 - [ ] S3.4 Q4 onboarding budget: k-matched DimensionBest curve (reference 2026-11-19, original
       split: 44.4 ± 2.6 at k = 25, 47.9 ± 2.1 at 50, 49.3 ± 0.9 at 100, 50.7 ± 0.6 at 250).
 - [ ] S3.5 State the expected value of onboarding before running E1: how much a new model could
@@ -711,7 +753,8 @@ in the log.
   analysis. In live runs, the verifier's tests and the
   grader's tests must be disjoint.
 - **R2 — Always report the simple baselines:** DimensionBest (full and k-matched), cost-aware
-  DimensionBest, fixed cascade and always-best. A result without them is not a result.
+  DimensionBest, Route Anything's 21-cell lookup (CellBest) and zero-loss direct-dispatch route
+  (2611.05275 C.2, Table 10), fixed cascade and always-best. A result without them is not a result.
 - **R3 — CPAT always carries an acceptance floor.** Never quote unconstrained CPAT; it picks a
   16.8%-accuracy model.
 - **R4 — Primary evidence comes from execution-scored data only.** Cascade claims use
@@ -749,8 +792,11 @@ in the log.
 |---|---|
 | CodeRouterBench headroom is mostly harness artefacts | DP1a/DP1b; C4 leads the accuracy story; LLMRouterBench as primary corpus if DP1b fails |
 | C1 is incremental over UniRoute / ICL-Router | Measure in routing units against k-matched DimensionBest; in-stream learning with stopping is the differentiator; novelty reads in Pre-S0 P0.1 |
-| ORACLE (2607.22465), the task-type papers or Route Anything already cover C1–C4 | Read their full text in Pre-S0 P0.1, before S0 sign-off; narrow the claim if needed |
-| The real visible-test verifier is weak (15% false-pass where visible tests exist) and absent for about four-fifths of headline cells (79.4%, provisional); the learned router must recover about 11–12 points over fixed cascades | Replay with real verdicts (S0.11); feasibility bound S3.2; power check S3.7; verifier profile S3.6 |
+| Prior work covers C1–C4 (P0.1: each partly covered) | §1 reworded; C3 rests on E4, so if E4 cannot be run C3 counts as covered and S0.14 is re-applied; IRT-Router read before P0.4 |
+| A cost-aware lookup with direct dispatch passes S0.3 on its own (Route Anything: 25.5× Opus's efficiency at −0.44 points, on its own population and metric) | R2 baseline; P0.5 checks it on the headline set; the user decides whether S0.3 also requires beating it |
+| Little predictive signal within a cell (Route Anything C.5) | S3.3 reports capture against the perfect-information bound before S4; DP1b |
+| In-stream learning has lost to static baselines in one pass (ORACLE E.8, Route Anything C.6) | E1 scored on a single pass with no repeated problem (S0.5); calibration probes as a second mechanism (S0.13) |
+| The real visible-test verifier is weak (15% false-pass where visible tests exist) and absent for about four-fifths of headline cells (79.4%, provisional, includes empty responses); the learned router must recover about 11–12 points over fixed cascades | Replay with real verdicts (S0.11); feasibility bound S3.2; power check S3.7; verifier profile S3.6 |
 | Suspected families decide which model is "best single" | S0.10 audit rule fixed before results; raw responses used in S1.7 |
 | Fit and evaluation sets share problems (second review: 643 of 1,430 joined test tasks) | R13 and the S1.6 split-integrity test |
 | Router changes overfit the tasks they are judged on | R14: development split for changes; nested evaluation with frozen candidates scored once |
@@ -774,9 +820,10 @@ in the log.
 | UniRoute (2502.08773), EmbedLLM (2410.02223), RouteProfile (2605.00180) | new-model representation (S4, E1) |
 | IRT-Router (2506.01048), tinyBenchmarks (2402.14992) | IRT and anchors (S4) |
 | Dekoninck et al. (2410.10347) | cascade optimality (S4.5) |
-| ORACLE (2607.22465) | verifier-feedback routing; related work for C3 (full text not yet read) |
+| Route Anything (2611.05275; code `InfRec-Cardinal/route-anything` at `e137f3f`; data `Lance1573/route-anything-data` at `bd361209`) | real verifier verdicts (S0.11), stop-or-escalate rule (C2), lookup baselines (R2), BigCodeBench diagnostic (S1.7) |
+| ORACLE (2607.22465) | online verifier feedback; the cold-start result in Appendix E.8 frames C1 |
 | PILOT (2508.21141), BaRP (2510.07429), LLM Bandit (2502.02743) | exploration and online learning (S4.2) |
-| LLMRouterBench (2601.07206), kNN baseline (2505.12601), Routing Plateau (2606.07587), 2608.23023 | evaluation honesty (S3, S5) |
+| LLMRouterBench (2601.07206), kNN baseline (2505.12601), Routing Plateau (2606.07587), 2608.23023 (confirmed as the task-type paper) | evaluation honesty (S3, S5) |
 
 The full list is in `Reports/Research_Progress_Report_7.md` §10.
 
@@ -1200,3 +1247,29 @@ Two further reviews were checked against the data; all fixes approved by the use
   verifier-only feedback). S3.2 holds the new feasibility table. S7.3 uses the task as the unit for
   the false-pass Clopper-Pearson bound and drops the bootstrap for it. Stale references fixed (S4.1,
   SC4, cut-order, S5.3); R15 and R16 reordered.
+
+### 2026-11-19 (P0.1 and P0.3 done, reviewed and merged)
+
+- **P0.3** merged (`b933171`): `scripts/fetch_data.py` and `external/CHECKSUMS` (187 files, both
+  repos pinned to full SHAs). Checked in a fresh directory: plain `shasum -c` passes, the 20 large
+  files match the Hub's hashes, an offline re-run fetches nothing, a corrupted file is re-fetched
+  alone. The paths to `obs_matrix.json` and `id_decisions.jsonl` were wrong in
+  `coderouterbench.py` and three `m1_profile` scripts and were corrected. Tests: 100 passed (the
+  CodeRouterBench data test now runs).
+- **P0.1** merged (`0a4f40b`): `docs/research/P0.1_novelty_read.md`. C1–C4 each partly covered;
+  order unchanged under S0.14; §1 reworded. Route Anything is arXiv 2611.05275. A proposed
+  correction of the ORACLE quote from "Fig. 4" to "Fig. 5" was checked against the arXiv v4 PDF
+  and rejected: E.8 and B.4 say "Fig. 4", so the quote is verbatim. IRT-Router is still unread.
+- **Data facts** (recounted on the pinned data): 1,551 of 23,288 X13 rows are empty responses, 877
+  of them with a passing released score; all 611 tasks whose visible-test count "differs between
+  models" differ only because of them. The route-anything-data card lists 148 zero-score,
+  zero-cost Qwen3-Max rows as missing runs.
+- **Plan changes:** §1 contributions and novelty status replaced; S0.5 single pass with no repeated
+  problem; S0.11 treats empty and missing cells as unavailable and marks the no-signal shares as
+  including them; S1.7 adds the all-zero tasks Route Anything excludes; S1.11 counts empty cells;
+  S3.3 reports capture against the perfect-information bound; R2 adds CellBest and the zero-loss
+  direct-dispatch route; four risk rows added or replaced; §8 adds Route Anything and moves ORACLE
+  to C1; new P0.5 (provisional recount) before P0.4. The power scripts are committed in
+  `router/experiments/e0_power/`.
+- **Open user decision (after P0.5):** whether S0.3 also requires the router to beat the
+  strongest R2 lookup baseline at matched acceptance, not only the best single model.
