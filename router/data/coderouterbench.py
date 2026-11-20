@@ -19,6 +19,9 @@ from router.data.schema import OutcomeMatrix
 from router.settings import EXTERNAL_DIR
 
 CRB_DIR = EXTERNAL_DIR / "CodeRouterBench"
+# Paths inside the repo mirror that scripts/fetch_data.py writes to external/CodeRouterBench/.
+OBS_MATRIX = "raw_matrices/phase1_acrouter_v2/obs_matrix.json"
+DECISIONS = "outputs/current/id_decisions.jsonl"
 SPLIT_FILES = {"probing": "id_probing_results_long.csv", "id_test": "id_test_results_long.csv"}
 
 
@@ -49,7 +52,7 @@ def load(split: str, view: str = "complete", root: Path = CRB_DIR) -> OutcomeMat
     cost = long.pivot_table(index="task_id", columns="model", values="cost_usd").reindex(score.index)
     cost = cost[score.columns]
     if view == "paper":
-        obs = json.load(open(root / "obs_matrix.json"))
+        obs = json.load(open(root / OBS_MATRIX))
         cells = pd.DataFrame([(t, m, v.get("perf")) for t, mm in obs.items() for m, v in mm.items()],
                              columns=["task_id", "model", "perf"]).dropna()
         paper = cells.pivot_table(index="task_id", columns="model", values="perf")
@@ -61,12 +64,12 @@ def load(split: str, view: str = "complete", root: Path = CRB_DIR) -> OutcomeMat
 
 
 def missing_cells(split: str, root: Path = CRB_DIR) -> int:
-    obs = json.load(open(root / "obs_matrix.json"))
+    obs = json.load(open(root / OBS_MATRIX))
     tasks = set(load_long(split, root).task_id)
     n_models = 8
     return sum(n_models - len(v) for k, v in obs.items() if k in tasks)
 
 
 def released_acrouter_decisions(root: Path = CRB_DIR) -> pd.Series:
-    d = pd.read_json(root / "id_decisions.jsonl", lines=True)
+    d = pd.read_json(root / DECISIONS, lines=True)
     return d.set_index("task_id")["chosen_model"]

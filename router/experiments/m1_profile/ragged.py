@@ -10,7 +10,7 @@ import sys
 import pandas as pd
 
 D = sys.argv[1]
-obs = json.load(open(f"{D}/obs_matrix.json"))
+obs = json.load(open(f"{D}/raw_matrices/phase1_acrouter_v2/obs_matrix.json"))
 test_ids = set(pd.read_csv(f"{D}/id_test_results_long.csv").task_id)
 sizes = [len(v) for k, v in obs.items() if k in test_ids]
 print("test tasks", len(sizes), "cells", sum(sizes), "of", 8 * len(sizes),

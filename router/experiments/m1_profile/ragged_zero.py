@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 
 D = sys.argv[1]
-obs = json.load(open(f"{D}/obs_matrix.json"))
+obs = json.load(open(f"{D}/raw_matrices/phase1_acrouter_v2/obs_matrix.json"))
 test = pd.read_csv(f"{D}/id_test_results_long.csv")
 probe = pd.read_csv(f"{D}/id_probing_results_long.csv")
 models = sorted(test.model.unique())
@@ -42,7 +42,7 @@ for label, fill in [("missing skipped", None), ("missing = 0", 0.0)]:
     print(f"  Always-Opus {p['claude-opus-4-6'].mean() * 100:.2f}"
           f"  Perf/$ {p['claude-opus-4-6'].mean() * 100 / c['claude-opus-4-6'].sum():.2f}")
 
-    dec = pd.read_json(f"{D}/id_decisions.jsonl", lines=True).set_index("task_id").chosen_model
+    dec = pd.read_json(f"{D}/outputs/current/id_decisions.jsonl", lines=True).set_index("task_id").chosen_model
     perf = np.nanmean([p.loc[i, dec[i]] for i in tid])
     cost = np.sum([c.loc[i, dec[i]] for i in tid])
     print(f"  ACRouter release decisions {perf * 100:.2f}  $Total {cost:.2f}  Perf/$ {perf * 100 / cost:.2f}")
