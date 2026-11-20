@@ -9,7 +9,7 @@ p = t.pivot_table(index="task_id", columns="model", values="score")
 c = t.pivot_table(index="task_id", columns="model", values="cost_usd")
 
 # 1. score the released ACRouter ID decisions against the released matrix
-dec = pd.read_json(f"{D}/id_decisions.jsonl", lines=True).set_index("task_id")
+dec = pd.read_json(f"{D}/outputs/current/id_decisions.jsonl", lines=True).set_index("task_id")
 print("decisions", len(dec), "voters", dec.voter.value_counts().to_dict(), "modes", dec.matched_mode.value_counts().to_dict())
 common = [i for i in dec.index if i in p.index]
 perf = np.mean([p.loc[i, dec.loc[i, "chosen_model"]] for i in common])
@@ -18,7 +18,7 @@ print(f"released ACRouter decisions on released matrix: n={len(common)} AvgPerf 
 print("chosen model share", dec.chosen_model.value_counts(normalize=True).round(3).to_dict())
 
 # 2. oracle / DimensionBest on the uncleaned obs_matrix
-obs = json.load(open(f"{D}/obs_matrix.json"))
+obs = json.load(open(f"{D}/raw_matrices/phase1_acrouter_v2/obs_matrix.json"))
 rows = [(tid, m, v.get("perf"), v.get("cost")) for tid, mm in obs.items() for m, v in mm.items()]
 o = pd.DataFrame(rows, columns=["task_id", "model", "perf", "cost"])
 print("obs_matrix tasks", o.task_id.nunique(), "models", o.model.nunique(), "NaN perf", int(o.perf.isna().sum()))

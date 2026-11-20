@@ -20,7 +20,10 @@ venv
 node_modules/
 
 # Third-party code and data cloned for the router (see docs/IMPLEMENTATION_PLAN.md, M1.1)
-external/
+# Not `external/`: a trailing-slash rule cannot be negated for files inside it.
+# CHECKSUMS is the one committed file (pinned hashes, see scripts/fetch_data.py).
+external/*
+!external/CHECKSUMS
 
 # Local router state (model registry, caches)
 *.sqlite

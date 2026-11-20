@@ -15,10 +15,11 @@ Files used:
   were computed on)
 - `outputs/current/id_decisions.jsonl` (the released ACRouter ID decisions)
 
-Download them into one directory (git-ignored, for example `external/CodeRouterBench/`) with:
+Fetch them (git-ignored, into `external/CodeRouterBench/`) with the pinned, hash-checked fetch
+script, which also fetches `route-anything-data` and checks both against `external/CHECKSUMS`:
 
 ```
-hf download Lance1573/CodeRouterBench --repo-type dataset --local-dir external/CodeRouterBench
+pipeline/venv/bin/python scripts/fetch_data.py
 ```
 
 ## Scripts
