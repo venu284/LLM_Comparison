@@ -61,3 +61,15 @@ def test_headline_sets_and_cruxeval(t):
     assert h["headline_1971"]["cruxeval_eligible"] == 800
     assert h["complete_case_1907"]["cruxeval_eligible"] == 792
     assert h["stop_rule_fires"] is False
+
+
+@needs_data
+def test_loader_views_carry_the_same_eligible_pool():
+    """`annotate` through `coderouterbench.long_table`, in both views, agrees with the pool."""
+    from router.data import coderouterbench as crb
+    want = {"probing": 3968, "id_test": 1658}
+    for split, n in want.items():
+        for view in crb.VIEWS:
+            long = crb.long_table(split, view)
+            assert long.score_type.notna().all() and long.eligible.notna().all(), (split, view)
+            assert long.loc[long.eligible.astype(bool), "task_id"].nunique() == n, (split, view)

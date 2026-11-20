@@ -43,11 +43,12 @@ class Rule:
     crb_rule: str            # how CodeRouterBench scored it, with a quote
     source_rule: str         # the source benchmark's own rule, with a quote
     notes: str = ""
+    id_pool: bool = True     # False for OOD families, which are outside the evaluation population
 
     @property
     def eligible(self) -> bool:
-        """S0.12: execution-scored and test-checkable."""
-        return self.score_type == "exec" and self.test_checkable
+        """S0.12: execution-scored and test-checkable, in the ID pool."""
+        return self.score_type == "exec" and self.test_checkable and self.id_pool
 
 
 # --------------------------------------------------------------------------- citations
@@ -278,7 +279,8 @@ RULES: dict[str, Rule] = {
 # OOD families: recorded for completeness; outside the evaluation population (S0.12).
 OOD_RULES: dict[str, Rule] = {
     fam: Rule("exec", "no", f"{_OOD} A task is resolved or not.", True, _OOD, _OOD, _OOD,
-              "OOD: outside the evaluation population; never eligible for the ID pool.")
+              "OOD: outside the evaluation population; never eligible for the ID pool.",
+              id_pool=False)
     for fam in ("featurebench", "longcli", "old112", "swe_ci")
 }
 
@@ -308,7 +310,7 @@ def annotate(long: pd.DataFrame) -> pd.DataFrame:
     out = long.copy()
     fam = out["family"]
     out["score_type"] = fam.map(lambda f: rule(f).score_type).astype(object)
-    out["eligible"] = fam.map(lambda f: f in RULES and RULES[f].eligible).astype("boolean")
+    out["eligible"] = fam.map(lambda f: rule(f).eligible).astype("boolean")
     return out
 
 

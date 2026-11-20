@@ -50,7 +50,7 @@ def test_eligible_implies_exec_and_test_checkable():
     for f, r in scoring.RULES.items():
         assert r.eligible == (r.score_type == "exec" and r.test_checkable), f
     for r in scoring.OOD_RULES.values():
-        assert "never eligible" in r.notes
+        assert "never eligible" in r.notes and not r.id_pool and not r.eligible
 
 
 def test_undocumented_families_are_never_eligible():
