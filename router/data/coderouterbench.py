@@ -16,6 +16,7 @@ import pandas as pd
 
 from router.data.schema import MISSING_TOKEN_RECORD, OutcomeMatrix, long_frame
 from router.data.scoring import annotate
+from router.data.splits import annotate as annotate_problems
 from router.data.sources import family_of
 from router.settings import EXTERNAL_DIR
 
@@ -68,7 +69,8 @@ def long_table(split: str, view: str = "complete", root: Path = CRB_DIR) -> pd.D
                 if v.get("perf") is not None}
         long["score"] = [float(perf.get(k, 0.0)) for k in zip(long["task_id"], long["model"])]
     # S1.4: score_type and eligible come from the family rule only (R16).
-    return long_frame(annotate(long))
+    # S1.6: problem_id comes from the committed problems.csv.
+    return long_frame(annotate_problems(annotate(long)))
 
 
 def load(split: str, view: str = "complete", root: Path = CRB_DIR) -> OutcomeMatrix:

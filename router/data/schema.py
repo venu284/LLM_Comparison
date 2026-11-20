@@ -24,8 +24,8 @@ MISSING_TOKEN_RECORD = "missing_token_record"   # CodeRouterBench cost_source ==
 EMPTY_RESPONSE = "empty_response"               # empty X13 response (CLAIMS S0.11), supplied by the verdict loader
 UNAVAILABLE_REASONS = (MISSING_TOKEN_RECORD, EMPTY_RESPONSE)
 
-# Columns filled after loading: score_type and eligible by scoring.annotate (S1.4, done);
-# problem_id by S1.6. Left null when absent.
+# Columns filled after loading: score_type and eligible by scoring.annotate (S1.4), problem_id by
+# splits.annotate (S1.6). long_frame leaves them null when a loader has not filled them.
 DEFERRED_COLUMNS = ("problem_id", "score_type", "eligible")   # S1.6, S1.4, S1.4
 
 
