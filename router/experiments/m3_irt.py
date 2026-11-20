@@ -1,7 +1,7 @@
 """M3 analyses: IRT model choice (A4), ability error against k (A6) and the ranking check (A7).
 
 Run from the repo root:  pipeline/venv/bin/python -m router.experiments.m3_irt
-Outcomes are binarised at score >= 0.5 (router.data.scoring.ACCEPT_THRESHOLD).
+Outcomes are binarised at score >= 0.5 (router.data.scoring.LEGACY_ACCEPT_THRESHOLD).
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from sklearn.metrics import roc_auc_score
 from router.core import irt
 from router.core.anchors import onboard
 from router.data import coderouterbench as crb
-from router.data.scoring import ACCEPT_THRESHOLD, score_types
+from router.data.scoring import LEGACY_ACCEPT_THRESHOLD, score_types
 from router.settings import REPO_ROOT
 
 OUT = REPO_ROOT / "router" / "experiments" / "out"
@@ -23,7 +23,7 @@ SEEDS = range(10)
 
 
 def binarise(df: pd.DataFrame) -> np.ndarray:
-    return (df.T.to_numpy() >= ACCEPT_THRESHOLD).astype(float)     # models x items
+    return (df.T.to_numpy() >= LEGACY_ACCEPT_THRESHOLD).astype(float)     # models x items
 
 
 def a4(probe: crb.OutcomeMatrix) -> pd.DataFrame:
