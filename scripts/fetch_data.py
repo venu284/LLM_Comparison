@@ -11,13 +11,23 @@ Both are pinned to full commit SHAs (REPOS below). `external/CHECKSUMS` (committ
 SHA-256 of every file in `sha256sum` format, so `cd external && shasum -a 256 -c CHECKSUMS`
 works without this script.
 
+Source benchmarks (task text for `router/data/prompts.py`) are pinned differently, as extracts
+(EXTRACTS below). Each names a repo, a full commit SHA, a per-file allowlist with the Hub's own
+hash of each file, and a field allowlist. The upstream files are streamed, never stored: their
+bytes are checked against the pinned hash, and only the allowlisted fields of each row are
+written to `<dest>/sources/<name>.jsonl`, whose SHA-256 goes into CHECKSUMS like any other
+file. Solution, test and expected-output columns therefore never reach the disk, and
+LiveCodeBench (4.5 GB, mostly private tests) costs a few MB.
+
 Normal run: read CHECKSUMS, hash the local files, download only the missing or mismatched
-ones, re-hash, exit non-zero on any mismatch, print `fetched: N, verified: M`. When every file
-already matches, no network call is made (works under HF_HUB_OFFLINE=1).
+ones (rebuilding a missing or mismatched extract from its upstream files), re-hash, exit
+non-zero on any mismatch, print `fetched: N, verified: M`. When every file already matches, no
+network call is made (works under HF_HUB_OFFLINE=1).
 
 `--write-checksums` is the only mode that creates or overwrites CHECKSUMS. It takes the file
 list from the Hub API at the pinned revision and checks every file against the Hub's own hash
-(LFS sha256, or the git blob SHA-1 for non-LFS files) before writing anything.
+(LFS sha256, or the git blob SHA-1 for non-LFS files) before writing anything. For extracts it
+checks that the pinned per-file hashes are the Hub's at the pinned revision, then builds them.
 
 Usage:
     pipeline/venv/bin/python scripts/fetch_data.py
@@ -30,8 +40,13 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import io
+import json
+import os
 import sys
+from collections.abc import Callable, Iterable, Iterator
 from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -45,11 +60,95 @@ REPOS: dict[str, tuple[str, str]] = {
     "route-anything-data": ("Lance1573/route-anything-data", "bd361209720f27a2383857e314c554476bc81c5c"),
 }
 
+
+@dataclass(frozen=True)
+class Extract:
+    """Allowlisted fields of pinned upstream files, written as one JSON object per upstream row.
+
+    `files` maps each upstream path to the Hub's own hash of it at `revision`: ("sha256", LFS
+    hash) or ("sha1", git blob id). `fields` is the only data read from a row; "a.b" reads the
+    nested key b of a. Rows keep upstream order (files in the order listed).
+    """
+
+    repo_id: str
+    revision: str
+    files: dict[str, tuple[str, str]]
+    fields: tuple[str, ...]
+
+    def spec(self) -> str:
+        return f"{self.repo_id}@{self.revision} files={','.join(self.files)} fields={','.join(self.fields)}"
+
+
+_LCB_FILES = {
+    "test.jsonl": ("sha256", "2bd02b38beb48e8c46b5b9987095d999ff38cd8efc255ea5d58974317c48f63f"),
+    "test2.jsonl": ("sha256", "095df7c5daf15f882c51a9deb84085cff1e073495a5dbcf95015a564d485f3a3"),
+    "test3.jsonl": ("sha256", "28ed26cc83363ce3f1fe2d5fad9f8393077beb1907b167a31bd3b32f80801b79"),
+    "test4.jsonl": ("sha256", "d711138ddaebfcf5f8ec6a4283ee677298c0f5c5d374a235af92aaf0584510da"),
+    "test5.jsonl": ("sha256", "7f77571c2a6df0c2a72a3277650309f67e01e0008e18117e624633df53f81214"),
+    "test6.jsonl": ("sha256", "bb4c364f71921c4495a6ad15abe1a927350b720009f4933e2e71f8af0f6fd1f5"),
+}
+
+# Source-benchmark task text: extract name -> pin. Field allowlists hold task text and ids only.
+EXTRACTS: dict[str, Extract] = {
+    # DS-1000 at the revision live at the Route Anything snapshot (September 2026). The later
+    # a93b81f (2026-11-19) leaves every prompt unchanged.
+    "ds1000": Extract(
+        "xlangai/DS-1000", "4416080ac5cb80bdf7576aefb8f9a0b4d5426a44",
+        {"test.jsonl": ("sha1", "3924161ac7b056443bb7ba724b15e7e128d1108b")},
+        ("metadata.problem_id", "prompt"),
+    ),
+    # BigCodeBench v0.1.4, the release `tasks.jsonl` names.
+    "bigcodebench": Extract(
+        "bigcode/bigcodebench", "b74c0d0bf70d2c0bc459be537895cca163007f1a",
+        {"data/v0.1.4-00000-of-00001.parquet": ("sha256", "d9a4965821c9507ebdfb551c288656b2d5fe553234f5183044333ca8a4018267")},
+        ("task_id", "complete_prompt"),
+    ),
+    # HumanEval-X in four languages (Python is fully covered by tasks.jsonl).
+    "humaneval_x": Extract(
+        "THUDM/humaneval-x", "62c78627f3072a1454fa0cb0184737cafe5e4198",
+        {
+            "data/cpp/data/humaneval.jsonl": ("sha1", "4c4ce46302c3dcc1e40e517f14b3407fce16053d"),
+            "data/go/data/humaneval.jsonl": ("sha1", "45cc3c3a67bf598fc5bdada98943b34aff2be1f3"),
+            "data/java/data/humaneval.jsonl": ("sha1", "4986ea5ba1de8693abbf9627a8376a53d88da55d"),
+            "data/js/data/humaneval.jsonl": ("sha1", "b8e32b85b98240656dd362681b100ba8687ad21c"),
+        },
+        ("task_id", "prompt"),
+    ),
+    # HumanEval+ prompts: the he_completion and he_testgen raw text (HumanEval/115 differs from
+    # HumanEval-X and matches this source).
+    "humanevalplus": Extract(
+        "evalplus/humanevalplus", "d32357cf319e50e9c8d8dab5ea876c72b0fd321b",
+        {"data/test-00000-of-00001-5973903632b82d40.parquet": ("sha256", "4436f5c03d77c17e0cbc57543b90665b5c1266f55a43992a5ed7922cd34a7558")},
+        ("task_id", "prompt"),
+    ),
+    # MultiPL-E HumanEval in Rust and TypeScript.
+    "multipl_e": Extract(
+        "nuprl/MultiPL-E", "28441b6024e71d4a1c1c0f6bf171c935cd5a43f2",
+        {
+            "humaneval-rs/test-00000-of-00001.parquet": ("sha256", "92dba15e4da4deb4dbae5e15ce1712c95ec5a63c3ead69886271470309d9d314"),
+            "humaneval-ts/test-00000-of-00001.parquet": ("sha256", "b9090cc4e5a0c06e671811f63d7c35737f8393f1b9d44685472d5a7b1877d136"),
+        },
+        ("language", "name", "prompt"),
+    ),
+    # LiveCodeBench code_generation_lite, release files v1-v6.
+    "livecodebench": Extract(
+        "livecodebench/code_generation_lite", "0fe84c3912ea0c4d4a78037083943e8f0c4dd505",
+        _LCB_FILES,
+        ("platform", "question_content", "question_id", "starter_code"),
+    ),
+}
+
 CHECKSUMS_NAME = "CHECKSUMS"
 COMMITTED_CHECKSUMS = REPO_ROOT / "external" / CHECKSUMS_NAME
 PIN_PREFIX = "# pin: "
+EXTRACT_PREFIX = "# extract: "
+EXTRACT_DIR = "sources"
 WORKERS = 8
 CHUNK = 1 << 20
+
+
+def extract_path(name: str) -> str:
+    return f"{EXTRACT_DIR}/{name}.jsonl"
 
 
 def is_excluded(relpath: str) -> bool:
@@ -103,8 +202,29 @@ def format_checksums(entries: dict[str, str]) -> str:
         "# Verify: cd external && shasum -a 256 -c CHECKSUMS",
     ]
     header += [f"{PIN_PREFIX}{repo_id}@{sha}" for repo_id, sha in REPOS.values()]
+    header += [f"{EXTRACT_PREFIX}{name} <- {ex.spec()}" for name, ex in EXTRACTS.items()]
     body = [f"{entries[p]}  {p}" for p in sorted(entries)]
     return "\n".join(header + body) + "\n"
+
+
+def parse_extract_pins(text: str) -> dict[str, str]:
+    """{extract name: spec} from the `# extract:` lines of a CHECKSUMS file."""
+    pins: dict[str, str] = {}
+    for line in text.splitlines():
+        if line.startswith(EXTRACT_PREFIX):
+            name, sep, spec = line[len(EXTRACT_PREFIX):].strip().partition(" <- ")
+            if not sep:
+                raise ValueError(f"malformed extract pin: {line!r}")
+            pins[name] = spec
+    return pins
+
+
+def extract_name(path: str) -> str | None:
+    """'sources/ds1000.jsonl' -> 'ds1000' when it is a pinned extract, else None."""
+    head, _, rel = path.partition("/")
+    if head == EXTRACT_DIR and rel.endswith(".jsonl") and rel[: -len(".jsonl")] in EXTRACTS:
+        return rel[: -len(".jsonl")]
+    return None
 
 
 def split_entry(path: str) -> tuple[str, str]:
@@ -113,6 +233,112 @@ def split_entry(path: str) -> tuple[str, str]:
     if repo_name not in REPOS or not rel:
         raise ValueError(f"CHECKSUMS path {path!r} is not under one of {sorted(REPOS)}")
     return repo_name, rel
+
+
+# --- extracts ---------------------------------------------------------------------------------
+
+Opener = Callable[[str, str, str], Iterable[bytes]]
+
+
+def open_hub(repo_id: str, path: str, revision: str) -> Iterator[bytes]:
+    """Stream one dataset file from the Hub at a pinned revision."""
+    from huggingface_hub import get_session, hf_hub_url
+
+    url = hf_hub_url(repo_id, path, repo_type="dataset", revision=revision)
+    with get_session().stream("GET", url, timeout=120, follow_redirects=True) as resp:
+        resp.raise_for_status()
+        yield from resp.iter_bytes(CHUNK)
+
+
+def pick(row: dict, field: str):
+    """The allowlisted field of a row; "a.b" reads row["a"]["b"]. A missing field is an error."""
+    value = row
+    for key in field.split("."):
+        value = value[key]
+    return value
+
+
+def _native(value):
+    """Plain JSON types, so the extract bytes do not depend on the reader library."""
+    if hasattr(value, "item") and not isinstance(value, (str, bytes)):
+        value = value.item()
+    if isinstance(value, float) and value != value:
+        return None
+    return value
+
+
+def _rows_jsonl(chunks: Iterable[bytes]) -> Iterator[dict]:
+    buf = b""
+    for chunk in chunks:
+        buf += chunk
+        *lines, buf = buf.split(b"\n")
+        for line in lines:
+            if line.strip():
+                yield json.loads(line)
+    if buf.strip():
+        yield json.loads(buf)
+
+
+class _Hashing:
+    """Wrap a byte stream; after it is consumed, `hexdigest()` is the Hub-style hash."""
+
+    def __init__(self, chunks: Iterable[bytes], kind: str):
+        self.chunks, self.kind = chunks, kind
+        self.h = hashlib.sha256() if kind == "sha256" else None
+        self.buf: list[bytes] = []
+
+    def __iter__(self) -> Iterator[bytes]:
+        for chunk in self.chunks:
+            if self.h is not None:
+                self.h.update(chunk)
+            else:
+                self.buf.append(chunk)  # git blob ids need the size first; these files are small
+            yield chunk
+
+    def hexdigest(self) -> str:
+        if self.h is not None:
+            return self.h.hexdigest()
+        data = b"".join(self.buf)
+        return hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
+
+
+def extract_rows(ex: Extract, opener: Opener = open_hub) -> Iterator[dict]:
+    """Allowlisted fields of every upstream row, after checking each file's pinned hash.
+
+    Rows of a file are yielded as they stream, and the hash is checked at the end of the file,
+    so a caller must not keep any output until the whole generator has finished.
+    """
+    top = sorted({f.split(".")[0] for f in ex.fields})
+    for path, (kind, expected) in ex.files.items():
+        stream = _Hashing(opener(ex.repo_id, path, ex.revision), kind)
+        if path.endswith(".parquet"):
+            import pyarrow.parquet as pq
+
+            data = b"".join(stream)
+            rows: Iterable[dict] = pq.read_table(io.BytesIO(data), columns=top).to_pylist()
+        elif path.endswith(".jsonl"):
+            rows = _rows_jsonl(stream)
+        else:
+            raise ValueError(f"{ex.repo_id}/{path}: no reader for this file type")
+        for row in rows:
+            yield {f: _native(pick(row, f)) for f in ex.fields}
+        got = stream.hexdigest()
+        if got != expected:
+            raise ValueError(f"{ex.repo_id}@{ex.revision}/{path}: {kind} {got}, pinned {expected}")
+
+
+def build_extract(dest: Path, name: str, opener: Opener = open_hub) -> None:
+    """Write `<dest>/sources/<name>.jsonl`; nothing is left behind if any upstream check fails."""
+    out = dest / extract_path(name)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    tmp = out.with_name(out.name + ".part")
+    try:
+        with open(tmp, "w", encoding="utf-8", newline="\n") as f:
+            for rec in extract_rows(EXTRACTS[name], opener):
+                f.write(json.dumps(rec, ensure_ascii=False, sort_keys=True) + "\n")
+        os.replace(tmp, out)
+    finally:
+        tmp.unlink(missing_ok=True)
 
 
 def download(dest: Path, repo_name: str, rel: str) -> None:
@@ -140,21 +366,33 @@ def run_fetch(dest: Path, verify_only: bool) -> int:
     if not checksums.is_file():
         print(f"error: no CHECKSUMS at {dest / CHECKSUMS_NAME} or {COMMITTED_CHECKSUMS}", file=sys.stderr)
         return 2
-    wanted, pins = parse_checksums(checksums.read_text())
+    text = checksums.read_text()
+    wanted, pins = parse_checksums(text)
     for repo_id, sha in REPOS.values():
         if pins.get(repo_id) != sha:
             print(f"error: {checksums} pins {repo_id}@{pins.get(repo_id)}, script pins {sha}", file=sys.stderr)
             return 2
+    extract_pins = parse_extract_pins(text)
+    for name, ex in EXTRACTS.items():
+        if extract_pins.get(name) != ex.spec():
+            print(f"error: {checksums} pins extract {name} as {extract_pins.get(name)}, script as {ex.spec()}",
+                  file=sys.stderr)
+            return 2
     for path in wanted:
-        split_entry(path)
+        if extract_name(path) is None:
+            split_entry(path)
 
     local = hash_all(dest, wanted)
     todo = [p for p, h in local.items() if h != wanted[p]]
     fetched = 0
     if todo and not verify_only:
         print(f"{len(todo)} of {len(wanted)} files missing or mismatched; downloading")
+        mirror = [p for p in todo if extract_name(p) is None]
         with ThreadPoolExecutor(WORKERS) as ex:
-            list(ex.map(lambda p: download(dest, *split_entry(p)), todo))
+            list(ex.map(lambda p: download(dest, *split_entry(p)), mirror))
+        for p in todo:
+            if (name := extract_name(p)) is not None:
+                build_extract(dest, name)
         fetched = len(todo)
         local.update(hash_all(dest, {p: wanted[p] for p in todo}))
 
@@ -211,6 +449,23 @@ def run_write_checksums(dest: Path) -> int:
         print("CHECKSUMS not written", file=sys.stderr)
         return 1
     entries = {p: h for p, h, _ in results}
+
+    for name, ex in EXTRACTS.items():
+        info = api.dataset_info(ex.repo_id, revision=ex.revision, files_metadata=True)
+        hub = {s.rfilename: hub_expected(s) for s in info.siblings}
+        if info.sha != ex.revision:
+            errors.append(f"{ex.repo_id}@{ex.revision} resolved to {info.sha}")
+        errors += [f"{ex.repo_id}/{p}: Hub {hub.get(p)}, pinned {h}" for p, h in ex.files.items() if hub.get(p) != h]
+        if errors:
+            break
+        print(f"building extract {name} from {len(ex.files)} upstream file(s)")
+        build_extract(dest, name)
+        entries[extract_path(name)] = sha256_file(dest / extract_path(name))
+    if errors:
+        for e in errors:
+            print(f"MISMATCH vs Hub: {e}", file=sys.stderr)
+        print("CHECKSUMS not written", file=sys.stderr)
+        return 1
     (dest / CHECKSUMS_NAME).write_text(format_checksums(entries))
     print(f"wrote {dest / CHECKSUMS_NAME} with {len(entries)} files, all matching the Hub's hashes")
     return 0

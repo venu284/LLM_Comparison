@@ -2,6 +2,12 @@
 # Verify: cd external && shasum -a 256 -c CHECKSUMS
 # pin: Lance1573/CodeRouterBench@e567d89bdd569c9c74ffc7c7118e50d15e46b886
 # pin: Lance1573/route-anything-data@bd361209720f27a2383857e314c554476bc81c5c
+# extract: ds1000 <- xlangai/DS-1000@4416080ac5cb80bdf7576aefb8f9a0b4d5426a44 files=test.jsonl fields=metadata.problem_id,prompt
+# extract: bigcodebench <- bigcode/bigcodebench@b74c0d0bf70d2c0bc459be537895cca163007f1a files=data/v0.1.4-00000-of-00001.parquet fields=task_id,complete_prompt
+# extract: humaneval_x <- THUDM/humaneval-x@62c78627f3072a1454fa0cb0184737cafe5e4198 files=data/cpp/data/humaneval.jsonl,data/go/data/humaneval.jsonl,data/java/data/humaneval.jsonl,data/js/data/humaneval.jsonl fields=task_id,prompt
+# extract: humanevalplus <- evalplus/humanevalplus@d32357cf319e50e9c8d8dab5ea876c72b0fd321b files=data/test-00000-of-00001-5973903632b82d40.parquet fields=task_id,prompt
+# extract: multipl_e <- nuprl/MultiPL-E@28441b6024e71d4a1c1c0f6bf171c935cd5a43f2 files=humaneval-rs/test-00000-of-00001.parquet,humaneval-ts/test-00000-of-00001.parquet fields=language,name,prompt
+# extract: livecodebench <- livecodebench/code_generation_lite@0fe84c3912ea0c4d4a78037083943e8f0c4dd505 files=test.jsonl,test2.jsonl,test3.jsonl,test4.jsonl,test5.jsonl,test6.jsonl fields=platform,question_content,question_id,starter_code
 386cce2e6cd6dbab37968750de131a1de600b1f81a65e4c071cf06a15c07e3ce  CodeRouterBench/README.md
 e9c7e884a7f40c9f0bd21d5eb584a40a9c452cd9f7bc7d6430f10c3dc1aa83a3  CodeRouterBench/configs/eval_pipeline.example.json
 c6189a518748d4310bf8aec17d4ae221850a3f4c31f5ec33d833a742530e8102  CodeRouterBench/evidence/figures/README.md
@@ -189,3 +195,9 @@ e3061487a668029927cde11d75c34713aed3ea5395bdafa2cf6278eeb4d28634  route-anything
 179a650b19c82b439f8d63d17443cddd076f315477489140013053eaa8e3eb85  route-anything-data/provenance/evalplus--mbppplus-README.md
 fbf0df23c9fb430778f037691bd191ece41d49373c0695151d87549b6f45d809  route-anything-data/provenance/livecodebench--code_generation_lite-README.md
 7cbf873fd6e895cb5d773fc49585f4c1ebbaa691bd2a00fa27e0390b4d46a012  route-anything-data/provenance/xlangai--DS-1000-README.md
+9ae57d9175dcb1c858fbb308397df89b424481e981c49bbb6744c4310bac49e1  sources/bigcodebench.jsonl
+95ca675639a65076920c69dff2e800f057ca063c0f148655c9b28878889779f4  sources/ds1000.jsonl
+ab84e8575a2ce0d27bf26ec7971f9f21e205f24bf3fdb65f3185ae8e049d7630  sources/humaneval_x.jsonl
+1c9075e2084795049fcf7bf57014985679f582416d46fc9036e78aaacc4de3eb  sources/humanevalplus.jsonl
+7395649e7cf79897ac102ea7c006c22da1d8e56e8da6dd9f72346473d7b8ee00  sources/livecodebench.jsonl
+a7678241127d5e56e507ac0e907e63bd89db14be013a7d3c0dab40a2060c0205  sources/multipl_e.jsonl
