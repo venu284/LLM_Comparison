@@ -8,6 +8,7 @@ import pytest
 
 from router.data import sources
 from router.data.coderouterbench import CRB_DIR
+from router.data.scoring import RULES
 from router.settings import MIN_FAMILY_TASKS
 
 HAVE_DATA = all((CRB_DIR / f).exists()
@@ -60,8 +61,9 @@ def test_no_family_name_carries_a_task_number_or_function(table):
     assert not [f for f in sources.FAMILIES if any(p.isdigit() for p in f.split("_"))]
 
 
-def test_id_families_meet_the_minimum_or_await_the_user():
-    under = sources.families_under(MIN_FAMILY_TASKS, "id")
+def test_eligible_id_families_meet_the_minimum_or_await_the_user():
+    # The minimum applies to eligible ID families only (S1.4 ruling on canitedit, 2026-11-20).
+    under = [f for f in sources.families_under(MIN_FAMILY_TASKS, "id") if RULES[f].eligible]
     assert set(under) <= sources.PENDING_USER_DECISION, sorted(set(under) - sources.PENDING_USER_DECISION)
     # A pending entry must still be under the minimum, so a stale entry cannot hide a family.
     assert sources.PENDING_USER_DECISION <= set(under)

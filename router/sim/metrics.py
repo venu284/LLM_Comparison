@@ -15,7 +15,7 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
-from router.data.scoring import ACCEPT_THRESHOLD
+from router.data.scoring import LEGACY_ACCEPT_THRESHOLD
 
 LAMBDA = 0.1
 
@@ -42,7 +42,7 @@ def summary(out: Outcome, score: pd.DataFrame, cost: pd.DataFrame, floor: float 
     total = out.cost.sum()
     oracle_reward = (score - LAMBDA * cost).max(axis=1)
     reward = out.score - LAMBDA * out.cost
-    accepted = (out.score >= ACCEPT_THRESHOLD).sum()
+    accepted = (out.score >= LEGACY_ACCEPT_THRESHOLD).sum()
     res = {
         "AvgPerf": perf,
         "$Total": total,

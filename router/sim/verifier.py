@@ -8,11 +8,11 @@ from __future__ import annotations
 
 import numpy as np
 
-from router.data.scoring import ACCEPT_THRESHOLD
+from router.data.scoring import LEGACY_ACCEPT_THRESHOLD
 
 
 class Verifier:
-    def __init__(self, eps: float = 0.0, seed: int = 0, threshold: float = ACCEPT_THRESHOLD):
+    def __init__(self, eps: float = 0.0, seed: int = 0, threshold: float = LEGACY_ACCEPT_THRESHOLD):
         if not 0.0 <= eps <= 1.0:
             raise ValueError("eps must be in [0, 1]")
         self.eps = eps

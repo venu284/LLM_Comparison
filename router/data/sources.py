@@ -115,9 +115,9 @@ FAMILIES: dict[str, Family] = {
 
 # ID families under MIN_FAMILY_TASKS awaiting the user's granularity decision
 # (docs/IMPLEMENTATION_PLAN.md S1.1: report candidate merges, do not merge).
-PENDING_USER_DECISION: frozenset[str] = frozenset({
-    "canitedit",   # 20 tasks (S1.1, handover 2026-11-20-s1-a1-data-core)
-})
+# canitedit (20 tasks) left this set on 2026-11-20: S1.4 ruled it ineligible (Proxy+ scoring,
+# router/data/scoring.py), so the minimum no longer applies to it.
+PENDING_USER_DECISION: frozenset[str] = frozenset()
 
 
 class UnparsedTaskId(ValueError):
