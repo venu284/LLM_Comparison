@@ -243,6 +243,12 @@ def test_fold_seeds_give_different_assignments(splits):
     assert len(set(cols)) == len(cols)
 
 
+def test_fold_seed_0_is_the_gate_seed():
+    from router.settings import GATE_SEED, N_SEEDS
+
+    assert S.FOLD_SEEDS[0] == GATE_SEED and len(S.FOLD_SEEDS) == N_SEEDS
+
+
 def test_draw_takes_only_problem_ids_and_seeds():
     assert list(inspect.signature(S.draw).parameters) == ["problem_ids", "dev_seed", "fold_seeds"]
 

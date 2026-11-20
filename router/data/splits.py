@@ -57,7 +57,12 @@ The development draw and the fold draws use separate streams: the SeedSequence e
 `[seed, stream]`, with stream 0 for the development split and 1 for the folds. `DEV_SEED` and
 `GATE_SEED` are both 0, so a plain `default_rng(0)` for both would make the development draw and
 fold seed 0 one stream. The development split takes no fold seed, so it is identical for every
-fold seed. Inner folds need no draw: they are the other `N_FOLDS - 1` outer folds (O7). There is
+fold seed. Later draws under the same seed (S2.4: stream order, probe draw) should take their own
+stream ids (2, 3, ...), never 0 or 1.
+
+`splits.csv` was drawn with NumPy 2.4.4. SeedSequence and PCG64 are stable, but NumPy does not
+promise that `Generator.choice` and `Generator.permutation` give the same output in every version;
+the committed `splits.csv` is the authority, and the pin test shows if a re-draw differs. Inner folds need no draw: they are the other `N_FOLDS - 1` outer folds (O7). There is
 no stratification (CLAIMS S0.6 says only "20% of problems").
 
 No score, cost, verdict or audit label is read here (S1.6 rule); the split depends only on the
