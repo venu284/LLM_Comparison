@@ -597,8 +597,8 @@ def ra_on_population(p: Pop, d, n_boot: int):
         for r in route_names + ["best_single"]:
             gap = 100 * (Bt[f"a_{r}"] - Bt["a_best_single"]) / Bt["n"]
             saving = 100 * (1 - Bt[f"c_{r}"] / Bt["c_best_single"])
-            rows[r] = {"acceptance_pct": 100 * float(acc[r].mean()),
-                       "cost_m_usd_per_task": 1e3 * float(cost[r].mean()),
+            rows[r] = {"acceptance_pct": ci(100 * Bt[f"a_{r}"] / Bt["n"]),
+                       "cost_m_usd_per_task": ci(1e3 * Bt[f"c_{r}"] / Bt["n"]),
                        "saving_pct": ci(saving), "gap_points": ci(gap),
                        "passes_s0_3": bool(np.percentile(saving[1:], 2.5) >= GATE_SAVING
                                            and np.percentile(gap[1:], 2.5) >= GATE_GAP)}
@@ -612,7 +612,9 @@ def ra_on_population(p: Pop, d, n_boot: int):
                                           "min": float(np.min([x[k] if np.isscalar(x[k]) else x[k][0] for x in xs])),
                                           "max": float(np.max([x[k] if np.isscalar(x[k]) else x[k][0] for x in xs]))}
                                       for k in ("acceptance_pct", "cost_m_usd_per_task", "saving_pct", "gap_points")},
-                      "passes_s0_3_by_seed": [x["passes_s0_3"] for x in xs]}
+                      "passes_s0_3_by_seed": [x["passes_s0_3"] for x in xs],
+                      "saving_ci_lower_by_seed": [x["saving_pct"][1] for x in xs],
+                      "gap_ci_lower_by_seed": [x["gap_points"][1] for x in xs]}
     summary["best_single"] = {"seed0": per_seed[GATE_SEED]["routes"]["best_single"]}
     cell_stats = {x: {"tasks": int((cells == x).sum()),
                       "acceptance_pct": {m: round(100 * float(p.B[m][(cells == x).values].mean()), 1) for m in p.models}}
