@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from collections import Counter
 from pathlib import Path
@@ -131,7 +132,11 @@ def shared_hashes(idt: pd.DataFrame, col: str, top: int = 8) -> dict:
             for i, a in enumerate(fams):
                 for b in fams[i + 1:]:
                     across_pairs[f"{a} + {b}"] += 1
-    biggest = sorted(multi, key=lambda g: (-len(g), g.task_id.min()))[:top]
+    # The largest group for each distinct family set, largest first.
+    by_set: dict = {}
+    for g in sorted(multi, key=lambda g: (-len(g), g.task_id.min())):
+        by_set.setdefault(tuple(sorted(set(g.family))), g)
+    biggest = list(by_set.values())[:top]
     return {"tasks_hashed": len(j), "distinct_hashes": j[col].nunique(),
             "hashes_shared_within_one_family": dict(within), "tasks_in_within_family_groups": tasks_within,
             "hashes_shared_across_families": dict(across.most_common()), "tasks_in_across_family_groups": tasks_across,
@@ -149,12 +154,23 @@ ALLOWED_CONTENT_SHARING = (
 )
 
 
+def _problem_number(upstream: str | None) -> str | None:
+    """Trailing problem number of an upstream id (BigCodeBench/10, HumanEval/10, Python/10)."""
+    m = re.search(r"(\d+)$", upstream or "")
+    return m.group(1) if m else None
+
+
 def unexpected_content_collisions(eligible_idt: pd.DataFrame) -> list[dict]:
+    """Cross-family content groups that are not the same problem within an allowed family set."""
     j = eligible_idt[eligible_idt.joined]
     out = []
     for _, g in j.groupby("content_sha256"):
         fams = set(g.family)
-        if len(fams) > 1 and not any(fams <= ok for ok in ALLOWED_CONTENT_SHARING):
+        if len(fams) < 2:
+            continue
+        allowed = any(fams <= ok for ok in ALLOWED_CONTENT_SHARING)
+        problems = {_problem_number(u) for u in g.upstream_id}
+        if not allowed or len(problems) != 1 or None in problems:
             out.append({"families": sorted(fams), "tasks": sorted(g.task_id)})
     return out
 

@@ -44,6 +44,14 @@ def test_eligible_families_share_content_only_where_allowed(report):
     t = P.prompt_table()
     el = t[(t.split_kind == "id") & t.family.isin(eligible_families())]
     assert report.unexpected_content_collisions(el) == []
+    # The check also catches a group that mixes problems within an allowed family set.
+    fake = el[el.family.isin(["humaneval", "hex_python"])].copy()
+    a = fake.index[fake.family == "humaneval"][0]
+    n = fake.upstream_id[a].rsplit("/", 1)[1]
+    b = fake.index[(fake.family == "hex_python") & (fake.upstream_id != f"Python/{n}")][0]
+    fake.loc[b, "content_sha256"] = fake.loc[a, "content_sha256"]
+    assert any(set(c["tasks"]) >= {fake.task_id[a], fake.task_id[b]}
+               for c in report.unexpected_content_collisions(fake))
     h = report.shared_hashes(el, "content_sha256")
     assert (h["tasks_hashed"], h["distinct_hashes"]) == (5555, 4988)
     assert (h["tasks_in_within_family_groups"], h["tasks_in_across_family_groups"]) == (10, 830)
