@@ -215,7 +215,7 @@ See §1.2.
 
 | DP | When | Question and threshold | On "no" |
 |---|---|---|---|
-| DP1a | End of S3 | Headroom of the oracle and of cross-fitted DimensionBest over the best single model, on the **full** artefact-filtered eligible pool. Passes if the 95% cluster-bootstrap CI lower bound is **≥ 3.0 AvgPerf points** (`DP1A_MIN_LOWER`; "AvgPerf": open item O10) | C4 leads the accuracy story |
+| DP1a | End of S3 | Headroom of the oracle and of cross-fitted DimensionBest over the best single model, on the **full** artefact-filtered eligible pool. Passes if the 95% cluster-bootstrap CI lower bound is **≥ 3.0 AvgPerf points** (`DP1A_MIN_LOWER`; "AvgPerf": open item O10; which headroom must clear: open item O18) | C4 leads the accuracy story |
 | DP1b | End of S3 (S3.2) | Does the **oracle-on-no-signal bound** meet S0.3 on **point estimates** on the headline set, verifier cost included: saving ≥ 20% and gap ≥ −2 points against the best single model, **and** saving > 0 and gap ≥ −2 points against CellBest with predicted cells? The bound uses the real verifier where visible tests exist and an oracle accept-or-escalate decision on no-signal cells. Fixed ladders are not the test. Also report the gap the learned router must close | Stop and bring it to the user before S4 (LLMRouterBench becomes a candidate primary corpus for C1 and C2). A reassessment, not a verdict that a learned policy cannot succeed. This half decides the economic claim |
 | DP2 | During S5 | Does the hierarchical model beat k-matched DimensionBest in routing units (AvgPerf, cost) at a k in **{10, 25, 50, 100}** (`DP2_K_GRID`), on the development split? | The routing model is the shrunk lookup table; IRT is reported as an ablation |
 | DP3 | S6 pilot | Is the routing gap on the live pool (free models plus the paid top model) **more than 2 ×** the run-to-run SD (`DP3_GAP_SD_MULTIPLE`), measured on **≥ 2 runs per task** (`DP3_MIN_RUNS_PER_TASK`)? ("routing gap": open item O14) | Live work is reported as a verifier study and a transfer test, not as a routing win |
@@ -414,3 +414,10 @@ The P0.6 checkbox and log entry: "0.3 to 2.3 points". The difference is whether 
 **O17. "Paired" in S0.3(a).** S0.3(a): "the lower end of the 95% cluster-bootstrap CI of its cost
 saving"; (b) and (c) say "paired". P0.5, P0.6 and E0 compute the saving on the same paired cluster
 resamples as the gap. Confirm that (a) is paired too.
+
+**O18. DP1a: which headroom must clear 3.0.** DP1a: "headroom of the oracle and of cross-fitted
+DimensionBest over the best single model … Passes if the lower end of the 95% cluster-bootstrap CI
+is ≥ 3.0 AvgPerf points". The text names two quantities and one CI. Does DP1a pass when both clear
+3.0, when either does, or only when DimensionBest does (the oracle being the upper bound)? The
+reading decides the verdict on the provisional numbers (E0, [P0.4 power](research/P0.4_power.md)
+§3.4): the oracle's headroom is +12.66 [11.55, 13.91] and DimensionBest's is +1.45 [0.68, 2.23].
