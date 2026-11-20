@@ -15,7 +15,7 @@
 | Field | Value |
 |---|---|
 | Current stage | **S1 — Validate data** (§4). Pre-S0 and S0 done; `docs/CLAIMS.md` signed off 2026-11-20 |
-| Next action | S1.1 `data/sources.py` (family table), then S1.2–S1.11 in order. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Next action | S1 batches A1 (S1.1–S1.3) and A2 (S1.11, S1.10, S1.9) in parallel, then B, then C (order under S1 in §4). `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
 | Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0 · Write-up: Report 8 |
 | Last updated | 2026-11-20 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
@@ -537,22 +537,53 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
   **Passed 2026-11-20.**
 
 ### S1 — Validate data
+
+**Order of work (reviewer, 2026-11-20).** Batches A1 and A2 run in parallel; B starts after A1;
+C starts after everything else. S1.8 is a side task.
+
+| Batch | Items | Depends on |
+|---|---|---|
+| A1 | S1.1, S1.2, S1.3 | — |
+| A2 | S1.11, S1.10, S1.9 | — (S1.11 returns verdicts keyed by task and model, ready to join to the S1.2 schema) |
+| B | S1.4 and S1.5 in parallel, then S1.6 | A1; S1.6 also needs S1.5 (prompts for the identical-prompt merge and the `lcb` link) |
+| C | S1.7 and `artefacts.yaml`, then the S1 gate check | all of the above (`artefacts.yaml` freezes headline counts, which need S1.11) |
+| Side | S1.8 | `scripts/fetch_data.py` must pin LLMRouterBench first; low priority unless DP1b fails |
+
+The P0.5, P0.6 and E0 scripts keep their provisional definitions; they are records and S1 does not
+edit them.
+
 - [ ] S1.1 `data/sources.py` [M1.1]: an explicit task-id-to-family table covering every id in the
       probing, ID-test and OOD splits. It replaces `coderouterbench.source_of`, which yields 600
-      "families" in the probing split, 572 of them with a single task. Unit test: every task maps to
-      one of a fixed list of families, none under 30 tasks (S0.13).
+      "families" in the probing split, 572 of them with a single task: every
+      `dim7_multiple_<lang>_HumanEval_<n>_<function>` id keeps its function name, and each of the
+      176 OOD ids (`new64::featurebench::…`) becomes its own family. Unit test: every task maps to
+      one of a fixed list of families, no ID family under 30 tasks (S0.13). OOD families are listed
+      with their counts but exempt from the minimum, because the OOD tasks are outside the router's
+      evaluation population (user, 2026-11-20). If an ID family falls under 30, the agent stops and
+      reports candidate merges instead of merging, because the family is the exploration group (O9)
+      and its granularity is the user's call.
 - [ ] S1.2 `data/schema.py` [M1.2]: long-format storage (task, model, run, score, cost, tokens,
-      problem_id, family, score_type, eligible), with the wide task × model views derived from it.
-      Test that every field survives `subset` and `without`.
+      problem_id, family, score_type, eligible, **available, unavailable_reason**), with the wide
+      task × model views derived from it. `unavailable_reason` is a missing token record (the 148
+      zero-score, zero-cost Qwen3-Max rows, `cost_source == "missing_token_record_zero_total"`) or
+      an empty X13 response (CLAIMS S0.11). The existing `OutcomeMatrix` callers (quick-check
+      baselines, `sim/`, m2/m3, their tests) keep working. Test that every field survives `subset`
+      and `without`.
 - [ ] S1.3 `data/coderouterbench.py` [M1.3]: two views, complete and paper (missing = 0). Tests:
       56,640 probing cells (7,080 × 8), 23,352 ID-test cells (2,919 × 8), 881 missing paper-view
-      test cells, no NaN scores.
+      test cells, no NaN scores. The 148 missing-token-record rows are flagged unavailable, not
+      scored 0 at cost 0 (the current `fillna(0.0)` on cost does nothing, because no cost is NaN);
+      the score stays as released, so the no-NaN test still holds.
 - [ ] S1.4 `data/scoring.py` [M1.4]: score type per family from the source benchmark's documented
       rule (exec, similarity or judge), not from the observed score distribution, with the citation
       for each rule. Record which families are eligible (S0.12) and which carry partial credit
       (provisional: `lcb` 1,000 tasks, CRUXEval 800, `lcb_testgen` 869, MBPP completion 124 have
       non-binary scores; an observed-score filter kept only 871, 93, 362 and 122 of them).
-      Recompute the eligible pool from these rules.
+      Recompute the eligible pool from these rules. CRUXEval is 792 of the 1,907 provisional
+      headline tasks (42%), so its ruling needs a citation and before-and-after counts. Success
+      goes through `settings.SUCCESS_SCORE` (S0.1): `ACCEPT_THRESHOLD = 0.5` and `accepted()` are
+      removed from the live path, kept only as a legacy constant for the 2026-11-10 m2/m3 records
+      (`sim/metrics.py` and `sim/verifier.py` import it today).
 - [ ] S1.5 `data/prompts.py` [M1.5]: add route-anything `tasks.jsonl` (3,297 prompts, including 888
       `lcb`) to the existing join, then adapters for families still missing. Report the join rate
       per family.
@@ -560,10 +591,16 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       table (HumanEval, MBPP and BigCodeBench variants linked; `lcb` linked to `lcb_testgen` through
       `tasks.jsonl`), with prompt matching as a cross-check only. Tasks with byte-identical
       prompts are merged into one problem even when their source ids differ (P0.6 found three
-      pairs: `ds1000_138`/`180`, `ds1000_137`/`179`, `mbpp_141`/`71`). The development split and the
-      five outer folds by problem (S0.6), with recorded seeds, and an automated split-integrity
-      test that fails if any problem id appears in two of them (R13). Recount the second review's
-      figure of 643 of 1,430 joined test tasks sharing prompt text with the probing split.
+      pairs: `ds1000_138`/`180`, `ds1000_137`/`179`, `mbpp_141`/`71`). Translations are linked to
+      their HumanEval problem: `hex_<lang>_<Lang>/<n>` (HumanEval-X; the provisional regex misses
+      it) and `multiple_<lang>_HumanEval_<n>_<function>`. Every `_sup` family is checked against
+      its base family for shared problems. The development split and the five outer folds by
+      problem (S0.6), with recorded seeds, and an automated split-integrity test that fails if any
+      problem id appears in two of them (R13). The development split is committed as a membership
+      file of problem ids, pinned by a test: seed 0 alone is not enough, because changed problem
+      ids make seed 0 draw a different split, and CellBest's saving ranged from 15.4% to 32.9%
+      across development draws (P0.4). Recount the second review's figure of 643 of 1,430 joined
+      test tasks sharing prompt text with the probing split.
 - [ ] S1.7 `data/audit.py` and `experiments/e0_audit.py` [M1.6]: a family × model table flagging
       all-zero families, flagship models below the pool median, and the share of oracle and
       DimensionBest gain per family. For each suspected family, inspect the raw responses
@@ -580,13 +617,20 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       `code_generation|mbpp` (218 headline tasks): under success = 1.0 Opus passes 22.0% and every
       other model 11.0% or less, against 75–81% on the MBPP completion cell (P0.5). Also check
       whether the 63 bcb tasks whose prompt is identical to a task in another dimension score
-      differently for the same model (P0.6).
+      differently for the same model (P0.6). The labelling criteria (confirmed defect, cleared,
+      undecided) are written and committed before any response is inspected, and labelling does
+      not look at P0.5, P0.6 or E0 outcomes. The audit states which families were actually
+      re-executed and in what sandbox; BigCodeBench may rest on Route Anything's diagnostic.
 - [ ] S1.8 `data/llmrouterbench.py` [M1.7]: code subsets; drop zero-cost models from economic
       metrics. Validate the loader early, so it is ready if DP1b makes it the primary corpus.
 - [ ] S1.9 `data/phase5.py` [M1.8]: read-only loader (R5), including the stored raw responses
       (324 non-empty of 325) read from the database without writing to it.
 - [ ] S1.10 `data/prices.py` [M1.9] as the single source of prices, with source URL and access date,
-      including reference prices for the live models (S0.2, S0.9).
+      including reference prices for the live models (S0.2, S0.9) and the verifier rate basis
+      (AWS Lambda, O11). Every released `cost_usd` equals tokens × the `models.json` prices
+      (reviewer check, 2026-11-20); a test keeps that true. Check `kimi-k2.5`'s input price
+      ($0.01/M in `models.json`) against Moonshot's published price and record the finding; the
+      released costs are not changed (the ×0.5 / ×2 price sweep covers it).
 - [ ] S1.11 `data/verdicts.py` (new): loader for the X13 visible-test and hidden-test verdicts
       (S0.11), joined to CodeRouterBench task ids. Tests cover only counts that cannot change: the
       23,288-row count, 2,911 tasks, and the 2,044/867 split coverage. Headline counts are derived
@@ -1439,3 +1483,29 @@ Two further reviews were checked against the data; all fixes approved by the use
   "score ≥ 0.5" figure marked historical; the P0.6 half-width wording fixed. New constants:
   `DEV_SEED`, `N_INNER_FOLDS`, `N_BOOT_GATE`, `PRICE_SWEEP`.
 - **Next:** S1.1.
+
+### 2026-11-20 (S0 implementation check; S1 plan)
+
+- **S0 check (reviewer):** 187 data files verified; 164 tests pass, including the data-gated
+  reproductions. P0.5, P0.6 and E0 re-run on the pinned data reproduce their committed JSON
+  exactly (only the runtime differs; all three logs complete, no tracebacks). The numbers signed
+  off in `CLAIMS.md` and the plan match the JSON: DP1a +1.45 [0.68, 2.23]; gap half-width 1.79–1.87
+  on the evaluation population (power at −2 55–59%) and 1.40–1.55 on the complete case (72–77%);
+  0.30–0.60 against CellBest.
+- Every released `cost_usd` equals tokens × the `models.json` prices (79,844 rows); the 148
+  missing-token-record rows are all Qwen3-Max and the S0 scripts treat them as unavailable.
+- E0's two DP1a readings give identical DimensionBest numbers because partial credit occurs only
+  in `code_completion`, where DimensionBest and the best single model both pick Opus. Not a bug.
+- The provisional problem ids miss HumanEval-X (`hex_go_Go/47`) and leave `multiple_*` ids
+  unlinked to their source; no S0 number is affected (neither appears in the 1,907-task set or
+  the DP1a pool), but S1.6 must link them.
+- Quick-check defects for S1 (not used by any S0 result): `scoring.ACCEPT_THRESHOLD = 0.5`
+  contradicts S0.1; `coderouterbench.load` scores the 148 rows as 0 at cost 0; `source_of` makes
+  the OOD and `multiple_*` ids singletons; `kimi-k2.5` input price $0.01/M looks wrong.
+- **Plan changes (user approved):** S1 batch order (A1 ∥ A2, then B, then C; S1.8 side task);
+  S1.1 id parsing, OOD families exempt from the 30-task minimum, stop and report instead of
+  merging; S1.2 `available` and `unavailable_reason` fields; S1.3 unavailable rows; S1.4 success
+  through `SUCCESS_SCORE`, CRUXEval citation; S1.6 HumanEval-X and MultiPL-E links, `_sup` check,
+  committed development-split membership file; S1.7 criteria committed before inspection and
+  blind labelling; S1.10 verifier rate basis, cost-identity test, kimi price check.
+- **Next:** briefs for batches A1 and A2.
