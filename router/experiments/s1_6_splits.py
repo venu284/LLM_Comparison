@@ -1,9 +1,10 @@
 #!/usr/bin/env python
-"""S1.6 report, checkpoint 1: problem ids.
+"""S1.6 report: problem ids, the development split and the outer folds.
 
-Every number in the S1.6 checkpoint-1 Outcome comes from this script, run on the pinned data
-(`scripts/fetch_data.py`). It derives the problem ids (`router.data.splits.derive`), writes
-`router/data/problems.csv` with `--write-problems`, and reports:
+Every number in the S1.6 Outcome comes from this script, run on the pinned data
+(`scripts/fetch_data.py`). It derives the problem ids (`router.data.splits.derive`) and the split
+(`router.data.splits.split_table`), writes `router/data/problems.csv` and `router/data/splits.csv`
+with `--write`, and reports:
 
   1. problems per family and in the eligible pool, problem counts after each kind of link, the
      distribution of tasks per problem, and the largest problems with their family make-up;
@@ -16,9 +17,13 @@ Every number in the S1.6 checkpoint-1 Outcome comes from this script, run on the
   5. the second review's recount ("643 of 1,430 joined test tasks share prompt text with the
      probing split") on today's denominators;
   6. cross-checks: MultiPL-E function names, MBPP texts, LiveCodeBench partners, `_sup`
-     families, and OOD instance ids.
+     families, and OOD instance ids;
+  7. the split: problems and tasks per label, the development split per family, dimension and
+     release split, task counts per fold for every seed, the development share of each S1.7
+     suspected family, and the R13 check.
 
-Exit status 2 if the sharp check finds a content link outside S1.5's five within-family pairs.
+Exit status 2 if the sharp check finds a content link outside S1.5's five within-family pairs,
+3 if the split breaks R13.
 Output: router/experiments/out/s1_6_splits.json.
 """
 
@@ -51,6 +56,9 @@ MBPP_FAMILIES = ("mbpp", "mbpp_completion", "mbpp_testgen")
 # DS-1000 paper (arXiv:2211.11501v1) Table 3, "Detailed statistics of DS-1000", Total column.
 DS1000_PAPER_COUNTS = {"Origin": 451, "Surface": 152, "Semantic": 235, "Difficult-Rewrite": 162}
 TOP = 15
+# Families the S1.7 audit names (IMPLEMENTATION_PLAN S1.7, 2026-11-19 list and the S1.4 additions).
+S1_7_SUSPECTED = ("lcb_testgen", "lcb", "mbpp_testgen", "he_testgen", "mbpp", "hex_cpp", "hex_go",
+                  "hex_java", "hex_js", "multiple_rs", "multiple_ts", "swebench", "cruxeval")
 
 
 def _counts(s: pd.Series) -> dict:
@@ -246,8 +254,14 @@ def recount(kt: pd.DataFrame, pr: pd.DataFrame) -> dict:
             entry[col] = {"joined": [int(hit[test.joined].sum()), int(test.joined.sum())],
                           "all": [int(hit.sum()), len(test)]}
         out[pool_name] = entry
+    el_test = d[eligible & (d.split == "id_test")]
+    any_probe = set(d.problem_id[d.split == "probing"])
+    out["eligible_pool"]["problem_id_vs_any_probing_task"] = [int(el_test.problem_id.isin(any_probe).sum()),
+                                                             len(el_test)]
     out["note"] = ("[shared, denominator] over ID-test tasks; a task shares a field when a probing task "
-                   "in the same pool has the same non-null value. Hash fields are null for unjoined tasks.")
+                   "in the same pool has the same non-null value. Hash fields are null for unjoined tasks. "
+                   "problem_id_vs_any_probing_task counts eligible ID-test tasks whose problem holds any "
+                   "probing task, eligible or not.")
     return out
 
 
@@ -362,9 +376,68 @@ def ood_check(kt: pd.DataFrame) -> dict:
             "ood_tasks_joined": int(ood.joined.sum())}
 
 
-# --------------------------------------------------------------------------- main
-def build(kt: pd.DataFrame, pr: pd.DataFrame) -> dict:
+# --------------------------------------------------------------------------- 7. split
+def split_report(kt: pd.DataFrame, pr: pd.DataFrame, sp: pd.DataFrame) -> dict:
+    d = kt.rename(columns={"split": "release_split"}).assign(problem_id=pr.problem_id.to_numpy())
+    d = d.merge(sp.rename(columns={"split": "label"}), on="problem_id", how="left", validate="many_to_one")
+    d["eligible"] = (d.split_kind == "id") & d.family.isin(eligible_families())
+    pool = d[d.label.isin([S.DEV, S.EVAL])]
+    dev = pool[pool.label == S.DEV]
+
+    def cut(by: str) -> dict:
+        out = {}
+        for k, g in pool.groupby(by):
+            gd = g[g.label == S.DEV]
+            out[str(k)] = {"pool_problems": int(g.problem_id.nunique()), "dev_problems": int(gd.problem_id.nunique()),
+                           "pool_tasks": len(g), "dev_tasks": len(gd),
+                           "pool_eligible_tasks": int(g.eligible.sum()), "dev_eligible_tasks": int(gd.eligible.sum()),
+                           "dev_share_of_eligible_tasks": round(gd.eligible.sum() / g.eligible.sum(), 4)
+                           if g.eligible.sum() else None}
+        return out
+
+    labels = {}
+    for lab in S.SPLIT_LABELS:
+        g = d[d.label == lab]
+        labels[lab] = {"problems": int(g.problem_id.nunique()), "tasks": len(g), "eligible_tasks": int(g.eligible.sum())}
+    folds = {}
+    for s in S.FOLD_SEEDS:
+        col = S.fold_column(s)
+        ev = pool[pool.label == S.EVAL]
+        folds[str(s)] = {str(int(k)): {"problems": int(g.problem_id.nunique()), "tasks": len(g),
+                                        "eligible_tasks": int(g.eligible.sum())}
+                         for k, g in ev.groupby(col)}
+    suspected = {}
+    for f in S1_7_SUSPECTED:
+        g = d[d.family == f]
+        gp = g[g.label.isin([S.DEV, S.EVAL])]
+        suspected[f] = {"tasks": len(g), "pool_tasks": len(gp), "dev_tasks": int((gp.label == S.DEV).sum()),
+                        "dev_share": round((gp.label == S.DEV).sum() / len(gp), 4) if len(gp) else None}
+    dev_problems = set(dev.problem_id)
+    same_dev = all(set(S.draw(sorted(set(pool.problem_id)), S.DEV_SEED, [s]).query("split == 'dev'").problem_id)
+                   == dev_problems for s in S.FOLD_SEEDS)
     return {
+        "pool_problems": int(pool.problem_id.nunique()),
+        "dev_problems_drawn": S.n_dev(int(pool.problem_id.nunique())),
+        "draw": {"dev_fraction": S.DEV_FRACTION, "dev_seed": S.DEV_SEED, "fold_seeds": list(S.FOLD_SEEDS),
+                 "n_folds": S.N_FOLDS, "streams": {"dev": S.STREAM_DEV, "folds": S.STREAM_FOLDS}},
+        "labels": labels,
+        "dev_share_of_pool": {"problems": round(len(dev_problems) / pool.problem_id.nunique(), 4),
+                              "tasks": round(len(dev) / len(pool), 4),
+                              "eligible_tasks": round(dev.eligible.sum() / pool.eligible.sum(), 4)},
+        "dev_by_family": cut("family"),
+        "dev_by_dimension": cut("dimension"),
+        "dev_by_release_split": cut("release_split"),
+        "folds_by_seed": folds,
+        "s1_7_suspected_dev_share": suspected,
+        "dev_identical_for_every_fold_seed": same_dev,
+        "r13_violations": len(S.r13_violations(pr, sp)),
+    }
+
+
+# --------------------------------------------------------------------------- main
+def build(kt: pd.DataFrame, pr: pd.DataFrame, sp: pd.DataFrame) -> dict:
+    return {
+        "split": split_report(kt, pr, sp),
         "problems": problem_summary(kt, pr),
         "sharp_check": sharp_check(kt),
         "ds1000_origin": ds1000_report(kt, pr),
@@ -378,13 +451,16 @@ def build(kt: pd.DataFrame, pr: pd.DataFrame) -> dict:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--out", type=Path, default=OUT_JSON)
-    ap.add_argument("--write-problems", action="store_true", help="also write router/data/problems.csv")
+    ap.add_argument("--write", action="store_true",
+                    help="also write router/data/problems.csv and router/data/splits.csv")
     a = ap.parse_args(argv)
     kt = S.key_table()
     pr = S.derive(kt)
-    if a.write_problems:
+    sp = S.split_table(pr, kt[["task_id", "family", "split_kind"]])
+    if a.write:
         S.write_problems(pr)
-    rep = build(kt, pr)
+        S.write_splits(sp)
+    rep = build(kt, pr, sp)
     a.out.parent.mkdir(parents=True, exist_ok=True)
     a.out.write_text(json.dumps(rep, indent=1, sort_keys=True, default=int) + "\n")
     sc = rep["sharp_check"]
@@ -392,7 +468,11 @@ def main(argv=None) -> int:
           f"eligible pool {rep['problems']['eligible_pool']['problems']} problems")
     print(f"sharp check: {len(sc['content_unimplied_groups'])} unimplied content groups, "
           f"match S1.5 pairs = {sc['content_matches_s1_5_pairs']}")
+    sr = rep["split"]
+    print(f"split: {sr['labels']} ; R13 violations {sr['r13_violations']}")
     print(f"wrote {a.out}")
+    if sr["r13_violations"]:
+        return 3
     return 0 if sc["content_matches_s1_5_pairs"] else 2
 
 

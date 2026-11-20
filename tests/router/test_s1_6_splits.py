@@ -28,6 +28,12 @@ def test_problems_csv_reproduces_from_the_pinned_data(derived, tmp_path):
     assert out.read_bytes() == S.PROBLEMS_CSV.read_bytes()
 
 
+def test_splits_csv_reproduces_from_the_pinned_data(kt, derived, tmp_path):
+    out = tmp_path / "splits.csv"
+    S.write_splits(S.split_table(derived, kt[["task_id", "family", "split_kind"]]), out)
+    assert out.read_bytes() == S.SPLITS_CSV.read_bytes()
+
+
 def test_only_s1_5_pairs_share_content_beyond_the_source_keys(kt):
     from router.experiments import s1_6_splits as R
 
@@ -37,5 +43,6 @@ def test_only_s1_5_pairs_share_content_beyond_the_source_keys(kt):
 def test_report_reproduces_its_committed_json(kt, derived):
     from router.experiments import s1_6_splits as R
 
-    text = json.dumps(R.build(kt, derived), indent=1, sort_keys=True, default=int) + "\n"
+    sp = S.split_table(derived, kt[["task_id", "family", "split_kind"]])
+    text = json.dumps(R.build(kt, derived, sp), indent=1, sort_keys=True, default=int) + "\n"
     assert text == R.OUT_JSON.read_text()

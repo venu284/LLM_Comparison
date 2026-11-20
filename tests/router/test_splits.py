@@ -1,5 +1,6 @@
 """S1.6 problem ids: unit tests and checks on the committed files (no external data needed)."""
 
+import inspect
 import json
 from pathlib import Path
 
@@ -8,6 +9,7 @@ import pytest
 
 from router.data import splits as S
 from router.data.sources import load_table
+from router.settings import DEV_SEED, N_FOLDS
 
 REPORT = Path(S.__file__).resolve().parents[1] / "experiments/out/s1_6_splits.json"
 
@@ -170,3 +172,92 @@ def test_annotate_fills_problem_id_from_the_committed_file(problems):
 def test_annotate_refuses_an_unknown_task():
     with pytest.raises(KeyError):
         S.annotate(pd.DataFrame({"task_id": ["dim1_nope_1"]}))
+
+
+# --------------------------------------------------------------------------- development split and folds
+@pytest.fixture(scope="module")
+def splits():
+    return S.load_splits()
+
+
+def test_splits_csv_reproduces_from_problems_csv_and_the_constants(problems, tmp_path):
+    """Pin: if problem ids change, this fails and the redraw becomes an explicit decision."""
+    out = tmp_path / "splits.csv"
+    S.write_splits(S.split_table(problems, load_table()), out)
+    assert out.read_bytes() == S.SPLITS_CSV.read_bytes()
+
+
+def test_r13_no_problem_content_or_source_key_in_two_of_dev_and_the_folds(problems, splits):
+    assert S.r13_violations(problems, splits) == []
+
+
+def test_r13_check_catches_a_task_moved_to_another_side(problems, splits):
+    """Move one task of a dev problem into an eval problem: its source key now sits in two groups,
+    which the check that does not use problem ids must catch."""
+    dev = set(splits.problem_id[splits.split == S.DEV])
+    first_eval = sorted(splits.problem_id[splits.split == S.EVAL])[0]
+    leaked = problems.copy()
+    i = leaked.index[leaked.problem_id.isin(dev) & leaked.duplicated("source_key", keep=False)][0]
+    leaked.loc[i, "problem_id"] = first_eval
+    found = S.r13_violations(leaked, splits)
+    assert {v["field"] for v in found} >= {"source_key"}
+    assert {v["seed"] for v in found} == set(S.FOLD_SEEDS)
+
+
+def test_labels_partition_the_problems_and_every_eligible_task_is_in_dev_or_eval(problems, splits):
+    from router.data.scoring import eligible_families
+
+    assert list(splits.columns) == S.SPLIT_COLUMNS
+    assert splits.problem_id.is_unique and set(splits.problem_id) == set(problems.problem_id)
+    assert set(splits.split) <= set(S.SPLIT_LABELS)
+    t = S.task_splits(problems, splits).merge(load_table()[["task_id", "family", "split_kind"]], on="task_id")
+    eligible = (t.split_kind == "id") & t.family.isin(eligible_families())
+    assert t.split.notna().all()
+    assert t.split[eligible].isin([S.DEV, S.EVAL]).all()
+    assert (t.split[t.split_kind == "ood"] == S.OOD).all() and (t.split[t.split_kind == "id"] != S.OOD).all()
+    assert set(splits.problem_id[splits.split.isin([S.DEV, S.EVAL])]) == set(t.problem_id[eligible])
+
+
+def test_folds_exist_only_for_eval_problems_and_differ_in_size_by_at_most_one(splits):
+    ev = splits.split == S.EVAL
+    for s in S.FOLD_SEEDS:
+        col = splits[S.fold_column(s)]
+        assert col[ev].notna().all() and col[~ev].isna().all()
+        assert set(col[ev]) == set(range(N_FOLDS))
+        sizes = col[ev].value_counts()
+        assert sizes.max() - sizes.min() <= 1
+
+
+def test_the_development_split_is_the_same_for_every_fold_seed(splits):
+    pool = sorted(splits.problem_id[splits.split.isin([S.DEV, S.EVAL])])
+    committed = set(splits.problem_id[splits.split == S.DEV])
+    for s in S.FOLD_SEEDS:
+        d = S.draw(pool, DEV_SEED, [s])
+        assert set(d.problem_id[d.split == S.DEV]) == committed
+    assert len(committed) == S.n_dev(len(pool))
+
+
+def test_fold_seeds_give_different_assignments(splits):
+    ev = splits[splits.split == S.EVAL]
+    cols = [tuple(ev[S.fold_column(s)]) for s in S.FOLD_SEEDS]
+    assert len(set(cols)) == len(cols)
+
+
+def test_draw_takes_only_problem_ids_and_seeds():
+    assert list(inspect.signature(S.draw).parameters) == ["problem_ids", "dev_seed", "fold_seeds"]
+
+
+def test_draw_does_not_depend_on_input_order():
+    ids = [f"p/{i}" for i in range(50)]
+    assert S.draw(ids, 0, [0, 1]).equals(S.draw(ids[::-1], 0, [0, 1]))
+
+
+@pytest.mark.parametrize("n, k", [(0, 0), (5, 1), (12, 2), (13, 3), (3487, 697)])
+def test_n_dev_rounds_half_up_exactly(n, k):
+    assert S.n_dev(n) == k
+
+
+def test_splits_module_imports_no_score_source():
+    src = Path(S.__file__).read_text()
+    for name in ("coderouterbench", "verdicts", "phase5", "prices", "audit", "artefacts"):
+        assert f"data.{name}" not in src and f"import {name}" not in src

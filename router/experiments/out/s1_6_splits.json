@@ -1135,6 +1135,10 @@
      1639
     ]
    },
+   "problem_id_vs_any_probing_task": [
+    978,
+    1658
+   ],
    "prompt_sha256": {
     "all": [
      143,
@@ -1156,7 +1160,7 @@
     ]
    }
   },
-  "note": "[shared, denominator] over ID-test tasks; a task shares a field when a probing task in the same pool has the same non-null value. Hash fields are null for unjoined tasks."
+  "note": "[shared, denominator] over ID-test tasks; a task shares a field when a probing task in the same pool has the same non-null value. Hash fields are null for unjoined tasks. problem_id_vs_any_probing_task counts eligible ID-test tasks whose problem holds any probing task, eligible or not."
  },
  "sharp_check": {
   "content_matches_s1_5_pairs": true,
@@ -1212,5 +1216,565 @@
   ],
   "raw_unimplied_groups": 5,
   "raw_unimplied_tasks": 12
+ },
+ "split": {
+  "dev_by_dimension": {
+   "algorithm": {
+    "dev_eligible_tasks": 234,
+    "dev_problems": 234,
+    "dev_share_of_eligible_tasks": 0.2106,
+    "dev_tasks": 234,
+    "pool_eligible_tasks": 1111,
+    "pool_problems": 1111,
+    "pool_tasks": 1111
+   },
+   "bug_fixing": {
+    "dev_eligible_tasks": 11,
+    "dev_problems": 11,
+    "dev_share_of_eligible_tasks": 0.1549,
+    "dev_tasks": 11,
+    "pool_eligible_tasks": 71,
+    "pool_problems": 71,
+    "pool_tasks": 71
+   },
+   "code_completion": {
+    "dev_eligible_tasks": 204,
+    "dev_problems": 204,
+    "dev_share_of_eligible_tasks": 0.1836,
+    "dev_tasks": 204,
+    "pool_eligible_tasks": 1111,
+    "pool_problems": 1110,
+    "pool_tasks": 1111
+   },
+   "code_generation": {
+    "dev_eligible_tasks": 218,
+    "dev_problems": 208,
+    "dev_share_of_eligible_tasks": 0.1962,
+    "dev_tasks": 218,
+    "pool_eligible_tasks": 1111,
+    "pool_problems": 1042,
+    "pool_tasks": 1111
+   },
+   "data_science": {
+    "dev_eligible_tasks": 229,
+    "dev_problems": 109,
+    "dev_share_of_eligible_tasks": 0.2061,
+    "dev_tasks": 229,
+    "pool_eligible_tasks": 1111,
+    "pool_problems": 561,
+    "pool_tasks": 1111
+   },
+   "multi_language": {
+    "dev_eligible_tasks": 208,
+    "dev_problems": 30,
+    "dev_share_of_eligible_tasks": 0.1872,
+    "dev_tasks": 208,
+    "pool_eligible_tasks": 1111,
+    "pool_problems": 164,
+    "pool_tasks": 1111
+   },
+   "test_generation": {
+    "dev_eligible_tasks": 0,
+    "dev_problems": 225,
+    "dev_share_of_eligible_tasks": null,
+    "dev_tasks": 225,
+    "pool_eligible_tasks": 0,
+    "pool_problems": 1038,
+    "pool_tasks": 1039
+   }
+  },
+  "dev_by_family": {
+   "bcb": {
+    "dev_eligible_tasks": 128,
+    "dev_problems": 128,
+    "dev_share_of_eligible_tasks": 0.1896,
+    "dev_tasks": 128,
+    "pool_eligible_tasks": 675,
+    "pool_problems": 675,
+    "pool_tasks": 675
+   },
+   "bcb_algo2": {
+    "dev_eligible_tasks": 17,
+    "dev_problems": 17,
+    "dev_share_of_eligible_tasks": 0.1532,
+    "dev_tasks": 17,
+    "pool_eligible_tasks": 111,
+    "pool_problems": 111,
+    "pool_tasks": 111
+   },
+   "bcb_completion": {
+    "dev_eligible_tasks": 12,
+    "dev_problems": 12,
+    "dev_share_of_eligible_tasks": 0.1348,
+    "dev_tasks": 12,
+    "pool_eligible_tasks": 89,
+    "pool_problems": 89,
+    "pool_tasks": 89
+   },
+   "bcb_ds": {
+    "dev_eligible_tasks": 18,
+    "dev_problems": 18,
+    "dev_share_of_eligible_tasks": 0.1622,
+    "dev_tasks": 18,
+    "pool_eligible_tasks": 111,
+    "pool_problems": 111,
+    "pool_tasks": 111
+   },
+   "bcb_v014": {
+    "dev_eligible_tasks": 17,
+    "dev_problems": 17,
+    "dev_share_of_eligible_tasks": 0.1532,
+    "dev_tasks": 17,
+    "pool_eligible_tasks": 111,
+    "pool_problems": 111,
+    "pool_tasks": 111
+   },
+   "cruxeval": {
+    "dev_eligible_tasks": 151,
+    "dev_problems": 151,
+    "dev_share_of_eligible_tasks": 0.1888,
+    "dev_tasks": 151,
+    "pool_eligible_tasks": 800,
+    "pool_problems": 800,
+    "pool_tasks": 800
+   },
+   "ds1000": {
+    "dev_eligible_tasks": 211,
+    "dev_problems": 91,
+    "dev_share_of_eligible_tasks": 0.211,
+    "dev_tasks": 211,
+    "pool_eligible_tasks": 1000,
+    "pool_problems": 450,
+    "pool_tasks": 1000
+   },
+   "he_completion": {
+    "dev_eligible_tasks": 15,
+    "dev_problems": 15,
+    "dev_share_of_eligible_tasks": 0.1531,
+    "dev_tasks": 15,
+    "pool_eligible_tasks": 98,
+    "pool_problems": 98,
+    "pool_tasks": 98
+   },
+   "he_testgen": {
+    "dev_eligible_tasks": 0,
+    "dev_problems": 24,
+    "dev_share_of_eligible_tasks": null,
+    "dev_tasks": 24,
+    "pool_eligible_tasks": 0,
+    "pool_problems": 131,
+    "pool_tasks": 131
+   },
+   "hex_cpp": {
+    "dev_eligible_tasks": 30,
+    "dev_problems": 30,
+    "dev_share_of_eligible_tasks": 0.1829,
+    "dev_tasks": 30,
+    "pool_eligible_tasks": 164,
+    "pool_problems": 164,
+    "pool_tasks": 164
+   },
+   "hex_go": {
+    "dev_eligible_tasks": 30,
+    "dev_problems": 30,
+    "dev_share_of_eligible_tasks": 0.1829,
+    "dev_tasks": 30,
+    "pool_eligible_tasks": 164,
+    "pool_problems": 164,
+    "pool_tasks": 164
+   },
+   "hex_java": {
+    "dev_eligible_tasks": 30,
+    "dev_problems": 30,
+    "dev_share_of_eligible_tasks": 0.1829,
+    "dev_tasks": 30,
+    "pool_eligible_tasks": 164,
+    "pool_problems": 164,
+    "pool_tasks": 164
+   },
+   "hex_js": {
+    "dev_eligible_tasks": 30,
+    "dev_problems": 30,
+    "dev_share_of_eligible_tasks": 0.1829,
+    "dev_tasks": 30,
+    "pool_eligible_tasks": 164,
+    "pool_problems": 164,
+    "pool_tasks": 164
+   },
+   "hex_python": {
+    "dev_eligible_tasks": 30,
+    "dev_problems": 30,
+    "dev_share_of_eligible_tasks": 0.1829,
+    "dev_tasks": 30,
+    "pool_eligible_tasks": 164,
+    "pool_problems": 164,
+    "pool_tasks": 164
+   },
+   "humaneval": {
+    "dev_eligible_tasks": 21,
+    "dev_problems": 21,
+    "dev_share_of_eligible_tasks": 0.21,
+    "dev_tasks": 21,
+    "pool_eligible_tasks": 100,
+    "pool_problems": 100,
+    "pool_tasks": 100
+   },
+   "lcb": {
+    "dev_eligible_tasks": 217,
+    "dev_problems": 217,
+    "dev_share_of_eligible_tasks": 0.217,
+    "dev_tasks": 217,
+    "pool_eligible_tasks": 1000,
+    "pool_problems": 1000,
+    "pool_tasks": 1000
+   },
+   "lcb_testgen": {
+    "dev_eligible_tasks": 0,
+    "dev_problems": 178,
+    "dev_share_of_eligible_tasks": null,
+    "dev_tasks": 178,
+    "pool_eligible_tasks": 0,
+    "pool_problems": 824,
+    "pool_tasks": 824
+   },
+   "mbpp": {
+    "dev_eligible_tasks": 52,
+    "dev_problems": 52,
+    "dev_share_of_eligible_tasks": 0.2311,
+    "dev_tasks": 52,
+    "pool_eligible_tasks": 225,
+    "pool_problems": 224,
+    "pool_tasks": 225
+   },
+   "mbpp_completion": {
+    "dev_eligible_tasks": 26,
+    "dev_problems": 26,
+    "dev_share_of_eligible_tasks": 0.2097,
+    "dev_tasks": 26,
+    "pool_eligible_tasks": 124,
+    "pool_problems": 123,
+    "pool_tasks": 124
+   },
+   "mbpp_testgen": {
+    "dev_eligible_tasks": 0,
+    "dev_problems": 23,
+    "dev_share_of_eligible_tasks": null,
+    "dev_tasks": 23,
+    "pool_eligible_tasks": 0,
+    "pool_problems": 83,
+    "pool_tasks": 84
+   },
+   "multiple_rs": {
+    "dev_eligible_tasks": 29,
+    "dev_problems": 29,
+    "dev_share_of_eligible_tasks": 0.1859,
+    "dev_tasks": 29,
+    "pool_eligible_tasks": 156,
+    "pool_problems": 156,
+    "pool_tasks": 156
+   },
+   "multiple_ts": {
+    "dev_eligible_tasks": 29,
+    "dev_problems": 29,
+    "dev_share_of_eligible_tasks": 0.2148,
+    "dev_tasks": 29,
+    "pool_eligible_tasks": 135,
+    "pool_problems": 135,
+    "pool_tasks": 135
+   },
+   "swebench": {
+    "dev_eligible_tasks": 11,
+    "dev_problems": 11,
+    "dev_share_of_eligible_tasks": 0.1549,
+    "dev_tasks": 11,
+    "pool_eligible_tasks": 71,
+    "pool_problems": 71,
+    "pool_tasks": 71
+   }
+  },
+  "dev_by_release_split": {
+   "id_test": {
+    "dev_eligible_tasks": 337,
+    "dev_problems": 298,
+    "dev_share_of_eligible_tasks": 0.2033,
+    "dev_tasks": 393,
+    "pool_eligible_tasks": 1658,
+    "pool_problems": 1470,
+    "pool_tasks": 1943
+   },
+   "probing": {
+    "dev_eligible_tasks": 767,
+    "dev_problems": 562,
+    "dev_share_of_eligible_tasks": 0.1933,
+    "dev_tasks": 936,
+    "pool_eligible_tasks": 3968,
+    "pool_problems": 2828,
+    "pool_tasks": 4722
+   }
+  },
+  "dev_identical_for_every_fold_seed": true,
+  "dev_problems_drawn": 697,
+  "dev_share_of_pool": {
+   "eligible_tasks": 0.1962,
+   "problems": 0.1999,
+   "tasks": 0.1994
+  },
+  "draw": {
+   "dev_fraction": 0.2,
+   "dev_seed": 0,
+   "fold_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "n_folds": 5,
+   "streams": {
+    "dev": 0,
+    "folds": 1
+   }
+  },
+  "folds_by_seed": {
+   "0": {
+    "0": {
+     "eligible_tasks": 854,
+     "problems": 558,
+     "tasks": 1001
+    },
+    "1": {
+     "eligible_tasks": 910,
+     "problems": 558,
+     "tasks": 1070
+    },
+    "2": {
+     "eligible_tasks": 954,
+     "problems": 558,
+     "tasks": 1125
+    },
+    "3": {
+     "eligible_tasks": 842,
+     "problems": 558,
+     "tasks": 1005
+    },
+    "4": {
+     "eligible_tasks": 962,
+     "problems": 558,
+     "tasks": 1135
+    }
+   },
+   "1": {
+    "0": {
+     "eligible_tasks": 941,
+     "problems": 558,
+     "tasks": 1105
+    },
+    "1": {
+     "eligible_tasks": 838,
+     "problems": 558,
+     "tasks": 996
+    },
+    "2": {
+     "eligible_tasks": 933,
+     "problems": 558,
+     "tasks": 1084
+    },
+    "3": {
+     "eligible_tasks": 953,
+     "problems": 558,
+     "tasks": 1132
+    },
+    "4": {
+     "eligible_tasks": 857,
+     "problems": 558,
+     "tasks": 1019
+    }
+   },
+   "2": {
+    "0": {
+     "eligible_tasks": 898,
+     "problems": 558,
+     "tasks": 1070
+    },
+    "1": {
+     "eligible_tasks": 896,
+     "problems": 558,
+     "tasks": 1064
+    },
+    "2": {
+     "eligible_tasks": 897,
+     "problems": 558,
+     "tasks": 1056
+    },
+    "3": {
+     "eligible_tasks": 930,
+     "problems": 558,
+     "tasks": 1092
+    },
+    "4": {
+     "eligible_tasks": 901,
+     "problems": 558,
+     "tasks": 1054
+    }
+   },
+   "3": {
+    "0": {
+     "eligible_tasks": 952,
+     "problems": 558,
+     "tasks": 1126
+    },
+    "1": {
+     "eligible_tasks": 940,
+     "problems": 558,
+     "tasks": 1118
+    },
+    "2": {
+     "eligible_tasks": 853,
+     "problems": 558,
+     "tasks": 999
+    },
+    "3": {
+     "eligible_tasks": 868,
+     "problems": 558,
+     "tasks": 1014
+    },
+    "4": {
+     "eligible_tasks": 909,
+     "problems": 558,
+     "tasks": 1079
+    }
+   },
+   "4": {
+    "0": {
+     "eligible_tasks": 909,
+     "problems": 558,
+     "tasks": 1063
+    },
+    "1": {
+     "eligible_tasks": 899,
+     "problems": 558,
+     "tasks": 1075
+    },
+    "2": {
+     "eligible_tasks": 893,
+     "problems": 558,
+     "tasks": 1063
+    },
+    "3": {
+     "eligible_tasks": 929,
+     "problems": 558,
+     "tasks": 1085
+    },
+    "4": {
+     "eligible_tasks": 892,
+     "problems": 558,
+     "tasks": 1050
+    }
+   }
+  },
+  "labels": {
+   "dev": {
+    "eligible_tasks": 1104,
+    "problems": 697,
+    "tasks": 1329
+   },
+   "eval": {
+    "eligible_tasks": 4522,
+    "problems": 2790,
+    "tasks": 5336
+   },
+   "ood": {
+    "eligible_tasks": 0,
+    "problems": 176,
+    "tasks": 176
+   },
+   "outside_pool": {
+    "eligible_tasks": 0,
+    "problems": 3334,
+    "tasks": 3334
+   }
+  },
+  "pool_problems": 3487,
+  "r13_violations": 0,
+  "s1_7_suspected_dev_share": {
+   "cruxeval": {
+    "dev_share": 0.1888,
+    "dev_tasks": 151,
+    "pool_tasks": 800,
+    "tasks": 800
+   },
+   "he_testgen": {
+    "dev_share": 0.1832,
+    "dev_tasks": 24,
+    "pool_tasks": 131,
+    "tasks": 131
+   },
+   "hex_cpp": {
+    "dev_share": 0.1829,
+    "dev_tasks": 30,
+    "pool_tasks": 164,
+    "tasks": 164
+   },
+   "hex_go": {
+    "dev_share": 0.1829,
+    "dev_tasks": 30,
+    "pool_tasks": 164,
+    "tasks": 164
+   },
+   "hex_java": {
+    "dev_share": 0.1829,
+    "dev_tasks": 30,
+    "pool_tasks": 164,
+    "tasks": 164
+   },
+   "hex_js": {
+    "dev_share": 0.1829,
+    "dev_tasks": 30,
+    "pool_tasks": 164,
+    "tasks": 164
+   },
+   "lcb": {
+    "dev_share": 0.217,
+    "dev_tasks": 217,
+    "pool_tasks": 1000,
+    "tasks": 1000
+   },
+   "lcb_testgen": {
+    "dev_share": 0.216,
+    "dev_tasks": 178,
+    "pool_tasks": 824,
+    "tasks": 869
+   },
+   "mbpp": {
+    "dev_share": 0.2311,
+    "dev_tasks": 52,
+    "pool_tasks": 225,
+    "tasks": 225
+   },
+   "mbpp_testgen": {
+    "dev_share": 0.2738,
+    "dev_tasks": 23,
+    "pool_tasks": 84,
+    "tasks": 111
+   },
+   "multiple_rs": {
+    "dev_share": 0.1859,
+    "dev_tasks": 29,
+    "pool_tasks": 156,
+    "tasks": 156
+   },
+   "multiple_ts": {
+    "dev_share": 0.2148,
+    "dev_tasks": 29,
+    "pool_tasks": 135,
+    "tasks": 135
+   },
+   "swebench": {
+    "dev_share": 0.1549,
+    "dev_tasks": 11,
+    "pool_tasks": 71,
+    "tasks": 71
+   }
+  }
  }
 }

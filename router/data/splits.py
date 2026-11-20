@@ -33,17 +33,50 @@ joined by "+"; "none" when the task is a problem of its own:
 - `content`: it shares content with a task that source keys and DS-1000 origins do not already
   put in its problem (so this marks only what the content rule adds).
 
-No score, cost, verdict or audit label is read here (S1.6 rule). `problems.csv` is written from
-`derive()` by `router/experiments/s1_6_splits.py`; `annotate()` reads only that file.
+**Development split and outer folds (S0.6, S0.8).** Drawn over the *pool*: the problems that hold
+at least one eligible ID task (S0.12 eligibility, by family; probing and ID-test pooled). Every
+task inherits its problem's label, ineligible tasks included. `split` is one of:
+- `dev`: the development split, drawn once;
+- `eval`: the evaluation population, assigned to `N_FOLDS` outer folds for each fold seed;
+- `outside_pool`: an ID problem with no eligible task;
+- `ood`: an OOD problem (never split).
+
+`draw(problem_ids, dev_seed, fold_seeds)` does, exactly:
+
+    ids = sorted(problem_ids)                      # Python string order
+    n_dev = round_half_up(Decimal(str(DEV_FRACTION)) * len(ids))
+    rng = np.random.default_rng(np.random.SeedSequence([dev_seed, STREAM_DEV]))      # STREAM_DEV = 0
+    dev = {ids[i] for i in rng.choice(len(ids), size=n_dev, replace=False)}
+    eval_ids = [p for p in ids if p not in dev]    # still sorted
+    for seed in fold_seeds:
+        rng = np.random.default_rng(np.random.SeedSequence([seed, STREAM_FOLDS]))  # STREAM_FOLDS = 1
+        perm = rng.permutation(len(eval_ids))
+        fold[eval_ids[perm[k]]] = k % N_FOLDS      # round-robin over the permuted order
+
+The development draw and the fold draws use separate streams: the SeedSequence entropy is
+`[seed, stream]`, with stream 0 for the development split and 1 for the folds. `DEV_SEED` and
+`GATE_SEED` are both 0, so a plain `default_rng(0)` for both would make the development draw and
+fold seed 0 one stream. The development split takes no fold seed, so it is identical for every
+fold seed. Inner folds need no draw: they are the other `N_FOLDS - 1` outer folds (O7). There is
+no stratification (CLAIMS S0.6 says only "20% of problems").
+
+No score, cost, verdict or audit label is read here (S1.6 rule); the split depends only on the
+problem ids, the family-level eligibility rule and the seeds. `problems.csv` and `splits.csv` are
+written by `router/experiments/s1_6_splits.py`; `annotate()`, `load_splits()` and
+`task_splits()` read only the committed files.
 """
 
 from __future__ import annotations
 
 import re
+from decimal import ROUND_HALF_UP, Decimal
 from functools import lru_cache
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
+
+from router.settings import DEV_FRACTION, DEV_SEED, N_FOLDS, N_SEEDS
 
 PROBLEMS_CSV = Path(__file__).with_name("problems.csv")
 PROBLEM_COLUMNS = ["task_id", "problem_id", "link", "source_key", "content_sha256"]
@@ -52,6 +85,20 @@ NO_LINK = "none"
 NAMESPACE_ORDER = ("he", "mbpp", "bcb", "lcb", "ds1000", "crux", "swe")
 DS1000_ORIGIN_EXTRACT = "ds1000_origin"
 _HE_EXACT = ("humaneval", "he_completion", "he_testgen")
+
+SPLITS_CSV = Path(__file__).with_name("splits.csv")
+DEV, EVAL, OUTSIDE_POOL, OOD = "dev", "eval", "outside_pool", "ood"
+SPLIT_LABELS = (DEV, EVAL, OUTSIDE_POOL, OOD)
+FOLD_SEEDS = tuple(range(N_SEEDS))      # seed 0 is GATE_SEED (user, 2026-11-20: seeds 0-4)
+STREAM_DEV, STREAM_FOLDS = 0, 1
+R13_FIELDS = ("problem_id", "content_sha256", "source_key")
+
+
+def fold_column(seed: int) -> str:
+    return f"fold_seed{seed}"
+
+
+SPLIT_COLUMNS = ["problem_id", "split", *(fold_column(s) for s in FOLD_SEEDS)]
 
 
 # --------------------------------------------------------------------------- source keys
@@ -278,4 +325,103 @@ def annotate(long: pd.DataFrame) -> pd.DataFrame:
         raise KeyError(f"no problem id for tasks {sorted(unknown)[:10]}")
     out = long.copy()
     out["problem_id"] = out["task_id"].map(pid).astype(object)
+    return out
+
+
+# --------------------------------------------------------------------------- development split and folds
+def n_dev(n_problems: int) -> int:
+    """round_half_up(DEV_FRACTION x n), in exact decimal arithmetic (not banker's `round`)."""
+    return int((Decimal(str(DEV_FRACTION)) * n_problems).quantize(Decimal(1), rounding=ROUND_HALF_UP))
+
+
+def draw(problem_ids, dev_seed, fold_seeds) -> pd.DataFrame:
+    """The development split and the outer folds over the pool's problem ids (see the module
+    docstring for the exact calls). Takes only problem ids and seeds.
+
+    Returns one row per problem, sorted: `problem_id`, `split` (dev or eval) and one fold column
+    per fold seed (null for dev)."""
+    ids = sorted(problem_ids)
+    if len(set(ids)) != len(ids):
+        raise ValueError("problem ids are not unique")
+    rng = np.random.default_rng(np.random.SeedSequence([dev_seed, STREAM_DEV]))
+    dev = {ids[i] for i in rng.choice(len(ids), size=n_dev(len(ids)), replace=False)}
+    eval_ids = [p for p in ids if p not in dev]
+    out = pd.DataFrame({"problem_id": ids, "split": [DEV if p in dev else EVAL for p in ids]})
+    for seed in fold_seeds:
+        perm = np.random.default_rng(np.random.SeedSequence([seed, STREAM_FOLDS])).permutation(len(eval_ids))
+        fold = {eval_ids[j]: k % N_FOLDS for k, j in enumerate(perm)}
+        out[fold_column(seed)] = pd.array([fold.get(p) for p in ids], dtype="Int64")
+    return out
+
+
+def pool_problems(problems: pd.DataFrame, table: pd.DataFrame) -> list[str]:
+    """Problems with at least one eligible ID task (S0.6 pool; eligibility by family, S0.12)."""
+    from router.data.scoring import eligible_families
+
+    t = table.set_index("task_id")
+    eligible = (t.split_kind == "id") & t.family.isin(eligible_families())
+    tasks = problems.task_id[problems.task_id.map(eligible).to_numpy()]
+    return sorted(set(problems.problem_id[problems.task_id.isin(tasks)]))
+
+
+def split_table(problems: pd.DataFrame | None = None, table: pd.DataFrame | None = None) -> pd.DataFrame:
+    """`splits.csv`: every problem with its label, and folds for the evaluation problems."""
+    from router.data.sources import load_table
+
+    problems = load_problems() if problems is None else problems
+    table = load_table() if table is None else table
+    pool = pool_problems(problems, table)
+    drawn = draw(pool, DEV_SEED, FOLD_SEEDS).set_index("problem_id")
+    kind = problems.task_id.map(table.set_index("task_id").split_kind)
+    ood = set(problems.problem_id[(kind == "ood").to_numpy()])
+    rows = []
+    for pid in sorted(set(problems.problem_id)):
+        if pid in drawn.index:
+            rows.append({"problem_id": pid, **drawn.loc[pid].to_dict()})
+        else:
+            rows.append({"problem_id": pid, "split": OOD if pid in ood else OUTSIDE_POOL})
+    out = pd.DataFrame(rows, columns=SPLIT_COLUMNS)
+    for s in FOLD_SEEDS:
+        out[fold_column(s)] = out[fold_column(s)].astype("Int64")
+    return out
+
+
+def write_splits(df: pd.DataFrame, path: Path = SPLITS_CSV) -> None:
+    df.to_csv(path, index=False, lineterminator="\n")
+
+
+@lru_cache(maxsize=1)
+def load_splits(path: Path = SPLITS_CSV) -> pd.DataFrame:
+    """The committed split table (no external data needed)."""
+    df = pd.read_csv(path, dtype={"problem_id": str, "split": str}, keep_default_na=False,
+                     na_values={fold_column(s): [""] for s in FOLD_SEEDS})
+    for s in FOLD_SEEDS:
+        df[fold_column(s)] = df[fold_column(s)].astype("Int64")
+    return df
+
+
+def task_splits(problems: pd.DataFrame | None = None, splits: pd.DataFrame | None = None) -> pd.DataFrame:
+    """One row per task: `PROBLEM_COLUMNS` plus its problem's `split` and fold columns."""
+    problems = load_problems() if problems is None else problems
+    splits = load_splits() if splits is None else splits
+    return problems.merge(splits, on="problem_id", how="left", validate="many_to_one")
+
+
+def r13_violations(problems: pd.DataFrame, splits: pd.DataFrame) -> list[dict]:
+    """R13: for each fold seed, every value of `R13_FIELDS` that appears in two of
+    {dev, fold 0, ..., fold N_FOLDS-1}. Null values are ignored. Empty when the split is clean.
+
+    The content and source-key checks do not depend on how problem ids were built."""
+    t = task_splits(problems, splits)
+    out = []
+    for s in FOLD_SEEDS:
+        col = fold_column(s)
+        part = t[t.split.isin([DEV, EVAL])]
+        group = np.where(part.split == DEV, DEV, "fold" + part[col].astype("string").fillna("?"))
+        part = part.assign(group=group)
+        for field in R13_FIELDS:
+            g = part[part[field].notna()].groupby(field).group.nunique()
+            for value in sorted(g.index[g > 1]):
+                out.append({"seed": s, "field": field, "value": value,
+                            "groups": sorted(set(part.group[part[field] == value]))})
     return out
