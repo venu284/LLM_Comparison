@@ -560,7 +560,9 @@ def ra_routes_fold(p: Pop, tr, te, sidx, X, Vm, Dm, names):
         out[name] = (Vm[te, a], Dm[te, a])
     out["best_single"] = (Vm[te, a_ref], Dm[te, a_ref])
     picks = {"best_single": names[a_ref],
+             "held_out_tasks_in_cells_without_training_tasks": int((~seen[sidx[te]]).sum()),
              "zero_loss": ra_route_actions(routes["zero_loss"], names, [f"cell{x}" for x in range(X)]),
+             "cellbest": ra_route_actions(routes["cellbest"], names, [f"cell{x}" for x in range(X)]),
              "cost_aware_dimensionbest": {k: names[j] for k, j in cadb.items()},
              "dimensionbest": {k: names[j] for k, j in db.items()}}
     return out, picks
@@ -600,7 +602,8 @@ def ra_on_population(p: Pop, d, n_boot: int):
                        "saving_pct": ci(saving), "gap_points": ci(gap),
                        "passes_s0_3": bool(np.percentile(saving[1:], 2.5) >= GATE_SAVING
                                            and np.percentile(gap[1:], 2.5) >= GATE_GAP)}
-        per_seed.append({"routes": rows, "fold_picks": fold_picks})
+        per_seed.append({"routes": rows, "fold_picks": fold_picks,
+                         "unseen_cell_tasks": sum(fp["held_out_tasks_in_cells_without_training_tasks"] for fp in fold_picks)})
     summary = {}
     for r in route_names:
         xs = [ps["routes"][r] for ps in per_seed]
@@ -611,7 +614,12 @@ def ra_on_population(p: Pop, d, n_boot: int):
                                       for k in ("acceptance_pct", "cost_m_usd_per_task", "saving_pct", "gap_points")},
                       "passes_s0_3_by_seed": [x["passes_s0_3"] for x in xs]}
     summary["best_single"] = {"seed0": per_seed[GATE_SEED]["routes"]["best_single"]}
+    cell_stats = {x: {"tasks": int((cells == x).sum()),
+                      "acceptance_pct": {m: round(100 * float(p.B[m][(cells == x).values].mean()), 1) for m in p.models}}
+                  for x in cell_names}
     return {"n": len(p), "n_problems": int(p.problem.nunique()), "n_cells": X, "cells": cell_names,
+            "cell_stats_whole_set": cell_stats,
+            "held_out_tasks_in_cells_without_training_tasks_by_seed": [ps["unseen_cell_tasks"] for ps in per_seed],
             "routes": summary, "seed0_fold_picks": per_seed[GATE_SEED]["fold_picks"]}
 
 
