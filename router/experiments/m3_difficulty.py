@@ -18,7 +18,7 @@ from sklearn.model_selection import GroupKFold
 from router.core import irt
 from router.data import coderouterbench as crb
 from router.data.prompts import join
-from router.data.scoring import ACCEPT_THRESHOLD
+from router.data.scoring import LEGACY_ACCEPT_THRESHOLD
 from router.settings import REPO_ROOT
 
 OUT = REPO_ROOT / "router" / "experiments" / "out"
@@ -30,7 +30,7 @@ def main() -> None:
     score = pd.concat([probe.score, test.score])
     dim = pd.concat([probe.dimension, test.dimension])
     src = pd.concat([probe.source, test.source])
-    Y = (score.T.to_numpy() >= ACCEPT_THRESHOLD).astype(float)
+    Y = (score.T.to_numpy() >= LEGACY_ACCEPT_THRESHOLD).astype(float)
     params = irt.fit(Y, score.index, score.columns, "1pl")
     b = pd.Series(params.b, index=score.index)
 
@@ -66,7 +66,7 @@ def main() -> None:
 
     # Routing relevance: AUC of sigma(theta_m - b_hat) against the real 0/1 outcomes.
     th = pd.Series(params.theta, index=score.columns)
-    Ysub = (score.loc[tasks] >= ACCEPT_THRESHOLD).astype(float)
+    Ysub = (score.loc[tasks] >= LEGACY_ACCEPT_THRESHOLD).astype(float)
     rows = []
     for name, p in preds.items():
         P = expit(th.to_numpy()[None, :] - p[:, None])

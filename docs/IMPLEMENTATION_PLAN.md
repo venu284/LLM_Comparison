@@ -15,7 +15,7 @@
 | Field | Value |
 |---|---|
 | Current stage | **S1 — Validate data** (§4). Pre-S0 and S0 done; `docs/CLAIMS.md` signed off 2026-11-20 |
-| Next action | S1 batch B: S1.4 and S1.5 in parallel, then S1.6 (order under S1 in §4). A1 and A2 are merged. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Next action | Finish S1.5 (in progress on `s1-b-prompts`), then S1.6 (order under S1 in §4). A1, A2 and S1.4 are merged. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
 | Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0 · Write-up: Report 8 |
 | Last updated | 2026-11-20 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
@@ -570,7 +570,9 @@ edit them.
       family under 30; it stays in `PENDING_USER_DECISION` until S1.4 rules on it (user,
       2026-11-20): if CanItEdit is not execution-scored it leaves the eligible pool, the 30-task
       minimum applies to eligible families only, and it leaves the pending set; if it is
-      execution-scored, the merge options go back to the user.
+      execution-scored, the merge options go back to the user. **Resolved by S1.4:**
+      `canitedit` is ineligible (Proxy+), the 30-task minimum applies to eligible ID families
+      only, and `PENDING_USER_DECISION` is empty.
 - [x] S1.2 `data/schema.py` [M1.2]: long-format storage (task, model, run, score, cost, tokens,
       problem_id, family, score_type, eligible, **available, unavailable_reason**), with the wide
       task × model views derived from it. `unavailable_reason` is a missing token record (the 148
@@ -592,7 +594,7 @@ edit them.
       loader in both views (reviewer check). The paper view zero-fills 2,417 probing and 881
       ID-test cells and leaves them available: it reproduces the paper only and is never used for
       claims (S1.7 records this in `artefacts.yaml`).
-- [ ] S1.4 `data/scoring.py` [M1.4]: score type per family from the source benchmark's documented
+- [x] S1.4 `data/scoring.py` [M1.4]: score type per family from the source benchmark's documented
       rule (exec, similarity or judge), not from the observed score distribution, with the citation
       for each rule. Record which families are eligible (S0.12) and which carry partial credit
       (provisional: `lcb` 1,000 tasks, CRUXEval 800, `lcb_testgen` 869, MBPP completion 124 have
@@ -602,6 +604,24 @@ edit them.
       goes through `settings.SUCCESS_SCORE` (S0.1): `ACCEPT_THRESHOLD = 0.5` and `accepted()` are
       removed from the live path, kept only as a legacy constant for the 2026-11-10 m2/m3 records
       (`sim/metrics.py` and `sim/verifier.py` import it today). Rule on `canitedit` (see S1.1).
+      **Done 2026-11-20 (merged from `s1-b-scoring` @ `4de4264`; note
+      `docs/research/S1.4_scoring_rules.md`, report `router/experiments/s1_4_pool.py`):**
+      CodeRouterBench scores per dimension (arXiv 2606.22902v3 Table 5, verified verbatim by
+      the reviewer): Exec (pass@1) for code generation, algorithm design, bug fixing, code
+      completion, data science and multi-language; Proxy+ (proxy metric plus LLM judge) for code
+      refactoring, code understanding and test generation. Eligible: 20 ID families, **5,626
+      tasks** (3,968 probing / 1,658 ID-test). Ineligible: the Proxy+ families (including
+      `canitedit` and all three testgen families) and DebugBench / `debugbench_sup` (Exec, but
+      the test suites need a LeetCode account, 2401.04621v3 §3 fn. 3; the released scores take
+      3,351 distinct values). Partial credit is unstated for every ID family; S0.1 applies.
+      Against the provisional `EXEC_DIMS`: in, multi_language (1,111) and swebench (71); out,
+      test generation (1,111). Every task in the 1,971 / 1,907 provisional sets is eligible
+      (CRUXEval 800 / 792). `lcb` is eligible by rule and stays artefact-suspected, pending S1.7
+      (776 tasks with X13 verdicts). Success is `scoring.success` (S0.1); the 0.5 threshold is
+      `LEGACY_ACCEPT_THRESHOLD`, confined to m3 and `sim/*` (checked by parsing imports). User
+      decisions (2026-11-20): `bcb_completion` and `mbpp_completion` stay eligible on the
+      dimension-level rule; DebugBench stays ineligible; the hex and all-zero findings go to
+      S1.7, not to an amendment.
 - [ ] S1.5 `data/prompts.py` [M1.5]: add route-anything `tasks.jsonl` (3,297 prompts, including 888
       `lcb`) to the existing join, then adapters for families still missing. Report the join rate
       per family.
@@ -639,6 +659,12 @@ edit them.
       undecided) are written and committed before any response is inspected, and labelling does
       not look at P0.5, P0.6 or E0 outcomes. The audit states which families were actually
       re-executed and in what sandbox; BigCodeBench may rest on Route Anything's diagnostic.
+      **Added from S1.4 (user, 2026-11-20):** audit `hex_cpp`, `hex_go`, `hex_java` and
+      `hex_js` (Exec by rule, but 999–1,135 distinct released values per family and almost none
+      at 1.0; Route Anything marks all their tasks not runnable); `multiple_rs`, `multiple_ts`
+      and `swebench` (every released score is 0); and CRUXEval's 0.8 value (707 of 800 tasks have
+      a 0.8 cell; under S0.1 it is a failure, and CRUXEval is 42% of the provisional complete
+      case; find what 0.8 means; any change to the success rule is the user's).
       `artefacts.yaml` also records that the paper view is zero-filled and for reproduction only,
       and the empty X13 cells (1,551, of which 877 score 1.0 in the release: X13 lost the
       response, the model did not fail; S0.11 keeps them unavailable, user 2026-11-20).
@@ -1568,3 +1594,21 @@ Two further reviews were checked against the data; all fixes approved by the use
   re-run at the new rate, and S3 measures the effect (the ×10 sweep already bracketed it). `e0_power.py` now records the rate it actually used.
 - Tests: 247 pass.
 - **Next:** batch B briefs (S1.4 ∥ S1.5, then S1.6).
+
+### 2026-11-20 (S1.4 merged)
+
+- **S1.4** merged from `s1-b-scoring` (`4de4264`). Reviewer check: 297 tests pass on the branch
+  (298 on `main` after the merge); `s1_4_pool.py` reproduces its JSON; the rule table was
+  committed before the pool report and a scramble test shows labels do not depend on scores;
+  Table 5 of arXiv 2606.22902v3 read verbatim from the PDF (six Exec dimensions, three Proxy+,
+  plus the OOD Sandbox dimension). The eligible pool (20 families, 5,626 tasks) and the
+  cross-check findings re-derived independently.
+- **User decisions:** `bcb_completion` and `mbpp_completion` stay eligible; DebugBench stays
+  ineligible; the S1.7 suspected list gains `hex_cpp`, `hex_go`, `hex_java`, `hex_js`,
+  `multiple_rs`, `multiple_ts`, `swebench` and CRUXEval's 0.8 value. `canitedit` is resolved
+  (ineligible), so `PENDING_USER_DECISION` is empty.
+- **S1.5** is in progress on `s1-b-prompts`: six sources pinned through per-field extracts (193
+  verified files); the wrappers are rebuilt and match all 3,297 `tasks.jsonl` prompts; the
+  adapters, join report and Outcome are not done.
+- Fixed the stale `DEFERRED_COLUMNS` comment in `router/data/schema.py`.
+- **Next:** finish S1.5, then S1.6.

@@ -1,0 +1,857 @@
+{
+  "crosscheck": {
+    "bcb": {
+      "cells": 5400,
+      "cells_at_one": 1317,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 2,
+      "eligible": true,
+      "flag": "",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 10,
+      "ra_runnable_false_share": 0.042,
+      "ra_tasks": 238,
+      "score_values": [
+        0.0,
+        1.0
+      ],
+      "tasks": 675,
+      "tasks_with_fractional_score": 0
+    },
+    "bcb_algo2": {
+      "cells": 888,
+      "cells_at_one": 205,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 2,
+      "eligible": true,
+      "flag": "",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 2,
+      "ra_runnable_false_share": 0.0571,
+      "ra_tasks": 35,
+      "score_values": [
+        0.0,
+        1.0
+      ],
+      "tasks": 111,
+      "tasks_with_fractional_score": 0
+    },
+    "bcb_completion": {
+      "cells": 712,
+      "cells_at_one": 167,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 2,
+      "eligible": true,
+      "flag": "",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 3,
+      "ra_runnable_false_share": 0.1034,
+      "ra_tasks": 29,
+      "score_values": [
+        0.0,
+        1.0
+      ],
+      "tasks": 89,
+      "tasks_with_fractional_score": 0
+    },
+    "bcb_ds": {
+      "cells": 888,
+      "cells_at_one": 89,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 2,
+      "eligible": true,
+      "flag": "",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 2,
+      "ra_runnable_false_share": 0.1429,
+      "ra_tasks": 14,
+      "score_values": [
+        0.0,
+        1.0
+      ],
+      "tasks": 111,
+      "tasks_with_fractional_score": 0
+    },
+    "bcb_v014": {
+      "cells": 888,
+      "cells_at_one": 203,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 2,
+      "eligible": true,
+      "flag": "",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 2,
+      "ra_runnable_false_share": 0.0645,
+      "ra_tasks": 31,
+      "score_values": [
+        0.0,
+        1.0
+      ],
+      "tasks": 111,
+      "tasks_with_fractional_score": 0
+    },
+    "bugs2fix": {
+      "cells": 7840,
+      "cells_at_one": 0,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 7820,
+      "distinct_scores": 4241,
+      "eligible": false,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_tasks": 0,
+      "score_values": null,
+      "tasks": 980,
+      "tasks_with_fractional_score": 980
+    },
+    "bugs2fix_sup": {
+      "cells": 888,
+      "cells_at_one": 1,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 883,
+      "distinct_scores": 673,
+      "eligible": false,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_tasks": 0,
+      "score_values": null,
+      "tasks": 111,
+      "tasks_with_fractional_score": 111
+    },
+    "canitedit": {
+      "cells": 160,
+      "cells_at_one": 12,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 147,
+      "distinct_scores": 144,
+      "eligible": false,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_tasks": 0,
+      "score_values": null,
+      "tasks": 20,
+      "tasks_with_fractional_score": 20
+    },
+    "codexglue": {
+      "cells": 8000,
+      "cells_at_one": 0,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 7985,
+      "distinct_scores": 2352,
+      "eligible": false,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_tasks": 0,
+      "score_values": null,
+      "tasks": 1000,
+      "tasks_with_fractional_score": 1000
+    },
+    "codexglue_sup": {
+      "cells": 888,
+      "cells_at_one": 0,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 874,
+      "distinct_scores": 629,
+      "eligible": false,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_tasks": 0,
+      "score_values": null,
+      "tasks": 111,
+      "tasks_with_fractional_score": 110
+    },
+    "cruxeval": {
+      "cells": 6400,
+      "cells_at_one": 2277,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 2236,
+      "distinct_scores": 3,
+      "eligible": true,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 0,
+      "ra_runnable_false_share": 0.0,
+      "ra_tasks": 800,
+      "score_values": [
+        0.0,
+        0.8,
+        1.0
+      ],
+      "tasks": 800,
+      "tasks_with_fractional_score": 707
+    },
+    "debugbench": {
+      "cells": 7432,
+      "cells_at_one": 952,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 6282,
+      "distinct_scores": 3351,
+      "eligible": false,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_tasks": 0,
+      "score_values": null,
+      "tasks": 929,
+      "tasks_with_fractional_score": 924
+    },
+    "debugbench_sup": {
+      "cells": 888,
+      "cells_at_one": 0,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 1,
+      "eligible": false,
+      "flag": "every released score is 0",
+      "partial_credit_rule": "unstated",
+      "ra_tasks": 0,
+      "score_values": [
+        0.0
+      ],
+      "tasks": 111,
+      "tasks_with_fractional_score": 0
+    },
+    "ds1000": {
+      "cells": 8000,
+      "cells_at_one": 846,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 2,
+      "eligible": true,
+      "flag": "",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 0,
+      "ra_runnable_false_share": 0.0,
+      "ra_tasks": 297,
+      "score_values": [
+        0.0,
+        1.0
+      ],
+      "tasks": 1000,
+      "tasks_with_fractional_score": 0
+    },
+    "he_completion": {
+      "cells": 784,
+      "cells_at_one": 679,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 2,
+      "eligible": true,
+      "flag": "",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 0,
+      "ra_runnable_false_share": 0.0,
+      "ra_tasks": 98,
+      "score_values": [
+        0.0,
+        1.0
+      ],
+      "tasks": 98,
+      "tasks_with_fractional_score": 0
+    },
+    "he_testgen": {
+      "cells": 1048,
+      "cells_at_one": 239,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 2,
+      "eligible": false,
+      "flag": "",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 81,
+      "ra_runnable_false_share": 1.0,
+      "ra_tasks": 81,
+      "score_values": [
+        0.0,
+        1.0
+      ],
+      "tasks": 131,
+      "tasks_with_fractional_score": 0
+    },
+    "hex_cpp": {
+      "cells": 1312,
+      "cells_at_one": 1,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 1306,
+      "distinct_scores": 1135,
+      "eligible": true,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 50,
+      "ra_runnable_false_share": 1.0,
+      "ra_tasks": 50,
+      "score_values": null,
+      "tasks": 164,
+      "tasks_with_fractional_score": 164
+    },
+    "hex_go": {
+      "cells": 1312,
+      "cells_at_one": 0,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 1301,
+      "distinct_scores": 999,
+      "eligible": true,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 42,
+      "ra_runnable_false_share": 1.0,
+      "ra_tasks": 42,
+      "score_values": null,
+      "tasks": 164,
+      "tasks_with_fractional_score": 164
+    },
+    "hex_java": {
+      "cells": 1312,
+      "cells_at_one": 16,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 1286,
+      "distinct_scores": 1045,
+      "eligible": true,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 33,
+      "ra_runnable_false_share": 1.0,
+      "ra_tasks": 33,
+      "score_values": null,
+      "tasks": 164,
+      "tasks_with_fractional_score": 164
+    },
+    "hex_js": {
+      "cells": 1312,
+      "cells_at_one": 0,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 1304,
+      "distinct_scores": 1002,
+      "eligible": true,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 48,
+      "ra_runnable_false_share": 1.0,
+      "ra_tasks": 48,
+      "score_values": null,
+      "tasks": 164,
+      "tasks_with_fractional_score": 164
+    },
+    "hex_python": {
+      "cells": 1312,
+      "cells_at_one": 1235,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 1,
+      "distinct_scores": 3,
+      "eligible": true,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 0,
+      "ra_runnable_false_share": 0.0,
+      "ra_tasks": 164,
+      "score_values": [
+        0.0,
+        0.8,
+        1.0
+      ],
+      "tasks": 164,
+      "tasks_with_fractional_score": 1
+    },
+    "humaneval": {
+      "cells": 800,
+      "cells_at_one": 785,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 2,
+      "eligible": true,
+      "flag": "",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 0,
+      "ra_runnable_false_share": 0.0,
+      "ra_tasks": 100,
+      "score_values": [
+        0.0,
+        1.0
+      ],
+      "tasks": 100,
+      "tasks_with_fractional_score": 0
+    },
+    "lcb": {
+      "cells": 8000,
+      "cells_at_one": 2657,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 157,
+      "distinct_scores": 10,
+      "eligible": true,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 0,
+      "ra_runnable_false_share": 0.0,
+      "ra_tasks": 776,
+      "score_values": [
+        0.0,
+        0.2,
+        0.25,
+        0.3333333333333333,
+        0.5,
+        0.6666666666666666,
+        0.75,
+        0.8,
+        0.8333333333333334,
+        1.0
+      ],
+      "tasks": 1000,
+      "tasks_with_fractional_score": 129
+    },
+    "lcb_testgen": {
+      "cells": 6952,
+      "cells_at_one": 3868,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 766,
+      "distinct_scores": 9,
+      "eligible": false,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 112,
+      "ra_runnable_false_share": 1.0,
+      "ra_tasks": 112,
+      "score_values": [
+        0.0,
+        0.2,
+        0.3,
+        0.3333333333333333,
+        0.4,
+        0.6,
+        0.6666666666666666,
+        0.8,
+        1.0
+      ],
+      "tasks": 869,
+      "tasks_with_fractional_score": 507
+    },
+    "mbpp": {
+      "cells": 1800,
+      "cells_at_one": 183,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 2,
+      "eligible": true,
+      "flag": "",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 0,
+      "ra_runnable_false_share": 0.0,
+      "ra_tasks": 225,
+      "score_values": [
+        0.0,
+        1.0
+      ],
+      "tasks": 225,
+      "tasks_with_fractional_score": 0
+    },
+    "mbpp_completion": {
+      "cells": 992,
+      "cells_at_one": 717,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 2,
+      "distinct_scores": 3,
+      "eligible": true,
+      "flag": "rule unstated, data has fractional scores",
+      "partial_credit_rule": "unstated",
+      "ra_runnable_false": 0,
+      "ra_runnable_false_share": 0.0,
+      "ra_tasks": 124,
+      "score_values": [
+        0.0,
+        0.8,
+        1.0
+      ],
+      "tasks": 124,
+      "tasks_with_fractional_score": 2
+    },
+    "mbpp_testgen": {
+      "cells": 888,
+      "cells_at_one": 0,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 1,
+      "eligible": false,
+      "flag": "every released score is 0",
+      "partial_credit_rule": "unstated",
+      "ra_tasks": 0,
+      "score_values": [
+        0.0
+      ],
+      "tasks": 111,
+      "tasks_with_fractional_score": 0
+    },
+    "multiple_rs": {
+      "cells": 1248,
+      "cells_at_one": 0,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 1,
+      "eligible": true,
+      "flag": "every released score is 0",
+      "partial_credit_rule": "unstated",
+      "ra_tasks": 0,
+      "score_values": [
+        0.0
+      ],
+      "tasks": 156,
+      "tasks_with_fractional_score": 0
+    },
+    "multiple_ts": {
+      "cells": 1080,
+      "cells_at_one": 0,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 1,
+      "eligible": true,
+      "flag": "every released score is 0",
+      "partial_credit_rule": "unstated",
+      "ra_tasks": 0,
+      "score_values": [
+        0.0
+      ],
+      "tasks": 135,
+      "tasks_with_fractional_score": 0
+    },
+    "swebench": {
+      "cells": 568,
+      "cells_at_one": 0,
+      "cells_in_near_one": 0,
+      "cells_with_fractional_score": 0,
+      "distinct_scores": 1,
+      "eligible": true,
+      "flag": "every released score is 0",
+      "partial_credit_rule": "unstated",
+      "ra_tasks": 0,
+      "score_values": [
+        0.0
+      ],
+      "tasks": 71,
+      "tasks_with_fractional_score": 0
+    }
+  },
+  "diff_a": {
+    "documented": {
+      "id_test": 1658,
+      "probing": 3968,
+      "total": 5626
+    },
+    "moved_in": {
+      "families": {
+        "hex_cpp": {
+          "dimension": "multi_language",
+          "id_test": 61,
+          "probing": 103,
+          "total": 164
+        },
+        "hex_go": {
+          "dimension": "multi_language",
+          "id_test": 44,
+          "probing": 120,
+          "total": 164
+        },
+        "hex_java": {
+          "dimension": "multi_language",
+          "id_test": 48,
+          "probing": 116,
+          "total": 164
+        },
+        "hex_js": {
+          "dimension": "multi_language",
+          "id_test": 50,
+          "probing": 114,
+          "total": 164
+        },
+        "hex_python": {
+          "dimension": "multi_language",
+          "id_test": 51,
+          "probing": 113,
+          "total": 164
+        },
+        "multiple_rs": {
+          "dimension": "multi_language",
+          "id_test": 40,
+          "probing": 116,
+          "total": 156
+        },
+        "multiple_ts": {
+          "dimension": "multi_language",
+          "id_test": 39,
+          "probing": 96,
+          "total": 135
+        },
+        "swebench": {
+          "dimension": "bug_fixing",
+          "id_test": 19,
+          "probing": 52,
+          "total": 71
+        }
+      },
+      "total": {
+        "id_test": 352,
+        "probing": 830,
+        "total": 1182
+      }
+    },
+    "moved_out": {
+      "families": {
+        "he_testgen": {
+          "dimension": "test_generation",
+          "id_test": 39,
+          "probing": 92,
+          "total": 131
+        },
+        "lcb_testgen": {
+          "dimension": "test_generation",
+          "id_test": 236,
+          "probing": 633,
+          "total": 869
+        },
+        "mbpp_testgen": {
+          "dimension": "test_generation",
+          "id_test": 31,
+          "probing": 80,
+          "total": 111
+        }
+      },
+      "total": {
+        "id_test": 306,
+        "probing": 805,
+        "total": 1111
+      }
+    },
+    "provisional": {
+      "id_test": 1612,
+      "probing": 3943,
+      "total": 5555
+    },
+    "provisional_rule": "dimension in ['code_generation', 'data_science', 'algorithm', 'code_completion', 'test_generation'] (no suspected removal)"
+  },
+  "diff_b": {
+    "he_testgen": {
+      "all_family_tasks_suspected": true,
+      "eligible_by_rule": false,
+      "label": "ineligible by rule",
+      "score_type": "judge",
+      "tasks": 131,
+      "test_checkable": false
+    },
+    "lcb": {
+      "all_family_tasks_suspected": true,
+      "eligible_by_rule": true,
+      "label": "eligible by rule, artefact-suspected, pending S1.7",
+      "score_type": "exec",
+      "tasks": 1000,
+      "test_checkable": true,
+      "with_x13_verdicts": {
+        "id_test": 212,
+        "probing": 564,
+        "total": 776
+      }
+    },
+    "lcb_testgen": {
+      "all_family_tasks_suspected": true,
+      "eligible_by_rule": false,
+      "label": "ineligible by rule",
+      "score_type": "judge",
+      "tasks": 869,
+      "test_checkable": false
+    },
+    "mbpp_testgen": {
+      "all_family_tasks_suspected": true,
+      "eligible_by_rule": false,
+      "label": "ineligible by rule",
+      "score_type": "judge",
+      "tasks": 111,
+      "test_checkable": false
+    }
+  },
+  "headline": {
+    "complete_case_1907": {
+      "cruxeval": 792,
+      "cruxeval_eligible": 792,
+      "eligible": 1907,
+      "ineligible": 0,
+      "ineligible_by_family": {},
+      "ineligible_share": 0.0,
+      "set": "headline tasks with no unavailable cell",
+      "tasks": 1907
+    },
+    "headline_1971": {
+      "cruxeval": 800,
+      "cruxeval_eligible": 800,
+      "eligible": 1971,
+      "ineligible": 0,
+      "ineligible_by_family": {},
+      "ineligible_share": 0.0,
+      "set": "provisional headline (S0.11)",
+      "tasks": 1971
+    },
+    "stop_rule_fires": false
+  },
+  "pool": {
+    "eligible_under_minimum": [],
+    "families": {
+      "bcb": {
+        "id_test": 215,
+        "probing": 460,
+        "total": 675
+      },
+      "bcb_algo2": {
+        "id_test": 33,
+        "probing": 78,
+        "total": 111
+      },
+      "bcb_completion": {
+        "id_test": 31,
+        "probing": 58,
+        "total": 89
+      },
+      "bcb_ds": {
+        "id_test": 32,
+        "probing": 79,
+        "total": 111
+      },
+      "bcb_v014": {
+        "id_test": 30,
+        "probing": 81,
+        "total": 111
+      },
+      "cruxeval": {
+        "id_test": 235,
+        "probing": 565,
+        "total": 800
+      },
+      "ds1000": {
+        "id_test": 280,
+        "probing": 720,
+        "total": 1000
+      },
+      "he_completion": {
+        "id_test": 32,
+        "probing": 66,
+        "total": 98
+      },
+      "hex_cpp": {
+        "id_test": 61,
+        "probing": 103,
+        "total": 164
+      },
+      "hex_go": {
+        "id_test": 44,
+        "probing": 120,
+        "total": 164
+      },
+      "hex_java": {
+        "id_test": 48,
+        "probing": 116,
+        "total": 164
+      },
+      "hex_js": {
+        "id_test": 50,
+        "probing": 114,
+        "total": 164
+      },
+      "hex_python": {
+        "id_test": 51,
+        "probing": 113,
+        "total": 164
+      },
+      "humaneval": {
+        "id_test": 33,
+        "probing": 67,
+        "total": 100
+      },
+      "lcb": {
+        "id_test": 279,
+        "probing": 721,
+        "total": 1000
+      },
+      "mbpp": {
+        "id_test": 69,
+        "probing": 156,
+        "total": 225
+      },
+      "mbpp_completion": {
+        "id_test": 37,
+        "probing": 87,
+        "total": 124
+      },
+      "multiple_rs": {
+        "id_test": 40,
+        "probing": 116,
+        "total": 156
+      },
+      "multiple_ts": {
+        "id_test": 39,
+        "probing": 96,
+        "total": 135
+      },
+      "swebench": {
+        "id_test": 19,
+        "probing": 52,
+        "total": 71
+      }
+    },
+    "ineligible": {
+      "bugs2fix": {
+        "score_type": "judge",
+        "tasks": 980,
+        "test_checkable": false
+      },
+      "bugs2fix_sup": {
+        "score_type": "judge",
+        "tasks": 111,
+        "test_checkable": false
+      },
+      "canitedit": {
+        "score_type": "judge",
+        "tasks": 20,
+        "test_checkable": true
+      },
+      "codexglue": {
+        "score_type": "judge",
+        "tasks": 1000,
+        "test_checkable": false
+      },
+      "codexglue_sup": {
+        "score_type": "judge",
+        "tasks": 111,
+        "test_checkable": false
+      },
+      "debugbench": {
+        "score_type": "exec",
+        "tasks": 929,
+        "test_checkable": false
+      },
+      "debugbench_sup": {
+        "score_type": "exec",
+        "tasks": 111,
+        "test_checkable": false
+      },
+      "he_testgen": {
+        "score_type": "judge",
+        "tasks": 131,
+        "test_checkable": false
+      },
+      "lcb_testgen": {
+        "score_type": "judge",
+        "tasks": 869,
+        "test_checkable": false
+      },
+      "mbpp_testgen": {
+        "score_type": "judge",
+        "tasks": 111,
+        "test_checkable": false
+      }
+    },
+    "n_eligible_families": 20,
+    "total": {
+      "id_test": 1658,
+      "probing": 3968,
+      "total": 5626
+    }
+  }
+}
