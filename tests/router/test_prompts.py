@@ -64,15 +64,66 @@ def test_builders_rebuild_every_tasks_jsonl_prompt():
         assert P.rebuild_tasks_jsonl_prompt(r) == r["prompt"], r["task_id"]
 
 
+def test_content_is_raw_text_plus_payload_without_fence_or_label():
+    assert P.content("cruxeval", "def f(x):\n    return x\n", call_input="f(1)") == \
+        "def f(x):\n    return x\n\nf(1)"
+    assert P.content("mbpp_completion", "Write a function.", def_header="def g(a):") == \
+        "Write a function.\n\ndef g(a):"
+    starter = "class Solution:\n    def m(self) -> int:\n        "
+    assert P.content("lcb", "Q\n", starter_code=starter) == "Q\n\nclass Solution:\n    def m(self) -> int:"
+    assert P.content("lcb", "Q\n") == "Q\n"
+    for fam in ("humaneval", "bcb", "ds1000", "mbpp", "hex_cpp", "multiple_rs"):
+        assert P.content(fam, "x \n") == "x \n"
+    with pytest.raises(ValueError):
+        P.content("cruxeval", "def f(): pass")
+
+
 @needs_tasks
-def test_tasks_jsonl_rows_are_complete_and_raw_is_the_router_field():
+def test_tasks_jsonl_payload_inversion_round_trips_on_every_row():
+    """The payload read back from `prompt` rebuilds `prompt` exactly (addendum A, step 2)."""
+    rows = P._tasks_jsonl_rows()
+    assert len(rows) == 3297
+    kinds = {}
+    for r in rows:
+        payload = P.invert_tasks_jsonl_payload(r)
+        fam = family_of(r["task_id"])
+        assert P.wrap(fam, r["raw_prompt"], **payload) == r["prompt"], r["task_id"]
+        kinds.setdefault(fam, set()).update(payload)
+    assert kinds["cruxeval"] == {"call_input"} and kinds["mbpp_completion"] == {"def_header"}
+    assert kinds["lcb"] == {"starter_code"} and kinds["lcb_testgen"] == {"starter_code"}
+
+
+@needs_tasks
+def test_tasks_jsonl_rows_are_complete_and_content_is_the_router_field():
     texts = P.from_tasks_jsonl()
     assert len(texts) == 3297
     t = texts["dim4_cruxeval_0"]
     assert t.raw_text.startswith("def f(nums):") and "Predict" in t.wrapped_prompt
+    assert t.content_text == t.raw_text.rstrip() + "\n\nf([1, 1, 3, 1, 3, 1])"
     joined = P.join(["dim4_cruxeval_0", "no_such_task"])
-    assert isinstance(joined, pd.Series) and joined["dim4_cruxeval_0"] == t.raw_text
+    assert isinstance(joined, pd.Series) and joined["dim4_cruxeval_0"] == t.content_text
     assert joined["no_such_task"] is None
+
+
+@needs_tasks
+def test_content_carries_the_payload_and_no_instruction_sentence():
+    _all_extracts()
+    texts = P.task_texts()
+    assert P.INSTRUCTIONS and all(len(s) > 20 for s in P.INSTRUCTIONS)
+    for t in texts.values():
+        for s in P.INSTRUCTIONS:
+            assert s not in t.content_text, (t.task_id, s)
+        if t.family == "cruxeval":
+            call = re.search(r"\nInput: `(.*)`\nOutput:$", t.wrapped_prompt, re.S).group(1)
+            assert t.content_text.endswith("\n\n" + call) and call.startswith("f(")
+            assert "Input:" not in t.content_text and "Output:" not in t.content_text
+        elif t.family == "mbpp_completion":
+            header = re.search(r"```python\n(.*)\n    \.\.\.\n```$", t.wrapped_prompt, re.S).group(1)
+            assert header.startswith("def ") and t.content_text.endswith("\n\n" + header.rstrip()), t.task_id
+        elif t.template and t.template.endswith(":method"):
+            assert t.content_text.startswith(t.raw_text.rstrip() + "\n\nclass Solution"), t.task_id
+        else:
+            assert t.content_text == t.raw_text, t.task_id
 
 
 # --- adapters and pins ------------------------------------------------------------------------
@@ -131,6 +182,7 @@ def test_adapters_match_tasks_jsonl_on_the_overlap_for_both_fields():
     seen = {}
     for tid, a in ad.items():
         if tid in jl:
+            assert a.content_text == jl[tid].content_text, tid
             assert a.raw_text == jl[tid].raw_text, tid
             assert a.wrapped_prompt == jl[tid].wrapped_prompt, tid
             seen[a.family] = seen.get(a.family, 0) + 1
@@ -177,7 +229,21 @@ def test_join_counts_per_id_family_are_pinned():
     assert got == JOINED
     assert {f for f, (j, n) in JOINED.items() if j < n} == set(P.GAPS)
     assert (idt.joined == idt.raw_sha256.notna()).all()
+    assert (idt.joined == idt.content_sha256.notna()).all()
     # The wrapped field is absent only where no template evidence exists.
     no_wrap = idt[idt.joined & idt.prompt_sha256.isna()]
     assert set(no_wrap.family) == {"multiple_rs", "multiple_ts"}
     assert set(no_wrap.template) == {"none"}
+
+
+@needs_tasks
+def test_eligible_pool_join_rate_meets_the_gate():
+    """Addendum A: the S1 gate's 95% is measured on S1.4's eligible pool; swebench (no source)
+    is the only gap there."""
+    from router.data.scoring import eligible_families
+
+    _all_extracts()
+    t = P.prompt_table()
+    el = t[(t.split_kind == "id") & t.family.isin(eligible_families())]
+    assert (int(el.joined.sum()), len(el)) == (5555, 5626)
+    assert set(el.family[~el.joined]) == {"swebench"}

@@ -1,4 +1,510 @@
 {
+ "eligible_families": [
+  "bcb",
+  "bcb_algo2",
+  "bcb_completion",
+  "bcb_ds",
+  "bcb_v014",
+  "cruxeval",
+  "ds1000",
+  "he_completion",
+  "hex_cpp",
+  "hex_go",
+  "hex_java",
+  "hex_js",
+  "hex_python",
+  "humaneval",
+  "lcb",
+  "mbpp",
+  "mbpp_completion",
+  "multiple_rs",
+  "multiple_ts",
+  "swebench"
+ ],
+ "join_eligible": {
+  "families": {
+   "bcb": {
+    "joined": 675,
+    "total": 675,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      215,
+      215
+     ],
+     "probing": [
+      460,
+      460
+     ]
+    },
+    "sources": {
+     "bigcode/bigcodebench@b74c0d0bf70d2c0bc459be537895cca163007f1a v0.1.4:complete_prompt": 437,
+     "route-anything-data tasks.jsonl:raw_prompt": 238
+    },
+    "templates": {
+     "fenced:bcb": 675
+    }
+   },
+   "bcb_algo2": {
+    "joined": 111,
+    "total": 111,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      33,
+      33
+     ],
+     "probing": [
+      78,
+      78
+     ]
+    },
+    "sources": {
+     "bigcode/bigcodebench@b74c0d0bf70d2c0bc459be537895cca163007f1a v0.1.4:complete_prompt": 76,
+     "route-anything-data tasks.jsonl:raw_prompt": 35
+    },
+    "templates": {
+     "fenced:bcb_algo2": 111
+    }
+   },
+   "bcb_completion": {
+    "joined": 89,
+    "total": 89,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      31,
+      31
+     ],
+     "probing": [
+      58,
+      58
+     ]
+    },
+    "sources": {
+     "bigcode/bigcodebench@b74c0d0bf70d2c0bc459be537895cca163007f1a v0.1.4:complete_prompt": 60,
+     "route-anything-data tasks.jsonl:raw_prompt": 29
+    },
+    "templates": {
+     "fenced:bcb_completion": 89
+    }
+   },
+   "bcb_ds": {
+    "joined": 111,
+    "total": 111,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      32,
+      32
+     ],
+     "probing": [
+      79,
+      79
+     ]
+    },
+    "sources": {
+     "bigcode/bigcodebench@b74c0d0bf70d2c0bc459be537895cca163007f1a v0.1.4:complete_prompt": 97,
+     "route-anything-data tasks.jsonl:raw_prompt": 14
+    },
+    "templates": {
+     "fenced:bcb_ds": 111
+    }
+   },
+   "bcb_v014": {
+    "joined": 111,
+    "total": 111,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      30,
+      30
+     ],
+     "probing": [
+      81,
+      81
+     ]
+    },
+    "sources": {
+     "bigcode/bigcodebench@b74c0d0bf70d2c0bc459be537895cca163007f1a v0.1.4:complete_prompt": 80,
+     "route-anything-data tasks.jsonl:raw_prompt": 31
+    },
+    "templates": {
+     "fenced:bcb_v014": 111
+    }
+   },
+   "cruxeval": {
+    "joined": 800,
+    "total": 800,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      235,
+      235
+     ],
+     "probing": [
+      565,
+      565
+     ]
+    },
+    "sources": {
+     "route-anything-data tasks.jsonl:raw_prompt": 800
+    },
+    "templates": {
+     "cruxeval": 800
+    }
+   },
+   "ds1000": {
+    "joined": 1000,
+    "total": 1000,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      280,
+      280
+     ],
+     "probing": [
+      720,
+      720
+     ]
+    },
+    "sources": {
+     "xlangai/DS-1000@4416080ac5cb80bdf7576aefb8f9a0b4d5426a44:prompt": 703,
+     "route-anything-data tasks.jsonl:raw_prompt": 297
+    },
+    "templates": {
+     "identity": 1000
+    }
+   },
+   "he_completion": {
+    "joined": 98,
+    "total": 98,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      32,
+      32
+     ],
+     "probing": [
+      66,
+      66
+     ]
+    },
+    "sources": {
+     "route-anything-data tasks.jsonl:raw_prompt": 98
+    },
+    "templates": {
+     "fenced:he_completion": 98
+    }
+   },
+   "hex_cpp": {
+    "joined": 164,
+    "total": 164,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      61,
+      61
+     ],
+     "probing": [
+      103,
+      103
+     ]
+    },
+    "sources": {
+     "THUDM/humaneval-x@62c78627f3072a1454fa0cb0184737cafe5e4198:prompt": 114,
+     "route-anything-data tasks.jsonl:raw_prompt": 50
+    },
+    "templates": {
+     "fenced:hex_cpp": 164
+    }
+   },
+   "hex_go": {
+    "joined": 164,
+    "total": 164,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      44,
+      44
+     ],
+     "probing": [
+      120,
+      120
+     ]
+    },
+    "sources": {
+     "THUDM/humaneval-x@62c78627f3072a1454fa0cb0184737cafe5e4198:prompt": 122,
+     "route-anything-data tasks.jsonl:raw_prompt": 42
+    },
+    "templates": {
+     "fenced:hex_go": 164
+    }
+   },
+   "hex_java": {
+    "joined": 164,
+    "total": 164,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      48,
+      48
+     ],
+     "probing": [
+      116,
+      116
+     ]
+    },
+    "sources": {
+     "THUDM/humaneval-x@62c78627f3072a1454fa0cb0184737cafe5e4198:prompt": 131,
+     "route-anything-data tasks.jsonl:raw_prompt": 33
+    },
+    "templates": {
+     "fenced:hex_java": 164
+    }
+   },
+   "hex_js": {
+    "joined": 164,
+    "total": 164,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      50,
+      50
+     ],
+     "probing": [
+      114,
+      114
+     ]
+    },
+    "sources": {
+     "THUDM/humaneval-x@62c78627f3072a1454fa0cb0184737cafe5e4198:prompt": 116,
+     "route-anything-data tasks.jsonl:raw_prompt": 48
+    },
+    "templates": {
+     "fenced:hex_js": 164
+    }
+   },
+   "hex_python": {
+    "joined": 164,
+    "total": 164,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      51,
+      51
+     ],
+     "probing": [
+      113,
+      113
+     ]
+    },
+    "sources": {
+     "route-anything-data tasks.jsonl:raw_prompt": 164
+    },
+    "templates": {
+     "fenced:hex_python": 164
+    }
+   },
+   "humaneval": {
+    "joined": 100,
+    "total": 100,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      33,
+      33
+     ],
+     "probing": [
+      67,
+      67
+     ]
+    },
+    "sources": {
+     "route-anything-data tasks.jsonl:raw_prompt": 100
+    },
+    "templates": {
+     "fenced:humaneval": 100
+    }
+   },
+   "lcb": {
+    "joined": 1000,
+    "total": 1000,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      279,
+      279
+     ],
+     "probing": [
+      721,
+      721
+     ]
+    },
+    "sources": {
+     "route-anything-data tasks.jsonl:raw_prompt": 776,
+     "livecodebench/code_generation_lite@0fe84c3912ea0c4d4a78037083943e8f0c4dd505:question_content": 224
+    },
+    "templates": {
+     "lcb:stdin": 578,
+     "lcb:method": 422
+    }
+   },
+   "mbpp": {
+    "joined": 225,
+    "total": 225,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      69,
+      69
+     ],
+     "probing": [
+      156,
+      156
+     ]
+    },
+    "sources": {
+     "route-anything-data tasks.jsonl:raw_prompt": 225
+    },
+    "templates": {
+     "identity": 225
+    }
+   },
+   "mbpp_completion": {
+    "joined": 124,
+    "total": 124,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      37,
+      37
+     ],
+     "probing": [
+      87,
+      87
+     ]
+    },
+    "sources": {
+     "route-anything-data tasks.jsonl:raw_prompt": 124
+    },
+    "templates": {
+     "mbpp_completion": 124
+    }
+   },
+   "multiple_rs": {
+    "joined": 156,
+    "total": 156,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      40,
+      40
+     ],
+     "probing": [
+      116,
+      116
+     ]
+    },
+    "sources": {
+     "nuprl/MultiPL-E@28441b6024e71d4a1c1c0f6bf171c935cd5a43f2:prompt": 156
+    },
+    "templates": {
+     "none": 156
+    }
+   },
+   "multiple_ts": {
+    "joined": 135,
+    "total": 135,
+    "rate": 1.0,
+    "meets_gate": true,
+    "by_split": {
+     "id_test": [
+      39,
+      39
+     ],
+     "probing": [
+      96,
+      96
+     ]
+    },
+    "sources": {
+     "nuprl/MultiPL-E@28441b6024e71d4a1c1c0f6bf171c935cd5a43f2:prompt": 135
+    },
+    "templates": {
+     "none": 135
+    }
+   },
+   "swebench": {
+    "joined": 0,
+    "total": 71,
+    "rate": 0.0,
+    "meets_gate": false,
+    "by_split": {
+     "id_test": [
+      0,
+      19
+     ],
+     "probing": [
+      0,
+      52
+     ]
+    },
+    "sources": {
+     "nan": 71
+    },
+    "templates": {
+     "nan": 71
+    },
+    "reason": "needs: what was given with each issue (repository files, retrieval, patch format); the instance ids are SWE-bench's, the prompt is not",
+    "unjoined_examples": [
+     "dim3_swebench_astropy__astropy-12907",
+     "dim3_swebench_astropy__astropy-14182",
+     "dim3_swebench_django__django-11019",
+     "dim3_swebench_django__django-11283",
+     "dim3_swebench_django__django-11564"
+    ]
+   }
+  },
+  "by_split": {
+   "id_test": {
+    "joined": 1639,
+    "total": 1658,
+    "rate": 0.9885
+   },
+   "probing": {
+    "joined": 3916,
+    "total": 3968,
+    "rate": 0.9869
+   }
+  },
+  "overall": {
+   "joined": 5555,
+   "total": 5626,
+   "rate": 0.9874
+  },
+  "families_below_gate": [
+   "swebench"
+  ]
+ },
  "join": {
   "families": {
    "bcb": {
@@ -880,78 +1386,91 @@
   "adapter_overlap": {
    "ds1000": {
     "overlap": 297,
+    "content_equal": 297,
     "raw_equal": 297,
     "wrapped_equal": 297,
     "raw_differs": []
    },
    "bcb": {
     "overlap": 238,
+    "content_equal": 238,
     "raw_equal": 238,
     "wrapped_equal": 238,
     "raw_differs": []
    },
    "bcb_algo2": {
     "overlap": 35,
+    "content_equal": 35,
     "raw_equal": 35,
     "wrapped_equal": 35,
     "raw_differs": []
    },
    "bcb_completion": {
     "overlap": 29,
+    "content_equal": 29,
     "raw_equal": 29,
     "wrapped_equal": 29,
     "raw_differs": []
    },
    "bcb_ds": {
     "overlap": 14,
+    "content_equal": 14,
     "raw_equal": 14,
     "wrapped_equal": 14,
     "raw_differs": []
    },
    "bcb_v014": {
     "overlap": 31,
+    "content_equal": 31,
     "raw_equal": 31,
     "wrapped_equal": 31,
     "raw_differs": []
    },
    "hex_cpp": {
     "overlap": 50,
+    "content_equal": 50,
     "raw_equal": 50,
     "wrapped_equal": 50,
     "raw_differs": []
    },
    "hex_go": {
     "overlap": 42,
+    "content_equal": 42,
     "raw_equal": 42,
     "wrapped_equal": 42,
     "raw_differs": []
    },
    "hex_java": {
     "overlap": 33,
+    "content_equal": 33,
     "raw_equal": 33,
     "wrapped_equal": 33,
     "raw_differs": []
    },
    "hex_js": {
     "overlap": 48,
+    "content_equal": 48,
     "raw_equal": 48,
     "wrapped_equal": 48,
     "raw_differs": []
    },
    "he_testgen": {
     "overlap": 81,
+    "content_equal": 81,
     "raw_equal": 81,
     "wrapped_equal": 81,
     "raw_differs": []
    },
    "lcb": {
     "overlap": 776,
+    "content_equal": 776,
     "raw_equal": 776,
     "wrapped_equal": 776,
     "raw_differs": []
    },
    "lcb_testgen": {
     "overlap": 112,
+    "content_equal": 112,
     "raw_equal": 112,
     "wrapped_equal": 112,
     "raw_differs": []
@@ -975,7 +1494,690 @@
    "multiple_ts": 135
   }
  },
+ "shared_hashes_eligible": {
+  "content": {
+   "tasks_hashed": 5555,
+   "distinct_hashes": 4988,
+   "hashes_shared_within_one_family": {
+    "ds1000": 4,
+    "mbpp": 1
+   },
+   "tasks_in_within_family_groups": 10,
+   "hashes_shared_across_families": {
+    "he_completion + hex_python + humaneval": 63,
+    "hex_python + humaneval": 37,
+    "bcb + bcb_algo2 + bcb_completion + bcb_ds + bcb_v014": 37,
+    "he_completion + hex_python": 34,
+    "bcb + bcb_ds": 23,
+    "bcb_algo2 + bcb_completion + bcb_ds + bcb_v014": 22,
+    "bcb + bcb_algo2 + bcb_completion + bcb_v014": 17,
+    "bcb_algo2 + bcb_completion + bcb_v014": 13,
+    "bcb + bcb_algo2 + bcb_ds + bcb_v014": 9,
+    "bcb_algo2 + bcb_ds + bcb_v014": 6,
+    "bcb + bcb_algo2 + bcb_v014": 5,
+    "bcb_algo2 + bcb_v014": 2
+   },
+   "tasks_in_across_family_groups": 830,
+   "family_pairs_sharing_a_hash": {
+    "bcb_algo2 + bcb_v014": 111,
+    "hex_python + humaneval": 100,
+    "he_completion + hex_python": 97,
+    "bcb_algo2 + bcb_completion": 89,
+    "bcb_completion + bcb_v014": 89,
+    "bcb_algo2 + bcb_ds": 74,
+    "bcb_ds + bcb_v014": 74,
+    "bcb + bcb_ds": 69,
+    "bcb + bcb_algo2": 68,
+    "bcb + bcb_v014": 68,
+    "he_completion + humaneval": 63,
+    "bcb_completion + bcb_ds": 59,
+    "bcb + bcb_completion": 54
+   },
+   "top_groups": [
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/10",
+      "dim1_bcb_v014_BigCodeBench/10",
+      "dim2_bcb_algo2_BigCodeBench/10",
+      "dim4_bcb_completion_BigCodeBench/10"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/20",
+      "dim1_bcb_v014_BigCodeBench/20",
+      "dim2_bcb_algo2_BigCodeBench/20",
+      "dim4_bcb_completion_BigCodeBench/20"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/23",
+      "dim1_bcb_v014_BigCodeBench/23",
+      "dim2_bcb_algo2_BigCodeBench/23",
+      "dim4_bcb_completion_BigCodeBench/23"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/29",
+      "dim1_bcb_v014_BigCodeBench/29",
+      "dim2_bcb_algo2_BigCodeBench/29",
+      "dim4_bcb_completion_BigCodeBench/29"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/34",
+      "dim1_bcb_v014_BigCodeBench/34",
+      "dim2_bcb_algo2_BigCodeBench/34",
+      "dim4_bcb_completion_BigCodeBench/34"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/35",
+      "dim1_bcb_v014_BigCodeBench/35",
+      "dim2_bcb_algo2_BigCodeBench/35",
+      "dim4_bcb_completion_BigCodeBench/35"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/37",
+      "dim1_bcb_v014_BigCodeBench/37",
+      "dim2_bcb_algo2_BigCodeBench/37",
+      "dim4_bcb_completion_BigCodeBench/37"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/39",
+      "dim1_bcb_v014_BigCodeBench/39",
+      "dim2_bcb_algo2_BigCodeBench/39",
+      "dim4_bcb_completion_BigCodeBench/39"
+     ]
+    }
+   ]
+  },
+  "raw": {
+   "tasks_hashed": 5555,
+   "distinct_hashes": 4910,
+   "hashes_shared_within_one_family": {
+    "ds1000": 4
+   },
+   "tasks_in_within_family_groups": 8,
+   "hashes_shared_across_families": {
+    "mbpp + mbpp_completion": 77,
+    "he_completion + hex_python + humaneval": 63,
+    "hex_python + humaneval": 37,
+    "bcb + bcb_algo2 + bcb_completion + bcb_ds + bcb_v014": 37,
+    "he_completion + hex_python": 34,
+    "bcb + bcb_ds": 23,
+    "bcb_algo2 + bcb_completion + bcb_ds + bcb_v014": 22,
+    "bcb + bcb_algo2 + bcb_completion + bcb_v014": 17,
+    "bcb_algo2 + bcb_completion + bcb_v014": 13,
+    "bcb + bcb_algo2 + bcb_ds + bcb_v014": 9,
+    "bcb_algo2 + bcb_ds + bcb_v014": 6,
+    "bcb + bcb_algo2 + bcb_v014": 5,
+    "bcb_algo2 + bcb_v014": 2
+   },
+   "tasks_in_across_family_groups": 986,
+   "family_pairs_sharing_a_hash": {
+    "bcb_algo2 + bcb_v014": 111,
+    "hex_python + humaneval": 100,
+    "he_completion + hex_python": 97,
+    "bcb_algo2 + bcb_completion": 89,
+    "bcb_completion + bcb_v014": 89,
+    "mbpp + mbpp_completion": 77,
+    "bcb_algo2 + bcb_ds": 74,
+    "bcb_ds + bcb_v014": 74,
+    "bcb + bcb_ds": 69,
+    "bcb + bcb_algo2": 68,
+    "bcb + bcb_v014": 68,
+    "he_completion + humaneval": 63,
+    "bcb_completion + bcb_ds": 59,
+    "bcb + bcb_completion": 54
+   },
+   "top_groups": [
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/10",
+      "dim1_bcb_v014_BigCodeBench/10",
+      "dim2_bcb_algo2_BigCodeBench/10",
+      "dim4_bcb_completion_BigCodeBench/10"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/20",
+      "dim1_bcb_v014_BigCodeBench/20",
+      "dim2_bcb_algo2_BigCodeBench/20",
+      "dim4_bcb_completion_BigCodeBench/20"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/23",
+      "dim1_bcb_v014_BigCodeBench/23",
+      "dim2_bcb_algo2_BigCodeBench/23",
+      "dim4_bcb_completion_BigCodeBench/23"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/29",
+      "dim1_bcb_v014_BigCodeBench/29",
+      "dim2_bcb_algo2_BigCodeBench/29",
+      "dim4_bcb_completion_BigCodeBench/29"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/34",
+      "dim1_bcb_v014_BigCodeBench/34",
+      "dim2_bcb_algo2_BigCodeBench/34",
+      "dim4_bcb_completion_BigCodeBench/34"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/35",
+      "dim1_bcb_v014_BigCodeBench/35",
+      "dim2_bcb_algo2_BigCodeBench/35",
+      "dim4_bcb_completion_BigCodeBench/35"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/37",
+      "dim1_bcb_v014_BigCodeBench/37",
+      "dim2_bcb_algo2_BigCodeBench/37",
+      "dim4_bcb_completion_BigCodeBench/37"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/39",
+      "dim1_bcb_v014_BigCodeBench/39",
+      "dim2_bcb_algo2_BigCodeBench/39",
+      "dim4_bcb_completion_BigCodeBench/39"
+     ]
+    }
+   ]
+  },
+  "wrapped": {
+   "tasks_hashed": 5264,
+   "distinct_hashes": 4894,
+   "hashes_shared_within_one_family": {
+    "ds1000": 4,
+    "mbpp": 1
+   },
+   "tasks_in_within_family_groups": 10,
+   "hashes_shared_across_families": {
+    "bcb + bcb_algo2 + bcb_completion + bcb_ds + bcb_v014": 37,
+    "bcb + bcb_ds": 23,
+    "bcb_algo2 + bcb_completion + bcb_ds + bcb_v014": 22,
+    "bcb + bcb_algo2 + bcb_completion + bcb_v014": 17,
+    "bcb_algo2 + bcb_completion + bcb_v014": 13,
+    "bcb + bcb_algo2 + bcb_ds + bcb_v014": 9,
+    "bcb_algo2 + bcb_ds + bcb_v014": 6,
+    "bcb + bcb_algo2 + bcb_v014": 5,
+    "bcb_algo2 + bcb_v014": 2
+   },
+   "tasks_in_across_family_groups": 499,
+   "family_pairs_sharing_a_hash": {
+    "bcb_algo2 + bcb_v014": 111,
+    "bcb_algo2 + bcb_completion": 89,
+    "bcb_completion + bcb_v014": 89,
+    "bcb_algo2 + bcb_ds": 74,
+    "bcb_ds + bcb_v014": 74,
+    "bcb + bcb_ds": 69,
+    "bcb + bcb_algo2": 68,
+    "bcb + bcb_v014": 68,
+    "bcb_completion + bcb_ds": 59,
+    "bcb + bcb_completion": 54
+   },
+   "top_groups": [
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/10",
+      "dim1_bcb_v014_BigCodeBench/10",
+      "dim2_bcb_algo2_BigCodeBench/10",
+      "dim4_bcb_completion_BigCodeBench/10"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/20",
+      "dim1_bcb_v014_BigCodeBench/20",
+      "dim2_bcb_algo2_BigCodeBench/20",
+      "dim4_bcb_completion_BigCodeBench/20"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/23",
+      "dim1_bcb_v014_BigCodeBench/23",
+      "dim2_bcb_algo2_BigCodeBench/23",
+      "dim4_bcb_completion_BigCodeBench/23"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/29",
+      "dim1_bcb_v014_BigCodeBench/29",
+      "dim2_bcb_algo2_BigCodeBench/29",
+      "dim4_bcb_completion_BigCodeBench/29"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/34",
+      "dim1_bcb_v014_BigCodeBench/34",
+      "dim2_bcb_algo2_BigCodeBench/34",
+      "dim4_bcb_completion_BigCodeBench/34"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/35",
+      "dim1_bcb_v014_BigCodeBench/35",
+      "dim2_bcb_algo2_BigCodeBench/35",
+      "dim4_bcb_completion_BigCodeBench/35"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/37",
+      "dim1_bcb_v014_BigCodeBench/37",
+      "dim2_bcb_algo2_BigCodeBench/37",
+      "dim4_bcb_completion_BigCodeBench/37"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/39",
+      "dim1_bcb_v014_BigCodeBench/39",
+      "dim2_bcb_algo2_BigCodeBench/39",
+      "dim4_bcb_completion_BigCodeBench/39"
+     ]
+    }
+   ]
+  }
+ },
  "shared_hashes": {
+  "content": {
+   "tasks_hashed": 6555,
+   "distinct_hashes": 5033,
+   "hashes_shared_within_one_family": {
+    "ds1000": 4,
+    "mbpp": 1
+   },
+   "tasks_in_within_family_groups": 10,
+   "hashes_shared_across_families": {
+    "lcb + lcb_testgen": 824,
+    "he_completion + he_testgen + hex_python + humaneval": 51,
+    "bcb + bcb_algo2 + bcb_completion + bcb_ds + bcb_v014": 37,
+    "he_testgen + hex_python + humaneval": 33,
+    "he_completion + he_testgen + hex_python": 28,
+    "bcb + bcb_ds": 23,
+    "bcb_algo2 + bcb_completion + bcb_ds + bcb_v014": 22,
+    "he_testgen + hex_python": 18,
+    "bcb + bcb_algo2 + bcb_completion + bcb_v014": 17,
+    "bcb_algo2 + bcb_completion + bcb_v014": 13,
+    "he_completion + hex_python + humaneval": 12,
+    "bcb + bcb_algo2 + bcb_ds + bcb_v014": 9,
+    "bcb_algo2 + bcb_ds + bcb_v014": 6,
+    "he_completion + hex_python": 6,
+    "bcb + bcb_algo2 + bcb_v014": 5,
+    "hex_python + humaneval": 4,
+    "bcb_algo2 + bcb_v014": 2,
+    "he_completion + he_testgen": 1
+   },
+   "tasks_in_across_family_groups": 2628,
+   "family_pairs_sharing_a_hash": {
+    "lcb + lcb_testgen": 824,
+    "he_testgen + hex_python": 130,
+    "bcb_algo2 + bcb_v014": 111,
+    "hex_python + humaneval": 100,
+    "he_completion + hex_python": 97,
+    "bcb_algo2 + bcb_completion": 89,
+    "bcb_completion + bcb_v014": 89,
+    "he_testgen + humaneval": 84,
+    "he_completion + he_testgen": 80,
+    "bcb_algo2 + bcb_ds": 74,
+    "bcb_ds + bcb_v014": 74,
+    "bcb + bcb_ds": 69,
+    "bcb + bcb_algo2": 68,
+    "bcb + bcb_v014": 68,
+    "he_completion + humaneval": 63,
+    "bcb_completion + bcb_ds": 59,
+    "bcb + bcb_completion": 54
+   },
+   "top_groups": [
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/10",
+      "dim1_bcb_v014_BigCodeBench/10",
+      "dim2_bcb_algo2_BigCodeBench/10",
+      "dim4_bcb_completion_BigCodeBench/10"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/20",
+      "dim1_bcb_v014_BigCodeBench/20",
+      "dim2_bcb_algo2_BigCodeBench/20",
+      "dim4_bcb_completion_BigCodeBench/20"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/23",
+      "dim1_bcb_v014_BigCodeBench/23",
+      "dim2_bcb_algo2_BigCodeBench/23",
+      "dim4_bcb_completion_BigCodeBench/23"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/29",
+      "dim1_bcb_v014_BigCodeBench/29",
+      "dim2_bcb_algo2_BigCodeBench/29",
+      "dim4_bcb_completion_BigCodeBench/29"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/34",
+      "dim1_bcb_v014_BigCodeBench/34",
+      "dim2_bcb_algo2_BigCodeBench/34",
+      "dim4_bcb_completion_BigCodeBench/34"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/35",
+      "dim1_bcb_v014_BigCodeBench/35",
+      "dim2_bcb_algo2_BigCodeBench/35",
+      "dim4_bcb_completion_BigCodeBench/35"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/37",
+      "dim1_bcb_v014_BigCodeBench/37",
+      "dim2_bcb_algo2_BigCodeBench/37",
+      "dim4_bcb_completion_BigCodeBench/37"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/39",
+      "dim1_bcb_v014_BigCodeBench/39",
+      "dim2_bcb_algo2_BigCodeBench/39",
+      "dim4_bcb_completion_BigCodeBench/39"
+     ]
+    }
+   ]
+  },
   "raw": {
    "tasks_hashed": 6555,
    "distinct_hashes": 4955,
@@ -1024,7 +2226,137 @@
     "he_completion + humaneval": 63,
     "bcb_completion + bcb_ds": 59,
     "bcb + bcb_completion": 54
-   }
+   },
+   "top_groups": [
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/10",
+      "dim1_bcb_v014_BigCodeBench/10",
+      "dim2_bcb_algo2_BigCodeBench/10",
+      "dim4_bcb_completion_BigCodeBench/10"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/20",
+      "dim1_bcb_v014_BigCodeBench/20",
+      "dim2_bcb_algo2_BigCodeBench/20",
+      "dim4_bcb_completion_BigCodeBench/20"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/23",
+      "dim1_bcb_v014_BigCodeBench/23",
+      "dim2_bcb_algo2_BigCodeBench/23",
+      "dim4_bcb_completion_BigCodeBench/23"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/29",
+      "dim1_bcb_v014_BigCodeBench/29",
+      "dim2_bcb_algo2_BigCodeBench/29",
+      "dim4_bcb_completion_BigCodeBench/29"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/34",
+      "dim1_bcb_v014_BigCodeBench/34",
+      "dim2_bcb_algo2_BigCodeBench/34",
+      "dim4_bcb_completion_BigCodeBench/34"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/35",
+      "dim1_bcb_v014_BigCodeBench/35",
+      "dim2_bcb_algo2_BigCodeBench/35",
+      "dim4_bcb_completion_BigCodeBench/35"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/37",
+      "dim1_bcb_v014_BigCodeBench/37",
+      "dim2_bcb_algo2_BigCodeBench/37",
+      "dim4_bcb_completion_BigCodeBench/37"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/39",
+      "dim1_bcb_v014_BigCodeBench/39",
+      "dim2_bcb_algo2_BigCodeBench/39",
+      "dim4_bcb_completion_BigCodeBench/39"
+     ]
+    }
+   ]
   },
   "wrapped": {
    "tasks_hashed": 6264,
@@ -1057,9 +2389,140 @@
     "bcb + bcb_v014": 68,
     "bcb_completion + bcb_ds": 59,
     "bcb + bcb_completion": 54
-   }
+   },
+   "top_groups": [
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/10",
+      "dim1_bcb_v014_BigCodeBench/10",
+      "dim2_bcb_algo2_BigCodeBench/10",
+      "dim4_bcb_completion_BigCodeBench/10"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/20",
+      "dim1_bcb_v014_BigCodeBench/20",
+      "dim2_bcb_algo2_BigCodeBench/20",
+      "dim4_bcb_completion_BigCodeBench/20"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/23",
+      "dim1_bcb_v014_BigCodeBench/23",
+      "dim2_bcb_algo2_BigCodeBench/23",
+      "dim4_bcb_completion_BigCodeBench/23"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/29",
+      "dim1_bcb_v014_BigCodeBench/29",
+      "dim2_bcb_algo2_BigCodeBench/29",
+      "dim4_bcb_completion_BigCodeBench/29"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/34",
+      "dim1_bcb_v014_BigCodeBench/34",
+      "dim2_bcb_algo2_BigCodeBench/34",
+      "dim4_bcb_completion_BigCodeBench/34"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/35",
+      "dim1_bcb_v014_BigCodeBench/35",
+      "dim2_bcb_algo2_BigCodeBench/35",
+      "dim4_bcb_completion_BigCodeBench/35"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/37",
+      "dim1_bcb_v014_BigCodeBench/37",
+      "dim2_bcb_algo2_BigCodeBench/37",
+      "dim4_bcb_completion_BigCodeBench/37"
+     ]
+    },
+    {
+     "tasks": 5,
+     "families": [
+      "bcb",
+      "bcb_algo2",
+      "bcb_completion",
+      "bcb_ds",
+      "bcb_v014"
+     ],
+     "examples": [
+      "dim1_bcb_BigCodeBench/39",
+      "dim1_bcb_v014_BigCodeBench/39",
+      "dim2_bcb_algo2_BigCodeBench/39",
+      "dim4_bcb_completion_BigCodeBench/39"
+     ]
+    }
+   ]
   }
  },
+ "unexpected_content_collisions_eligible": [],
  "upstream_ids": {
   "bcb": 675,
   "bcb_algo2": 111,
@@ -1095,7 +2558,7 @@
  "p0_6": {
   "tasks": 1907,
   "joined": 1907,
-  "wrapped": {
+  "content": {
    "pairs_identical": {
     "dim6_ds1000_138/dim6_ds1000_180": true,
     "dim6_ds1000_137/dim6_ds1000_179": true,
@@ -1122,7 +2585,7 @@
     "code_completion|he": {
      "tasks": 96,
      "problem_also_in_other_cell": 60,
-     "identical_prompt_in_other_cell": 0
+     "identical_prompt_in_other_cell": 60
     },
     "code_completion|mbpp": {
      "tasks": 118,
@@ -1137,7 +2600,7 @@
     "code_generation|humaneval": {
      "tasks": 98,
      "problem_also_in_other_cell": 60,
-     "identical_prompt_in_other_cell": 0
+     "identical_prompt_in_other_cell": 60
     },
     "code_generation|mbpp": {
      "tasks": 218,
@@ -1204,6 +2667,67 @@
      "tasks": 218,
      "problem_also_in_other_cell": 68,
      "identical_prompt_in_other_cell": 68
+    },
+    "data_science|bcb": {
+     "tasks": 12,
+     "problem_also_in_other_cell": 12,
+     "identical_prompt_in_other_cell": 12
+    },
+    "data_science|ds1000": {
+     "tasks": 283,
+     "problem_also_in_other_cell": 0,
+     "identical_prompt_in_other_cell": 0
+    }
+   }
+  },
+  "wrapped": {
+   "pairs_identical": {
+    "dim6_ds1000_138/dim6_ds1000_180": true,
+    "dim6_ds1000_137/dim6_ds1000_179": true,
+    "dim1_mbpp_141/dim1_mbpp_71": true
+   },
+   "small_bcb_identical_in_other_cell": 63,
+   "small_bcb_tasks": 67,
+   "overlap_by_cell": {
+    "algorithm|bcb": {
+     "tasks": 29,
+     "problem_also_in_other_cell": 28,
+     "identical_prompt_in_other_cell": 28
+    },
+    "code_completion|bcb": {
+     "tasks": 26,
+     "problem_also_in_other_cell": 23,
+     "identical_prompt_in_other_cell": 23
+    },
+    "code_completion|cruxeval": {
+     "tasks": 792,
+     "problem_also_in_other_cell": 0,
+     "identical_prompt_in_other_cell": 0
+    },
+    "code_completion|he": {
+     "tasks": 96,
+     "problem_also_in_other_cell": 60,
+     "identical_prompt_in_other_cell": 0
+    },
+    "code_completion|mbpp": {
+     "tasks": 118,
+     "problem_also_in_other_cell": 68,
+     "identical_prompt_in_other_cell": 0
+    },
+    "code_generation|bcb": {
+     "tasks": 235,
+     "problem_also_in_other_cell": 48,
+     "identical_prompt_in_other_cell": 48
+    },
+    "code_generation|humaneval": {
+     "tasks": 98,
+     "problem_also_in_other_cell": 60,
+     "identical_prompt_in_other_cell": 0
+    },
+    "code_generation|mbpp": {
+     "tasks": 218,
+     "problem_also_in_other_cell": 68,
+     "identical_prompt_in_other_cell": 0
     },
     "data_science|bcb": {
      "tasks": 12,

@@ -1,17 +1,23 @@
 """Task text for CodeRouterBench ID tasks (S1.5).
 
 CodeRouterBench ships no prompt text for its ID tasks, and publishes no prompt template for
-them. Two text fields are built per task:
+them. Three text fields are built per task:
 
-- `raw_text`, the **router field**: the upstream benchmark's task text with no instruction
-  wrapper (`raw_prompt` in Route Anything's `tasks.jsonl`, or the same field read from the
-  pinned upstream release). The router, every baseline and the cell predictor read this field
-  (user decision, 2026-11-20): the wrapper is not evidence of what the models saw, and it works
-  as a family label, which S4.4 forbids the difficulty predictor.
+- `content_text`, the **router field** (S1.5 addendum A, user decision 2026-11-20): the raw task
+  text plus the task-specific payload, with none of Route Anything's instruction sentences.
+  The payload is the CRUXEval call (`f(...)`), the LiveCodeBench starter code where present, or
+  the MBPP-completion `def` header; every other family has none, so its content is its raw
+  text. Parts are joined by one blank line, with no code fence and no label for any family.
+  `join()` returns this field. The router, every baseline and the cell predictor read it.
+- `raw_text`: the upstream benchmark's task text with no wrapper (`raw_prompt` in Route
+  Anything's `tasks.jsonl`, or the same field read from the pinned upstream release). It drops
+  the payload, so tasks of different kinds can share it (an extra column).
 - `wrapped_prompt`: Route Anything's reconstruction of the prompt (`prompt` in `tasks.jsonl`),
   "Reconstructed replay prompts ... from the original local benchmark snapshots"
   (`inventory.json`). It is kept only to reproduce P0.6. `wrap()` rebuilds it from the raw text
-  for every family, so tasks outside `tasks.jsonl` get the same wrapper.
+  for every family, so tasks outside `tasks.jsonl` get the same wrapper. The instruction
+  sentences are not evidence of what the models saw, and they work as a family label, which
+  S4.4 forbids the difficulty predictor.
 
 Sources, in priority order: `tasks.jsonl` (3,297 tasks), then adapters over the pinned extracts
 in `external/sources/` (`scripts/fetch_data.py`, EXTRACTS). Families with no source are gaps;
@@ -123,6 +129,36 @@ def wrap(family: str, raw: str, *, starter_code: str = "", call_input: str | Non
     raise ValueError(f"no wrapper for family {family!r}")
 
 
+# Every instruction sentence the builders add; content_text contains none of them.
+INSTRUCTIONS: tuple[str, ...] = tuple(sorted(
+    {i for i, _ in FENCED.values()}
+    | {_COMPLETE, _LCB_STDIN, _LCB_METHOD.split("`{method}`")[0], _LCB_TESTGEN, _CRUXEVAL}))
+
+
+def content(family: str, raw: str, *, starter_code: str = "", call_input: str | None = None,
+            def_header: str | None = None) -> str:
+    """The router field: the raw text, then the task's payload, joined by one blank line.
+
+    The payload is the CRUXEval call, the LiveCodeBench starter code (lcb, lcb_testgen) or the
+    MBPP-completion `def` header, each as given (trailing whitespace dropped), with no fence and
+    no label. A family without a payload returns its raw text unchanged.
+    """
+    if family == "cruxeval":
+        if call_input is None:
+            raise ValueError("cruxeval needs call_input")
+        part = call_input
+    elif family == "mbpp_completion":
+        if def_header is None:
+            raise ValueError("mbpp_completion needs def_header")
+        part = def_header
+    elif family in ("lcb", "lcb_testgen"):
+        part = starter_code
+    else:
+        part = ""
+    part = part.rstrip()
+    return f"{raw.rstrip()}\n\n{part}" if part else raw
+
+
 # --- task text -------------------------------------------------------------------------------------
 
 @dataclass(frozen=True)
@@ -134,6 +170,7 @@ class TaskText:
     prompt_source: str           # source and field of raw_text
     upstream_id: str | None
     template: str                # builder name, or "none"
+    content_text: str            # the router field: raw_text plus the task payload
 
 
 def upstream_id(task_id: str, family: str) -> str | None:
@@ -163,16 +200,35 @@ def rebuild_tasks_jsonl_prompt(row: dict) -> str:
     call input and the def header are read back from the prompt itself, so for those two
     families equality shows only that the template around them is constant.
     """
-    fam, p = family_of(row["task_id"]), row["prompt"]
-    kw: dict = {}
+    fam = family_of(row["task_id"])
     if fam in ("lcb", "lcb_testgen"):
         lcb = _index_cached("livecodebench", "question_id")
-        kw["starter_code"] = lcb[upstream_id(row["task_id"], fam)]["starter_code"]
-    elif fam == "cruxeval":
-        kw["call_input"] = re.search(r"\nInput: `(.*)`\nOutput:$", p, re.S).group(1)
-    elif fam == "mbpp_completion":
-        kw["def_header"] = re.search(r"```python\n(.*)\n    \.\.\.\n```$", p, re.S).group(1)
+        kw = {"starter_code": lcb[upstream_id(row["task_id"], fam)]["starter_code"]}
+    else:
+        kw = invert_tasks_jsonl_payload(row)
     return wrap(fam, row["raw_prompt"], **kw)
+
+
+_STARTER_FENCE = "\n\n```python\n"
+
+
+def invert_tasks_jsonl_payload(row: dict) -> dict:
+    """The payload of one tasks.jsonl row, read back from its `prompt` by inverting the builder.
+
+    Returns `wrap()`/`content()` keyword arguments. Exact because the builders rebuild every
+    row byte for byte; `from_tasks_jsonl` asserts the round trip `wrap(raw, payload) == prompt`
+    on each row. lcb starter code read this way has its trailing whitespace dropped (the
+    builder's fence drops it), which `content()` drops too.
+    """
+    fam, p = family_of(row["task_id"]), row["prompt"]
+    if fam == "cruxeval":
+        return {"call_input": re.search(r"\nInput: `(.*)`\nOutput:$", p, re.S).group(1)}
+    if fam == "mbpp_completion":
+        return {"def_header": re.search(r"```python\n(.*)\n    \.\.\.\n```$", p, re.S).group(1)}
+    if fam in ("lcb", "lcb_testgen") and p.endswith("\n```"):
+        i = p.rfind(_STARTER_FENCE)
+        return {"starter_code": p[i + len(_STARTER_FENCE):-len("\n```")]}
+    return {}
 
 
 def _tasks_jsonl_rows() -> list[dict]:
@@ -181,7 +237,8 @@ def _tasks_jsonl_rows() -> list[dict]:
 
 
 def from_tasks_jsonl() -> dict[str, TaskText]:
-    """Every tasks.jsonl row: raw_prompt is the router field, prompt the wrapped one."""
+    """Every tasks.jsonl row: raw_prompt plus the inverted payload is the router field, prompt
+    the wrapped one. Raises if a row's payload does not round-trip through the builder."""
     out: dict[str, TaskText] = {}
     for r in _tasks_jsonl_rows():
         tid, fam = r["task_id"], family_of(r["task_id"])
@@ -189,10 +246,12 @@ def from_tasks_jsonl() -> dict[str, TaskText]:
             raise ValueError(f"tasks.jsonl repeats {tid}")
         if not r["found"] or not r["raw_prompt"] or not r["prompt"]:
             raise ValueError(f"tasks.jsonl row {tid} is not found or has empty text")
-        # An lcb prompt ends in a code fence exactly when the task has starter code.
-        has_starter = "starter" if r["prompt"].endswith("```") else ""
+        payload = invert_tasks_jsonl_payload(r)
+        if wrap(fam, r["raw_prompt"], **payload) != r["prompt"]:
+            raise ValueError(f"tasks.jsonl row {tid}: payload does not round-trip through the builder")
         out[tid] = TaskText(tid, fam, r["raw_prompt"], r["prompt"], f"{TASKS_JSONL_SOURCE}:raw_prompt",
-                            upstream_id(tid, fam), template_name(fam, has_starter))
+                            upstream_id(tid, fam), template_name(fam, payload.get("starter_code", "")),
+                            content(fam, r["raw_prompt"], **payload))
     return out
 
 
@@ -283,12 +342,13 @@ def adapter_text(task_id: str, family: str, row: dict) -> TaskText:
     name = ADAPTERS[family][0]
     source, field = SOURCE_FIELDS[name]
     raw = row[field]
+    starter = row.get("starter_code") or ""
     if family in _MULTIPL_E_LANG:
         wrapped, template = None, "none"
     else:
-        starter = row.get("starter_code") or ""
         wrapped, template = wrap(family, raw, starter_code=starter), template_name(family, starter)
-    return TaskText(task_id, family, raw, wrapped, f"{source}:{field}", upstream_id(task_id, family), template)
+    return TaskText(task_id, family, raw, wrapped, f"{source}:{field}", upstream_id(task_id, family),
+                    template, content(family, raw, starter_code=starter))
 
 
 def adapter_texts() -> dict[str, TaskText]:
@@ -311,22 +371,24 @@ def adapter_texts() -> dict[str, TaskText]:
 
 
 def join(task_ids) -> pd.Series:
-    """Raw task text (the router field) per task id; None where no source covers the task."""
+    """Task content (the router field) per task id; None where no source covers the task."""
     texts = task_texts()
-    return pd.Series({tid: (texts[tid].raw_text if tid in texts else None) for tid in task_ids}, dtype=object)
+    return pd.Series({tid: (texts[tid].content_text if tid in texts else None) for tid in task_ids},
+                     dtype=object)
 
 
 def sha256_text(text: str | None) -> str | None:
     return None if text is None else hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-TABLE_COLUMNS = ["task_id", "family", "split_kind", "split", "prompt_source", "raw_sha256",
-                 "prompt_sha256", "joined", "upstream_id", "template"]
+TABLE_COLUMNS = ["task_id", "family", "split_kind", "split", "prompt_source", "content_sha256",
+                 "raw_sha256", "prompt_sha256", "joined", "upstream_id", "template"]
 
 
 def prompt_table() -> pd.DataFrame:
-    """One row per task in the family table: where its text comes from and the hashes of both
-    fields. `prompt_sha256` hashes the wrapped prompt (P0.6 reproduction only)."""
+    """One row per task in the family table: where its text comes from and the hashes of the
+    three fields. `content_sha256` hashes the router field; `prompt_sha256` hashes the wrapped
+    prompt (P0.6 reproduction only)."""
     texts = task_texts()
     rows = []
     for r in load_table().itertuples(index=False):
@@ -334,6 +396,7 @@ def prompt_table() -> pd.DataFrame:
         rows.append({
             "task_id": r.task_id, "family": r.family, "split_kind": r.split_kind, "split": r.split,
             "prompt_source": t.prompt_source if t else None,
+            "content_sha256": sha256_text(t.content_text) if t else None,
             "raw_sha256": sha256_text(t.raw_text) if t else None,
             "prompt_sha256": sha256_text(t.wrapped_prompt) if t else None,
             "joined": t is not None,

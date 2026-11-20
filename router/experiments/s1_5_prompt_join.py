@@ -4,15 +4,18 @@
 Every number in the S1.5 Outcome comes from this script, run on the pinned data
 (`scripts/fetch_data.py`). It reports:
 
-  1. join rate for ID families (family table `split_kind == "id"`): per family, per split,
-     overall, against the S1 gate's 95%, with the reason for every family below it;
+  1. join rate per family, per split and overall against the S1 gate's 95%, on S1.4's eligible
+     pool (the gate, addendum A) and on all ID families (family table `split_kind == "id"`),
+     with the reason for every family below it;
   2. OOD families, listed separately (not joined here);
   3. tasks.jsonl split against the family table split;
   4. the builders against all tasks.jsonl prompts, and each adapter against tasks.jsonl on the
-     overlap, for the raw text and the wrapped prompt;
-  5. tasks sharing a hash, within and across families, for both fields;
+     overlap, for the content, the raw text and the wrapped prompt;
+  5. tasks sharing a hash, within and across families, for all three fields, on the eligible
+     pool and on all ID tasks, with the largest groups; and any cross-family content collision
+     among eligible families outside the allowed sets (exit status 2 if there is one);
   6. P0.6 reproduction on its complete-case headline set (1,907 tasks): all join, the three
-     byte-identical pairs, and the identical-prompt counts per cell, for both fields.
+     byte-identical pairs, and the identical-prompt counts per cell, for all three fields.
 
 Output: router/experiments/out/s1_5_prompt_join.json.
 """
@@ -32,6 +35,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from router.data import prompts as P  # noqa: E402
+from router.data.scoring import eligible_families  # noqa: E402
 from router.data.sources import family_of  # noqa: E402
 
 OUT_JSON = REPO_ROOT / "router/experiments/out/s1_5_prompt_join.json"
@@ -39,10 +43,11 @@ GATE = 0.95
 P0_6_PAIRS = [("dim6_ds1000_138", "dim6_ds1000_180"), ("dim6_ds1000_137", "dim6_ds1000_179"),
               ("dim1_mbpp_141", "dim1_mbpp_71")]
 SMALL_BCB_CELLS = ("algorithm|bcb", "code_completion|bcb", "data_science|bcb")
+FIELDS = (("content", "content_sha256"), ("raw", "raw_sha256"), ("wrapped", "prompt_sha256"))
 
 
-def join_rates(table: pd.DataFrame) -> dict:
-    idt = table[table.split_kind == "id"]
+def join_rates(idt: pd.DataFrame) -> dict:
+    """Join rate per family and split over the given ID tasks."""
     fams = {}
     for fam, g in idt.groupby("family"):
         n, j = len(g), int(g.joined.sum())
@@ -88,8 +93,10 @@ def source_checks() -> dict:
     for tid, a in ad.items():
         if tid not in jl:
             continue
-        e = overlap.setdefault(a.family, {"overlap": 0, "raw_equal": 0, "wrapped_equal": 0, "raw_differs": []})
+        e = overlap.setdefault(a.family, {"overlap": 0, "content_equal": 0, "raw_equal": 0, "wrapped_equal": 0,
+                                          "raw_differs": []})
         e["overlap"] += 1
+        e["content_equal"] += a.content_text == jl[tid].content_text
         e["raw_equal"] += a.raw_text == jl[tid].raw_text
         e["wrapped_equal"] += a.wrapped_prompt == jl[tid].wrapped_prompt
         if a.raw_text != jl[tid].raw_text:
@@ -105,13 +112,15 @@ def source_checks() -> dict:
             "adapter_overlap": overlap, "adapter_tasks_by_family": dict(adapter_cover)}
 
 
-def shared_hashes(table: pd.DataFrame, col: str) -> dict:
-    j = table[table.joined & table[col].notna() & (table.split_kind == "id")]
+def shared_hashes(idt: pd.DataFrame, col: str, top: int = 8) -> dict:
+    """Tasks sharing a hash of one field, within one family and across families, over the given
+    ID tasks; with the largest groups."""
+    j = idt[idt.joined & idt[col].notna()]
     groups = j.groupby(col)
-    multi = {h: g for h, g in groups if len(g) > 1}
+    multi = [g for _, g in groups if len(g) > 1]
     within = Counter(); across = Counter(); across_pairs = Counter()
     tasks_within = tasks_across = 0
-    for g in multi.values():
+    for g in multi:
         fams = sorted(set(g.family))
         if len(fams) == 1:
             within[fams[0]] += 1
@@ -122,10 +131,32 @@ def shared_hashes(table: pd.DataFrame, col: str) -> dict:
             for i, a in enumerate(fams):
                 for b in fams[i + 1:]:
                     across_pairs[f"{a} + {b}"] += 1
+    biggest = sorted(multi, key=lambda g: (-len(g), g.task_id.min()))[:top]
     return {"tasks_hashed": len(j), "distinct_hashes": j[col].nunique(),
             "hashes_shared_within_one_family": dict(within), "tasks_in_within_family_groups": tasks_within,
             "hashes_shared_across_families": dict(across.most_common()), "tasks_in_across_family_groups": tasks_across,
-            "family_pairs_sharing_a_hash": dict(across_pairs.most_common())}
+            "family_pairs_sharing_a_hash": dict(across_pairs.most_common()),
+            "top_groups": [{"tasks": len(g), "families": sorted(set(g.family)), "examples": sorted(g.task_id)[:4]}
+                           for g in biggest]}
+
+
+# Families whose tasks may share content across families (addendum A): BigCodeBench prompts reused
+# across dimensions, and HumanEval variants of the same problem. Any other cross-family content
+# collision among eligible families is a stop-and-report.
+ALLOWED_CONTENT_SHARING = (
+    frozenset({"bcb", "bcb_algo2", "bcb_completion", "bcb_ds", "bcb_v014"}),
+    frozenset({"humaneval", "he_completion", "hex_python"}),
+)
+
+
+def unexpected_content_collisions(eligible_idt: pd.DataFrame) -> list[dict]:
+    j = eligible_idt[eligible_idt.joined]
+    out = []
+    for _, g in j.groupby("content_sha256"):
+        fams = set(g.family)
+        if len(fams) > 1 and not any(fams <= ok for ok in ALLOWED_CONTENT_SHARING):
+            out.append({"families": sorted(fams), "tasks": sorted(g.task_id)})
+    return out
 
 
 def p0_6_reproduction(table: pd.DataFrame) -> dict:
@@ -141,7 +172,7 @@ def p0_6_reproduction(table: pd.DataFrame) -> dict:
     names = sorted(set(cells))
     out = {"tasks": len(ids), "joined": joined}
     by = table.set_index("task_id")
-    for field, col in (("wrapped", "prompt_sha256"), ("raw", "raw_sha256")):
+    for field, col in FIELDS:
         hashes = by[col].reindex(ids).values
         ov = p6.prompt_overlap(cc, cells, hashes, names)
         small = {c: ov[c] for c in SMALL_BCB_CELLS}
@@ -159,44 +190,57 @@ def main(argv=None) -> int:
     ap.add_argument("--out", type=Path, default=OUT_JSON)
     a = ap.parse_args(argv)
     table = P.prompt_table()
+    idt = table[table.split_kind == "id"]
+    eligible = eligible_families()
+    elt = idt[idt.family.isin(eligible)]
     rep = {
-        "join": join_rates(table),
+        "eligible_families": eligible,
+        "join_eligible": join_rates(elt),
+        "join": join_rates(idt),
         "ood": ood(table),
         "split_agreement": split_agreement(table),
         "sources": source_checks(),
-        "shared_hashes": {"raw": shared_hashes(table, "raw_sha256"), "wrapped": shared_hashes(table, "prompt_sha256")},
-        "upstream_ids": {f: int(g.upstream_id.notna().sum()) for f, g in table[table.split_kind == "id"].groupby("family")},
+        "shared_hashes_eligible": {f: shared_hashes(elt, col) for f, col in FIELDS},
+        "shared_hashes": {f: shared_hashes(idt, col) for f, col in FIELDS},
+        "unexpected_content_collisions_eligible": unexpected_content_collisions(elt),
+        "upstream_ids": {f: int(g.upstream_id.notna().sum()) for f, g in idt.groupby("family")},
         "p0_6": p0_6_reproduction(table),
     }
     a.out.parent.mkdir(parents=True, exist_ok=True)
     a.out.write_text(json.dumps(rep, indent=1, default=int) + "\n")
 
-    j = rep["join"]
-    print(f"{'family':18s} {'joined':>7s} {'total':>6s} {'rate':>7s}  probing   id_test")
-    for fam, e in sorted(j["families"].items()):
-        bs = e["by_split"]
-        print(f"{fam:18s} {e['joined']:7d} {e['total']:6d} {e['rate']:7.1%}  "
-              f"{'%d/%d' % tuple(bs.get('probing', (0, 0))):9s} {'%d/%d' % tuple(bs.get('id_test', (0, 0)))}"
-              f"{'' if e['meets_gate'] else '  < 95%'}")
-    print(f"ID overall: {j['overall']['joined']}/{j['overall']['total']} = {j['overall']['rate']:.1%}; "
-          + "; ".join(f"{s} {v['joined']}/{v['total']} = {v['rate']:.1%}" for s, v in j["by_split"].items()))
+    for label, key in (("eligible pool", "join_eligible"), ("all ID tasks", "join")):
+        j = rep[key]
+        print(f"-- {label}\n{'family':18s} {'joined':>7s} {'total':>6s} {'rate':>7s}  probing   id_test")
+        for fam, e in sorted(j["families"].items()):
+            bs = e["by_split"]
+            print(f"{fam:18s} {e['joined']:7d} {e['total']:6d} {e['rate']:7.1%}  "
+                  f"{'%d/%d' % tuple(bs.get('probing', (0, 0))):9s} {'%d/%d' % tuple(bs.get('id_test', (0, 0)))}"
+                  f"{'' if e['meets_gate'] else '  < 95%'}")
+        print(f"{label} overall: {j['overall']['joined']}/{j['overall']['total']} = {j['overall']['rate']:.1%}; "
+              + "; ".join(f"{s} {v['joined']}/{v['total']} = {v['rate']:.1%}" for s, v in j["by_split"].items()))
     s = rep["sources"]
     print(f"builders: {s['builders']['rebuilt']}/{s['builders']['rows']} tasks.jsonl prompts rebuilt")
     for fam, e in sorted(s["adapter_overlap"].items()):
-        print(f"adapter {fam}: overlap {e['overlap']}, raw equal {e['raw_equal']}, wrapped equal {e['wrapped_equal']}")
+        print(f"adapter {fam}: overlap {e['overlap']}, content equal {e['content_equal']}, "
+              f"raw equal {e['raw_equal']}, wrapped equal {e['wrapped_equal']}")
     print(f"split agreement: {rep['split_agreement']['mismatches']} mismatches in {rep['split_agreement']['rows']} rows")
     p = rep["p0_6"]
     print(f"P0.6 complete-case set: {p['joined']}/{p['tasks']} joined")
-    for field in ("wrapped", "raw"):
+    for field, _ in FIELDS:
         q = p[field]
         print(f"  {field}: pairs {q['pairs_identical']}; small bcb identical in other cell "
               f"{q['small_bcb_identical_in_other_cell']}/{q['small_bcb_tasks']}")
-    for field in ("raw", "wrapped"):
-        h = rep["shared_hashes"][field]
-        print(f"shared {field} hashes: {h['tasks_hashed']} tasks, {h['distinct_hashes']} distinct; "
-              f"within-family groups hold {h['tasks_in_within_family_groups']} tasks, "
-              f"across-family groups {h['tasks_in_across_family_groups']}")
+    for scope, key in (("eligible", "shared_hashes_eligible"), ("all ID", "shared_hashes")):
+        for field, _ in FIELDS:
+            h = rep[key][field]
+            print(f"shared {field} hashes ({scope}): {h['tasks_hashed']} tasks, {h['distinct_hashes']} distinct; "
+                  f"within-family groups hold {h['tasks_in_within_family_groups']} tasks, "
+                  f"across-family groups {h['tasks_in_across_family_groups']}")
+    bad = rep["unexpected_content_collisions_eligible"]
+    print(f"unexpected cross-family content collisions among eligible families: {len(bad)}")
     print(f"wrote {a.out}")
+    return 2 if bad else 0
     return 0
 
 
