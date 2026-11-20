@@ -15,7 +15,7 @@
 | Field | Value |
 |---|---|
 | Current stage | **Pre-S0 — requirements before S0** (§4) |
-| Next action | P0.6: the oracle-on-no-signal bound against CellBest (S0.3(c)); then P0.4 (`docs/CLAIMS.md`). P0.1–P0.3 and P0.5 done |
+| Next action | P0.4: write `docs/CLAIMS.md` (S0.1–S0.14), the constants in `router/settings.py`, and port the power scripts. P0.1–P0.3, P0.5 and P0.6 done |
 | Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: none yet · Write-up: Report 8 |
 | Last updated | 2026-11-19 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
@@ -99,7 +99,7 @@ C1–C4 are each **partly covered**; none is fully covered. Under S0.14 the orde
 | DP | Where | Test | Consequence |
 |---|---|---|---|
 | DP1a | End of S3 | **Accuracy:** headroom of the oracle and of cross-fitted DimensionBest over the best single model, on the **full** artefact-filtered eligible pool (not the development split: the oracle needs no fitting and a cross-fitted lookup table is not router development, so no leak; the development split alone, about 690 tasks, would leave the test weak). Passes if the lower end of the 95% cluster-bootstrap CI is ≥ 3.0 AvgPerf points | No: C4 leads the accuracy story |
-| DP1b | End of S3 (S3.2) | **Cost (feasibility upper bound):** does the **oracle-on-no-signal bound** meet S0.3 on point estimates on the headline set, with verifier cost included: saving ≥ 20% and acceptance gap ≥ −2 points against the best single model, **and** saving > 0 and gap ≥ −2 points against CellBest with predicted cells (S0.3(c))? In the bound, cascades use the real verifier where visible tests exist and an oracle accept-or-escalate decision on cells with no verifier signal. Fixed ladders cannot pass by construction (S3.2), so they are not the test. Also report the gap the learned router must close (provisional: about 11 points against the best single model, P0.5; against CellBest, P0.6) | No: the bound misses the gate, so stop and bring it to the user before S4 (LLMRouterBench becomes a candidate primary corpus for C1 and C2). A failed DP1b means the tested policies have not shown economic feasibility; it does not prove a learned policy cannot succeed, so the pause is a reassessment, not a verdict. This half decides the economic claim |
+| DP1b | End of S3 (S3.2) | **Cost (feasibility upper bound):** does the **oracle-on-no-signal bound** meet S0.3 on point estimates on the headline set, with verifier cost included: saving ≥ 20% and acceptance gap ≥ −2 points against the best single model, **and** saving > 0 and gap ≥ −2 points against CellBest with predicted cells (S0.3(c))? In the bound, cascades use the real verifier where visible tests exist and an oracle accept-or-escalate decision on cells with no verifier signal. Fixed ladders cannot pass by construction (S3.2), so they are not the test. Also report the gap the learned router must close (provisional: about 11 points against the best single model, P0.5; against CellBest with predicted cells (P0.6, seed 0): the bound meets (c) on point estimates (per-cell Rule A: 36.6% saving, +1.6 points; Rule B: 16.4%, +8.1). The best policy without an oracle (per-cell Rule A, no-signal cells escalated) reaches 3.3%, +0.3. The learned no-signal decision must recover the difference, about 33 points of saving at similar acceptance) | No: the bound misses the gate, so stop and bring it to the user before S4 (LLMRouterBench becomes a candidate primary corpus for C1 and C2). A failed DP1b means the tested policies have not shown economic feasibility; it does not prove a learned policy cannot succeed, so the pause is a reassessment, not a verdict. This half decides the economic claim |
 | DP2 | During S5 | Does the hierarchical model beat k-matched DimensionBest **in routing units** (AvgPerf, cost) at a k in the fixed grid {10, 25, 50, 100}, on the development split? | No: the routing model is the shrunk lookup table, and IRT is reported as an ablation |
 | DP3 | S6 pilot | Is the routing gap on the live pool (free models plus the paid top model) more than twice the run-to-run standard deviation, measured on the pilot's ≥ 2 runs per task? | No: live work is reported as a verifier study and a transfer test, not as a routing win |
 
@@ -294,15 +294,20 @@ before P0.4); S0 cannot be signed off until P0.1–P0.6 are done.
       25.2], gap +3.0 [+1.5, +4.5]), with the saving's lower bound less than one point above 20%.
       This led to S0.3(c). IRT-Router read: it onboards from a text profile with no outcomes, so
       it does not cover C1 (P0.1 §7).
-- [ ] **P0.6 Feasibility against CellBest (before P0.4).** On the complete-case headline set
-      (1,907 tasks), extending the P0.5 script: compute the oracle-on-no-signal bound and the two
-      bracketed fixed cascades against CellBest as well as against the best single model, for
-      (i) the P0.5 fixed ladders and (ii) ladders chosen per cell on the training folds. Use
-      CellBest with predicted cells if a cell predictor can be built from the prompts at low
-      effort; otherwise use true cells (the stronger baseline, so the conservative choice) and
-      state which. Report the saving and gap against CellBest for each, and the paired CI
-      half-width against CellBest as a first power estimate for S0.3(c). Output: whether
-      S0.3(c) is reachable in principle, before S0.3 goes into `CLAIMS.md`. Provisional only.
+- [x] **P0.6 Feasibility against CellBest (before P0.4).** Done 2026-11-19 (merged `36c3371`):
+      `docs/research/P0.6_cellbest_bound.md`, script `router/experiments/p0_6_cellbest_bound.py`
+      (output `router/experiments/out/p0_6_cellbest_bound.json`). P0.5 reproduces exactly. Cell
+      predictor from prompt text only (TF-IDF and logistic regression inside the cross-fit):
+      96.2% held-out accuracy. All errors are in the three small bcb cells, whose prompts are
+      byte-identical to prompts in other cells for 63 of 67 tasks, and between the HumanEval and
+      MBPP cells. CellBest with predicted cells saves 18.2% [16.4, 20.2] at a gap of +2.9
+      [+1.5, +4.3] against Opus (true cells: 22.9%, +3.0). DP1b on point estimates, seed 0: the
+      oracle-on-no-signal bound meets S0.3(c) with fixed ladders (7 of 84; the best, an
+      in-sample pick, saves 24.7% at −0.6 against CellBest) and with per-cell choice fitted in
+      training folds (Rule A: 36.6%, +1.6; Rule B: 16.4%, +8.1), on all five seeds. Per-cell
+      choice without an oracle also meets (c) on point estimates (1.7% to 3.3%, gap −0.3 to
+      +0.3) and is now an R2 baseline. Gap CI half-width against CellBest: 0.3 to 2.3 points
+      depending on the policy.
 
 The remaining requirements are placed in the stage that needs them, in priority order:
 
@@ -375,7 +380,9 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       complete-case headline set Opus scores 67.3%, gpt-5.4 53.2% and qwen3.5-plus 42.2%; Opus is
       the best model in every training fold. Power: recomputed in S3.7 on the final population;
       the user chose on 2026-11-19 to keep −2 and report the power with the result, even if it is
-      about 60–70%. Power for (c) is first estimated in P0.6.
+      about 60–70%. First estimate for (c) (P0.6): gap CI half-width 0.3–1.8 points against
+      CellBest; a router that departs from CellBest as much as the bound policies needs a point
+      gap of about −0.2 or better.
 - [ ] **S0.4 Research gate.** Every decision point and contribution ends in a verdict (holds,
       fails, not reached) with quoted evidence. A negative verdict passes this gate.
 - [ ] **S0.5 k and label source.** k is the number of calls made to the new model. Every
@@ -413,6 +420,10 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       are resampled together (cluster by task). A seed means the fold assignment plus the stream
       order plus the probe draw; gates use a single pre-registered seed, and the other four seeds
       are reported next to it. Leave-one-model-out results are shown per model, never pooled.
+      A point estimate that clears its threshold on the gate seed is reported as **at the
+      threshold** when it falls to the threshold or below on another seed, when its CI lower
+      bound is at or below the threshold, or when its margin is under 0.1 points (adopted from
+      P0.6 on 2026-11-19).
 - [ ] **S0.9 Live pool and budget.** The live ladder needs steps in both price and ability, and
       models the router has not seen:
 
@@ -532,7 +543,9 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       per family.
 - [ ] S1.6 `data/splits.py` (new): `problem_id` taken from the source-benchmark ids in the S1.1
       table (HumanEval, MBPP and BigCodeBench variants linked; `lcb` linked to `lcb_testgen` through
-      `tasks.jsonl`), with prompt matching as a cross-check only. The development split and the
+      `tasks.jsonl`), with prompt matching as a cross-check only. Tasks with byte-identical
+      prompts are merged into one problem even when their source ids differ (P0.6 found three
+      pairs: `ds1000_138`/`180`, `ds1000_137`/`179`, `mbpp_141`/`71`). The development split and the
       five outer folds by problem (S0.6), with recorded seeds, and an automated split-integrity
       test that fails if any problem id appears in two of them (R13). Recount the second review's
       figure of 643 of 1,430 joined test tasks sharing prompt text with the probing split.
@@ -550,7 +563,9 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       For BigCodeBench there is execution evidence already: Route Anything's local re-run passed
       91 of 318 recorded responses (`experiments/grading_diagnostic`). Also audit
       `code_generation|mbpp` (218 headline tasks): under success = 1.0 Opus passes 22.0% and every
-      other model 11.0% or less, against 75–81% on the MBPP completion cell (P0.5).
+      other model 11.0% or less, against 75–81% on the MBPP completion cell (P0.5). Also check
+      whether the 63 bcb tasks whose prompt is identical to a task in another dimension score
+      differently for the same model (P0.6).
 - [ ] S1.8 `data/llmrouterbench.py` [M1.7]: code subsets; drop zero-cost models from economic
       metrics. Validate the loader early, so it is ready if DP1b makes it the primary corpus.
 - [ ] S1.9 `data/phase5.py` [M1.8]: read-only loader (R5), including the stored raw responses
@@ -616,8 +631,13 @@ not used for any S3 number that feeds a decision.
       | Oracle decides (bound) | 12 | +10.9 points (23.2% saving) |
 
       The bound passes (a) and (b), so they are reachable in principle; the learned prediction must
-      recover about 11 points over the best fixed cascade. Whether the bound also meets S0.3(c)
-      against CellBest is checked in P0.6. Rerun after S1.4 fixes the population. The 1,971-task
+      recover about 11 points over the best fixed cascade. Against CellBest with predicted
+      cells (P0.6, seed 0, point estimates): fixed ladders, 0 / 0 / 7 ladders meet (c) with
+      no-signal cells accepted / escalated / oracle-decided; the best gap at saving > 0 is −16.0 /
+      −16.8 / +10.0 points (the last at a saving of 1.6%, at the threshold). Per-cell choice fitted
+      on training folds meets (c) in all three modes; in the bound, Rule A saves 36.6% at +1.6 and
+      Rule B 16.4% at +8.1. CellBest with predicted cells itself saves 18.2% against the best
+      single model (true cells: 22.9%). Rerun after S1.4 fixes the population. The 1,971-task
       figures with unavailable cells scored as recorded (0 / −13.4, 0 / −14.0, 12 / +10.8) and
       the earlier −1.4 to −1.7 (X13 heuristic) and −6.3 / −8 (old 1,262-task set) figures are
       superseded.
@@ -799,7 +819,8 @@ in the log.
 - **R2 — Always report the simple baselines:** DimensionBest (full and k-matched), cost-aware
   DimensionBest, Route Anything's 21-cell lookup (CellBest) in two variants (true source cells
   as a reference; predicted cells as the S0.3(c) comparator), its zero-loss direct-dispatch route
-  (2611.05275 C.2, Table 10), fixed cascade and always-best. A result without them is not a result.
+  (2611.05275 C.2, Table 10), per-cell choice without an oracle (P0.6 Rules A and B, no-signal
+  cells accepted or escalated), fixed cascade and always-best. A result without them is not a result.
 - **R3 — CPAT always carries an acceptance floor.** Never quote unconstrained CPAT; it picks a
   16.8%-accuracy model.
 - **R4 — Primary evidence comes from execution-scored data only.** Cascade claims use
@@ -838,7 +859,7 @@ in the log.
 | CodeRouterBench headroom is mostly harness artefacts | DP1a/DP1b; C4 leads the accuracy story; LLMRouterBench as primary corpus if DP1b fails |
 | C1 is incremental over UniRoute / ICL-Router | Measure in routing units against k-matched DimensionBest; in-stream learning with stopping is the differentiator; novelty reads in Pre-S0 P0.1 |
 | Prior work covers C1–C4 (P0.1: each partly covered) | §1 reworded; C3 rests on E4, so if E4 cannot be run C3 counts as covered and S0.14 is re-applied; IRT-Router read in P0.5 (does not cover C1) |
-| A lookup table passes S0.3 (a)–(b) on its own (P0.5: CellBest saving 22.9% [20.8, 25.2], gap +3.0 [+1.5, +4.5]; Route Anything's zero-loss route fails on the gap) | S0.3(c): the router must also beat CellBest with predicted cells; P0.6 and DP1b check the bound against CellBest |
+| A lookup table passes S0.3 (a)–(b) on its own (P0.5: CellBest saving 22.9% [20.8, 25.2], gap +3.0 [+1.5, +4.5]; Route Anything's zero-loss route fails on the gap) | S0.3(c): the router must also beat CellBest with predicted cells. P0.6: the bound meets (c) (per-cell Rule A 36.6%, +1.6); per-cell choice without an oracle meets (c) on point estimates and fails (a) on its CI, and is reported under R2 |
 | Little predictive signal within a cell (Route Anything C.5) | S3.3 reports capture against the perfect-information bound before S4; DP1b |
 | In-stream learning has lost to static baselines in one pass (ORACLE E.8, Route Anything C.6) | E1 scored on a single pass with no repeated problem (S0.5); calibration probes as a second mechanism (S0.13) |
 | The real visible-test verifier is weak (15% false-pass where visible tests exist) and absent for about four-fifths of headline cells (80.0% of the complete-case set, provisional, P0.5); the learned router must recover about 11 points over fixed cascades and also beat CellBest (S0.3(c)) | Replay with real verdicts (S0.11); feasibility bound S3.2; power check S3.7; verifier profile S3.6 |
@@ -1345,3 +1366,30 @@ Two further reviews were checked against the data; all fixes approved by the use
 - **Other plan changes:** S0.11 and C2 use the complete-case shares (80.0%); S0.3's example uses
   P0.5 pass rates and drops the "wrong population" argument, which no longer holds under
   success = 1.0; S1.7 adds `code_generation|mbpp` (Opus 22.0%).
+
+### 2026-11-19 (P0.6 feasibility against CellBest)
+
+- **P0.6** merged (`36c3371`): `docs/research/P0.6_cellbest_bound.md`,
+  `router/experiments/p0_6_cellbest_bound.py`. P0.5's numbers reproduce exactly from its own
+  functions; true-cell CellBest recomputed here equals P0.5's to 10⁻⁹. A reviewer re-run gave
+  identical numbers (only the runtime field differs) and 109 tests passed.
+- **Cell predictor** (prompt text only, inside the cross-fit): 96.2% held-out accuracy. The
+  three small bcb cells are not identifiable from the prompt (63 of 67 prompts are identical
+  to prompts in other cells) and are all predicted as code_generation|bcb. All cross-cell
+  identical-prompt groups share one problem id, so they stay in one fold.
+- **Comparator.** CellBest with predicted cells: 70.2%, 4.41 m$ per task; saving 18.2%
+  [16.4, 20.2] and gap +2.9 against Opus, below S0.3(a)'s 20% on point estimates on all seeds.
+- **DP1b, point estimates:** the oracle bound meets S0.3(c) with fixed ladders (7 of 84, best
+  an in-sample pick at 24.7% / −0.6) and with per-cell choice (Rule A 36.6% / +1.6, Rule B
+  16.4% / +8.1), on all five seeds.
+- **No-oracle per-cell choice** (real verdicts only) meets (c) on point estimates at 1.7% to
+  3.3% saving; Rule B with no-signal cells accepted is at the threshold. Rule A with no-signal
+  cells escalated also meets (a) and (b) on point estimates (20.9%, +3.1) but fails (a) on its CI
+  (lower bound 18.8%). The learned no-signal decision's headroom against CellBest is about 33
+  points of saving (3.3% without an oracle against 36.6% in the bound).
+- **Power for (c):** gap CI half-width against CellBest 0.3 to 2.3 points, growing with how far
+  the policy's routing departs from CellBest.
+- **Plan changes (approved by the user):** DP1b states the headroom against CellBest; R2 adds
+  per-cell choice without an oracle; S0.3 adds the power note for (c); S0.8 adopts the "at the
+  threshold" rule; S1.6 merges byte-identical prompts into one problem (three pairs found);
+  S1.7 checks the identical-prompt bcb tasks; S3.2 adds the CellBest results. Next: P0.4.
