@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **Signed off by the user on 2026-11-20** (S0 Gate). In force |
+| Status | **Signed off by the user on 2026-11-20** (S0 Gate). In force; amended 2026-11-20 ([Amendments](#amendments)) |
 | Date | Drafted 2026-11-20 (P0.4); signed off 2026-11-20 with the decisions in [Sign-off decisions](#sign-off-decisions-2026-11-20) |
 | Written from | `docs/IMPLEMENTATION_PLAN.md` at commit `1921063` (§1, §2, S0.1–S0.14, §6) |
 | Constants | `router/settings.py`, section "Claim constants (docs/CLAIMS.md)"; checked by `tests/router/test_claims_constants.py` |
@@ -86,12 +86,13 @@ this gate (S0.4, §1).
 - Cost = model tokens × published price (source URL and access date in `router/data/prices.py`)
   + verifier runs + retries + probe calls, spread over the stream. Actual spend is not the metric
   (R7, R15).
-- **Verifier runs** are reported as a count and in dollars: the X13 mean visible-test run time,
-  **0.074 s per run** (`VERIFIER_RUN_S`), priced at a published on-demand cloud vCPU-hour rate,
-  about **$10⁻⁶ per run** (`VERIFIER_RUN_USD`), swept at **×1, ×10, ×100**
-  (`VERIFIER_COST_SWEEP`). Rate basis: on-demand serverless pricing as used by Route Anything
-  (AWS Lambda; 2611.05275 C.4). The URL, access date and the recomputed per-run value are recorded
-  in `router/data/prices.py` in S1.10 (O11).
+- **Verifier runs** are reported as a count and in dollars: the X13 mean visible-test run time
+  over the cells where a verifier ran, **0.200 s per run** (`VERIFIER_RUN_S`), priced on Route
+  Anything's serverless basis (AWS Lambda x86, 2 GB, us-east-1, plus the per-request charge;
+  2611.05275 C.4), about **$6.9 × 10⁻⁶ per run** (`VERIFIER_RUN_USD`), swept at **×1, ×10,
+  ×100** (`VERIFIER_COST_SWEEP`). The URL, access date and the recomputation are in
+  `router/data/prices.py` (S1.10, O11). Amended 2026-11-20 (amendment A1): the signed-off
+  0.074 s and $10⁻⁶ averaged in the cells with no visible tests as 0 s.
 - Probe cost is spread over the number of tasks scored; the break-even stream length is reported.
 - A price-sensitivity sweep is run on every headline number: each model's price ×0.5 and ×2, one
   model at a time, and the range is reported (`PRICE_SWEEP`; O13).
@@ -299,8 +300,8 @@ were decided at sign-off (O-numbers in the note column).
 | Name | Value | Source | Note |
 |---|---|---|---|
 | `SUCCESS_SCORE` | 1.0 | S0.1 | Success = all tests pass |
-| `VERIFIER_RUN_S` | 0.074 s | S0.2 | X13 mean visible-test run time |
-| `VERIFIER_RUN_USD` | $10⁻⁶ | S0.2 | Rate basis recorded in S1.10 (O11) |
+| `VERIFIER_RUN_S` | 0.200 s | S0.2 | X13 mean visible-test run time over cells where a verifier ran (amendment A1) |
+| `VERIFIER_RUN_USD` | $6.9 × 10⁻⁶ | S0.2 | Lambda x86, 2 GB, plus per-request charge (O11; amendment A1) |
 | `VERIFIER_COST_SWEEP` | ×1, ×10, ×100 | S0.2 | |
 | `PRICE_SWEEP` | ×0.5, ×2 | S0.2 | Each model's price, one at a time (O13) |
 | `GATE_SAVING` | 20% | S0.3(a) | Lower bound ≥ |
@@ -384,3 +385,12 @@ recommendation on every item on 2026-11-20. The draft's quotes are in git histor
 | O17 | Paired (a) | Yes |
 | O18 | DP1a headroom | Cross-fitted DimensionBest must clear 3.0; the oracle is the ceiling. Provisionally (P0.4) DimensionBest is +1.45 [0.68, 2.23], so DP1a would fail and C4 would lead the accuracy story; the verdict is taken at the end of S3 |
 | O19 | Bar for C2 | S0.3 unchanged. C2 and SC2 must beat per-cell Rule A with no-signal cells escalated at matched acceptance, because that buildable policy passes all of S0.3 on the evaluation population (P0.4 §3.2) |
+
+## Amendments
+
+Changes after sign-off, each approved by the user and logged in the plan's progress log (Change
+rule above).
+
+| # | Date | Change | Reason | Re-scoring |
+|---|---|---|---|---|
+| A1 | 2026-11-20 | `VERIFIER_RUN_S` 0.074 s → 0.200 s; `VERIFIER_RUN_USD` $10⁻⁶ → $6.9 × 10⁻⁶ (S0.2) | S1.10 (batch A2) found that 0.074 s is the X13 `w1_sec` mean over all cells, counting the 80% of cells with no visible tests as 0 s; no verifier runs there and none is charged. Over the cells where a verifier ran the mean is 0.200 s, which costs $6.87 × 10⁻⁶ on the O11 basis. The old value also came from a vCPU-hour rate, not the O11 basis ($2.67 × 10⁻⁶ at 0.074 s) | The P0.5, P0.6 and E0 records keep $10⁻⁶ and are labelled so. Every result from S3 on uses the amended value. A verifier run is about 3% of the cheapest model's mean cost per task and 0.1% of Opus's; the ×10 sweep already covered the amended value |

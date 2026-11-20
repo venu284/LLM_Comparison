@@ -98,8 +98,15 @@ def test_method_reproduces_route_anything_sandbox_cost():
 
 
 def test_claim_constants_untouched():
-    assert settings.VERIFIER_RUN_USD == 1e-6
+    assert settings.VERIFIER_RUN_USD == 6.9e-6          # CLAIMS amendment A1
     assert settings.PAID_TOP_PRICE_USD_PER_MTOK == (5.0, 25.0)
+
+
+def test_verifier_constant_matches_the_o11_recompute():
+    # Amendment A1: the constant is the Lambda recompute at VERIFIER_RUN_S, rounded to 2 figures.
+    r = pr.verifier_run_cost()
+    assert r["per_run_usd"] == pytest.approx(settings.VERIFIER_RUN_USD, rel=1e-2)
+    assert not r["outside_x0.5_x2"]
 
 
 @pytest.mark.skipif(not HAVE_LONG, reason="external data not fetched")

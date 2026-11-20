@@ -14,8 +14,8 @@ CLAIMS_MD = S.REPO_ROOT / "docs" / "CLAIMS.md"
 # Name -> value as written in docs/IMPLEMENTATION_PLAN.md (source item in the comment).
 DOCUMENTED = {
     "SUCCESS_SCORE": 1.0,                     # S0.1
-    "VERIFIER_RUN_S": 0.074,                  # S0.2
-    "VERIFIER_RUN_USD": 1e-6,                 # S0.2
+    "VERIFIER_RUN_S": 0.200,                  # S0.2 (amendment A1)
+    "VERIFIER_RUN_USD": 6.9e-6,               # S0.2 (amendment A1)
     "VERIFIER_COST_SWEEP": (1, 10, 100),      # S0.2
     "PRICE_SWEEP": (0.5, 2.0),                # S0.2 (O13)
     "GATE_SAVING": 20.0,                      # S0.3(a)
@@ -74,9 +74,19 @@ def test_claims_table_names_exist_in_settings():
 
 @pytest.mark.parametrize("name,module", [
     ("GATE_SAVING", rc), ("GATE_GAP", rc), ("N_FOLDS", rc), ("N_SEEDS", rc), ("GATE_SEED", rc),
-    ("VERIFIER_RUN_USD", rc), ("C_SAVING", cb), ("C_GAP", cb)])
+    ("C_SAVING", cb), ("C_GAP", cb)])
 def test_p0_5_and_p0_6_used_the_same_constants(name, module):
     assert getattr(module, name) == getattr(S, name)
+
+
+# The P0.5, P0.6 and E0 records were computed before amendment A1 (docs/CLAIMS.md) changed the
+# verifier rate; they keep the value they used, and S3 re-scores on the current constant.
+P0_RECORD_VERIFIER_RUN_USD = 1e-6
+
+
+def test_p0_records_keep_the_pre_amendment_verifier_rate():
+    assert rc.VERIFIER_RUN_USD == P0_RECORD_VERIFIER_RUN_USD
+    assert S.VERIFIER_RUN_USD != P0_RECORD_VERIFIER_RUN_USD
 
 
 def test_e0_power_used_the_signed_off_development_seed():

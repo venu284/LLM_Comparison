@@ -34,11 +34,14 @@ BENCHMARK_DIR = REPO_ROOT / "benchmark"
 # S0.1 Acceptance: success means all tests pass (released score = 1.0).
 SUCCESS_SCORE = 1.0
 
-# S0.2 Cost: verifier runs priced at the X13 mean visible-test run time on a
-# published on-demand rate (about $1e-6 per run; the rate basis is recorded with
-# its source and date in router/data/prices.py in S1.10, O11), swept x1, x10, x100.
-VERIFIER_RUN_S = 0.074
-VERIFIER_RUN_USD = 1e-6
+# S0.2 Cost: verifier runs priced at the X13 mean visible-test run time over the
+# cells where a verifier ran (0.200 s; the earlier 0.074 s averaged in the cells
+# with no visible tests as 0 s), on AWS Lambda x86, 2 GB, us-east-1, plus the
+# per-request charge (O11; source and date in router/data/prices.py), about
+# $6.9e-6 per run, swept x1, x10, x100. Amended 2026-11-20 (CLAIMS amendment A1);
+# the P0.5, P0.6 and E0 records used the earlier $1e-6.
+VERIFIER_RUN_S = 0.200
+VERIFIER_RUN_USD = 6.9e-6
 VERIFIER_COST_SWEEP = (1, 10, 100)
 # S0.2 price-sensitivity sweep (O13): each model's price x0.5 and x2, one model at a time.
 PRICE_SWEEP = (0.5, 2.0)

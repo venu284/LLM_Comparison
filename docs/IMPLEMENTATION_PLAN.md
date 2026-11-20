@@ -15,7 +15,7 @@
 | Field | Value |
 |---|---|
 | Current stage | **S1 — Validate data** (§4). Pre-S0 and S0 done; `docs/CLAIMS.md` signed off 2026-11-20 |
-| Next action | S1 batches A1 (S1.1–S1.3) and A2 (S1.11, S1.10, S1.9) in parallel, then B, then C (order under S1 in §4). `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Next action | S1 batch B: S1.4 and S1.5 in parallel, then S1.6 (order under S1 in §4). A1 and A2 are merged. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
 | Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0 · Write-up: Report 8 |
 | Last updated | 2026-11-20 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
@@ -362,10 +362,10 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
 - [x] **S0.2 Cost.** Cost = model tokens × published price (source URL and access date in
       `router/data/prices.py`) + verifier runs + retries + probe calls, spread over the stream.
       Actual spend is not the metric. Verifier runs are reported as a count and in dollars at a
-      stated per-run rate: the X13 measured mean run time (0.074 s per visible-test run) priced at a
-      published on-demand cloud vCPU-hour rate, with its source and date in `CLAIMS.md` (about
-      $10⁻⁶ per run, about 0.06% of the best single model's per-task cost), swept at ×1, ×10 and
-      ×100. The stream length over which probe cost is spread is the number of tasks scored
+      stated per-run rate, swept at ×1, ×10 and ×100. **Amended 2026-11-20 (`CLAIMS.md` A1):**
+      0.200 s per visible-test run (the X13 mean over cells where a verifier ran) on the AWS Lambda
+      basis (O11), about $6.9 × 10⁻⁶ per run; the original 0.074 s and $10⁻⁶ counted cells with no
+      visible tests as 0 s. The P0.5, P0.6 and E0 records used $10⁻⁶. The stream length over which probe cost is spread is the number of tasks scored
       (reported with the break-even stream length). A price-sensitivity sweep is run on every
       headline number.
 - [x] **S0.3 Performance gate.** The router passes if, over the nested cross-fitted evaluation
@@ -552,7 +552,7 @@ C starts after everything else. S1.8 is a side task.
 The P0.5, P0.6 and E0 scripts keep their provisional definitions; they are records and S1 does not
 edit them.
 
-- [ ] S1.1 `data/sources.py` [M1.1]: an explicit task-id-to-family table covering every id in the
+- [x] S1.1 `data/sources.py` [M1.1]: an explicit task-id-to-family table covering every id in the
       probing, ID-test and OOD splits. It replaces `coderouterbench.source_of`, which yields 600
       "families" in the probing split, 572 of them with a single task: every
       `dim7_multiple_<lang>_HumanEval_<n>_<function>` id keeps its function name, and each of the
@@ -561,19 +561,37 @@ edit them.
       with their counts but exempt from the minimum, because the OOD tasks are outside the router's
       evaluation population (user, 2026-11-20). If an ID family falls under 30, the agent stops and
       reports candidate merges instead of merging, because the family is the exploration group (O9)
-      and its granularity is the user's call.
-- [ ] S1.2 `data/schema.py` [M1.2]: long-format storage (task, model, run, score, cost, tokens,
+      and its granularity is the user's call. **Done 2026-11-20 (A1, merged `1ffed9c`):** 34
+      families (30 ID, 4 OOD: `featurebench` 49, `longcli` 14, `old112` 112, `swe_ci` 1), one
+      parse rule per id pattern (an unmatched id raises), per-id table
+      `router/data/task_families.csv` with a drift test against the pinned release; every family
+      has one dimension. `old112` keeps the release's batch label (97 django, 15 astropy; OOD is
+      not routed in evaluation). **`canitedit`** (code_refactoring, 20 tasks) is the one ID
+      family under 30; it stays in `PENDING_USER_DECISION` until S1.4 rules on it (user,
+      2026-11-20): if CanItEdit is not execution-scored it leaves the eligible pool, the 30-task
+      minimum applies to eligible families only, and it leaves the pending set; if it is
+      execution-scored, the merge options go back to the user.
+- [x] S1.2 `data/schema.py` [M1.2]: long-format storage (task, model, run, score, cost, tokens,
       problem_id, family, score_type, eligible, **available, unavailable_reason**), with the wide
       task × model views derived from it. `unavailable_reason` is a missing token record (the 148
       zero-score, zero-cost Qwen3-Max rows, `cost_source == "missing_token_record_zero_total"`) or
       an empty X13 response (CLAIMS S0.11). The existing `OutcomeMatrix` callers (quick-check
       baselines, `sim/`, m2/m3, their tests) keep working. Test that every field survives `subset`
-      and `without`.
-- [ ] S1.3 `data/coderouterbench.py` [M1.3]: two views, complete and paper (missing = 0). Tests:
+      and `without`. **Done 2026-11-20 (A1):** `OutcomeMatrix.from_long`; the wide constructor
+      is unchanged and the new fields are keyword-only; `mark_unavailable(cells, reason)` takes
+      A2's empty-response cells (wired in batch C). `OutcomeMatrix.source` is now the S1.1
+      family, so the 2026-11-10 quick-check LinUCB/kNN features and per-source M2/M3 numbers
+      would differ if re-run; they are rebuilt in S2.
+- [x] S1.3 `data/coderouterbench.py` [M1.3]: two views, complete and paper (missing = 0). Tests:
       56,640 probing cells (7,080 × 8), 23,352 ID-test cells (2,919 × 8), 881 missing paper-view
       test cells, no NaN scores. The 148 missing-token-record rows are flagged unavailable, not
       scored 0 at cost 0 (the current `fillna(0.0)` on cost does nothing, because no cost is NaN);
-      the score stays as released, so the no-NaN test still holds.
+      the score stays as released, so the no-NaN test still holds. **Done 2026-11-20 (A1):**
+      all count tests pass; 148 unavailable cells (106 probing, 42 ID-test), cell for cell the
+      ones the S0 scripts treated as missing; score and cost matrices identical to the pre-A1
+      loader in both views (reviewer check). The paper view zero-fills 2,417 probing and 881
+      ID-test cells and leaves them available: it reproduces the paper only and is never used for
+      claims (S1.7 records this in `artefacts.yaml`).
 - [ ] S1.4 `data/scoring.py` [M1.4]: score type per family from the source benchmark's documented
       rule (exec, similarity or judge), not from the observed score distribution, with the citation
       for each rule. Record which families are eligible (S0.12) and which carry partial credit
@@ -583,7 +601,7 @@ edit them.
       headline tasks (42%), so its ruling needs a citation and before-and-after counts. Success
       goes through `settings.SUCCESS_SCORE` (S0.1): `ACCEPT_THRESHOLD = 0.5` and `accepted()` are
       removed from the live path, kept only as a legacy constant for the 2026-11-10 m2/m3 records
-      (`sim/metrics.py` and `sim/verifier.py` import it today).
+      (`sim/metrics.py` and `sim/verifier.py` import it today). Rule on `canitedit` (see S1.1).
 - [ ] S1.5 `data/prompts.py` [M1.5]: add route-anything `tasks.jsonl` (3,297 prompts, including 888
       `lcb`) to the existing join, then adapters for families still missing. Report the join rate
       per family.
@@ -621,22 +639,40 @@ edit them.
       undecided) are written and committed before any response is inspected, and labelling does
       not look at P0.5, P0.6 or E0 outcomes. The audit states which families were actually
       re-executed and in what sandbox; BigCodeBench may rest on Route Anything's diagnostic.
+      `artefacts.yaml` also records that the paper view is zero-filled and for reproduction only,
+      and the empty X13 cells (1,551, of which 877 score 1.0 in the release: X13 lost the
+      response, the model did not fail; S0.11 keeps them unavailable, user 2026-11-20).
 - [ ] S1.8 `data/llmrouterbench.py` [M1.7]: code subsets; drop zero-cost models from economic
       metrics. Validate the loader early, so it is ready if DP1b makes it the primary corpus.
-- [ ] S1.9 `data/phase5.py` [M1.8]: read-only loader (R5), including the stored raw responses
-      (324 non-empty of 325) read from the database without writing to it.
-- [ ] S1.10 `data/prices.py` [M1.9] as the single source of prices, with source URL and access date,
+- [x] S1.9 `data/phase5.py` [M1.8]: read-only loader (R5), including the stored raw responses
+      (324 non-empty of 325) read from the database without writing to it. **Done 2026-11-20 (A2,
+      merged `e2a572f`):** CSV refused on a hash mismatch; one read-only fetch (connection option,
+      read-only session, checked before the query; no retries) cached 325 responses to
+      git-ignored `external/phase5/`, 324 non-empty; the empty one is FE-010 / Llama-3.3-70B /
+      run 1.
+- [x] S1.10 `data/prices.py` [M1.9] as the single source of prices, with source URL and access date,
       including reference prices for the live models (S0.2, S0.9) and the verifier rate basis
       (AWS Lambda, O11). Every released `cost_usd` equals tokens × the `models.json` prices
       (reviewer check, 2026-11-20); a test keeps that true. Check `kimi-k2.5`'s input price
       ($0.01/M in `models.json`) against Moonshot's published price and record the finding; the
-      released costs are not changed (the ×0.5 / ×2 price sweep covers it).
-- [ ] S1.11 `data/verdicts.py` (new): loader for the X13 visible-test and hidden-test verdicts
+      released costs are not changed (the ×0.5 / ×2 price sweep covers it). **Done 2026-11-20
+      (A2):** cost identity holds on all 79,844 token-priced rows; Opus 4.6 still published at
+      $5 / $25; Lambda method reproduces Route Anything's $5.2 × 10⁻⁶ example, and the
+      recompute led to amendment A1 (S0.2). kimi-k2.5: Moonshot's own price could not be read
+      (JavaScript-rendered page); OpenRouter providers list $0.49–0.60/M input, which raises
+      kimi's total cost ×1.15–1.18 with no change in price order. Left open (user, 2026-11-20).
+      Live candidates are recorded as `candidate` only; the pool is chosen in S6.4.
+- [x] S1.11 `data/verdicts.py` (new): loader for the X13 visible-test and hidden-test verdicts
       (S0.11), joined to CodeRouterBench task ids. Tests cover only counts that cannot change: the
       23,288-row count, 2,911 tasks, and the 2,044/867 split coverage. Headline counts are derived
       after S1.4 and S1.7 and frozen in `artefacts.yaml`. Cells with `w1_n = 0` are marked "no
       signal" (S0.11); `empty` cells are counted separately and marked unavailable (S0.11).
-- **Gate:** the S1.3 count tests pass; zero singleton families; the split-integrity test passes;
+      **Done 2026-11-20 (A2):** 8,577 signal, 13,160 no-signal and 1,551 empty cells; observations
+      PASS / FAIL / UNKNOWN; the released score, the X13 heuristic and the hidden-test (`w2`)
+      fields are behind separate, labelled functions. Agrees with the P0.5 pivots on every cell (0
+      mismatches); X13 `truth` equals the released score on all 23,288 cells.
+- **Gate:** the S1.3 count tests pass; zero singleton ID families (OOD families are exempt, as
+  from the 30-task minimum; user, 2026-11-20); the split-integrity test passes;
   eligibility comes from S1.4 rules only; prompt join ≥ 95%, or the gap is documented per family
   and every embedding result is restricted to joined tasks; both matrix views load; the verdict
   loader passes its count tests; `artefacts.yaml` committed with every audit-dependent count; the
@@ -1509,3 +1545,26 @@ Two further reviews were checked against the data; all fixes approved by the use
   committed development-split membership file; S1.7 criteria committed before inspection and
   blind labelling; S1.10 verifier rate basis, cost-identity test, kimi price check.
 - **Next:** briefs for batches A1 and A2.
+
+### 2026-11-20 (S1 batches A1 and A2 merged; amendment A1)
+
+- **A1 (S1.1–S1.3)** merged (`1ffed9c`): family table (30 ID, 4 OOD), long-format
+  `OutcomeMatrix` with availability fields, CodeRouterBench loader with the 148
+  missing-token-record cells unavailable. Reviewer check: score and cost matrices identical to
+  the pre-A1 loader in both views and both splits; unavailable cells identical to the S0
+  scripts'.
+- **A2 (S1.9–S1.11)** merged (`e2a572f`): X13 verdict loader (0 mismatches with P0.5), price
+  table with sources and the Lambda verifier basis, read-only Phase 5 loader with a response
+  cache. Reviewer check: the A2 report script reproduces its committed JSON; the verdict and
+  verifier-time figures re-derived independently.
+- **User decisions:** `canitedit` waits for S1.4; the singleton gate covers ID families only;
+  `old112` keeps its label; the paper view is reproduction-only; empty X13 cells stay unavailable
+  (S0.11); the kimi-k2.5 price stays an open note.
+- **Amendment A1 (`CLAIMS.md`):** `VERIFIER_RUN_S` 0.074 → 0.200 s and `VERIFIER_RUN_USD`
+  $10⁻⁶ → $6.9 × 10⁻⁶. The 0.074 s averaged in the 80% of cells with no visible tests as 0 s;
+  0.200 s is the mean over cells where a verifier ran, priced on the O11 Lambda basis. The P0
+  records keep $10⁻⁶ (a test pins this) and S3 re-scores on the amended value. A verifier run is
+  about 3% of the cheapest model's mean cost per task and 0.1% of Opus's; the P0 numbers were not
+  re-run at the new rate, and S3 measures the effect (the ×10 sweep already bracketed it). `e0_power.py` now records the rate it actually used.
+- Tests: 247 pass.
+- **Next:** batch B briefs (S1.4 ∥ S1.5, then S1.6).

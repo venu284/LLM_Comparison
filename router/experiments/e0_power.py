@@ -326,7 +326,7 @@ def main(argv=None):
     res = {
         "settings": {"draws": a.draws, "s0_8_seeds": S.N_SEEDS, "gate_seed": S.GATE_SEED, "boot": a.boot,
                      "folds": S.N_FOLDS, "dev_fraction": S.DEV_FRACTION, "dev_seed_provisional": a.dev_seed,
-                     "power_factor": POWER_FACTOR, "verifier_run_usd": S.VERIFIER_RUN_USD,
+                     "power_factor": POWER_FACTOR, "verifier_run_usd": rc.VERIFIER_RUN_USD,
                      "thresholds": {"gate_saving": S.GATE_SAVING, "gate_gap": S.GATE_GAP, "c_saving": S.C_SAVING,
                                     "c_gap": S.C_GAP, "dp1a_min_lower": S.DP1A_MIN_LOWER}},
         "p0_6_check": check,
