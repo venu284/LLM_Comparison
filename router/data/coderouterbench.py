@@ -10,12 +10,12 @@ Two views of the in-distribution data:
 from __future__ import annotations
 
 import json
-import re
 from pathlib import Path
 
 import pandas as pd
 
-from router.data.schema import OutcomeMatrix
+from router.data.schema import MISSING_TOKEN_RECORD, OutcomeMatrix, long_frame
+from router.data.sources import family_of
 from router.settings import EXTERNAL_DIR
 
 CRB_DIR = EXTERNAL_DIR / "CodeRouterBench"
@@ -23,44 +23,54 @@ CRB_DIR = EXTERNAL_DIR / "CodeRouterBench"
 OBS_MATRIX = "raw_matrices/phase1_acrouter_v2/obs_matrix.json"
 DECISIONS = "outputs/current/id_decisions.jsonl"
 SPLIT_FILES = {"probing": "id_probing_results_long.csv", "id_test": "id_test_results_long.csv"}
+VIEWS = ("complete", "paper")
+MISSING_TOKEN_COST_SOURCE = "missing_token_record_zero_total"
 
 
 def source_of(task_id: str) -> str:
-    """Source benchmark family from an ID task id, e.g. dim1_mbpp_631 -> mbpp."""
-    s = re.sub(r"^dim\d+_", "", task_id)
-    if s.startswith("swebench_"):
-        return "swebench"
-    s = re.sub(r"/\d+$", "", s)          # BigCodeBench/767
-    s = re.sub(r"_\d+$", "", s)
-    if s.startswith("lcb_") and not s.startswith("lcb_testgen"):
-        s = "lcb"
-    if s.startswith("bcb"):
-        s = s.replace("_BigCodeBench", "")
-    return s
+    """Deprecated: use `router.data.sources.family_of`. Kept for the quick-check callers.
+
+    The S1.1 family of a task id, e.g. dim1_mbpp_631 -> mbpp.
+    """
+    return family_of(task_id)
 
 
 def load_long(split: str, root: Path = CRB_DIR) -> pd.DataFrame:
     return pd.read_csv(root / SPLIT_FILES[split])
 
 
-def load(split: str, view: str = "complete", root: Path = CRB_DIR) -> OutcomeMatrix:
-    if view not in ("complete", "paper"):
+def long_table(split: str, view: str = "complete", root: Path = CRB_DIR) -> pd.DataFrame:
+    """One split in the S1.2 long format (`schema.LONG_COLUMNS`), one run (run 0) per cell.
+
+    `complete` keeps the release CSV scores; `paper` takes `obs_matrix.json` scores with missing
+    cells scored 0, as the paper's Table 3 does. Costs come from the release CSVs in both views.
+    The rows with `cost_source == "missing_token_record_zero_total"` are flagged unavailable
+    (CLAIMS S0.11) in both views; their score is left as released.
+    """
+    if view not in VIEWS:
         raise ValueError(view)
-    long = load_long(split, root)
-    long["cost_usd"] = long["cost_usd"].fillna(0.0)
-    score = long.pivot_table(index="task_id", columns="model", values="score").sort_index()
-    cost = long.pivot_table(index="task_id", columns="model", values="cost_usd").reindex(score.index)
-    cost = cost[score.columns]
+    raw = load_long(split, root)
+    long = pd.DataFrame({
+        "task_id": raw["task_id"], "model": raw["model"], "run": 0,
+        "score": raw["score"].astype(float), "cost_usd": raw["cost_usd"].astype(float),
+        "input_tokens": raw["input_tokens"], "output_tokens": raw["output_tokens"],
+        "dimension": raw["dimension"], "split": split,
+    })
+    long["family"] = long["task_id"].map(family_of)
+    missing = (raw["cost_source"] == MISSING_TOKEN_COST_SOURCE).to_numpy()
+    long["available"] = ~missing
+    long["unavailable_reason"] = pd.Series(None, index=long.index, dtype=object).mask(
+        missing, MISSING_TOKEN_RECORD)
     if view == "paper":
         obs = json.load(open(root / OBS_MATRIX))
-        cells = pd.DataFrame([(t, m, v.get("perf")) for t, mm in obs.items() for m, v in mm.items()],
-                             columns=["task_id", "model", "perf"]).dropna()
-        paper = cells.pivot_table(index="task_id", columns="model", values="perf")
-        score = paper.reindex(index=score.index, columns=score.columns).fillna(0.0)
-    meta = long.drop_duplicates("task_id").set_index("task_id")
-    dimension = meta["dimension"]
-    source = pd.Series({t: source_of(t) for t in score.index})
-    return OutcomeMatrix(score, cost, dimension, source, name=f"crb/{split}/{view}")
+        perf = {(t, m): v["perf"] for t, mm in obs.items() for m, v in mm.items()
+                if v.get("perf") is not None}
+        long["score"] = [float(perf.get(k, 0.0)) for k in zip(long["task_id"], long["model"])]
+    return long_frame(long)
+
+
+def load(split: str, view: str = "complete", root: Path = CRB_DIR) -> OutcomeMatrix:
+    return OutcomeMatrix.from_long(long_table(split, view, root), name=f"crb/{split}/{view}")
 
 
 def missing_cells(split: str, root: Path = CRB_DIR) -> int:
