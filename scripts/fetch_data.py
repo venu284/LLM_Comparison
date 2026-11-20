@@ -97,6 +97,15 @@ EXTRACTS: dict[str, Extract] = {
         {"test.jsonl": ("sha1", "3924161ac7b056443bb7ba724b15e7e128d1108b")},
         ("metadata.problem_id", "prompt"),
     ),
+    # The same DS-1000 file, metadata only (S1.6): which problem each perturbed problem was made
+    # from. `perturbation_origin_id` counts within a library (it matches `library_problem_id`, not
+    # the global `problem_id`), so the library fields are kept with it.
+    "ds1000_origin": Extract(
+        "xlangai/DS-1000", "4416080ac5cb80bdf7576aefb8f9a0b4d5426a44",
+        {"test.jsonl": ("sha1", "3924161ac7b056443bb7ba724b15e7e128d1108b")},
+        ("metadata.problem_id", "metadata.library", "metadata.library_problem_id",
+         "metadata.perturbation_type", "metadata.perturbation_origin_id"),
+    ),
     # BigCodeBench v0.1.4, the release `tasks.jsonl` names.
     "bigcodebench": Extract(
         "bigcode/bigcodebench", "b74c0d0bf70d2c0bc459be537895cca163007f1a",

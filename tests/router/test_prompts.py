@@ -150,8 +150,11 @@ def _all_extracts():
 
 def test_every_text_field_is_pinned_and_allowlisted_in_fetch_data():
     """prompts.py reads only fields that fetch_data.py pins, at the revision it names."""
+    from router.data.splits import DS1000_ORIGIN_EXTRACT
+
     ex = _fetch_data().EXTRACTS
-    assert set(P.SOURCE_FIELDS) == set(ex)
+    # ds1000_origin holds DS-1000 metadata only (S1.6 problem ids), no task text.
+    assert set(P.SOURCE_FIELDS) == set(ex) - {DS1000_ORIGIN_EXTRACT}
     for name, (source, field) in P.SOURCE_FIELDS.items():
         repo, rev = source.split()[0].split("@")
         assert (ex[name].repo_id, ex[name].revision) == (repo, rev), name

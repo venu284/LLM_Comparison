@@ -1,0 +1,1198 @@
+{
+ "cross_checks": {
+  "lcb_partners": {
+   "lcb_not_in_livecodebench_extract": [],
+   "lcb_qids": 1000,
+   "lcb_testgen_not_in_livecodebench_extract": [],
+   "lcb_testgen_qids": 869,
+   "lcb_testgen_without_lcb_partner": [
+    "1899_C",
+    "2854",
+    "3026",
+    "3209",
+    "3245",
+    "3353",
+    "3354",
+    "3383",
+    "3387",
+    "3438",
+    "3485",
+    "3515",
+    "3568",
+    "3588",
+    "3654",
+    "3684",
+    "3704",
+    "3763",
+    "3777",
+    "abc301_b",
+    "abc303_c",
+    "abc312_c",
+    "abc312_e",
+    "abc315_b",
+    "abc315_c",
+    "abc319_b",
+    "abc322_d",
+    "abc324_a",
+    "abc328_c",
+    "abc329_e",
+    "abc335_b",
+    "abc339_d",
+    "abc341_b",
+    "abc348_c",
+    "abc354_b",
+    "abc359_e",
+    "abc369_a",
+    "abc371_d",
+    "abc379_g",
+    "abc380_b",
+    "abc385_f",
+    "abc397_g",
+    "abc398_g",
+    "arc191_d",
+    "arc195_a"
+   ],
+   "lcb_without_lcb_testgen_partner": 176,
+   "partners": 824,
+   "partners_raw_text_disagree": [],
+   "tasks_in_tasks_jsonl": {
+    "lcb": 776,
+    "lcb_testgen": 112
+   }
+  },
+  "mbpp_texts": {
+   "disagreements": [],
+   "families_without_text": {
+    "mbpp_testgen": 111
+   },
+   "field": "raw_sha256 (mbpp_completion content adds a def header; raw text does not)",
+   "keys_in_two_or_more_families": 136,
+   "keys_with_two_or_more_joined_families": 78
+  },
+  "multiple_names": {
+   "checked": 291,
+   "humaneval_problems_in_extract": 164,
+   "mismatches": [],
+   "source": "humanevalplus extract (HumanEval/0-163)"
+  },
+  "ood": {
+   "ood_instances_also_in_swebench": {
+    "featurebench": [],
+    "longcli": [],
+    "old112": [],
+    "swe_ci": []
+   },
+   "ood_tasks_joined": 0,
+   "swebench_instances": 71
+  },
+  "sup": {
+   "bugs2fix_sup": {
+    "base": "bugs2fix",
+    "base_id_range": [
+     7,
+     6536
+    ],
+    "base_joined": 0,
+    "base_tasks": 980,
+    "id_range": [
+     7000,
+     7110
+    ],
+    "ids_also_used_by_base": [],
+    "joined": 0,
+    "linked": 0,
+    "of_those_same_crb_source_split": 0,
+    "shared_content_or_raw_hash": 0,
+    "tasks": 111
+   },
+   "codexglue_sup": {
+    "base": "codexglue",
+    "base_id_range": [
+     2,
+     14915
+    ],
+    "base_joined": 0,
+    "base_tasks": 1000,
+    "id_range": [
+     15000,
+     15110
+    ],
+    "ids_also_used_by_base": [],
+    "joined": 0,
+    "linked": 0,
+    "of_those_same_crb_source_split": 0,
+    "shared_content_or_raw_hash": 0,
+    "tasks": 111
+   },
+   "debugbench_sup": {
+    "base": "debugbench",
+    "base_id_range": [
+     24,
+     4250
+    ],
+    "base_joined": 0,
+    "base_tasks": 929,
+    "id_range": [
+     1000,
+     1220
+    ],
+    "ids_also_used_by_base": [
+     1004,
+     1026,
+     1034,
+     1054,
+     1080,
+     1092,
+     1094,
+     1098,
+     1104,
+     1122,
+     1124,
+     1126,
+     1140,
+     1146,
+     1154,
+     1158,
+     1160,
+     1176,
+     1182,
+     1210,
+     1220
+    ],
+    "joined": 0,
+    "linked": 0,
+    "of_those_same_crb_source_split": 12,
+    "shared_content_or_raw_hash": 0,
+    "tasks": 111
+   },
+   "note": "No task text exists for these six families (S1.5 GAPS), so no hash can link them. Equal id numbers are not evidence of one problem: no field maps a _sup id to a base id, so none is linked."
+  }
+ },
+ "ds1000_origin": {
+  "ds1000_problem_sizes": {
+   "1": 162,
+   "2": 122,
+   "3": 102,
+   "4": 42,
+   "5": 15,
+   "6": 5,
+   "7": 1,
+   "8": 1
+  },
+  "ds1000_problems": {
+   "source_keys_only": 1000,
+   "with_origin": 452,
+   "with_origin_and_content": 450
+  },
+  "extract": "xlangai/DS-1000@4416080ac5cb80bdf7576aefb8f9a0b4d5426a44 test.jsonl, metadata fields",
+  "fields": [
+   "metadata.problem_id",
+   "metadata.library",
+   "metadata.library_problem_id",
+   "metadata.perturbation_type",
+   "metadata.perturbation_origin_id"
+  ],
+  "origin_id_space": {
+   "origin_rows": 452,
+   "origin_rows_pointing_to_self_by_global_problem_id": 100,
+   "origin_rows_pointing_to_self_by_library_problem_id": 452
+  },
+  "perturbation_types_paper_table3": {
+   "Difficult-Rewrite": 162,
+   "Origin": 451,
+   "Semantic": 235,
+   "Surface": 152
+  },
+  "perturbation_types_release": {
+   "Difficult-Rewrite": 162,
+   "Origin": 452,
+   "Semantic": 234,
+   "Surface": 152
+  },
+  "perturbations_of_a_perturbation": [
+   {
+    "origin_id": 870,
+    "origin_of_origin": 868,
+    "origin_type": "Semantic",
+    "problem_id": 871
+   }
+  ],
+  "perturbed_problems": 548,
+  "s1_5_pair_perturbation_types": {
+   "dim6_ds1000_137/dim6_ds1000_179": [
+    "Semantic",
+    "Semantic"
+   ],
+   "dim6_ds1000_138/dim6_ds1000_180": [
+    "Difficult-Rewrite",
+    "Semantic"
+   ],
+   "dim6_ds1000_515/dim6_ds1000_516": [
+    "Origin",
+    "Semantic"
+   ],
+   "dim6_ds1000_621/dim6_ds1000_622": [
+    "Origin",
+    "Origin"
+   ]
+  },
+  "s1_5_pairs_explained_by_origin": {
+   "dim6_ds1000_137/dim6_ds1000_179": false,
+   "dim6_ds1000_138/dim6_ds1000_180": false,
+   "dim6_ds1000_515/dim6_ds1000_516": true,
+   "dim6_ds1000_621/dim6_ds1000_622": false
+  }
+ },
+ "problems": {
+  "eligible_pool": {
+   "eligible_tasks_per_problem": {
+    "1": 2824,
+    "2": 223,
+    "3": 126,
+    "4": 91,
+    "5": 53,
+    "6": 11,
+    "7": 38,
+    "8": 72,
+    "9": 49
+   },
+   "families": 20,
+   "problems": 3487,
+   "tasks": 5626,
+   "tasks_in_those_problems_incl_ineligible": 6665
+  },
+  "families": {
+   "bcb": {
+    "eligible": true,
+    "links": {
+     "none": 584,
+     "source_key": 91
+    },
+    "problems": 675,
+    "split_kind": "id",
+    "tasks": 675
+   },
+   "bcb_algo2": {
+    "eligible": true,
+    "links": {
+     "source_key": 111
+    },
+    "problems": 111,
+    "split_kind": "id",
+    "tasks": 111
+   },
+   "bcb_completion": {
+    "eligible": true,
+    "links": {
+     "source_key": 89
+    },
+    "problems": 89,
+    "split_kind": "id",
+    "tasks": 89
+   },
+   "bcb_ds": {
+    "eligible": true,
+    "links": {
+     "none": 14,
+     "source_key": 97
+    },
+    "problems": 111,
+    "split_kind": "id",
+    "tasks": 111
+   },
+   "bcb_v014": {
+    "eligible": true,
+    "links": {
+     "source_key": 111
+    },
+    "problems": 111,
+    "split_kind": "id",
+    "tasks": 111
+   },
+   "bugs2fix": {
+    "eligible": false,
+    "links": {
+     "none": 980
+    },
+    "problems": 980,
+    "split_kind": "id",
+    "tasks": 980
+   },
+   "bugs2fix_sup": {
+    "eligible": false,
+    "links": {
+     "none": 111
+    },
+    "problems": 111,
+    "split_kind": "id",
+    "tasks": 111
+   },
+   "canitedit": {
+    "eligible": false,
+    "links": {
+     "none": 20
+    },
+    "problems": 20,
+    "split_kind": "id",
+    "tasks": 20
+   },
+   "codexglue": {
+    "eligible": false,
+    "links": {
+     "none": 1000
+    },
+    "problems": 1000,
+    "split_kind": "id",
+    "tasks": 1000
+   },
+   "codexglue_sup": {
+    "eligible": false,
+    "links": {
+     "none": 111
+    },
+    "problems": 111,
+    "split_kind": "id",
+    "tasks": 111
+   },
+   "cruxeval": {
+    "eligible": true,
+    "links": {
+     "none": 800
+    },
+    "problems": 800,
+    "split_kind": "id",
+    "tasks": 800
+   },
+   "debugbench": {
+    "eligible": false,
+    "links": {
+     "none": 929
+    },
+    "problems": 929,
+    "split_kind": "id",
+    "tasks": 929
+   },
+   "debugbench_sup": {
+    "eligible": false,
+    "links": {
+     "none": 111
+    },
+    "problems": 111,
+    "split_kind": "id",
+    "tasks": 111
+   },
+   "ds1000": {
+    "eligible": true,
+    "links": {
+     "content": 2,
+     "ds1000_origin": 832,
+     "ds1000_origin+content": 4,
+     "none": 162
+    },
+    "problems": 450,
+    "split_kind": "id",
+    "tasks": 1000
+   },
+   "featurebench": {
+    "eligible": false,
+    "links": {
+     "none": 49
+    },
+    "problems": 49,
+    "split_kind": "ood",
+    "tasks": 49
+   },
+   "he_completion": {
+    "eligible": true,
+    "links": {
+     "source_key": 98
+    },
+    "problems": 98,
+    "split_kind": "id",
+    "tasks": 98
+   },
+   "he_testgen": {
+    "eligible": false,
+    "links": {
+     "source_key": 131
+    },
+    "problems": 131,
+    "split_kind": "id",
+    "tasks": 131
+   },
+   "hex_cpp": {
+    "eligible": true,
+    "links": {
+     "source_key": 164
+    },
+    "problems": 164,
+    "split_kind": "id",
+    "tasks": 164
+   },
+   "hex_go": {
+    "eligible": true,
+    "links": {
+     "source_key": 164
+    },
+    "problems": 164,
+    "split_kind": "id",
+    "tasks": 164
+   },
+   "hex_java": {
+    "eligible": true,
+    "links": {
+     "source_key": 164
+    },
+    "problems": 164,
+    "split_kind": "id",
+    "tasks": 164
+   },
+   "hex_js": {
+    "eligible": true,
+    "links": {
+     "source_key": 164
+    },
+    "problems": 164,
+    "split_kind": "id",
+    "tasks": 164
+   },
+   "hex_python": {
+    "eligible": true,
+    "links": {
+     "source_key": 164
+    },
+    "problems": 164,
+    "split_kind": "id",
+    "tasks": 164
+   },
+   "humaneval": {
+    "eligible": true,
+    "links": {
+     "source_key": 100
+    },
+    "problems": 100,
+    "split_kind": "id",
+    "tasks": 100
+   },
+   "lcb": {
+    "eligible": true,
+    "links": {
+     "none": 176,
+     "source_key": 824
+    },
+    "problems": 1000,
+    "split_kind": "id",
+    "tasks": 1000
+   },
+   "lcb_testgen": {
+    "eligible": false,
+    "links": {
+     "none": 45,
+     "source_key": 824
+    },
+    "problems": 869,
+    "split_kind": "id",
+    "tasks": 869
+   },
+   "longcli": {
+    "eligible": false,
+    "links": {
+     "none": 14
+    },
+    "problems": 14,
+    "split_kind": "ood",
+    "tasks": 14
+   },
+   "mbpp": {
+    "eligible": true,
+    "links": {
+     "none": 103,
+     "source_key": 120,
+     "source_key+content": 2
+    },
+    "problems": 224,
+    "split_kind": "id",
+    "tasks": 225
+   },
+   "mbpp_completion": {
+    "eligible": true,
+    "links": {
+     "none": 32,
+     "source_key": 92
+    },
+    "problems": 123,
+    "split_kind": "id",
+    "tasks": 124
+   },
+   "mbpp_testgen": {
+    "eligible": false,
+    "links": {
+     "none": 27,
+     "source_key": 84
+    },
+    "problems": 110,
+    "split_kind": "id",
+    "tasks": 111
+   },
+   "multiple_rs": {
+    "eligible": true,
+    "links": {
+     "source_key": 156
+    },
+    "problems": 156,
+    "split_kind": "id",
+    "tasks": 156
+   },
+   "multiple_ts": {
+    "eligible": true,
+    "links": {
+     "source_key": 135
+    },
+    "problems": 135,
+    "split_kind": "id",
+    "tasks": 135
+   },
+   "old112": {
+    "eligible": false,
+    "links": {
+     "none": 112
+    },
+    "problems": 112,
+    "split_kind": "ood",
+    "tasks": 112
+   },
+   "swe_ci": {
+    "eligible": false,
+    "links": {
+     "none": 1
+    },
+    "problems": 1,
+    "split_kind": "ood",
+    "tasks": 1
+   },
+   "swebench": {
+    "eligible": true,
+    "links": {
+     "none": 71
+    },
+    "problems": 71,
+    "split_kind": "id",
+    "tasks": 71
+   }
+  },
+  "id": {
+   "problems": 6821,
+   "tasks": 9999
+  },
+  "largest_problems": [
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/1",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/3",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/6",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/10",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/12",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/17",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/19",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/31",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/39",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/40",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/46",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/55",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/56",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/59",
+    "tasks": 10
+   },
+   {
+    "eligible_tasks": 9,
+    "families": {
+     "he_completion": 1,
+     "he_testgen": 1,
+     "hex_cpp": 1,
+     "hex_go": 1,
+     "hex_java": 1,
+     "hex_js": 1,
+     "hex_python": 1,
+     "humaneval": 1,
+     "multiple_rs": 1,
+     "multiple_ts": 1
+    },
+    "problem_id": "he/64",
+    "tasks": 10
+   }
+  ],
+  "links": {
+   "content": 2,
+   "ds1000_origin": 832,
+   "ds1000_origin+content": 4,
+   "none": 5452,
+   "source_key": 3883,
+   "source_key+content": 2
+  },
+  "ood": {
+   "problems": 176,
+   "tasks": 176
+  },
+  "problems": 6997,
+  "problems_after_each_link": {
+   "none": {
+    "id_problems": 9999,
+    "ood_problems": 176
+   },
+   "source_key": {
+    "id_problems": 7372,
+    "ood_problems": 176
+   },
+   "source_key+ds1000_origin": {
+    "id_problems": 6824,
+    "ood_problems": 176
+   },
+   "source_key+ds1000_origin+content": {
+    "id_problems": 6821,
+    "ood_problems": 176
+   }
+  },
+  "tasks": 10175,
+  "tasks_per_problem": {
+   "1": 5452,
+   "10": 39,
+   "2": 1081,
+   "3": 150,
+   "4": 90,
+   "5": 53,
+   "6": 7,
+   "7": 18,
+   "8": 35,
+   "9": 72
+  }
+ },
+ "provisional_diff": {
+  "examples": {
+   "content": [
+    {
+     "problem_id": "ds1000/621",
+     "provisional": "ds1000_621",
+     "provisional_size": 1,
+     "size": 2,
+     "task_id": "dim6_ds1000_621"
+    },
+    {
+     "problem_id": "ds1000/621",
+     "provisional": "ds1000_622",
+     "provisional_size": 1,
+     "size": 2,
+     "task_id": "dim6_ds1000_622"
+    },
+    {
+     "problem_id": "mbpp/71",
+     "provisional": "mbpp141",
+     "provisional_size": 3,
+     "size": 6,
+     "task_id": "dim1_mbpp_141"
+    },
+    {
+     "problem_id": "mbpp/71",
+     "provisional": "mbpp71",
+     "provisional_size": 3,
+     "size": 6,
+     "task_id": "dim1_mbpp_71"
+    },
+    {
+     "problem_id": "mbpp/71",
+     "provisional": "mbpp141",
+     "provisional_size": 3,
+     "size": 6,
+     "task_id": "dim4_mbpp_completion_141"
+    }
+   ],
+   "content+ds1000_origin": [
+    {
+     "problem_id": "ds1000/135",
+     "provisional": "ds1000_135",
+     "provisional_size": 1,
+     "size": 8,
+     "task_id": "dim6_ds1000_135"
+    },
+    {
+     "problem_id": "ds1000/135",
+     "provisional": "ds1000_136",
+     "provisional_size": 1,
+     "size": 8,
+     "task_id": "dim6_ds1000_136"
+    },
+    {
+     "problem_id": "ds1000/135",
+     "provisional": "ds1000_137",
+     "provisional_size": 1,
+     "size": 8,
+     "task_id": "dim6_ds1000_137"
+    },
+    {
+     "problem_id": "ds1000/135",
+     "provisional": "ds1000_138",
+     "provisional_size": 1,
+     "size": 8,
+     "task_id": "dim6_ds1000_138"
+    },
+    {
+     "problem_id": "ds1000/135",
+     "provisional": "ds1000_177",
+     "provisional_size": 1,
+     "size": 8,
+     "task_id": "dim6_ds1000_177"
+    }
+   ],
+   "ds1000_origin": [
+    {
+     "problem_id": "ds1000/0",
+     "provisional": "ds1000_0",
+     "provisional_size": 1,
+     "size": 2,
+     "task_id": "dim6_ds1000_0"
+    },
+    {
+     "problem_id": "ds1000/0",
+     "provisional": "ds1000_1",
+     "provisional_size": 1,
+     "size": 2,
+     "task_id": "dim6_ds1000_1"
+    },
+    {
+     "problem_id": "ds1000/100",
+     "provisional": "ds1000_100",
+     "provisional_size": 1,
+     "size": 5,
+     "task_id": "dim6_ds1000_100"
+    },
+    {
+     "problem_id": "ds1000/100",
+     "provisional": "ds1000_101",
+     "provisional_size": 1,
+     "size": 5,
+     "task_id": "dim6_ds1000_101"
+    },
+    {
+     "problem_id": "ds1000/100",
+     "provisional": "ds1000_102",
+     "provisional_size": 1,
+     "size": 5,
+     "task_id": "dim6_ds1000_102"
+    }
+   ],
+   "hex": [
+    {
+     "problem_id": "he/0",
+     "provisional": "he0",
+     "provisional_size": 4,
+     "size": 9,
+     "task_id": "dim4_he_completion_HumanEval_0"
+    },
+    {
+     "problem_id": "he/1",
+     "provisional": "he1",
+     "provisional_size": 5,
+     "size": 10,
+     "task_id": "dim4_he_completion_HumanEval_1"
+    },
+    {
+     "problem_id": "he/10",
+     "provisional": "he10",
+     "provisional_size": 5,
+     "size": 10,
+     "task_id": "dim4_he_completion_HumanEval_10"
+    },
+    {
+     "problem_id": "he/100",
+     "provisional": "he100",
+     "provisional_size": 4,
+     "size": 9,
+     "task_id": "dim4_he_completion_HumanEval_100"
+    },
+    {
+     "problem_id": "he/104",
+     "provisional": "he104",
+     "provisional_size": 4,
+     "size": 9,
+     "task_id": "dim4_he_completion_HumanEval_104"
+    }
+   ]
+  },
+  "new_problems": 6997,
+  "new_problems_not_a_provisional_problem": 453,
+  "provisional_problems": 8367,
+  "provisional_problems_not_a_new_problem": 1823,
+  "tasks_changed": 2284,
+  "tasks_changed_by_cause": {
+   "content": 8,
+   "content+ds1000_origin": 8,
+   "ds1000_origin": 828,
+   "hex": 1440
+  }
+ },
+ "second_review_recount": {
+  "all_id": {
+   "content_sha256": {
+    "all": [
+     618,
+     2919
+    ],
+    "joined": [
+     618,
+     1914
+    ]
+   },
+   "id_test_joined": 1914,
+   "id_test_tasks": 2919,
+   "problem_id": {
+    "all": [
+     1201,
+     2919
+    ],
+    "joined": [
+     1186,
+     1914
+    ]
+   },
+   "prompt_sha256": {
+    "all": [
+     143,
+     2919
+    ],
+    "joined": [
+     143,
+     1914
+    ]
+   },
+   "raw_sha256": {
+    "all": [
+     651,
+     2919
+    ],
+    "joined": [
+     651,
+     1914
+    ]
+   }
+  },
+  "eligible_pool": {
+   "content_sha256": {
+    "all": [
+     224,
+     1658
+    ],
+    "joined": [
+     224,
+     1639
+    ]
+   },
+   "id_test_joined": 1639,
+   "id_test_tasks": 1658,
+   "problem_id": {
+    "all": [
+     791,
+     1658
+    ],
+    "joined": [
+     791,
+     1639
+    ]
+   },
+   "prompt_sha256": {
+    "all": [
+     143,
+     1658
+    ],
+    "joined": [
+     143,
+     1639
+    ]
+   },
+   "raw_sha256": {
+    "all": [
+     257,
+     1658
+    ],
+    "joined": [
+     257,
+     1639
+    ]
+   }
+  },
+  "note": "[shared, denominator] over ID-test tasks; a task shares a field when a probing task in the same pool has the same non-null value. Hash fields are null for unjoined tasks."
+ },
+ "sharp_check": {
+  "content_matches_s1_5_pairs": true,
+  "content_unimplied_groups": [
+   [
+    "dim1_mbpp_141",
+    "dim1_mbpp_71"
+   ],
+   [
+    "dim6_ds1000_137",
+    "dim6_ds1000_179"
+   ],
+   [
+    "dim6_ds1000_138",
+    "dim6_ds1000_180"
+   ],
+   [
+    "dim6_ds1000_515",
+    "dim6_ds1000_516"
+   ],
+   [
+    "dim6_ds1000_621",
+    "dim6_ds1000_622"
+   ]
+  ],
+  "raw_unimplied_by_family_set": {
+   "ds1000": 4,
+   "mbpp | mbpp_completion": 1
+  },
+  "raw_unimplied_examples": [
+   [
+    "dim1_mbpp_141",
+    "dim1_mbpp_71",
+    "dim4_mbpp_completion_141",
+    "dim4_mbpp_completion_71"
+   ],
+   [
+    "dim6_ds1000_137",
+    "dim6_ds1000_179"
+   ],
+   [
+    "dim6_ds1000_138",
+    "dim6_ds1000_180"
+   ],
+   [
+    "dim6_ds1000_515",
+    "dim6_ds1000_516"
+   ],
+   [
+    "dim6_ds1000_621",
+    "dim6_ds1000_622"
+   ]
+  ],
+  "raw_unimplied_groups": 5,
+  "raw_unimplied_tasks": 12
+ }
+}
