@@ -15,7 +15,7 @@
 | Field | Value |
 |---|---|
 | Current stage | **S1 — Validate data** (§4). Pre-S0 and S0 done; `docs/CLAIMS.md` signed off 2026-11-20 |
-| Next action | S1.6 `data/splits.py` (problem ids, development split, folds), then batch C (S1.7). A1, A2, S1.4 and S1.5 are merged. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Next action | Batch C: S1.7 `data/audit.py` and `e0_audit.py`, then `artefacts.yaml`, then the S1 gate check. S1.1–S1.6 and S1.9–S1.11 are merged; S1.8 is a side task. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
 | Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0 · Write-up: Report 8 |
 | Last updated | 2026-11-20 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
@@ -99,7 +99,7 @@ C1–C4 are each **partly covered**; none is fully covered. Under S0.14 the orde
 
 | DP | Where | Test | Consequence |
 |---|---|---|---|
-| DP1a | End of S3 | **Accuracy:** headroom of the oracle and of cross-fitted DimensionBest over the best single model, on the **full** artefact-filtered eligible pool (not the development split: the oracle needs no fitting and a cross-fitted lookup table is not router development, so no leak; the development split alone, about 690 tasks, would leave the test weak). Passes if the lower end of the 95% cluster-bootstrap CI of **cross-fitted DimensionBest's** headroom is ≥ 3.0 AvgPerf points; the oracle is reported as the ceiling (`CLAIMS.md` O18). AvgPerf = acceptance rate under S0.1, in points (O10). Provisional (P0.4): oracle +12.66 [11.55, 13.91], DimensionBest +1.45 [0.68, 2.23] | No: C4 leads the accuracy story |
+| DP1a | End of S3 | **Accuracy:** headroom of the oracle and of cross-fitted DimensionBest over the best single model, on the **full** artefact-filtered eligible pool (not the development split: the oracle needs no fitting and a cross-fitted lookup table is not router development, so no leak; the development split alone, 697 problems and 1,104 eligible tasks before the artefact filter, would leave the test weak). Passes if the lower end of the 95% cluster-bootstrap CI of **cross-fitted DimensionBest's** headroom is ≥ 3.0 AvgPerf points; the oracle is reported as the ceiling (`CLAIMS.md` O18). AvgPerf = acceptance rate under S0.1, in points (O10). Provisional (P0.4): oracle +12.66 [11.55, 13.91], DimensionBest +1.45 [0.68, 2.23] | No: C4 leads the accuracy story |
 | DP1b | End of S3 (S3.2) | **Cost (feasibility upper bound):** does the **oracle-on-no-signal bound** meet S0.3 on point estimates on the headline set, with verifier cost included: saving ≥ 20% and acceptance gap ≥ −2 points against the best single model, **and** saving > 0 and gap ≥ −2 points against CellBest with predicted cells (S0.3(c))? In the bound, cascades use the real verifier where visible tests exist and an oracle accept-or-escalate decision on cells with no verifier signal. Fixed ladders cannot pass by construction (S3.2), so they are not the test. Also report the gap the learned router must close (provisional: about 11 points against the best single model, P0.5; against CellBest with predicted cells (P0.6, seed 0): the bound meets (c) on point estimates (per-cell Rule A: 36.6% saving, +1.6 points; Rule B: 16.4%, +8.1). The best policy without an oracle (per-cell Rule A, no-signal cells escalated) reaches 3.3%, +0.3. The learned no-signal decision must recover the difference, about 33 points of saving at similar acceptance) | No: the bound misses the gate, so stop and bring it to the user before S4 (LLMRouterBench becomes a candidate primary corpus for C1 and C2). A failed DP1b means the tested policies have not shown economic feasibility; it does not prove a learned policy cannot succeed, so the pause is a reassessment, not a verdict. This half decides the economic claim |
 | DP2 | During S5 | Does the hierarchical model beat k-matched DimensionBest **in routing units** (AvgPerf, cost) at a k in the fixed grid {10, 25, 50, 100}, on the development split? | No: the routing model is the shrunk lookup table, and IRT is reported as an ablation |
 | DP3 | S6 pilot | Is the routing gap on the live pool (free models plus the paid top model) more than twice the run-to-run standard deviation, measured on the pilot's ≥ 2 runs per task? The routing gap is the noise-corrected oracle headroom over the best single model: choose on run 1, score on run 2 (`CLAIMS.md` O14) | No: live work is reported as a verifier study and a transfer test, not as a routing win |
@@ -650,7 +650,7 @@ edit them.
         on all three fields; all 1,907 P0.6 tasks join.
       - Open notes: which MultiPL-E prompt variant CodeRouterBench used cannot be checked (no
         overlap); all six LiveCodeBench release files are pinned (no minimal set computed).
-- [ ] S1.6 `data/splits.py` (new): `problem_id` taken from the source-benchmark ids in the S1.1
+- [x] S1.6 `data/splits.py` (new): `problem_id` taken from the source-benchmark ids in the S1.1
       table (HumanEval, MBPP and BigCodeBench variants linked; `lcb` linked to `lcb_testgen` through
       `tasks.jsonl`), with prompt matching as a cross-check only. Tasks with byte-identical
       `content_sha256` (S1.5) are merged into one problem even when their source ids differ, **for
@@ -667,6 +667,33 @@ edit them.
       ids make seed 0 draw a different split, and CellBest's saving ranged from 15.4% to 32.9%
       across development draws (P0.4). Recount the second review's figure of 643 of 1,430 joined
       test tasks sharing prompt text with the probing split.
+      **Done 2026-11-20** (`8e0c4cf`).
+      - **Problem ids** (`router/data/problems.csv`) come from three kinds of link:
+        - source keys: HumanEval `n` across humaneval, he_*, hex_* and multiple_*; MBPP `n`;
+          BigCodeBench `n`; the LiveCodeBench question id;
+        - DS-1000 variants, linked to their original through `perturbation_origin_id`, which
+          counts within `library` (pinned extract `ds1000_origin`; user, 2026-11-20);
+        - identical `content_sha256`, for splits only.
+
+        This gives 6,997 problems (ds1000: 1,000 tasks in 450 problems), 3,487 of them in the
+        eligible pool. The only identical-text links beyond source keys are S1.5's five pairs.
+      - **Development split:** 697 problems, `round_half_up(0.20 × 3,487)`, holding 1,104
+        eligible tasks. Drawn with `SeedSequence([DEV_SEED, 0])`. Not stratified (user,
+        2026-11-20); by family it holds 13.5% to 23.1% of eligible tasks.
+      - **Outer folds:** fold seeds 0–4 (seed 0 = `GATE_SEED`; user, 2026-11-20). Each seed is a
+        `SeedSequence([seed, 1])` permutation of the 2,790 evaluation problems, assigned
+        round-robin: 558 problems per fold, 996–1,135 tasks.
+      - **Labels:** every task takes its problem's label. Problems with no eligible task are
+        `outside_pool`.
+      - **Files and tests:** the development split and all five fold assignments are committed in
+        `router/data/splits.csv` and pinned by a test. The R13 test checks problem ids, content
+        hashes and source keys for every seed: 0 violations.
+      - **Eligibility:** the split is drawn on the S1.4 eligible pool. S1.7's artefact filter
+        never redraws it. A change to eligibility fails the pin test and needs the user's
+        decision.
+      - **Second-review recount:** 618 of 1,914 joined ID-test tasks share content with a probing
+        task. Eligible ID-test tasks sharing a problem with a probing task: 791 of 1,658 against
+        eligible probing tasks, 978 against any probing task.
 - [ ] S1.7 `data/audit.py` and `experiments/e0_audit.py` [M1.6]: a family × model table flagging
       all-zero families, flagship models below the pool median, and the share of oracle and
       DimensionBest gain per family. For each suspected family, inspect the raw responses
@@ -726,7 +753,8 @@ edit them.
       fields are behind separate, labelled functions. Agrees with the P0.5 pivots on every cell (0
       mismatches); X13 `truth` equals the released score on all 23,288 cells.
 - **Gate:** the S1.3 count tests pass; zero singleton ID families (OOD families are exempt, as
-  from the 30-task minimum; user, 2026-11-20); the split-integrity test passes;
+  from the 30-task minimum; user, 2026-11-20); the split-integrity test passes (S1.6: 0
+  violations, all five seeds);
   eligibility comes from S1.4 rules only; prompt join ≥ 95% on the eligible pool (S1.5: 98.7%), or the gap is documented per family
   and every embedding result is restricted to joined tasks; both matrix views load; the verdict
   loader passes its count tests; `artefacts.yaml` committed with every audit-dependent count; the
@@ -744,7 +772,10 @@ quick-check code.
 - [ ] S2.3 `sim/metrics.py` [M2.2]: AvgPerf, cost (S0.2), acceptance rate (S0.1), CPAT@floor, cost at
       matched acceptance rate, and regret that includes probe cost in dollars and in probe count.
 - [ ] S2.4 `sim/stats.py` [M2.3]: S0.8, plus the development split and nested cross-fitting driver
-      of S0.6, including automatic per-fold selection from a frozen candidate list.
+      of S0.6, including automatic per-fold selection from a frozen candidate list. Reuse
+      `splits.load_splits` and `splits.r13_violations`. Stream order and the probe draw under a
+      seed use their own SeedSequence stream ids (`[seed, 2]`, `[seed, 3]`, …); ids 0 and 1
+      belong to the development split and the folds (S1.6).
 - [ ] S2.5 Baselines [M2.4]: Always-X, Random, DimensionBest (full, k-matched, cost-aware),
       CellBest with true source cells (reference) and with predicted cells (the S0.3(c)
       comparator), using a cell predictor that infers dimension × source from the task content
@@ -1659,3 +1690,31 @@ Two further reviews were checked against the data; all fixes approved by the use
   the gate's 95% is measured on the eligible pool. Written into S1.5, S1.6, the S1 gate, S2.5 and
   S4.4. The "888 `lcb`" figure is corrected (776 `lcb` plus 112 `lcb_testgen`).
 - **Next:** S1.6.
+
+### 2026-11-20 (S1.6 merged)
+
+- **S1.6** merged from `s1-b-splits` (`8e0c4cf`). It was done in two checkpoints, with a reviewer
+  check between them.
+  - **Checkpoint 1, problem ids:** an independent union-find over source keys, content hashes
+    and DS-1000 origins (resolved within the library) gives the same partition: 6,997
+    problems, 3,487 in the eligible pool.
+  - **Checkpoint 2, split and folds:** an independent re-draw from the documented calls
+    reproduces the development split and all five seeds' folds. A deliberately injected
+    content or source-key leak is caught, once per seed. The development split is identical
+    for every seed.
+  - **Tests:** 383 pass on the branch, 384 on `main`. `fetch_data.py` was run once in the main
+    checkout (one new extract; 194 verified).
+- **User decisions:**
+  - DS-1000 variants are linked to their original;
+  - the fold assignments for seeds 0–4 are committed alongside the development split;
+  - no stratification;
+  - eligibility stays read from S1.4 and is not frozen in `splits.py`; the pin test guards it.
+- **Correction:** the provisional regex already linked `multiple_*` to HumanEval; only
+  HumanEval-X was missed. The 2026-11-19 entry above overstated this.
+- **Noted, not acted on:**
+  - 45 `lcb_testgen` ids have no `lcb` partner (`outside_pool`);
+  - 21 `debugbench_sup` numbers also occur in debugbench, but nothing ties them, so they stay
+    unlinked;
+  - the DS-1000 release has 452 Origin rows, where the paper reports 451.
+  - No new S1.7 suspects.
+- **Next:** batch C (S1.7 audit and `artefacts.yaml`, then the S1 gate).
