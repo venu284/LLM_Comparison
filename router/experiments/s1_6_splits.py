@@ -281,11 +281,19 @@ def mbpp_texts(kt: pd.DataFrame) -> dict:
             out.append({"source_key": key, "raw_sha256": dict(zip(j.family, j.raw_sha256))})
     no_text = d[~d.joined]
     return {"field": "raw_sha256 (mbpp_completion content adds a def header; raw text does not)",
+            "text_sources": {f: _counts(g.prompt_source.map(_source_name)) for f, g in d.groupby("family")},
             "keys_in_two_or_more_families": multi,
             "keys_with_two_or_more_joined_families": int(sum(g[g.joined].family.nunique() >= 2
                                                              for _, g in d.groupby("source_key"))),
             "families_without_text": _counts(no_text.family),
             "disagreements": sorted(out, key=lambda r: S.key_order(r["source_key"]))}
+
+
+def _source_name(prompt_source: str | None) -> str:
+    """'tasks.jsonl' or the extract a task's text was read from (S1.5 `prompt_source`)."""
+    if not isinstance(prompt_source, str):
+        return "none"
+    return "tasks.jsonl" if "tasks.jsonl" in prompt_source else prompt_source.split("@")[0]
 
 
 def lcb_partners(kt: pd.DataFrame) -> dict:
@@ -294,9 +302,12 @@ def lcb_partners(kt: pd.DataFrame) -> dict:
     d = kt[kt.family.isin(["lcb", "lcb_testgen"])]
     q = {f: set(g.upstream_id) for f, g in d.groupby("family")}
     raw = {(f, u): h for f, u, h in zip(d.family, d.upstream_id, d.raw_sha256)}
+    src = {(f, u): _source_name(s) for f, u, s in zip(d.family, d.upstream_id, d.prompt_source)}
     both = sorted(q["lcb"] & q["lcb_testgen"])
-    disagree = [u for u in both if raw[("lcb", u)] is not None and raw[("lcb_testgen", u)] is not None
-                and raw[("lcb", u)] != raw[("lcb_testgen", u)]]
+    # Both texts read from one LiveCodeBench extract row cannot disagree: only pairs with at
+    # least one side from tasks.jsonl (a separate row per task) test anything.
+    independent = [u for u in both if "tasks.jsonl" in (src[("lcb", u)], src[("lcb_testgen", u)])]
+    disagree = [u for u in independent if raw[("lcb", u)] != raw[("lcb_testgen", u)]]
     in_tj = {f: int(sum(t in tj for t in g.task_id)) for f, g in d.groupby("family")}
     return {
         "lcb_qids": len(q["lcb"]), "lcb_testgen_qids": len(q["lcb_testgen"]),
@@ -304,7 +315,11 @@ def lcb_partners(kt: pd.DataFrame) -> dict:
         "lcb_testgen_not_in_livecodebench_extract": sorted(q["lcb_testgen"] - lcb_ext),
         "lcb_testgen_without_lcb_partner": sorted(q["lcb_testgen"] - q["lcb"]),
         "lcb_without_lcb_testgen_partner": len(q["lcb"] - q["lcb_testgen"]),
-        "partners": len(both), "partners_raw_text_disagree": disagree,
+        "partners": len(both),
+        "partners_by_text_source": dict(sorted(Counter(
+            f"lcb:{src[('lcb', u)]} | lcb_testgen:{src[('lcb_testgen', u)]}" for u in both).items())),
+        "partners_compared_independently": len(independent),
+        "independent_partners_raw_text_disagree": disagree,
         "tasks_in_tasks_jsonl": in_tj,
     }
 

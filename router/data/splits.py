@@ -197,7 +197,7 @@ def key_table() -> pd.DataFrame:
     pt = prompt_table().set_index("task_id")
     out = table.copy()
     out["source_key"] = [source_key(t, f, k) for t, f, k in zip(table.task_id, table.family, table.split_kind)]
-    for c in ("content_sha256", "raw_sha256", "prompt_sha256", "joined", "upstream_id"):
+    for c in ("content_sha256", "raw_sha256", "prompt_sha256", "joined", "upstream_id", "prompt_source"):
         out[c] = pt.loc[table.task_id, c].to_numpy()
     return out
 
