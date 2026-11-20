@@ -91,6 +91,12 @@ def test_verifier_rate_arithmetic():
                                                                             rel=2e-3)
 
 
+def test_method_reproduces_route_anything_sandbox_cost():
+    r = pr.verifier_run_cost(run_s=pr.RA_C4_SANDBOX_RUN_S)
+    assert r["per_run_usd"] == pytest.approx(pr.RA_C4_SANDBOX_RUN_USD, rel=5e-3)
+    assert r["compute_usd"] != pytest.approx(pr.RA_C4_SANDBOX_RUN_USD, rel=5e-3)
+
+
 def test_claim_constants_untouched():
     assert settings.VERIFIER_RUN_USD == 1e-6
     assert settings.PAID_TOP_PRICE_USD_PER_MTOK == (5.0, 25.0)

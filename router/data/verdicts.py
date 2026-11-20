@@ -14,12 +14,16 @@ Fields in the X13 file (route-anything-data README, "Memory verdicts"):
 - `w2_*` is the hidden-test run. The README calls these "hidden-test outcomes". Route Anything
   (arXiv 2611.05275 v1, App. C.4, Table 14) uses hidden tests as "an oracle-like control" verifier
   (a sandbox run of about 0.15 s), and App. C.6 reports that hidden-test writes have TPR/FPR
-  0.960/0.205 against the released score. The paper does not define the `w2_kind` categories
-  (passed, assertion, extraction_failure, harness_mismatch, empty_response, runtime_error,
-  timeout, missing_lib), nor how `harness_mismatch` arises; the README does not either. The names
-  are the sandbox's outcome classes; `empty_response` coincides with `empty`. CLAIMS S0.1 makes the
-  hidden-test outcome a sensitivity check only: it is never ground truth. Exposed only by
-  `load_hidden_tests()`.
+  0.960/0.205 against the released score. Neither the paper nor the README defines the `w2_kind`
+  categories (passed, assertion, extraction_failure, harness_mismatch, empty_response,
+  runtime_error, timeout, missing_lib). X13 stores no error text. Route Anything's X7b attempt
+  records (`experiments_x/X7b_inloop_live/attempts.jsonl`) use the same `failure_kind` labels with
+  the error string: there, every `harness_mismatch` is a `NameError` for the entry-point function
+  the test harness calls (the response defined a differently named function), `missing_lib` is a
+  `ModuleNotFoundError`, `extraction_failure` a `SyntaxError` in the extracted code. That reading
+  of X13's labels is inferred from X7b, not documented. In X13, `empty_response` coincides exactly
+  with `empty`. CLAIMS S0.1 makes the hidden-test outcome a sensitivity check only: it is never
+  ground truth. Exposed only by `load_hidden_tests()`.
 - `empty` marks a cell with no model response: the model is unavailable for that task (S0.11).
 - `truth` is the released CodeRouterBench score. The router never sees it (S0.13, R16): it is not in
   `load_verdicts()`, and only `truth_matches_release()` and `hidden_vs_release()` read it.

@@ -18,6 +18,8 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
@@ -26,6 +28,7 @@ from router.settings import EXTERNAL_DIR, PHASE5_CSV, REPO_ROOT
 
 PHASE5_SHA256 = "abaceb9a17c65c42333ef98d6762b8685db0ccb2a4d0dec52e3563cdd39f04c5"
 RESPONSE_CACHE = EXTERNAL_DIR / "phase5" / "raw_responses.jsonl"
+FETCH_STATS = EXTERNAL_DIR / "phase5" / "fetch_stats.json"
 ENV_FILE = REPO_ROOT / "pipeline" / ".env"
 RUN_KEY = ["task_id", "model_name", "run_number"]
 
@@ -79,11 +82,13 @@ def _connect_read_only(url: str):
 
 
 def fetch_raw_responses(url: str | None = None, cache: Path = RESPONSE_CACHE,
-                        runs: pd.DataFrame | None = None) -> dict:
+                        runs: pd.DataFrame | None = None, stats_path: Path | None = None) -> dict:
     """Read the Phase 5 raw responses once, read-only, and cache the CSV's 325 runs to `cache`.
 
-    One connection attempt; no retries. Returns counts only.
+    One connection attempt; no retries. Returns counts only, and writes them (with the fetch time)
+    to `stats_path`, next to the cache by default, so reported database counts come from a file.
     """
+    stats_path = Path(stats_path) if stats_path else Path(cache).with_name(FETCH_STATS.name)
     url = url or _database_url()
     if not url:
         raise Phase5DatabaseUnavailable("DATABASE_URL not set")
@@ -117,7 +122,8 @@ def fetch_raw_responses(url: str | None = None, cache: Path = RESPONSE_CACHE,
             f.write(json.dumps({"task_id": r.task_id, "model_name": r.model_name,
                                 "run_number": int(r.run_number),
                                 "raw_response": r.raw_response}) + "\n")
-    return {
+    stats = {
+        "fetched_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "n_db_rows": len(db),
         "n_db_duplicate_key_rows": int(dup.sum()),
         "n_db_rows_not_in_csv": int(len(db[~dup].merge(keys, on=RUN_KEY, how="left",
@@ -127,6 +133,8 @@ def fetch_raw_responses(url: str | None = None, cache: Path = RESPONSE_CACHE,
         "n_cached": len(cached),
         "n_csv_runs_without_response_row": int((j._merge == "left_only").sum()),
     }
+    Path(stats_path).write_text(json.dumps(stats, indent=2) + "\n")
+    return stats
 
 
 def load_responses(cache: Path = RESPONSE_CACHE) -> pd.DataFrame:
@@ -155,3 +163,20 @@ def response_counts(j: pd.DataFrame) -> dict:
         "n_whitespace_only": int((~is_null & (text != "") & (text.str.strip() == "")).sum()),
         "n_non_empty": int((text.str.strip() != "").sum()),
     }
+
+
+def empty_responses(j: pd.DataFrame) -> list[dict]:
+    """The runs whose cached response is NULL, empty or whitespace-only (for the S1.7 audit)."""
+    text = j.raw_response.fillna("").astype(str)
+    bad = j[text.str.strip() == ""]
+    return bad[RUN_KEY + ["pass_fail", "tests_total"]].to_dict("records")
+
+
+if __name__ == "__main__":
+    # One read-only fetch, from the repo root:
+    #   PYTHONPATH=.:pipeline pipeline/venv/bin/python -m router.data.phase5
+    try:
+        print(json.dumps(fetch_raw_responses(), indent=2))
+    except Phase5DatabaseUnavailable as exc:
+        print(f"blocked: {exc}")
+        sys.exit(1)

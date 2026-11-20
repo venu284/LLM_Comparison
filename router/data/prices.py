@@ -63,9 +63,9 @@ CRB_PRICES: dict[str, Price] = {p.model: p for p in [
     _crb("glm-5", "Zhipu", "low", 0.80, 3.00, _CNY.format("models.json note: pricing CNY-> USD")),
     _crb("kimi-k2.5", "Moonshot", "mid", 0.01, 2.90,
          _CNY.format("models.json note: kimi-k2.5 pricing CNY-> USD")
-         + ". The $0.01/M input price looks like a conversion error: third-party providers on "
-           "OpenRouter list kimi-k2.5 input at $0.49-0.60/M (accessed 2026-11-20); Moonshot's own "
-           "price table did not render (see KIMI_FINDING). Released costs are not changed."),
+         + ". The $0.01/M input price is inconsistent with third-party listings: providers on "
+           "OpenRouter list kimi-k2.5 input at $0.49-0.60/M (accessed 2026-11-20). Moonshot's own "
+           "price was not obtained (see KIMI_FINDING). Released costs are not changed."),
     _crb("MiniMax-M2.7", "MiniMax", "mid", 1.00, 3.00,
          _CNY.format("models.json note: pricing CNY-> USD")),
     _crb("Qwen3-Max", "Alibaba", "mid", 0.34, 1.38,
@@ -131,6 +131,10 @@ LAMBDA_MEMORY_GB = 2.0
 LAMBDA_ARCH = "x86"
 LAMBDA_REGION = "us-east-1"
 RA_C4_USD_PER_S = 3.33e-5
+# Same appendix: "a hidden-test sandbox run 0.15 s and $5.2x10^-6". verifier_run_cost(0.15)
+# reproduces it only with the per-request charge included, which fixes the method used here.
+RA_C4_SANDBOX_RUN_S = 0.15
+RA_C4_SANDBOX_RUN_USD = 5.2e-6
 
 
 def verifier_run_cost(run_s: float = VERIFIER_RUN_S, memory_gb: float = LAMBDA_MEMORY_GB) -> dict:
@@ -222,5 +226,6 @@ def kimi_input_price_effect(alt_input_per_m, root: Path = CRB_DIR) -> dict:
         "released_input_per_m": CRB_PRICES["kimi-k2.5"].input_per_m,
         "released_total_usd": base,
         "input_share_of_released": inp_tok * CRB_PRICES["kimi-k2.5"].input_per_m / 1e6 / base,
+        "input_token_share": inp_tok / (inp_tok + out_tok),
         "alternatives": alts,
     }

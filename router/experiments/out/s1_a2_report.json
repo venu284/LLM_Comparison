@@ -98,6 +98,18 @@
       "timeout": 95,
       "missing_lib": 32
     },
+    "harness_mismatch_x7b": {
+      "n_attempts": 2317,
+      "n_harness_mismatch": 28,
+      "exception_types": {
+        "NameError": 28
+      },
+      "sources": {
+        "mbpp": 24,
+        "bcb": 4
+      }
+    },
+    "empty_cells_release_success": 877,
     "empty_cells_with_w2_kind_empty_response": 1551
   },
   "prices": {
@@ -124,6 +136,17 @@
       "accessed": "2026-11-20",
       "differs": false
     },
+    "verifier_at_signal_cell_mean_s": {
+      "mean_all_cells_s": 0.0736865939539677,
+      "mean_signal_cells_s": 0.20007151684738253,
+      "per_run_usd_at_signal_mean": 6.9000134e-06
+    },
+    "verifier_method_check_ra_c4": {
+      "run_s": 0.15,
+      "paper_usd": 5.2e-06,
+      "recomputed_usd": 5.20001e-06,
+      "compute_only_usd": 5.00001e-06
+    },
     "verifier": {
       "run_s": 0.074,
       "billed_s": 0.074,
@@ -148,6 +171,7 @@
       "released_input_per_m": 0.01,
       "released_total_usd": 8.1683105,
       "input_share_of_released": 0.0031234855726897256,
+      "input_token_share": 0.47606918990651814,
       "alternatives": [
         {
           "input_per_m": 0.49,
@@ -193,6 +217,24 @@
       "n_empty_string": 1,
       "n_whitespace_only": 0,
       "n_non_empty": 324
+    },
+    "empty_responses": [
+      {
+        "task_id": "FE-010",
+        "model_name": "Llama-3.3-70B",
+        "run_number": 1,
+        "pass_fail": false,
+        "tests_total": 13
+      }
+    ],
+    "database_fetch": {
+      "fetched_utc": "2026-11-20T18:01:00Z",
+      "n_db_rows": 325,
+      "n_db_duplicate_key_rows": 0,
+      "n_db_rows_not_in_csv": 0,
+      "n_csv_runs": 325,
+      "n_cached": 325,
+      "n_csv_runs_without_response_row": 0
     }
   }
 }

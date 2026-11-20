@@ -58,11 +58,26 @@ def verdict_section() -> dict:
         k: {str(c): int(n) for c, n in row.items()} for k, row in ct.iterrows()}
     h = vd.load_hidden_tests()
     out["w2_kind_counts"] = h.w2_kind.value_counts().to_dict()
+    out["harness_mismatch_x7b"] = x7b_failure_errors()
     raw = vd.load_raw()
     empty = raw["empty"] == "True"
+    out["empty_cells_release_success"] = int(
+        (ct.loc["empty_response", True] if True in ct.columns else 0))
     out["empty_cells_with_w2_kind_empty_response"] = int(
         (raw.loc[empty, "w2_kind"] == "empty_response").sum())
     return out
+
+
+def x7b_failure_errors() -> dict:
+    """How Route Anything's sandbox labels arise, from X7b attempts (same labels, with error text)."""
+    import collections
+    path = vd.X13_VERDICTS.parents[2] / "X7b_inloop_live" / "attempts.jsonl"
+    rows = [json.loads(line) for line in open(path)]
+    hm = [r for r in rows if r.get("failure_kind") == "harness_mismatch"]
+    exc = collections.Counter(str(r.get("error")).split(":")[0] for r in hm)
+    return {"n_attempts": len(rows), "n_harness_mismatch": len(hm),
+            "exception_types": dict(exc),
+            "sources": dict(collections.Counter(r["source"] for r in hm))}
 
 
 def price_section() -> dict:
@@ -79,6 +94,11 @@ def price_section() -> dict:
             "differs": (opus.input_per_m, opus.output_per_m) != (pub.input_per_m,
                                                                 pub.output_per_m),
         },
+        "verifier_at_signal_cell_mean_s": verifier_at_signal_mean(),
+        "verifier_method_check_ra_c4": {
+            "run_s": pr.RA_C4_SANDBOX_RUN_S, "paper_usd": pr.RA_C4_SANDBOX_RUN_USD,
+            "recomputed_usd": pr.verifier_run_cost(run_s=pr.RA_C4_SANDBOX_RUN_S)["per_run_usd"],
+            "compute_only_usd": pr.verifier_run_cost(run_s=pr.RA_C4_SANDBOX_RUN_S)["compute_usd"]},
         "verifier": {**pr.verifier_run_cost(), "url": pr.LAMBDA_PRICING_URL,
                      "accessed": pr.LAMBDA_ACCESSED, "arch": pr.LAMBDA_ARCH,
                      "region": pr.LAMBDA_REGION},
@@ -90,12 +110,26 @@ def price_section() -> dict:
     }
 
 
+def verifier_at_signal_mean() -> dict:
+    """VERIFIER_RUN_S (0.074 s) against the X13 w1_sec means: over all cells (zeros included,
+    where no visible test ran) and over signal cells only."""
+    v = vd.load_verdicts()
+    sig_mean = float(v.verifier_seconds[v.signal].mean())
+    return {"mean_all_cells_s": float(v.verifier_seconds.mean()),
+            "mean_signal_cells_s": sig_mean,
+            "per_run_usd_at_signal_mean": pr.verifier_run_cost(run_s=sig_mean)["per_run_usd"]}
+
+
 def phase5_section() -> dict:
     out = {"csv_sha256_ok": p5.csv_sha256() == p5.PHASE5_SHA256, "csv_rows": len(p5.load_runs())}
     if p5.RESPONSE_CACHE.exists():
-        out["responses"] = p5.response_counts(p5.load_runs_with_responses())
+        j = p5.load_runs_with_responses()
+        out["responses"] = p5.response_counts(j)
+        out["empty_responses"] = p5.empty_responses(j)
     else:
         out["responses"] = "cache not built"
+    if p5.FETCH_STATS.exists():
+        out["database_fetch"] = json.loads(p5.FETCH_STATS.read_text())
     return out
 
 
