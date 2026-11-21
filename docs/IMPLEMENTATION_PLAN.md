@@ -695,8 +695,9 @@ edit them.
         task. Eligible ID-test tasks sharing a problem with a probing task: 791 of 1,658 against
         eligible probing tasks, 978 against any probing task.
 - [ ] S1.7 `data/audit.py` and `experiments/e0_audit.py` [M1.6]: a family × model table flagging
-      all-zero families, flagship models below the pool median, and the share of oracle and
-      DimensionBest gain per family. For each suspected family, inspect the raw responses
+      all-zero families and flagship models below the pool median. Each family's share of the
+      oracle and DimensionBest gain is computed only after the labels in `artefacts.yaml` are
+      committed (blind labelling; reviewer, 2026-11-20). For each suspected family, inspect the raw responses
       (`response_matrix.json`) and, where tests are available, re-execute them, then label it
       **confirmed defect**, **cleared** or **undecided** (S0.10). Write `data/artefacts.yaml`,
       including every audit-dependent count, and commit it **before** any router result is computed
