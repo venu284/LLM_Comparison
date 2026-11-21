@@ -57,7 +57,35 @@ DS_SPEC = runner.Spec(image=DS_IMAGE_FILE.read_text().strip() if DS_IMAGE_FILE.e
                       wall_s=600.0,
                       env=runner.Spec.env + (("TF_CPP_MIN_LOG_LEVEL", "3"), ("CUDA_VISIBLE_DEVICES", "-1")))
 HARNESS = {"bcb": (SANDBOX / "harness_bcb.py").read_text(),
-           "py": (SANDBOX / "harness_py.py").read_text()}
+           "py": (SANDBOX / "harness_py.py").read_text(),
+           "mx": (SANDBOX / "harness_mx.py").read_text()}
+
+
+def _tc_image(tc: str) -> str:
+    f = SANDBOX / "toolchains" / tc / "IMAGE_ID"
+    return f.read_text().strip() if f.exists() else "unbuilt"
+
+
+_BASE_PATH = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+_TC_ENV = {   # Amendment 9: fixed per-toolchain variables (env -i inside the container)
+    "cpp": (), "node": (), "java": (("PATH", "/opt/java/openjdk/bin:" + _BASE_PATH),),
+    "go": (("PATH", "/usr/local/go/bin:" + _BASE_PATH), ("GOCACHE", "/tmp/gocache"),
+           ("GOPATH", "/tmp/gopath"), ("GOPROXY", "off"), ("GOTOOLCHAIN", "local"),
+           ("GOFLAGS", "-mod=vendor"), ("CGO_ENABLED", "0")),
+    "rust": (("PATH", "/usr/local/cargo/bin:" + _BASE_PATH), ("RUSTUP_HOME", "/usr/local/rustup"),
+             ("CARGO_HOME", "/usr/local/cargo")),
+}
+LANG_TC = {"cpp": "cpp", "go": "go", "java": "java", "js": "node", "ts": "node", "rs": "rust"}
+
+
+def _mx_spec(tc: str) -> runner.Spec:
+    base = dict(runner.Spec.env)
+    base.update(dict(_TC_ENV[tc]))
+    return runner.Spec(image=_tc_image(tc), platform=PLATFORM, cpus=2.0, memory="4g", pids=1024,
+                       tmpfs_size="1g", wall_s=300.0, env=tuple(base.items()))
+
+
+MX_SPECS = {lang: _mx_spec(tc) for lang, tc in LANG_TC.items()}
 
 
 # --------------------------------------------------------------------------- data
@@ -258,6 +286,164 @@ class Py:
         return {**self._body(up, version), "mode": "response", "response": response}
 
 
+# --------------------------------------------------------------------------- 2b: other languages
+MX_FAMILIES = ("hex_cpp", "hex_go", "hex_java", "hex_js", "multiple_rs", "multiple_ts")
+FAM_LANG = {"hex_cpp": "cpp", "hex_go": "go", "hex_java": "java", "hex_js": "js",
+            "multiple_rs": "rs", "multiple_ts": "ts"}
+READ_LANG = {"cpp": "cpp", "go": "go", "java": "java", "js": "javascript", "rs": "rust",
+             "ts": "typescript"}
+FENCE_TAG = {"cpp": "cpp", "go": "go", "java": "java", "js": "javascript", "rs": "rust",
+             "ts": "typescript"}
+# Amendment 9 controls, written before any 2b response is read.
+MAIN_STUB = {"cpp": "\nint main(){\n    return 0;\n}\n", "go": "\nfunc main() {\n}\n",
+             "java": "\npublic class Main {\n    public static void main(String[] args) {\n    }\n}\n",
+             "js": "\n", "rs": "\nfn main() {\n}\n", "ts": "\n"}
+FAIL_BODY = {"cpp": "    abort();\n}\n", "go": "    panic(\"stub\")\n}\n",
+             "java": "        throw new RuntimeException(\"stub\");\n    }\n}\n",
+             "js": "  return undefined;\n}\n", "rs": "    todo!()\n", "ts": "    throw new Error(\"stub\");\n}\n"}
+# Hand-written MultiPL-E references (bodies after the prompt), the only positive controls for
+# Rust and TypeScript (MultiPL-E ships no reference solutions).
+MX_REFS = {
+    ("rs", "HumanEval_0_has_close_elements"): "    for i in 0..numbers.len() {\n        for j in 0..numbers.len() {\n            if i != j && (numbers[i] - numbers[j]).abs() < threshold {\n                return true;\n            }\n        }\n    }\n    false\n",
+    ("rs", "HumanEval_2_truncate_number"): "    number % 1.0\n",
+    ("rs", "HumanEval_4_mean_absolute_deviation"): "    let n = numbers.len() as f64;\n    let m: f64 = numbers.iter().sum::<f64>() / n;\n    numbers.iter().map(|x| (x - m).abs()).sum::<f64>() / n\n",
+    ("rs", "HumanEval_23_strlen"): "    string.len() as isize\n",
+    ("ts", "HumanEval_0_has_close_elements"): "  for (let i = 0; i < numbers.length; i++)\n    for (let j = 0; j < numbers.length; j++)\n      if (i !== j && Math.abs(numbers[i] - numbers[j]) < threshold) return true;\n  return false;\n}\n",
+    ("ts", "HumanEval_2_truncate_number"): "  return number % 1.0;\n}\n",
+    ("ts", "HumanEval_4_mean_absolute_deviation"): "  const m = numbers.reduce((a, b) => a + b, 0) / numbers.length;\n  return numbers.reduce((a, b) => a + Math.abs(b - m), 0) / numbers.length;\n}\n",
+    ("ts", "HumanEval_23_strlen"): "  return string.length;\n}\n",
+}
+GATE_MX = SANDBOX.parent / "experiments/out/s1_7_gate_mx.json"
+
+
+class Mx:
+    """hex_cpp, hex_go, hex_java, hex_js (HumanEval-X, CodeGeeX harness) and multiple_rs,
+    multiple_ts (MultiPL-E harness), criteria Amendment 9."""
+    kind = "mx"
+    spec = MX_SPECS["cpp"]                    # replaced per payload in sandbox()
+
+    def __init__(self):
+        self.hx = _index("humaneval_x_tests", "task_id")
+        self.hx.update(_index("humaneval_x_go_tests", "task_id"))
+        self.me = {f"{r['language']}::{r['name']}": r for r in _jsonl(SOURCES / "multipl_e_tests.jsonl")}
+
+    def up(self, task_id, family):
+        return f"{family}::{upstream_id(task_id, family)}"
+
+    @staticmethod
+    def _split(up):
+        fam, u = up.split("::", 1)
+        return fam, u, FAM_LANG[fam]
+
+    def _row(self, up):
+        fam, u, lang = self._split(up)
+        return self.hx.get(u) if fam.startswith("hex_") else self.me.get(f"{lang}::{u}")
+
+    def has_tests(self, up):
+        return self._row(up) is not None
+
+    def read_lang(self, up):
+        return READ_LANG[self._split(up)[2]]
+
+    def entry(self, up):
+        fam, u, lang = self._split(up)
+        r = self._row(up)
+        if lang == "go":
+            return re.findall(r"func\s+(\w+)", r["declaration"])[-1]
+        if lang == "js":
+            return re.findall(r"const\s+(\w+)\s*=", r["declaration"])[-1]
+        if lang in ("cpp", "java"):
+            last = [l for l in r["declaration"].splitlines() if l.strip()][-1]
+            return re.search(r"(\w+)\s*\(", last).group(1)
+        if lang == "rs":
+            return re.findall(r"fn\s+(\w+)", r["prompt"])[-1]
+        return re.findall(r"function\s+(\w+)", r["prompt"])[-1]
+
+    def _body(self, up):
+        fam, u, lang = self._split(up)
+        r = self._row(up)
+        b = {"lang": lang, "task_id": u, "entry_point": self.entry(up), "prompt": r["prompt"]}
+        if fam.startswith("hex_"):
+            b.update(test=r["test"], declaration=r["declaration"], import_=None)
+            if lang == "go":
+                b.update({"import": r["import"], "test_setup": r["test_setup"]})
+        else:
+            b.update(test=r["tests"], declaration="")
+        b.pop("import_", None)
+        return b
+
+    def canonical(self, up, version=None):
+        r = self._row(up)
+        if not self._split(up)[0].startswith("hex_"):
+            return None
+        return {**self._body(up), "mode": "canonical", "code": r["canonical_solution"]}
+
+    def controls(self, up) -> list[tuple[str, dict, str]]:
+        """(name, payload, expected status). Uses task fields only, never a response."""
+        fam, u, lang = self._split(up)
+        b, r = self._body(up), self._row(up)
+        fence = lambda code: f"Here is the function.\n\n```{FENCE_TAG[lang]}\n{code}\n```\n"
+        out = [("negative", {**b, "mode": "canonical", "code": FAIL_BODY[lang]}, "fail")]
+        if fam.startswith("hex_"):
+            full = r["prompt"] + r["canonical_solution"]
+            out.append(("synthetic_full_main", {**b, "mode": "response",
+                                                "response": fence(full + MAIN_STUB[lang])}, "pass"))
+        else:
+            stub = r["prompt"] + FAIL_BODY[lang] + ("}\n" if lang == "rs" else "")
+            out.append(("synthetic_stub_main", {**b, "mode": "response",
+                                                "response": fence(stub + MAIN_STUB[lang])}, "fail"))
+            ref = MX_REFS.get((lang, u))
+            if ref:
+                out.append(("reference", {**b, "mode": "canonical", "code": ref
+                                         }, "pass"))
+                closed = ref + ("}\n" if lang == "rs" else "")
+                out.append(("reference_full_main", {**b, "mode": "response",
+                                                    "response": fence(r["prompt"] + closed + MAIN_STUB[lang])}, "pass"))
+        return out
+
+    def payload(self, up, response, gt, version=None):
+        return {**self._body(up), "mode": "response", "response": response}
+
+
+def mx_samples(long, stats) -> pd.DataFrame:
+    return _with_keys(pd.concat([family_sample(long, stats, f) for f in MX_FAMILIES], ignore_index=True))
+
+
+def mx_gate(s: pd.DataFrame, mx: "Mx") -> bool:
+    """Amendment 9 gate, before any 2b response is loaded: on each family's sampled tasks, the
+    documented canonical (HumanEval-X) and every control must give its expected status; more
+    than 10% of tasks with a failed control stops that family."""
+    cache = Cache(OUT / "s1_7_runs_mx.jsonl")
+    ups = sorted(set(mx.up(t, f) for t, f in zip(s.task_id, s.family)))
+    jobs, expect = [], {}
+    extra = [f"{f}::{n}" for (lang, n) in MX_REFS for f in ("multiple_rs", "multiple_ts")
+             if FAM_LANG[f] == lang]
+    for u in ups + [x for x in extra if x not in ups]:
+        c = mx.canonical(u)
+        if c is not None:
+            jobs.append((f"canonical|{u}|None", c)); expect[f"canonical|{u}|None"] = (u, "pass")
+        for name, pl, exp in mx.controls(u):
+            jobs.append((f"control:{name}|{u}", pl)); expect[f"control:{name}|{u}"] = (u, exp)
+    run_many(jobs, cache, "mx", MX_SPECS["cpp"])
+    gate, sampled = {}, set(ups)
+    for rid, (u, exp) in expect.items():
+        fam = u.split("::")[0]
+        got = (cache.get(rid) or {}).get("status")
+        g = gate.setdefault(fam, {"tasks": set(), "bad_tasks": set(), "bad": []})
+        if u in sampled:
+            g["tasks"].add(u)
+        if got != exp:
+            g["bad"].append({"run": rid, "expected": exp, "got": got})
+            if u in sampled:
+                g["bad_tasks"].add(u)
+    rep = {f: {"tasks": len(g["tasks"]), "tasks_with_failed_control": len(g["bad_tasks"]),
+               "share": round(len(g["bad_tasks"]) / max(len(g["tasks"]), 1), 4), "failures": g["bad"]}
+           for f, g in sorted(gate.items())}
+    GATE_MX.write_text(json.dumps(rep, indent=2, sort_keys=True) + "\n")
+    print({f: (v["tasks_with_failed_control"], v["tasks"]) for f, v in rep.items()})
+    return all(v["share"] <= GATE_MAX_CANONICAL_FAIL for v in rep.values())
+
+
 # --------------------------------------------------------------------------- sandbox
 class Cache:
     def __init__(self, path: Path):
@@ -276,6 +462,8 @@ class Cache:
 def sandbox(kind: str, spec: runner.Spec, payload: dict) -> dict:
     if payload.get("family_kind") == "ds1000":
         spec = DS_SPEC
+    if kind == "mx":
+        spec = MX_SPECS[payload["lang"]]
     files = {"cell.json": json.dumps(payload), "harness.py": HARNESS[kind]}
     res = runner.run(spec, {"files": files, "cmd": ["python", "harness.py"],
                             "timeout": spec.wall_s - 20})
@@ -326,7 +514,9 @@ def run_part(part: str, s: pd.DataFrame, fam_obj, long: pd.DataFrame) -> pd.Data
     reading = [] if not gate_only else None
     for r in ([] if gate_only else s.drop_duplicates("cell_id").itertuples()):
         ep = fam_obj.entry(r.upstream) if r.has_tests else None
-        reading.append({"cell_id": r.cell_id, **read_cell(resp.get((r.task_id, r.key)), "python", ep)})
+        reading.append({"cell_id": r.cell_id, **read_cell(resp.get((r.task_id, r.key)),
+                                                       (fam_obj.read_lang(r.upstream) if hasattr(fam_obj, "read_lang")
+                                                        else "python"), ep)})
     if not gate_only:
         pd.DataFrame(reading).sort_values("cell_id").to_csv(OUT / f"s1_7_reading_{part}.csv",
                                                              index=False, lineterminator="\n")
@@ -416,6 +606,13 @@ def main(part: str) -> None:
         run_part("bcb", bcb_samples(long, stats), Bcb(), long)
     elif part == "py":
         run_part("py", py_samples(long, stats), Py(), long)
+    elif part == "mx":
+        s, mx = mx_samples(long, stats), Mx()
+        s.drop(columns=["cell_id"]).to_csv(OUT / "s1_7_samples_mx.csv", index=False, lineterminator="\n")
+        if not mx_gate(s, mx) or "--gate-only" in sys.argv:
+            print("STOP: Amendment 9 gate" if "--gate-only" not in sys.argv else "gate only")
+            return
+        run_part("mx", s, mx, long)
     else:
         raise SystemExit(part)
 

@@ -165,6 +165,30 @@ EXTRACTS: dict[str, Extract] = {
         keep=("question_id", tuple(
             (REPO_ROOT / "router/audit_sandbox/lcb_sample_question_ids.txt").read_text().split())),
     ),
+    # S1.7 checkpoint 2b: HumanEval-X and MultiPL-E tests (test code as data, executed only in
+    # the audit sandbox). Go keeps its own `import` and `test_setup` fields (CodeGeeX assembly).
+    "humaneval_x_tests": Extract(
+        "THUDM/humaneval-x", "62c78627f3072a1454fa0cb0184737cafe5e4198",
+        {
+            "data/cpp/data/humaneval.jsonl": ("sha1", "4c4ce46302c3dcc1e40e517f14b3407fce16053d"),
+            "data/java/data/humaneval.jsonl": ("sha1", "4986ea5ba1de8693abbf9627a8376a53d88da55d"),
+            "data/js/data/humaneval.jsonl": ("sha1", "b8e32b85b98240656dd362681b100ba8687ad21c"),
+        },
+        ("task_id", "prompt", "declaration", "canonical_solution", "test"),
+    ),
+    "humaneval_x_go_tests": Extract(
+        "THUDM/humaneval-x", "62c78627f3072a1454fa0cb0184737cafe5e4198",
+        {"data/go/data/humaneval.jsonl": ("sha1", "45cc3c3a67bf598fc5bdada98943b34aff2be1f3")},
+        ("task_id", "prompt", "import", "declaration", "canonical_solution", "test", "test_setup"),
+    ),
+    "multipl_e_tests": Extract(
+        "nuprl/MultiPL-E", "28441b6024e71d4a1c1c0f6bf171c935cd5a43f2",
+        {
+            "humaneval-rs/test-00000-of-00001.parquet": ("sha256", "92dba15e4da4deb4dbae5e15ce1712c95ec5a63c3ead69886271470309d9d314"),
+            "humaneval-ts/test-00000-of-00001.parquet": ("sha256", "b9090cc4e5a0c06e671811f63d7c35737f8393f1b9d44685472d5a7b1877d136"),
+        },
+        ("language", "name", "prompt", "tests", "stop_tokens"),
+    ),
     # HumanEval-X in four languages (Python is fully covered by tasks.jsonl).
     "humaneval_x": Extract(
         "THUDM/humaneval-x", "62c78627f3072a1454fa0cb0184737cafe5e4198",
@@ -205,7 +229,8 @@ EXTRACTS: dict[str, Extract] = {
 # router/data/prompts.py. Every other extract keeps the text-only rule.
 AUDIT_EXTRACTS: frozenset[str] = frozenset({"bigcodebench_tests", "ds1000_tests", "humanevalplus_tests",
                                           "humaneval_x_python_tests", "mbppplus_tests", "cruxeval_tests",
-                                          "livecodebench_tests"})
+                                          "livecodebench_tests", "humaneval_x_tests", "humaneval_x_go_tests",
+                                          "multipl_e_tests"})
 
 CHECKSUMS_NAME = "CHECKSUMS"
 COMMITTED_CHECKSUMS = REPO_ROOT / "external" / CHECKSUMS_NAME

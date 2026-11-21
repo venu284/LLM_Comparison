@@ -49,3 +49,15 @@ def test_accepts_local_image_id_only_in_full():
     runner.check_args(runner.docker_args(runner.Spec(image="sha256:" + "a" * 64), "x"))
     with pytest.raises(PermissionError):
         runner.check_args(runner.docker_args(runner.Spec(image="sha256:abc"), "x"))
+
+
+def test_mx_specs_pass_the_isolation_check():
+    """Checkpoint 2b (Amendment 9): every toolchain spec keeps the sandbox flags."""
+    from router.experiments.s1_7_cp2 import MX_SPECS
+    for lang, spec in MX_SPECS.items():
+        if spec.image == "unbuilt":
+            continue
+        args = runner.docker_args(spec, f"t-{lang}")
+        runner.check_args(args)
+        assert "--network" in args and args[args.index("--network") + 1] == "none"
+        assert not any(k in ("GOPROXY",) and v != "off" for k, v in spec.env)
