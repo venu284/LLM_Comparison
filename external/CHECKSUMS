@@ -16,6 +16,7 @@
 # extract: humaneval_x_go_tests <- THUDM/humaneval-x@62c78627f3072a1454fa0cb0184737cafe5e4198 files=data/go/data/humaneval.jsonl fields=task_id,prompt,import,declaration,canonical_solution,test,test_setup
 # extract: multipl_e_tests <- nuprl/MultiPL-E@28441b6024e71d4a1c1c0f6bf171c935cd5a43f2 files=humaneval-rs/test-00000-of-00001.parquet,humaneval-ts/test-00000-of-00001.parquet fields=language,name,prompt,tests,stop_tokens
 # extract: livecodebench_tests_140 <- livecodebench/code_generation_lite@0fe84c3912ea0c4d4a78037083943e8f0c4dd505 files=test.jsonl,test2.jsonl,test3.jsonl,test4.jsonl,test5.jsonl,test6.jsonl fields=question_id,platform,starter_code,public_test_cases,private_test_cases,metadata keep=question_id:75:f708cc872d4e3ac8
+# extract: swebench_lite_tests <- princeton-nlp/SWE-bench_Lite@6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2 files=data/test-00000-of-00001.parquet fields=instance_id,repo,base_commit,version,environment_setup_commit,FAIL_TO_PASS,PASS_TO_PASS,test_patch,patch
 # extract: humaneval_x <- THUDM/humaneval-x@62c78627f3072a1454fa0cb0184737cafe5e4198 files=data/cpp/data/humaneval.jsonl,data/go/data/humaneval.jsonl,data/java/data/humaneval.jsonl,data/js/data/humaneval.jsonl fields=task_id,prompt
 # extract: humanevalplus <- evalplus/humanevalplus@d32357cf319e50e9c8d8dab5ea876c72b0fd321b files=data/test-00000-of-00001-5973903632b82d40.parquet fields=task_id,prompt
 # extract: multipl_e <- nuprl/MultiPL-E@28441b6024e71d4a1c1c0f6bf171c935cd5a43f2 files=humaneval-rs/test-00000-of-00001.parquet,humaneval-ts/test-00000-of-00001.parquet fields=language,name,prompt
@@ -225,3 +226,4 @@ e9fe529ee3b47b479e31a4b5c85069520a17fe0fb1c894ce3f78409ccd970d3b  sources/humane
 b006180194f2d9d470170f0c49dc67b06fe3e1e313e95eeb334193a25fd8cb27  sources/mbppplus_tests.jsonl
 a7678241127d5e56e507ac0e907e63bd89db14be013a7d3c0dab40a2060c0205  sources/multipl_e.jsonl
 e8adaf1c09fd81ace490735e3f95bb0714c866057e62f312ce06f50b2253ec8b  sources/multipl_e_tests.jsonl
+a460a597e4f5c44c1f7766c9582a245f2e206fb1779dd43329679fcbed8f206e  sources/swebench_lite_tests.jsonl

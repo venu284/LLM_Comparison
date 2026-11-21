@@ -199,6 +199,14 @@ EXTRACTS: dict[str, Extract] = {
         keep=("question_id", tuple(
             (REPO_ROOT / "router/audit_sandbox/lcb_kept140_question_ids.txt").read_text().split())),
     ),
+    # S1.7 checkpoint 2c: SWE-bench Lite test fields (patch = the gold patch, used only as the
+    # harness control; test code is executed only in the audit sandbox).
+    "swebench_lite_tests": Extract(
+        "princeton-nlp/SWE-bench_Lite", "6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2",
+        {"data/test-00000-of-00001.parquet": ("sha256", "7a21f37b8bc179c7db5beeb14e88ac538ba283455c776e6b2535bbfb6e3551b4")},
+        ("instance_id", "repo", "base_commit", "version", "environment_setup_commit", "FAIL_TO_PASS",
+         "PASS_TO_PASS", "test_patch", "patch"),
+    ),
     # HumanEval-X in four languages (Python is fully covered by tasks.jsonl).
     "humaneval_x": Extract(
         "THUDM/humaneval-x", "62c78627f3072a1454fa0cb0184737cafe5e4198",
@@ -240,7 +248,8 @@ EXTRACTS: dict[str, Extract] = {
 AUDIT_EXTRACTS: frozenset[str] = frozenset({"bigcodebench_tests", "ds1000_tests", "humanevalplus_tests",
                                           "humaneval_x_python_tests", "mbppplus_tests", "cruxeval_tests",
                                           "livecodebench_tests", "humaneval_x_tests", "humaneval_x_go_tests",
-                                          "multipl_e_tests", "livecodebench_tests_140"})
+                                          "multipl_e_tests", "livecodebench_tests_140",
+                                          "swebench_lite_tests"})
 
 CHECKSUMS_NAME = "CHECKSUMS"
 COMMITTED_CHECKSUMS = REPO_ROOT / "external" / CHECKSUMS_NAME
