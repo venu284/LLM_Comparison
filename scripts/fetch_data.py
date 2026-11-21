@@ -74,9 +74,16 @@ class Extract:
     revision: str
     files: dict[str, tuple[str, str]]
     fields: tuple[str, ...]
+    # Optional row filter (S1.7 audit): keep only rows whose `keep[0]` field is in `keep[1]`. Every
+    # upstream byte is still hashed against the pin.
+    keep: tuple[str, tuple[str, ...]] | None = None
 
     def spec(self) -> str:
-        return f"{self.repo_id}@{self.revision} files={','.join(self.files)} fields={','.join(self.fields)}"
+        s = f"{self.repo_id}@{self.revision} files={','.join(self.files)} fields={','.join(self.fields)}"
+        if self.keep:
+            ids = "\n".join(sorted(self.keep[1])).encode()
+            s += f" keep={self.keep[0]}:{len(self.keep[1])}:{hashlib.sha256(ids).hexdigest()[:16]}"
+        return s
 
 
 _LCB_FILES = {
@@ -120,6 +127,44 @@ EXTRACTS: dict[str, Extract] = {
         {"data/v0.1.4-00000-of-00001.parquet": ("sha256", "d9a4965821c9507ebdfb551c288656b2d5fe553234f5183044333ca8a4018267")},
         ("task_id", "code_prompt", "test", "entry_point", "libs", "canonical_solution"),
     ),
+    # S1.7 audit (checkpoint 2a), the other Python families. Reference solutions are harness
+    # controls only.
+    "ds1000_tests": Extract(
+        "xlangai/DS-1000", "4416080ac5cb80bdf7576aefb8f9a0b4d5426a44",
+        {"test.jsonl": ("sha1", "3924161ac7b056443bb7ba724b15e7e128d1108b")},
+        ("metadata.problem_id", "metadata.library", "code_context", "reference_code"),
+    ),
+    "humanevalplus_tests": Extract(
+        "evalplus/humanevalplus", "d32357cf319e50e9c8d8dab5ea876c72b0fd321b",
+        {"data/test-00000-of-00001-5973903632b82d40.parquet": ("sha256", "4436f5c03d77c17e0cbc57543b90665b5c1266f55a43992a5ed7922cd34a7558")},
+        ("task_id", "prompt", "entry_point", "test", "canonical_solution"),
+    ),
+    "humaneval_x_python_tests": Extract(
+        "THUDM/humaneval-x", "62c78627f3072a1454fa0cb0184737cafe5e4198",
+        {"data/python/data/humaneval.jsonl": ("sha1", "53abae0f4d1340579315a2832f6e721184a41584")},
+        ("task_id", "prompt", "declaration", "test", "canonical_solution"),
+    ),
+    "mbppplus_tests": Extract(
+        "evalplus/mbppplus", "b2d74c91837c3f2a20c1299ae98133cbe7cfa077",
+        {"data/test-00000-of-00001-d5781c9c51e02795.parquet": ("sha256", "dc20030b3788fccf617444edcb34138ef13d7e4fafd17bfcb8c1279dbb12399b")},
+        ("task_id", "prompt", "code", "test_imports", "test_list", "test"),
+    ),
+    "cruxeval_tests": Extract(
+        "cruxeval-org/cruxeval", "b96af0450242eb4da433032b90998f25588a5d0f",
+        {"test.jsonl": ("sha1", "4d16f303dce8a83e9805b96f531acee38853c443")},
+        ("id", "code", "input", "output"),
+    ),
+    # LiveCodeBench tests for the sampled lcb tasks only (streams 100 and 122; ids drawn from
+    # presence data before any response was read). Private tests are kept encoded as published;
+    # they are decoded only inside the sandbox.
+    "livecodebench_tests": Extract(
+        "livecodebench/code_generation_lite", "0fe84c3912ea0c4d4a78037083943e8f0c4dd505",
+        _LCB_FILES,
+        ("question_id", "platform", "starter_code", "public_test_cases", "private_test_cases",
+         "metadata"),
+        keep=("question_id", tuple(
+            (REPO_ROOT / "router/audit_sandbox/lcb_sample_question_ids.txt").read_text().split())),
+    ),
     # HumanEval-X in four languages (Python is fully covered by tasks.jsonl).
     "humaneval_x": Extract(
         "THUDM/humaneval-x", "62c78627f3072a1454fa0cb0184737cafe5e4198",
@@ -158,7 +203,9 @@ EXTRACTS: dict[str, Extract] = {
 # Extracts that deliberately hold test, solution or expected-output fields, for the S1.7 artefact
 # audit only. They are executed only inside router/audit_sandbox/ and never read by
 # router/data/prompts.py. Every other extract keeps the text-only rule.
-AUDIT_EXTRACTS: frozenset[str] = frozenset({"bigcodebench_tests"})
+AUDIT_EXTRACTS: frozenset[str] = frozenset({"bigcodebench_tests", "ds1000_tests", "humanevalplus_tests",
+                                          "humaneval_x_python_tests", "mbppplus_tests", "cruxeval_tests",
+                                          "livecodebench_tests"})
 
 CHECKSUMS_NAME = "CHECKSUMS"
 COMMITTED_CHECKSUMS = REPO_ROOT / "external" / CHECKSUMS_NAME
@@ -342,7 +389,10 @@ def extract_rows(ex: Extract, opener: Opener = open_hub) -> Iterator[dict]:
             rows = _rows_jsonl(stream)
         else:
             raise ValueError(f"{ex.repo_id}/{path}: no reader for this file type")
+        keep = set(ex.keep[1]) if ex.keep else None
         for row in rows:
+            if keep is not None and str(pick(row, ex.keep[0])) not in keep:
+                continue
             yield {f: _native(pick(row, f)) for f in ex.fields}
         got = stream.hexdigest()
         if got != expected:
