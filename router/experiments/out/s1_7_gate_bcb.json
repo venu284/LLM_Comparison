@@ -1,0 +1,40 @@
+{
+  "bcb": {
+    "canonical_fail": 1,
+    "failed": [
+      "BigCodeBench/734"
+    ],
+    "share": 0.010752688172043012,
+    "tasks": 93
+  },
+  "bcb_algo2": {
+    "canonical_fail": 1,
+    "failed": [
+      "BigCodeBench/101"
+    ],
+    "share": 0.014925373134328358,
+    "tasks": 67
+  },
+  "bcb_completion": {
+    "canonical_fail": 0,
+    "failed": [],
+    "share": 0.0,
+    "tasks": 59
+  },
+  "bcb_ds": {
+    "canonical_fail": 1,
+    "failed": [
+      "BigCodeBench/101"
+    ],
+    "share": 0.014285714285714285,
+    "tasks": 70
+  },
+  "bcb_v014": {
+    "canonical_fail": 1,
+    "failed": [
+      "BigCodeBench/101"
+    ],
+    "share": 0.014285714285714285,
+    "tasks": 70
+  }
+}

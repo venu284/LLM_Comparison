@@ -6,7 +6,17 @@
 #                   max_stack_limit=10, min_time_limit=1, gt_time_limit=<canonical time> or 20)
 # Canonical mode runs complete_prompt + "\n" + canonical_solution (bigcodebench.get_groundtruth).
 import json
+import sys
 import time
+import types
+
+# The v0.2.1 image's `datasets` import fails (its pyarrow needs numpy 2; numpy is 1.21.2).
+# bigcodebench.sanitize imports four bigcodebench.data helpers it does not use in sanitize();
+# a stub module stands in for bigcodebench.data so the official sanitize code still runs.
+_stub = types.ModuleType("bigcodebench.data")
+for _n in ("get_bigcodebench", "load_solutions", "write_directory", "write_jsonl"):
+    setattr(_stub, _n, None)
+sys.modules["bigcodebench.data"] = _stub
 
 from bigcodebench.eval import untrusted_check
 from bigcodebench.sanitize import sanitize
