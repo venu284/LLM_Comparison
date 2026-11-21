@@ -16,6 +16,14 @@ Rules (each with the evidence it rests on; see docs/research/S1.7_audit.md, chec
               literal (an unquoted string answer): `our_harness`.
   R-HE-TESTS  humaneval, released pass, our run fails under both HumanEval+ and base tests:
               `test_version` (the release's tests were neither documented suite).
+  R-MX-NONEXEC  hex_cpp/go/java/js (2b), released fail with a released score strictly between 0
+              and 1, our run passes: `wrong_field` (the released value is not an execution
+              result: the documented harness gives pass/fail only; 1,286-1,306 of each family's
+              1,312 released cells are fractional, and in the 2b samples the fractions rank with
+              text similarity to the canonical solution, Spearman 0.31-0.83 for cpp/go/js).
+  R-MX-CONST  multiple_rs/multiple_ts (2b), every released cell of the family is 0 (1,248 and
+              1,080 cells, all models), our run passes: `wrong_field` (a constant independent of
+              the response).
   R-FLAKY     the three runs of the cell differ: `flaky`.
   otherwise   `unexplained`.
 Mechanisms on our side or neutral (`our_harness`, `flaky`, `release_correct`, `mapping`) leave
@@ -44,7 +52,10 @@ OUT = REPO_ROOT / "router/experiments/out"
 SCI_LIBS = {"matplotlib", "sklearn", "seaborn", "scipy", "wordcloud"}
 RELEASE_SIDE = {"extraction", "toolchain", "harness_timeout", "truncation", "test_version", "wrong_field"}
 MAIN = ("bcb", "bcb_v014", "bcb_algo2", "bcb_completion", "bcb_ds", "ds1000", "humaneval",
-        "hex_python", "mbpp", "mbpp_completion", "lcb", "cruxeval")
+        "hex_python", "mbpp", "mbpp_completion", "lcb", "cruxeval",
+        "hex_cpp", "hex_go", "hex_java", "hex_js", "multiple_rs", "multiple_ts")
+MX_HEX = ("hex_cpp", "hex_go", "hex_java", "hex_js")
+MX_CONST = ("multiple_rs", "multiple_ts")
 
 
 def _runs(part):
@@ -52,8 +63,9 @@ def _runs(part):
 
 
 def assign() -> pd.DataFrame:
-    c = pd.concat([pd.read_csv(OUT / "s1_7_cells_bcb.csv").assign(part="bcb"),
-                   pd.read_csv(OUT / "s1_7_cells_py.csv").assign(part="py")], ignore_index=True)
+    parts = [("bcb", "s1_7_cells_bcb.csv"), ("py", "s1_7_cells_py.csv"), ("mx", "s1_7_cells_mx.csv")]
+    c = pd.concat([pd.read_csv(OUT / f).assign(part=p) for p, f in parts if (OUT / f).exists()],
+                  ignore_index=True)
     c = c[c.key_role == "graded"].copy()
     bcb = _bcb_tests()
     probes = {n: pd.read_csv(OUT / f"s1_7_probe_{n}.csv").drop_duplicates(["task_id", "key"])
@@ -62,6 +74,10 @@ def assign() -> pd.DataFrame:
     runs = _runs("py")
     he_base = (c[(c.family == "humaneval") & (c.test_version == "base")]
                .drop_duplicates(["task_id", "key"]).set_index(["task_id", "key"])["rerun"].to_dict())
+
+    from router.data import audit
+    long = audit.released_long()
+    const_zero = {f: bool((long[(long.family == f) & long.available].score == 0).all()) for f in MX_CONST}
 
     def mech(r):
         if r.rerun not in ("pass", "fail") or r.agree is None or pd.isna(r.agree) or bool(r.agree):
@@ -78,6 +94,10 @@ def assign() -> pd.DataFrame:
         if r.family == "cruxeval" and r.released_pass and r.rerun == "fail":
             err = ((runs.get(f"{r.task_id}|{r.key}|None|1") or {}).get("cell") or {}).get("err", "")
             return "our_harness" if ("NameError" in err or "SyntaxError" in err) else "unexplained"
+        if r.family in MX_HEX and rel_fail_run_pass and 0 < r.released_score < 1:
+            return "wrong_field"
+        if r.family in MX_CONST and rel_fail_run_pass and const_zero.get(r.family, False):
+            return "wrong_field"
         if r.family == "humaneval" and r.released_pass and r.rerun == "fail":
             return "test_version" if he_base.get((r.task_id, r.key)) == "fail" else "unexplained"
         return "unexplained"
@@ -117,9 +137,14 @@ def interim(c: pd.DataFrame) -> pd.DataFrame:
 
 def main():
     c = assign()
-    c.to_csv(OUT / "s1_7_mechanisms_2a.csv", index=False, lineterminator="\n")
+    a2 = c[c.part != "mx"]
+    a2.to_csv(OUT / "s1_7_mechanisms_2a.csv", index=False, lineterminator="\n")
+    interim(a2).to_csv(OUT / "s1_7_interim_2a.csv", index=False, lineterminator="\n")
+    b = c[c.part == "mx"]
+    if len(b):
+        b.to_csv(OUT / "s1_7_mechanisms_2b.csv", index=False, lineterminator="\n")
+        interim(b).to_csv(OUT / "s1_7_interim_2b.csv", index=False, lineterminator="\n")
     t = interim(c)
-    t.to_csv(OUT / "s1_7_interim_2a.csv", index=False, lineterminator="\n")
     pd.set_option("display.width", 250)
     print(t.to_string(index=False))
     other = c[~c["sample"].isin(MAIN) & c.mechanism.notna()]

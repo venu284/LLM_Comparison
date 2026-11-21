@@ -1,0 +1,7 @@
+sample,cells,capped,share,wilson_lo,wilson_hi,bars_cleared
+hex_cpp,97,0,0.0,0.0,0.0381,False
+hex_go,97,0,0.0,0.0,0.0381,False
+hex_java,97,2,0.0206,0.0057,0.0721,False
+hex_js,97,0,0.0,0.0,0.0381,False
+multiple_rs,97,0,0.0,0.0,0.0381,False
+multiple_ts,97,0,0.0,0.0,0.0381,False
