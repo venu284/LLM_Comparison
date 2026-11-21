@@ -2,17 +2,32 @@
 # Reads cell.json, extracts code from the response by fixed rules, runs the family's tests in a
 # child process with a time limit, prints one "@@CELL@@{json}" line.
 #
-# Extraction (fixed before any response was read; S1.7 checkpoint 2a):
-#   code families: the fenced block that defines `def <entry_point>(`; else the longest fenced
-#     block; else the whole text. If the result does not define the entry point and the task
-#     ships a prompt (signature + docstring), the prompt is prepended (completion style).
+# Extraction: each benchmark's own post-processing where one exists (revised 2026-11-20 before
+# any response of these families was read):
+#   humaneval / hex_python / mbpp: EvalPlus sanitize (the same tree-sitter code ships as
+#     bigcodebench.sanitize in this image) with the entry point. If the result does not define
+#     the entry point and the task ships a prompt (signature + docstring), the prompt is
+#     prepended (completion style).
 #   cruxeval: the last `assert f(...) == <literal>` in the text; else the last fenced block;
 #     else the whole stripped text. The literal is compared as `f(<input>) == <literal>`.
-#   ds1000: the last <code>...</code> span; else the longest fenced block; else the whole text;
-#     run as code_context's test_execution(solution) (and test_string(solution) if defined).
-#   lcb: as code families, without an entry point; LeetCode-style tasks call
+#   ds1000: DS-1000's own postprocess (test_ds1000.py at xlang-ai/DS-1000@cddd245): text before
+#     the first </code>, "```python" removed, text before the next ```, before "\nEND SOLUTION",
+#     "<code>" removed; run as code_context's test_execution(code) (+ test_string(code)).
+#   lcb: the last fenced block (LiveCodeBench's extract_code), else the whole text; LeetCode-style tasks call
 #     Solution().<func_name> (or a bare <func_name>), stdin tasks run the program.
-import base64, json, pickle, re, subprocess, sys, time, zlib
+import base64, json, pickle, re, subprocess, sys, time, types, zlib
+
+
+
+def sanitize(text, ep):
+    # bigcodebench.data cannot import in the BigCodeBench image (see harness_bcb.py); sanitize()
+    # does not use it. Imported lazily: the DS-1000 image has no bigcodebench package.
+    _stub = types.ModuleType("bigcodebench.data")
+    for _n in ("get_bigcodebench", "load_solutions", "write_directory", "write_jsonl"):
+        setattr(_stub, _n, None)
+    sys.modules.setdefault("bigcodebench.data", _stub)
+    from bigcodebench.sanitize import sanitize as _s
+    return _s(text, ep)
 
 FENCE = re.compile(r"```[^\n`]*\n(.*?)```", re.S)
 p = json.load(open("cell.json"))
@@ -30,10 +45,17 @@ def extract_code(text, ep=None):
     return text
 
 
+_N = [0]
+
+
 def run_py(src, stdin=None, timeout=None):
+    _N[0] += 1
+    path = f"/work/_run{_N[0]}.py"          # a file, not -c: large tests exceed the argv limit
+    with open(path, "w") as f:
+        f.write(src)
     t0 = time.time()
     try:
-        r = subprocess.run([sys.executable, "-c", src], input=stdin, capture_output=True, text=True,
+        r = subprocess.run([sys.executable, path], input=stdin, capture_output=True, text=True,
                            timeout=timeout or p.get("timeout_s", 30))
         return {"rc": r.returncode, "out": r.stdout, "err": r.stderr[-3000:], "t": time.time() - t0,
                 "timeout": False}
@@ -48,7 +70,7 @@ def verdict(r):
 out = {"mode": mode}
 if p["family_kind"] in ("humaneval", "mbpp"):
     ep = p["entry_point"]
-    code = p["reference"] if mode == "canonical" else extract_code(text, ep)
+    code = p["reference"] if mode == "canonical" else sanitize(text, ep)
     if mode != "canonical" and not re.search(rf"\bdef\s+{re.escape(ep)}\s*\(", code) and p.get("prompt"):
         code = p["prompt"] + "\n" + code
         out["prompt_prepended"] = True
@@ -59,12 +81,12 @@ elif p["family_kind"] == "ds1000":
     if mode == "canonical":
         code = p["reference"]
     else:
-        spans = re.findall(r"<code>(.*?)</code>", text, re.S)
-        code = spans[-1] if spans else extract_code(text)
+        code = text.split("</code>")[0].replace("```python", "").split("```")[0]
+        code = code.split("\nEND SOLUTION")[0].replace("<code>", "")
     ctx = p["code_context"]
-    src = ctx + f"\ntest_execution({code!r})\n"
-    if re.search(r"\bdef\s+test_string\s*\(", ctx):
-        src += f"test_string({code!r})\n"
+    src = ctx + f"\ncode = {code!r}\ntest_execution(code)\n"
+    if "test_string(" in ctx:
+        src += "test_string(code)\n"
     r = run_py(src, timeout=p.get("timeout_s", 60))
     out.update(stat=verdict(r), err=r["err"], elapsed=round(r["t"], 3), code_chars=len(code))
 elif p["family_kind"] == "cruxeval":
@@ -90,7 +112,8 @@ elif p["family_kind"] == "lcb":
         except ValueError:
             tests += json.loads(pickle.loads(zlib.decompress(base64.b64decode(priv.encode()))))
     meta = json.loads(p.get("metadata") or "{}")
-    code = p["reference"] if mode == "canonical" else extract_code(text)
+    blocks = FENCE.findall(text)
+    code = p["reference"] if mode == "canonical" else (blocks[-1] if blocks else text)
     fn = meta.get("func_name")
     fails, t_all, first = 0, 0.0, ""
     for i, t in enumerate(tests):

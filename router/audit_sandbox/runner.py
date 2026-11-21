@@ -55,7 +55,7 @@ FORBIDDEN = ("-v", "--volume", "--mount", "-e", "--env", "--env-file", "--privil
 
 @dataclass(frozen=True)
 class Spec:
-    image: str                  # repo@sha256:... (digest required)
+    image: str                  # repo@sha256:... (registry digest) or sha256:<64 hex> (local image id)
     platform: str = "linux/amd64"
     cpus: float = 1.0
     memory: str = "2g"
@@ -91,7 +91,9 @@ def check_args(args: list[str]) -> None:
                 return True
         return False
 
-    image_at = next((i for i, a in enumerate(args) if "@sha256:" in a), None)
+    import re
+    image_at = next((i for i, a in enumerate(args)
+                     if "@sha256:" in a or re.fullmatch(r"sha256:[0-9a-f]{64}", a)), None)
     head = args[:image_at] if image_at is not None else args
     missing = [f for f, v in (("--network", "none"), ("--read-only", None), ("--user", USER),
                               ("--cpus", None), ("--memory", None), ("--memory-swap", None),

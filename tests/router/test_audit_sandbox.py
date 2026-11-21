@@ -43,3 +43,9 @@ def test_refuses_network_and_tag_images():
     b = runner.docker_args(runner.Spec(image="python:3.11"), "x")
     with pytest.raises(PermissionError):
         runner.check_args(b)
+
+
+def test_accepts_local_image_id_only_in_full():
+    runner.check_args(runner.docker_args(runner.Spec(image="sha256:" + "a" * 64), "x"))
+    with pytest.raises(PermissionError):
+        runner.check_args(runner.docker_args(runner.Spec(image="sha256:abc"), "x"))

@@ -51,6 +51,11 @@ BCB_SPEC = runner.Spec(image=BCB_IMAGE, platform=PLATFORM, cpus=2.0, memory="4g"
                        wall_s=330.0)   # 240 s BigCodeBench task limit + start-up
 PY_SPEC = runner.Spec(image=BCB_IMAGE, platform=PLATFORM, cpus=2.0, memory="4g", pids=512, tmpfs_size="1g",
                       wall_s=600.0)
+DS_IMAGE_FILE = SANDBOX / "ds1000" / "IMAGE_ID"      # written after the local build (Amendment 5)
+DS_SPEC = runner.Spec(image=DS_IMAGE_FILE.read_text().strip() if DS_IMAGE_FILE.exists() else "unbuilt",
+                      platform=PLATFORM, cpus=2.0, memory="4g", pids=512, tmpfs_size="1g",
+                      wall_s=600.0,
+                      env=runner.Spec.env + (("TF_CPP_MIN_LOG_LEVEL", "3"), ("CUDA_VISIBLE_DEVICES", "-1")))
 HARNESS = {"bcb": (SANDBOX / "harness_bcb.py").read_text(),
            "py": (SANDBOX / "harness_py.py").read_text()}
 
@@ -269,6 +274,8 @@ class Cache:
 
 
 def sandbox(kind: str, spec: runner.Spec, payload: dict) -> dict:
+    if payload.get("family_kind") == "ds1000":
+        spec = DS_SPEC
     files = {"cell.json": json.dumps(payload), "harness.py": HARNESS[kind]}
     res = runner.run(spec, {"files": files, "cmd": ["python", "harness.py"],
                             "timeout": spec.wall_s - 20})
@@ -326,7 +333,7 @@ def run_part(part: str, s: pd.DataFrame, fam_obj, long: pd.DataFrame) -> pd.Data
 
     cache = Cache(OUT / f"s1_7_runs_{part}.jsonl")
     ex = s[~s["sample"].isin(READ_ONLY) & s.has_tests]
-    if gate_only:
+    if gate_only and fam_obj.kind == "bcb":
         ex = ex[ex["sample"].isin(BCB_FAMILIES)]
     versions = {u: fam_obj.versions(u) if hasattr(fam_obj, "versions") else (None,) for u in set(ex.upstream)}
 
@@ -352,6 +359,14 @@ def run_part(part: str, s: pd.DataFrame, fam_obj, long: pd.DataFrame) -> pd.Data
         if any(v["share"] > GATE_MAX_CANONICAL_FAIL for v in gate.values()) or "--gate-only" in sys.argv:
             print("STOP: harness gate (Amendment 4)" if "--gate-only" not in sys.argv else "gate only")
             return None
+
+    if gate_only:                                                # controls only, no response
+        ctl = pd.DataFrame([{"upstream": u, "version": v,
+                             "status": (cache.get(f"canonical|{u}|{v}") or {}).get("status")}
+                            for u in sorted(set(ex.upstream)) for v in versions[u]])
+        ctl["family"] = ctl.upstream.str.split("::").str[0]
+        print(ctl.groupby(["family", "version"], dropna=False).status.value_counts().to_string())
+        return None
 
     def gt(u, v):
         c = cache.get(f"canonical|{u}|{v}")
