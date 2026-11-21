@@ -592,6 +592,23 @@ def view_counts(m, task_split: pd.Series, stats: pd.DataFrame) -> dict:
     }
 
 
+def _signal_counts(m, v: pd.DataFrame) -> dict:
+    """X13 visible-test verifier coverage on a view (S0.11): a cell has signal when its task has
+    visible tests (`w1_n > 0`); unavailable (empty) cells are counted apart."""
+    v = v[v.task_id.isin(set(m.tasks)) & v.model.isin(set(m.models))]
+    live = v[~v.unavailable]
+    complete = set(m.tasks[m.available.all(axis=1).to_numpy()])
+    no_sig = live.groupby("task_id").signal.any()
+    no_sig = no_sig[~no_sig].index
+    cc_tasks = sorted(complete & set(live.task_id))
+    n_cc_no = len(set(no_sig) & complete)
+    return {"cells_with_signal": int(live.signal.sum()), "cells_no_signal": int((~live.signal).sum()),
+            "cells_unavailable": int(v.unavailable.sum()),
+            "tasks_no_signal_any_model": len(no_sig),
+            "complete_case_tasks_no_signal_any_model": n_cc_no,
+            "complete_case_no_signal_task_share": n_cc_no / max(1, len(cc_tasks))}
+
+
 def _interim(unit: dict) -> dict | None:
     if not unit.get("interim"):
         return None
@@ -633,11 +650,13 @@ def build_artefacts(root: Path = crb.CRB_DIR) -> dict:
         units[f] = {"family": f, "label": "not suspected", "tasks": int((m.family == f).sum()),
                     "eligible": f in set(eligible_families()), "evidence": "§5.2: never flagged"}
 
+    vsig = verdicts.load_verdicts(root=root)
     views = {}
     for name in VIEW_NAMES:
         sub = m.subset(ids[name])
         c = view_counts(sub, ts, stats)
         c["x13_tasks"] = int(sum(t in x13 for t in ids[name]))
+        c["verifier_signal"] = _signal_counts(sub, vsig)
         c["task_ids_sha256"] = _sha(ids[name])
         views[name] = c
 

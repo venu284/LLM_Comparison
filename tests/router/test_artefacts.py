@@ -93,3 +93,15 @@ def test_counts_reviewed_at_checkpoint_2(built):
     assert art["unavailable"]["x13_empty_cells_released_score_1"] == 877
     assert art["unavailable"]["missing_token_record_cells"] == 148
     assert art["response_matrix"]["empty_cells_8_models"] == 3330
+
+
+def test_committed_yaml_is_present_and_complete():
+    """Needs no external data: the frozen file exists and holds the views and the labels."""
+    art = audit.load_artefacts()
+    assert set(audit.VIEW_NAMES) <= set(art["views"])
+    assert art["labels_commit"] == audit.LABELS_COMMIT
+    assert art["criteria"]["commit"] == audit.CRITERIA_COMMIT
+    assert {k: u["label"] for k, u in art["units"].items() if k in audit.LABELS} == \
+        {k: u["label"] for k, u in audit.LABELS.items()}
+    assert sum(art["label_task_counts_eligible"].values()) == art["views"]["all_eligible"]["tasks"]
+    assert len(art["subset_rules"]["lcb"]["excluded_task_ids"]) == art["subset_rules"]["lcb"]["excluded_tasks"]

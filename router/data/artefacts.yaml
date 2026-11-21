@@ -83,6 +83,13 @@ views:
       best_single_model_complete_case:
         model: claude-opus-4-6
         success_rate: 0.3653
+    verifier_signal:
+      cells_with_signal: 8577
+      cells_no_signal: 13160
+      cells_unavailable: 1551
+      tasks_no_signal_any_model: 1650
+      complete_case_tasks_no_signal_any_model: 1610
+      complete_case_no_signal_task_share: 0.7124
     task_ids_sha256: 664e091f33844fa559b2021cdf046acd95d88f0e6445b3e2afc376e4da82da56
   filtered:
     tasks: 1287
@@ -136,6 +143,13 @@ views:
       best_single_model_complete_case:
         model: claude-opus-4-6
         success_rate: 0.8394
+    verifier_signal:
+      cells_with_signal: 956
+      cells_no_signal: 9317
+      cells_unavailable: 23
+      tasks_no_signal_any_model: 1167
+      complete_case_tasks_no_signal_any_model: 1148
+      complete_case_no_signal_task_share: 0.9082
     task_ids_sha256: 7652b5e1b548894e3d9b92cd7d382a90432877f6f5805948a38bd4552f072d9a
   sensitivity:
     tasks: 2160
@@ -193,6 +207,13 @@ views:
       best_single_model_complete_case:
         model: claude-opus-4-6
         success_rate: 0.8176
+    verifier_signal:
+      cells_with_signal: 4871
+      cells_no_signal: 10743
+      cells_unavailable: 1026
+      tasks_no_signal_any_model: 1346
+      complete_case_tasks_no_signal_any_model: 1321
+      complete_case_no_signal_task_share: 0.7887
     task_ids_sha256: 9f79633f23c5d49fa5c4b8e806e9829224f5ec85d522c0f9c988632dd81f802e
   headline:
     tasks: 1287
@@ -246,6 +267,13 @@ views:
       best_single_model_complete_case:
         model: claude-opus-4-6
         success_rate: 0.8394
+    verifier_signal:
+      cells_with_signal: 956
+      cells_no_signal: 9317
+      cells_unavailable: 23
+      tasks_no_signal_any_model: 1167
+      complete_case_tasks_no_signal_any_model: 1148
+      complete_case_no_signal_task_share: 0.9082
     task_ids_sha256: 7652b5e1b548894e3d9b92cd7d382a90432877f6f5805948a38bd4552f072d9a
 label_task_counts_eligible:
   cleared: 1189
