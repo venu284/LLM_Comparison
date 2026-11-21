@@ -93,9 +93,20 @@ def _toy(files: dict[str, bytes], fields, kind="sha256"):
 
 def test_every_pinned_field_allowlist_excludes_solutions_tests_and_outputs():
     for name, ex in fd.EXTRACTS.items():
+        assert len(ex.revision) == 40 and all(k in ("sha256", "sha1") for k, _ in ex.files.values())
+        if name in fd.AUDIT_EXTRACTS:          # S1.7 audit: tests on purpose, sandbox only
+            continue
         for field in ex.fields:
             assert field not in FORBIDDEN and field.split(".")[-1] not in FORBIDDEN, (name, field)
-        assert len(ex.revision) == 40 and all(k in ("sha256", "sha1") for k, _ in ex.files.values())
+
+
+def test_audit_extracts_are_named_and_unused_by_the_prompt_loader():
+    from pathlib import Path
+
+    assert fd.AUDIT_EXTRACTS <= set(fd.EXTRACTS)
+    prompts_src = (Path(fd.REPO_ROOT) / "router/data/prompts.py").read_text()
+    for name in fd.AUDIT_EXTRACTS:
+        assert name not in prompts_src, name
 
 
 @pytest.mark.parametrize("kind", ["sha256", "sha1"])

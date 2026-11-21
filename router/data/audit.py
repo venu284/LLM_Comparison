@@ -317,3 +317,57 @@ def name_match_keys(keys, aliases: pd.DataFrame) -> dict:
                 if out.get(x) and not out.get(y):
                     out[y] = out[x]
     return out
+
+
+# --------------------------------------------------------------------------- checkpoint 2: samples (§8, Amendments 1, 3)
+UNCONFIRMED = ("MiniMax-M2.7", "glm-5", "qwen3.5-plus")          # Amendment 1
+MAIN_STREAMS = {"lcb": 100, "mbpp": 101, "hex_cpp": 102, "hex_go": 103, "hex_java": 104,
+                "hex_js": 105, "multiple_rs": 106, "multiple_ts": 107, "swebench": 108,
+                "cruxeval": 109, "bcb": 110, "bcb_v014": 111, "bcb_algo2": 112,
+                "bcb_completion": 113, "bcb_ds": 114, "ds1000": 115, "humaneval": 116,
+                "hex_python": 130, "mbpp_completion": 131}
+SAMPLE_N = 97
+N_TASKS_ALL = 12
+QWEN_CODEGEN = ("bcb", "bcb_v014", "humaneval", "mbpp")          # Amendment 1 (decision B)
+
+
+def response_key(model: str) -> str:
+    """Amendment 1: every released model reads the key of the same name (Qwen3-Max also has
+    `qwen3.6-plus` on QWEN_CODEGEN, read alongside)."""
+    return model
+
+
+def frame(long: pd.DataFrame, stats: pd.DataFrame, tasks) -> pd.DataFrame:
+    """§8.1 frame: available cells of `tasks` whose mapped response is non-empty, sorted by
+    (task_id, model)."""
+    ne = stats.loc[~stats["is_empty"], ["task_id", "key"]]
+    c = long[long.task_id.isin(set(tasks)) & long.available][["task_id", "model", "family"]]
+    c = c.assign(key=c.model.map(response_key)).merge(ne, on=["task_id", "key"])
+    return c.sort_values(["task_id", "model"]).reset_index(drop=True)
+
+
+def draw(fr: pd.DataFrame, stream: int, n: int = SAMPLE_N, n_tasks_all: int = N_TASKS_ALL) -> pd.DataFrame:
+    """§8.1: every cell when the frame has n_tasks_all tasks or fewer, else n cells without
+    replacement from SeedSequence([0, stream])."""
+    few_tasks = "task_id" in fr and fr.task_id.nunique() <= n_tasks_all
+    if few_tasks or len(fr) <= n:
+        out = fr.copy()
+    else:
+        rng = np.random.default_rng(np.random.SeedSequence([0, stream]))
+        idx = np.sort(rng.choice(len(fr), size=n, replace=False))
+        out = fr.iloc[idx].copy()
+    return out.assign(stream=stream).reset_index(drop=True)
+
+
+def all_zero_tasks(long: pd.DataFrame, families) -> list[str]:
+    """X12b stratum (§8.2, streams 120-124): tasks of `families` whose every available released
+    cell is 0. Score-defined, so evidence only (§3.5)."""
+    t = long[long.family.isin(set(families)) & long.available]
+    z = t.groupby("task_id")["score"].apply(lambda s: bool((s == 0).all()))
+    return sorted(z[z].index)
+
+
+def identical_frame(differing_cells: list[dict]) -> pd.DataFrame:
+    """Amendment 3 frame, sorted by (bcb_task, other_task, model)."""
+    return (pd.DataFrame(differing_cells).sort_values(["bcb_task", "other_task", "model"])
+            .reset_index(drop=True))

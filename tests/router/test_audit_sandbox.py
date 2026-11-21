@@ -1,0 +1,45 @@
+"""S1.7 sandbox: the runner refuses to start without its isolation flags (no Docker needed)."""
+
+import pytest
+
+from router.audit_sandbox import runner
+
+SPEC = runner.Spec(image="example/image@sha256:" + "0" * 64)
+
+
+def args():
+    return runner.docker_args(SPEC, "s17-test")
+
+
+def test_default_args_pass():
+    runner.check_args(args())
+
+
+@pytest.mark.parametrize("drop", [("--network", "none"), ("--read-only",), ("--user", runner.USER),
+                                  ("--cpus", "1.0"), ("--memory", "2g"), ("--pids-limit", "256"),
+                                  ("--cap-drop", "ALL"), ("--security-opt", "no-new-privileges")])
+def test_refuses_without_each_flag(drop):
+    a = args()
+    i = a.index(drop[0])
+    del a[i:i + len(drop)]
+    with pytest.raises(PermissionError):
+        runner.check_args(a)
+
+
+@pytest.mark.parametrize("extra", [["-v", "/:/host"], ["--mount", "type=bind,src=/,dst=/h"],
+                                   ["-e", "SECRET=1"], ["--privileged"]])
+def test_refuses_host_exposure(extra):
+    a = args()
+    a[2:2] = extra
+    with pytest.raises(PermissionError):
+        runner.check_args(a)
+
+
+def test_refuses_network_and_tag_images():
+    a = args()
+    a[a.index("--network") + 1] = "bridge"
+    with pytest.raises(PermissionError):
+        runner.check_args(a)
+    b = runner.docker_args(runner.Spec(image="python:3.11"), "x")
+    with pytest.raises(PermissionError):
+        runner.check_args(b)

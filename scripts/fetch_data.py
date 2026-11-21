@@ -112,6 +112,14 @@ EXTRACTS: dict[str, Extract] = {
         {"data/v0.1.4-00000-of-00001.parquet": ("sha256", "d9a4965821c9507ebdfb551c288656b2d5fe553234f5183044333ca8a4018267")},
         ("task_id", "complete_prompt"),
     ),
+    # S1.7 audit (checkpoint 2a): BigCodeBench v0.1.4 tests, from the same pinned file. Test code
+    # is data here; it is executed only inside the audit sandbox (router/audit_sandbox/). The
+    # canonical solution is kept as a harness control: it must pass in the sandbox.
+    "bigcodebench_tests": Extract(
+        "bigcode/bigcodebench", "b74c0d0bf70d2c0bc459be537895cca163007f1a",
+        {"data/v0.1.4-00000-of-00001.parquet": ("sha256", "d9a4965821c9507ebdfb551c288656b2d5fe553234f5183044333ca8a4018267")},
+        ("task_id", "code_prompt", "test", "entry_point", "libs", "canonical_solution"),
+    ),
     # HumanEval-X in four languages (Python is fully covered by tasks.jsonl).
     "humaneval_x": Extract(
         "THUDM/humaneval-x", "62c78627f3072a1454fa0cb0184737cafe5e4198",
@@ -146,6 +154,11 @@ EXTRACTS: dict[str, Extract] = {
         ("platform", "question_content", "question_id", "starter_code"),
     ),
 }
+
+# Extracts that deliberately hold test, solution or expected-output fields, for the S1.7 artefact
+# audit only. They are executed only inside router/audit_sandbox/ and never read by
+# router/data/prompts.py. Every other extract keeps the text-only rule.
+AUDIT_EXTRACTS: frozenset[str] = frozenset({"bigcodebench_tests"})
 
 CHECKSUMS_NAME = "CHECKSUMS"
 COMMITTED_CHECKSUMS = REPO_ROOT / "external" / CHECKSUMS_NAME
