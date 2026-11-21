@@ -353,6 +353,10 @@ These motivate the rules above. They are not claims; S1–S3 recompute them on t
 |---|---|---|
 | Headline set (filtered, X13 tasks, success = 1.0) | 1,971 tasks; complete case 1,907 | [P0.5](research/P0.5_recount.md) |
 | No visible-test signal, complete case | 80.0% of tasks (1,525) and of cells | P0.5 |
+| **Frozen (S1.7):** headline set = artefact-filtered view | 1,287 tasks (CRUXEval 800, MBPP 225, HumanEval-X Python 164, HumanEval completion 98); complete case 1,264 | `router/data/artefacts.yaml` |
+| **Frozen (S1.7):** best single model, complete case | Opus 70.0% (83.9% under the CRUXEval 0.8 sensitivity) | `artefacts.yaml` |
+| **Frozen (S1.7):** headline tasks solved by no model, complete case | 198 of 1,264 (15.7%; 161 under the CRUXEval 0.8 sensitivity) | `artefacts.yaml` |
+| **Frozen (S1.7):** no visible-test signal, complete case | 90.8% of tasks (1,148 of 1,264) | `artefacts.yaml` |
 | Best single model, complete case | Opus 67.3% in every training fold (gpt-5.4 53.2%, qwen3.5-plus 42.2%) | P0.5 |
 | CellBest, true cells, against Opus | saving 22.9% [20.8, 25.2], gap +3.0 [+1.5, +4.5]: passes (a)–(b) | P0.5 |
 | CellBest, predicted cells (the comparator), against Opus | saving 18.2% [16.4, 20.2], gap +2.9 [+1.5, +4.3] | [P0.6](research/P0.6_cellbest_bound.md) |

@@ -15,7 +15,7 @@
 | Field | Value |
 |---|---|
 | Current stage | **S1 — Validate data** (§4). Pre-S0 and S0 done; `docs/CLAIMS.md` signed off 2026-11-20 |
-| Next action | Batch C: S1.7 `data/audit.py` and `e0_audit.py`, then `artefacts.yaml`, then the S1 gate check. S1.1–S1.6 and S1.9–S1.11 are merged; S1.8 is a side task. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Next action | **S1 gate passed (2026-11-21).** Next: S2 (evaluation infrastructure and baselines) on the S1.7 views, with S1.8 (LLMRouterBench) as a hedge in parallel, because a DP1b failure on CodeRouterBench is now likely. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
 | Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0 · Write-up: Report 8 |
 | Last updated | 2026-11-20 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
@@ -699,7 +699,7 @@ edit them.
       - **Second-review recount:** 618 of 1,914 joined ID-test tasks share content with a probing
         task. Eligible ID-test tasks sharing a problem with a probing task: 791 of 1,658 against
         eligible probing tasks, 978 against any probing task.
-- [ ] S1.7 `data/audit.py` and `experiments/e0_audit.py` [M1.6]: a family × model table flagging
+- [x] S1.7 `data/audit.py` and `experiments/e0_audit.py` [M1.6]: a family × model table flagging
       all-zero families and flagship models below the pool median. Each family's share of the
       oracle and DimensionBest gain is computed only after the labels in `artefacts.yaml` are
       committed (blind labelling; reviewer, 2026-11-20). For each suspected family, inspect the raw responses
@@ -739,8 +739,45 @@ edit them.
         by name, marked unconfirmed (their released token counts include hidden reasoning).
       - **Scope:** the 19 flagged eligible families stay in scope as pre-registered.
         Checkpoint 2 is split by toolchain.
-- [ ] S1.8 `data/llmrouterbench.py` [M1.7]: code subsets; drop zero-cost models from economic
+
+      **Done 2026-11-21** (merged `b5d5bc0`). Criteria: `docs/research/S1.7_audit_criteria.md`
+      (pre-registered, Amendments 1–10). Report: `docs/research/S1.7_audit.md`.
+      - **Labels** (`audit.LABELS`, `router/data/artefacts.yaml`, committed `471ddb5` before any
+        router result):
+        - **confirmed defect** (3,466 eligible tasks):
+          - BigCodeBench ×5 (`toolchain`: tasks using matplotlib, sklearn, seaborn, scipy or
+            wordcloud pass 0.18% against 41.3%);
+          - DS-1000 (`extraction`: fences and `</code>` not stripped);
+          - `lcb`'s 422 LeetCode tasks (functional tasks never called; subset rule on `platform`);
+          - HumanEval-X C++/Go/Java/JS and MultiPL-E Rust/TypeScript (`wrong_field`).
+        - **cleared** (1,189): `mbpp`, `hex_python`, `cruxeval` (strict 1.0).
+        - **undecided** (873): `humaneval`, `mbpp_completion`, `lcb`'s 578 AtCoder/Codeforces
+          tasks and `swebench` (the last two by the capped-response rule).
+        - **never suspected:** `he_completion` (98).
+        - The test-generation families are undecided, ineligible, and in no view.
+      - **Views:**
+        - all eligible: 5,626 tasks / 3,487 problems;
+        - artefact-filtered = headline set: 1,287 / 1,188 (complete case 1,264);
+        - sensitivity: 2,160.
+
+        The headline set is CRUXEval 800, MBPP 225, HumanEval-X Python 164 and HumanEval
+        completion 98.
+      - **Gain shares** on the filtered view, computed after the yaml:
+        - the oracle is +14.3 points over Opus, and 91% of that comes from CRUXEval; under the
+          CRUXEval 0.8 sensitivity it is +3.3;
+        - in-sample DimensionBest beats Opus by 1 task in 1,264;
+        - 90.8% of complete-case headline tasks have no visible-test signal for any model.
+      - **Reviewer checks:**
+        - 48 sandbox re-runs matched;
+        - the mechanisms were re-derived from the released scores;
+        - the two single-cell reassignments were read and confirmed;
+        - the views were recounted.
+      - 428 tests pass.
+- [~] S1.8 `data/llmrouterbench.py` [M1.7]: code subsets; drop zero-cost models from economic
       metrics. Validate the loader early, so it is ready if DP1b makes it the primary corpus.
+      **Started 2026-11-21 as a hedge (user):** S1.7's headline makes a DP1b failure on
+      CodeRouterBench likely. In-sample DimensionBest is +1 task, the oracle gain is mostly
+      CRUXEval format, and 90.8% of tasks have no verifier signal.
 - [x] S1.9 `data/phase5.py` [M1.8]: read-only loader (R5), including the stored raw responses
       (324 non-empty of 325) read from the database without writing to it. **Done 2026-11-20 (A2,
       merged `e2a572f`):** CSV refused on a hash mismatch; one read-only fetch (connection option,
@@ -776,6 +813,17 @@ edit them.
   loader passes its count tests; `artefacts.yaml` committed with every audit-dependent count; the
   three data views (all eligible tasks, artefact-filtered, headline set) can be built from
   `OutcomeMatrix`.
+  **Passed 2026-11-21 (reviewer, on `main` at `b5d5bc0`):**
+  - the count tests pass (428 in all);
+  - no singleton ID family (smallest: `canitedit`, 20, ineligible);
+  - 0 R13 violations;
+  - 20 eligible families, 5,626 tasks, by rule;
+  - prompt join 5,555 / 5,626 (98.7%; the swebench gap is documented);
+  - probing and ID-test load in both views;
+  - verdicts: 23,288 rows, 2,911 tasks;
+  - `artefacts.yaml` is tracked;
+  - `audit.build_views` builds all eligible 5,626, filtered 1,287, sensitivity 2,160 and
+    headline 1,287 from `OutcomeMatrix`.
 
 ### S2 — Evaluation infrastructure and baselines
 Validated before any analysis that feeds a decision point, so that DP1 does not rest on the
@@ -1826,3 +1874,25 @@ Two further reviews were checked against the data; all fixes approved by the use
   S3 measures the power of the gates on this smaller headline.
 - **Next:** S1.7 checkpoint 3 (labels, merge `main`, `artefacts.yaml`, view builder, then the gain
   shares), then the S1 gate.
+
+### 2026-11-21 (S1.7 merged; S1 gate passed)
+
+- **S1.7** merged from `s1-c-audit` (`b5d5bc0`).
+  - **Checkpoint 3:** final labels (`a865dfb`), then the merge of `main`, then
+    `artefacts.yaml` and the view builder (`471ddb5`), then the gain shares (`bdf833f`).
+    `c72db93` adds only verifier-signal counts; the view task-id hashes are unchanged.
+  - **Reviewer recount:** labels 3,466 / 873 / 1,287; filtered view 1,287 tasks, 1,188
+    problems and 248 development tasks; sensitivity 2,160; Opus strict passes 901.
+  - Tests: 428 pass on `main`, and 206 data files verify.
+- **S1 gate passed;** each item is checked under the gate in §4 S1.
+- **CLAIMS:** the provisional-numbers table gains the S1.7 frozen values next to the P0.5 ones.
+  No rule changed.
+- **What S1.7 implies** (the formal verdicts come at the end of S3):
+  - DP1a will almost certainly fail: in-sample DimensionBest beats Opus by 1 task in 1,264. C4
+    then leads the accuracy story (O18).
+  - The oracle's +14.3-point headroom on the headline is 91% CRUXEval (+3.3 under the 0.8
+    sensitivity).
+  - 90.8% of headline tasks have no visible-test signal.
+  - A DP1b failure on CodeRouterBench is therefore likely.
+- **User decision:** start S1.8 (the LLMRouterBench loader) now as a hedge, alongside S2.
+- **Next:** the S1.8 brief, then S2.
