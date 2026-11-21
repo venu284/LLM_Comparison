@@ -420,5 +420,34 @@ def main(part: str) -> None:
         raise SystemExit(part)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and sys.argv[1] != "probe":
     main(sys.argv[1])
+
+
+# --------------------------------------------------------------------------- mechanism probes
+PROBES = {"lcb_stdin": ("lcb", "allzero_lcb"), "ds_raw": ("ds1000", "allzero_ds1000")}
+
+
+def probe(name: str) -> pd.DataFrame:
+    """Run one fault model on every executed cell of its samples; report how often the probe's
+    outcome equals the released S0.1 outcome, split by the main re-run's outcome."""
+    c = pd.read_csv(OUT / "s1_7_cells_py.csv")
+    c = c[c["sample"].isin(PROBES[name]) & (c.key_role == "graded") & c.rerun.isin(["pass", "fail"])]
+    resp = load_responses(c.assign(key=c.key))
+    py = Py()
+    cache = Cache(OUT / "s1_7_runs_py.jsonl")
+    jobs = [(f"probe:{name}|{r.task_id}|{r.key}",
+             {**py.payload(r.upstream, resp[(r.task_id, r.key)], None), "probe": name})
+            for r in c.itertuples()]
+    run_many(jobs, cache, "py", PY_SPEC)
+    c = c.assign(probe=[cache.get(f"probe:{name}|{t}|{k}")["status"] for t, k in zip(c.task_id, c.key)])
+    c["probe_agrees_release"] = (c.probe == "pass") == c.released_pass
+    c[["sample", "task_id", "model", "key", "released_pass", "rerun", "probe",
+       "probe_agrees_release"]].to_csv(OUT / f"s1_7_probe_{name}.csv", index=False, lineterminator="\n")
+    t = pd.crosstab([c["sample"], c.rerun], c.probe_agrees_release)
+    print(t.to_string())
+    return c
+
+
+if __name__ == "__main__" and len(sys.argv) > 2 and sys.argv[1] == "probe":
+    probe(sys.argv[2])

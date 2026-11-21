@@ -32,6 +32,7 @@ def sanitize(text, ep):
 FENCE = re.compile(r"```[^\n`]*\n(.*?)```", re.S)
 p = json.load(open("cell.json"))
 mode, text = p["mode"], p.get("response") or ""
+probe = p.get("probe")   # mechanism probes (S1.7 §1.1): model one specific grader fault
 
 
 def extract_code(text, ep=None):
@@ -83,6 +84,8 @@ elif p["family_kind"] == "ds1000":
     else:
         code = text.split("</code>")[0].replace("```python", "").split("```")[0]
         code = code.split("\nEND SOLUTION")[0].replace("<code>", "")
+        if probe == "ds_raw":                      # probe: no extraction at all
+            code = text
     ctx = p["code_context"]
     src = ctx + f"\ncode = {code!r}\ntest_execution(code)\n"
     if "test_string(" in ctx:
@@ -117,7 +120,7 @@ elif p["family_kind"] == "lcb":
     fn = meta.get("func_name")
     fails, t_all, first = 0, 0.0, ""
     for i, t in enumerate(tests):
-        if t.get("testtype") == "functional" or fn:
+        if (t.get("testtype") == "functional" or fn) and probe != "lcb_stdin":
             args = [line for line in t["input"].split("\n") if line.strip()]
             call = (f"import json\n_a=[json.loads(x) for x in {args!r}]\n"
                     f"_f=(Solution().{fn} if 'Solution' in globals() else {fn})\n"

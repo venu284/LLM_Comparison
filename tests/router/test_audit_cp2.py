@@ -39,3 +39,10 @@ def test_draw_is_seeded_and_without_replacement():
 def test_small_frame_takes_every_cell():
     fr = pd.DataFrame({"task_id": [f"t{i // 8}" for i in range(96)], "model": ["m"] * 96})
     assert len(audit.draw(fr, 120)) == 96
+
+
+def test_wilson_interval():
+    from router.experiments.s1_7_summary import wilson
+    lo, hi = wilson(19, 97)
+    assert 0.12 < lo < 0.14 and 0.28 < hi < 0.30
+    assert wilson(0, 97)[0] == 0.0

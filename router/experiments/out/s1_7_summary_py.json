@@ -1,0 +1,418 @@
+{
+  "by_sample": [
+    {
+      "sample": "allzero_ds1000",
+      "test_version": "-",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 0,
+      "n_exec": 97,
+      "agree": 52,
+      "a": 0.5361,
+      "a_ci": [
+        0.4374,
+        0.6321
+      ],
+      "released_pass_rerun_fail": 0,
+      "released_fail_rerun_pass": 45,
+      "flaky": 0
+    },
+    {
+      "sample": "allzero_lcb",
+      "test_version": "-",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 0,
+      "n_exec": 97,
+      "agree": 41,
+      "a": 0.4227,
+      "a_ci": [
+        0.3292,
+        0.5221
+      ],
+      "released_pass_rerun_fail": 0,
+      "released_fail_rerun_pass": 56,
+      "flaky": 0
+    },
+    {
+      "sample": "allzero_mbpp",
+      "test_version": "-",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 0,
+      "n_exec": 97,
+      "agree": 97,
+      "a": 1.0,
+      "a_ci": [
+        0.9619,
+        1.0
+      ],
+      "released_pass_rerun_fail": 0,
+      "released_fail_rerun_pass": 0,
+      "flaky": 0
+    },
+    {
+      "sample": "cruxeval",
+      "test_version": "-",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 0,
+      "n_exec": 97,
+      "agree": 88,
+      "a": 0.9072,
+      "a_ci": [
+        0.833,
+        0.9504
+      ],
+      "released_pass_rerun_fail": 9,
+      "released_fail_rerun_pass": 0,
+      "flaky": 0
+    },
+    {
+      "sample": "cruxeval_0.8",
+      "test_version": "-",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 0,
+      "n_exec": 97,
+      "agree": 94,
+      "a": 0.9691,
+      "a_ci": [
+        0.913,
+        0.9894
+      ],
+      "released_pass_rerun_fail": 0,
+      "released_fail_rerun_pass": 3,
+      "flaky": 0
+    },
+    {
+      "sample": "ds1000",
+      "test_version": "-",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 0,
+      "n_exec": 97,
+      "agree": 56,
+      "a": 0.5773,
+      "a_ci": [
+        0.4779,
+        0.6708
+      ],
+      "released_pass_rerun_fail": 3,
+      "released_fail_rerun_pass": 38,
+      "flaky": 0
+    },
+    {
+      "sample": "hex_python",
+      "test_version": "-",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 0,
+      "n_exec": 97,
+      "agree": 96,
+      "a": 0.9897,
+      "a_ci": [
+        0.9439,
+        0.9982
+      ],
+      "released_pass_rerun_fail": 1,
+      "released_fail_rerun_pass": 0,
+      "flaky": 0
+    },
+    {
+      "sample": "humaneval",
+      "test_version": "base",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 0,
+      "n_exec": 97,
+      "agree": 92,
+      "a": 0.9485,
+      "a_ci": [
+        0.885,
+        0.9778
+      ],
+      "released_pass_rerun_fail": 5,
+      "released_fail_rerun_pass": 0,
+      "flaky": 0
+    },
+    {
+      "sample": "humaneval",
+      "test_version": "plus",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 0,
+      "n_exec": 97,
+      "agree": 92,
+      "a": 0.9485,
+      "a_ci": [
+        0.885,
+        0.9778
+      ],
+      "released_pass_rerun_fail": 5,
+      "released_fail_rerun_pass": 0,
+      "flaky": 0
+    },
+    {
+      "sample": "humaneval_version_id",
+      "test_version": "base",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 0,
+      "n_exec": 97,
+      "agree": 88,
+      "a": 0.9072,
+      "a_ci": [
+        0.833,
+        0.9504
+      ],
+      "released_pass_rerun_fail": 9,
+      "released_fail_rerun_pass": 0,
+      "flaky": 0
+    },
+    {
+      "sample": "humaneval_version_id",
+      "test_version": "plus",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 1,
+      "n_exec": 96,
+      "agree": 89,
+      "a": 0.9271,
+      "a_ci": [
+        0.8571,
+        0.9642
+      ],
+      "released_pass_rerun_fail": 7,
+      "released_fail_rerun_pass": 0,
+      "flaky": 0
+    },
+    {
+      "sample": "lcb",
+      "test_version": "-",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 0,
+      "n_exec": 97,
+      "agree": 74,
+      "a": 0.7629,
+      "a_ci": [
+        0.6693,
+        0.8365
+      ],
+      "released_pass_rerun_fail": 1,
+      "released_fail_rerun_pass": 22,
+      "flaky": 0
+    },
+    {
+      "sample": "mbpp",
+      "test_version": "-",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 0,
+      "n_exec": 97,
+      "agree": 97,
+      "a": 1.0,
+      "a_ci": [
+        0.9619,
+        1.0
+      ],
+      "released_pass_rerun_fail": 0,
+      "released_fail_rerun_pass": 0,
+      "flaky": 0
+    },
+    {
+      "sample": "mbpp_completion",
+      "test_version": "-",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 0,
+      "harness_error_or_timeout": 0,
+      "n_exec": 97,
+      "agree": 95,
+      "a": 0.9794,
+      "a_ci": [
+        0.9279,
+        0.9943
+      ],
+      "released_pass_rerun_fail": 1,
+      "released_fail_rerun_pass": 1,
+      "flaky": 0
+    },
+    {
+      "sample": "read_he_testgen",
+      "test_version": "-",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 97,
+      "harness_error_or_timeout": 0,
+      "n_exec": 0,
+      "agree": 0,
+      "a": NaN,
+      "a_ci": [
+        NaN,
+        NaN
+      ],
+      "released_pass_rerun_fail": 0,
+      "released_fail_rerun_pass": 0,
+      "flaky": 0
+    },
+    {
+      "sample": "read_lcb_testgen",
+      "test_version": "-",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 97,
+      "harness_error_or_timeout": 0,
+      "n_exec": 0,
+      "agree": 0,
+      "a": NaN,
+      "a_ci": [
+        NaN,
+        NaN
+      ],
+      "released_pass_rerun_fail": 0,
+      "released_fail_rerun_pass": 0,
+      "flaky": 0
+    },
+    {
+      "sample": "read_mbpp_testgen",
+      "test_version": "-",
+      "drawn": 97,
+      "no_response": 0,
+      "no_tests": 97,
+      "harness_error_or_timeout": 0,
+      "n_exec": 0,
+      "agree": 0,
+      "a": NaN,
+      "a_ci": [
+        NaN,
+        NaN
+      ],
+      "released_pass_rerun_fail": 0,
+      "released_fail_rerun_pass": 0,
+      "flaky": 0
+    }
+  ],
+  "by_model": [
+    {
+      "model": "MiniMax-M2.7",
+      "unconfirmed": true,
+      "n_exec": 76,
+      "agree": 71,
+      "a": 0.9342,
+      "a_ci": [
+        0.8551,
+        0.9716
+      ]
+    },
+    {
+      "model": "Qwen3-Max",
+      "unconfirmed": false,
+      "n_exec": 104,
+      "agree": 95,
+      "a": 0.9135,
+      "a_ci": [
+        0.8437,
+        0.9538
+      ]
+    },
+    {
+      "model": "claude-opus-4-6",
+      "unconfirmed": false,
+      "n_exec": 73,
+      "agree": 56,
+      "a": 0.7671,
+      "a_ci": [
+        0.6583,
+        0.8492
+      ]
+    },
+    {
+      "model": "claude-sonnet-4-6",
+      "unconfirmed": false,
+      "n_exec": 75,
+      "agree": 63,
+      "a": 0.84,
+      "a_ci": [
+        0.7408,
+        0.906
+      ]
+    },
+    {
+      "model": "glm-5",
+      "unconfirmed": true,
+      "n_exec": 81,
+      "agree": 72,
+      "a": 0.8889,
+      "a_ci": [
+        0.8021,
+        0.9404
+      ]
+    },
+    {
+      "model": "gpt-5.4",
+      "unconfirmed": false,
+      "n_exec": 92,
+      "agree": 84,
+      "a": 0.913,
+      "a_ci": [
+        0.8377,
+        0.9553
+      ]
+    },
+    {
+      "model": "kimi-k2.5",
+      "unconfirmed": false,
+      "n_exec": 87,
+      "agree": 74,
+      "a": 0.8506,
+      "a_ci": [
+        0.761,
+        0.9105
+      ]
+    },
+    {
+      "model": "qwen3.5-plus",
+      "unconfirmed": true,
+      "n_exec": 91,
+      "agree": 83,
+      "a": 0.9121,
+      "a_ci": [
+        0.836,
+        0.9548
+      ]
+    }
+  ],
+  "mapping_interim": {
+    "a_C": 0.8631,
+    "MiniMax-M2.7": {
+      "a_U": 0.9342,
+      "n": 76,
+      "gap": -0.0711
+    },
+    "glm-5": {
+      "a_U": 0.8889,
+      "n": 81,
+      "gap": -0.0258
+    },
+    "qwen3.5-plus": {
+      "a_U": 0.9121,
+      "n": 91,
+      "gap": -0.049
+    }
+  }
+}

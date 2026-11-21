@@ -1,0 +1,13 @@
+family,drawn,n_exec,agree,a,d,r,r_wilson_lo,u,our_harness_or_error,mechanisms,interim_label
+bcb,97,97,70,0.7216,19,0.1959,0.1291,8,0,"{'toolchain': 19, 'unexplained': 8}",confirmed defect
+bcb_algo2,97,97,66,0.6804,23,0.2371,0.1635,8,0,"{'toolchain': 23, 'unexplained': 8}",confirmed defect
+bcb_completion,97,97,63,0.6495,27,0.2784,0.1989,7,0,"{'toolchain': 27, 'unexplained': 7}",confirmed defect
+bcb_ds,97,97,62,0.6392,33,0.3402,0.2536,2,0,"{'toolchain': 33, 'unexplained': 2}",confirmed defect
+bcb_v014,97,97,66,0.6804,23,0.2371,0.1635,8,0,"{'toolchain': 23, 'unexplained': 8}",confirmed defect
+cruxeval,97,89,88,0.9888,0,0.0,0.0,1,8,{'unexplained': 1},undecided
+ds1000,97,97,56,0.5773,33,0.3402,0.2536,8,0,"{'extraction': 33, 'unexplained': 8}",confirmed defect
+hex_python,97,97,96,0.9897,0,0.0,0.0,1,0,{'unexplained': 1},undecided
+humaneval,97,97,92,0.9485,1,0.0103,0.0018,4,0,"{'unexplained': 4, 'test_version': 1}",undecided
+lcb,97,97,74,0.7629,22,0.2268,0.1548,1,0,"{'harness_timeout': 22, 'unexplained': 1}",confirmed defect
+mbpp,97,97,97,1.0,0,0.0,0.0,0,0,{},cleared
+mbpp_completion,97,97,95,0.9794,0,0.0,0.0,2,0,{'unexplained': 2},undecided
