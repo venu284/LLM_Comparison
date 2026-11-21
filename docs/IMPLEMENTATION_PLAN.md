@@ -1800,3 +1800,29 @@ Two further reviews were checked against the data; all fixes approved by the use
   DS-1000 1,000, LeetCode 422, HumanEval-X C++/Go/Java/JS 656, MultiPL-E 291.
 - **Next:** finish 2a (the kept `lcb` sample on stream 140; unexplained cells in every family),
   then 2c (SWE-bench).
+
+### 2026-11-21 (S1.7 checkpoint 2 complete)
+
+- **2a remainder, decision D and 2c** reviewed on `s1-c-audit` (`5e9acb4`; 414 tests).
+  - **Kept `lcb` subset** (AtCoder and Codeforces, stream 140): agreement 94/96, but 37/97
+    responses are capped, so it is undecided under the capped-response rule.
+  - **Decision D:** 32 of the 40 unexplained main-sample cells were reassigned with evidence.
+    The reviewer read the two that decided labels (`hex_python` Python/50, CRUXEval
+    sample_505) and both were our-side extraction errors.
+  - **SWE-bench Lite:** 89/89 agree, but only 4 cells executed (85 responses contain no diff).
+    53/97 are capped, so it is undecided.
+  - **Mapping test:** no unconfirmed model fails (gaps −0.008 to +0.007).
+- **Labels (user, 2026-11-21; final labels are written in checkpoint 3):**
+  - **confirmed defect:** BigCodeBench ×5, DS-1000, `lcb` (LeetCode subset excluded by rule),
+    HumanEval-X C++/Go/Java/JS, MultiPL-E Rust/TypeScript;
+  - **cleared:** `mbpp`, `hex_python`, `cruxeval` (strict 1.0);
+  - **undecided:** `humaneval`, `mbpp_completion`, the kept `lcb` subset, `swebench`;
+  - `he_completion` was never suspected.
+- **Views, provisionally:**
+  - artefact-filtered headline: 1,287 eligible tasks, about 62% CRUXEval;
+  - sensitivity: 2,160;
+  - out: 3,466.
+
+  S3 measures the power of the gates on this smaller headline.
+- **Next:** S1.7 checkpoint 3 (labels, merge `main`, `artefacts.yaml`, view builder, then the gain
+  shares), then the S1 gate.
