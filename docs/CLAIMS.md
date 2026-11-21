@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **Signed off by the user on 2026-11-20** (S0 Gate). In force; amended 2026-11-20 ([Amendments](#amendments)) |
+| Status | **Signed off by the user on 2026-11-20** (S0 Gate). In force; amended 2026-11-20 (A1) and 2026-11-21 (A2) ([Amendments](#amendments)) |
 | Date | Drafted 2026-11-20 (P0.4); signed off 2026-11-20 with the decisions in [Sign-off decisions](#sign-off-decisions-2026-11-20) |
 | Written from | `docs/IMPLEMENTATION_PLAN.md` at commit `1921063` (§1, §2, S0.1–S0.14, §6) |
 | Constants | `router/settings.py`, section "Claim constants (docs/CLAIMS.md)"; checked by `tests/router/test_claims_constants.py` |
@@ -78,6 +78,14 @@ this gate (S0.4, §1).
 - A task is accepted only when the ground truth passes it.
 - **Replay:** the ground truth is the benchmark's released score. Success means all tests pass:
   **score = 1.0** (`SUCCESS_SCORE`), including execution-scored families with partial credit.
+- **CRUXEval (amendment A2):** success means a released score **≥ 0.8**
+  (`CRUXEVAL_SUCCESS_SCORE`).
+  - CRUXEval's released values are only 0, 0.8 and 1.0.
+  - The S1.7 audit found that 0.8 marks a correct output wrapped in extra text: a format penalty
+    added by CodeRouterBench.
+  - CRUXEval's own documented rule counts an output as passing when `assert f(input) == output`
+    passes (arXiv 2401.03065v1 §3).
+  - The strict 1.0 reading is reported as a sensitivity check.
 - The X13 hidden-test outcome is reported only as a sensitivity check.
 - **Live runs:** the ground truth is the reserved hidden test pool.
 - The router's own verifier decides escalation; it never counts as acceptance.
@@ -300,6 +308,7 @@ were decided at sign-off (O-numbers in the note column).
 | Name | Value | Source | Note |
 |---|---|---|---|
 | `SUCCESS_SCORE` | 1.0 | S0.1 | Success = all tests pass |
+| `CRUXEVAL_SUCCESS_SCORE` | 0.8 | S0.1 (A2) | CRUXEval: correct output, with or without extra text (amendment A2) |
 | `VERIFIER_RUN_S` | 0.200 s | S0.2 | X13 mean visible-test run time over cells where a verifier ran (amendment A1) |
 | `VERIFIER_RUN_USD` | $6.9 × 10⁻⁶ | S0.2 | Lambda x86, 2 GB, plus per-request charge (O11; amendment A1) |
 | `VERIFIER_COST_SWEEP` | ×1, ×10, ×100 | S0.2 | |
@@ -394,3 +403,4 @@ rule above).
 | # | Date | Change | Reason | Re-scoring |
 |---|---|---|---|---|
 | A1 | 2026-11-20 | `VERIFIER_RUN_S` 0.074 s → 0.200 s; `VERIFIER_RUN_USD` $10⁻⁶ → $6.9 × 10⁻⁶ (S0.2) | S1.10 (batch A2) found that 0.074 s is the X13 `w1_sec` mean over all cells, counting the 80% of cells with no visible tests as 0 s; no verifier runs there and none is charged. Over the cells where a verifier ran the mean is 0.200 s, which costs $6.87 × 10⁻⁶ on the O11 basis. The old value also came from a vCPU-hour rate, not the O11 basis ($2.67 × 10⁻⁶ at 0.074 s) | The P0.5, P0.6 and E0 records keep $10⁻⁶ and are labelled so. Every result from S3 on uses the amended value. A verifier run is about 3% of the cheapest model's mean cost per task and 0.1% of Opus's; the ×10 sweep already covered the amended value |
+| A2 | 2026-11-21 | CRUXEval success: released score = 1.0 → ≥ 0.8 (S0.1; `CRUXEVAL_SUCCESS_SCORE`) | S1.7 audit, checkpoint 2a. All 128 sampled 0.8 cells contain the correct output from CRUXEval's `output` field; all 35 sampled 1.0 cells give it as a bare answer. So 0.8 is a format penalty that CRUXEval's documented metric (arXiv 2401.03065v1 §3) does not impose. It is also strongly model-dependent: 0.8 is 72% of Sonnet's CRUXEval cells and 12% of gpt-5.4's, so under the strict rule the router would learn answer formatting, not correctness | The P0.5, P0.6 and E0 records keep the strict rule and are labelled so. Every result from S3 on uses A2. The strict rule is reported as a sensitivity check. No S1-or-later result existed, so nothing else is re-scored |

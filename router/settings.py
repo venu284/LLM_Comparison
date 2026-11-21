@@ -33,6 +33,10 @@ BENCHMARK_DIR = REPO_ROOT / "benchmark"
 
 # S0.1 Acceptance: success means all tests pass (released score = 1.0).
 SUCCESS_SCORE = 1.0
+# S0.1, CLAIMS amendment A2 (2026-11-21): CRUXEval's released 0.8 marks a correct output wrapped
+# in extra text (a CodeRouterBench format penalty; S1.7 audit), so CRUXEval success is >= 0.8.
+CRUXEVAL_SUCCESS_SCORE = 0.8
+CRUXEVAL_FAMILY = "cruxeval"
 
 # S0.2 Cost: verifier runs priced at the X13 mean visible-test run time over the
 # cells where a verifier ran (0.200 s; the earlier 0.074 s averaged in the cells

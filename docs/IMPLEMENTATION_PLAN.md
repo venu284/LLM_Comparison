@@ -359,6 +359,10 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       on 87.7% of cells and has 2,051 harness-mismatch and 2,718 extraction-failure cells, so it is
       reported only as a sensitivity check. In live runs the ground truth is the reserved hidden
       test pool. The router's own verifier decides escalation but never counts as acceptance.
+      **Amendment A2 (2026-11-21):** for CRUXEval, success means a released score ≥ 0.8
+      (`CRUXEVAL_SUCCESS_SCORE`). Its 0.8 marks a correct output with extra text, a format
+      penalty; see `CLAIMS.md` A2. The strict 1.0 reading is a sensitivity check, and the P0
+      records keep it. Code: `scoring.success(score, family)`.
 - [x] **S0.2 Cost.** Cost = model tokens × published price (source URL and access date in
       `router/data/prices.py`) + verifier runs + retries + probe calls, spread over the stream.
       Actual spend is not the metric. Verifier runs are reported as a count and in dollars at a
@@ -1737,3 +1741,36 @@ Two further reviews were checked against the data; all fixes approved by the use
   - the DS-1000 release has 452 Origin rows, where the paper reports 451.
   - No new S1.7 suspects.
 - **Next:** batch C (S1.7 audit and `artefacts.yaml`, then the S1 gate).
+
+### 2026-11-21 (S1.7 checkpoints 1 and 2a reviewed; amendment A2)
+
+- **S1.7 in progress** on `s1-c-audit`. The labels are interim; final labels come after 2c.
+  - **Checkpoint 1:** the criteria were committed before any table or response; the coverage
+    counts and model mapping were re-derived.
+  - **Checkpoint 2a (Python):** the reviewer re-ran 36 sandbox cells, and all matched.
+  - **Release-side grading faults** reproduced from the released scores:
+    - BigCodeBench: tasks importing matplotlib, sklearn, seaborn, scipy or wordcloud pass
+      0.18%, against 41.3% for the rest;
+    - LiveCodeBench: LeetCode tasks are never called as functions (9.2% vs 50.9% AtCoder;
+      0% for five of the eight models);
+    - DS-1000: answers are executed without stripping fences or `</code>` (0.1% pass with
+      `</code>`, 34.1% bare).
+  - MBPP is cleared. 6,232 stored responses are capped at 2,000 characters.
+- **User decisions:**
+  - `lcb` excludes its LeetCode subset (422 tasks; the kept part gets its own sample);
+  - BigCodeBench is labelled at family level (the library subset is only a sensitivity check);
+  - capped responses stay in, and a capped share with a Wilson lower bound ≥ 5% blocks
+    "cleared";
+  - unexplained cells are investigated in every family;
+  - empty `response_matrix.json` cells keep their released scores;
+  - glm-5, MiniMax-M2.7 and qwen3.5-plus are mapped by name (unconfirmed);
+  - S2.4 stream ids run 2–99.
+- **Amendment A2 (`CLAIMS.md`):** CRUXEval success is a released score ≥ 0.8.
+  - All 128 sampled 0.8 cells hold the correct output with extra text. CRUXEval's documented
+    metric is `assert f(input) == output`.
+  - 0.8 is 72% of Sonnet's CRUXEval cells and 12% of gpt-5.4's.
+  - Code: `CRUXEVAL_SUCCESS_SCORE`, and `scoring.success(score, family, strict=False)`.
+  - The P0 records keep the strict rule (a test pins this).
+  - Tests: 390 pass on `main`.
+- **Next:** S1.7 checkpoint 2b (C++, Go, Java, JavaScript, Rust, TypeScript), after the agent
+  commits the capped-response amendment.

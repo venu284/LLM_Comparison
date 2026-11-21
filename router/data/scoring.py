@@ -27,7 +27,7 @@ from dataclasses import dataclass
 import pandas as pd
 
 from router.data.sources import FAMILIES
-from router.settings import SUCCESS_SCORE
+from router.settings import CRUXEVAL_FAMILY, CRUXEVAL_SUCCESS_SCORE, SUCCESS_SCORE
 
 SCORE_TYPES = ("exec", "similarity", "judge", "undocumented")
 PARTIAL_CREDIT = ("yes", "no", "unstated")
@@ -294,10 +294,26 @@ def eligible_families() -> list[str]:
 
 
 # --------------------------------------------------------------------------- success rule
-def success(score):
-    """S0.1: success means the released score is 1.0 (every test passes). Partial credit below 1.0
-    is not success, whatever the family."""
-    return score >= SUCCESS_SCORE
+def success_threshold(family: str | None, strict: bool = False) -> float:
+    """The released score that counts as success for `family` (S0.1).
+
+    1.0 for every family, except CRUXEval under CLAIMS amendment A2 (0.8: a correct output with
+    extra text). `strict=True` gives the pre-A2 reading (1.0 everywhere), the A2 sensitivity check.
+    """
+    if not strict and family == CRUXEVAL_FAMILY:
+        return CRUXEVAL_SUCCESS_SCORE
+    return SUCCESS_SCORE
+
+
+def success(score, family=None, strict: bool = False):
+    """S0.1: success means the released score reaches the family's threshold: 1.0 (every test
+    passes), or 0.8 for CRUXEval (amendment A2). Partial credit below the threshold is never
+    success. `family` is a family name, a Series aligned with `score`, or None (threshold 1.0).
+    `strict=True` applies 1.0 to every family (the A2 sensitivity check)."""
+    if family is None or isinstance(family, str):
+        return score >= success_threshold(family, strict)
+    threshold = [success_threshold(f, strict) for f in family]      # positional, like `score`
+    return score >= pd.Series(threshold, dtype=float).to_numpy()
 
 
 # --------------------------------------------------------------------------- long table hook

@@ -76,6 +76,42 @@ def test_success_follows_the_setting(monkeypatch):
     assert bool(scoring.success(0.5))
 
 
+# --------------------------------------------------------------------------- amendment A2
+def test_cruxeval_succeeds_at_0_8_and_other_families_still_need_1_0():
+    assert scoring.success_threshold("cruxeval") == 0.8
+    assert bool(scoring.success(0.8, "cruxeval")) and not bool(scoring.success(0.0, "cruxeval"))
+    for fam in sorted(set(scoring.RULES) - {"cruxeval"}):
+        assert scoring.success_threshold(fam) == 1.0, fam
+        assert not bool(scoring.success(0.8, fam)), fam
+    assert not bool(scoring.success(0.8))                     # no family: 1.0
+
+
+def test_strict_reading_is_the_pre_a2_rule():
+    assert scoring.success_threshold("cruxeval", strict=True) == 1.0
+    assert not bool(scoring.success(0.8, "cruxeval", strict=True))
+
+
+def test_success_with_a_family_series_is_positional():
+    score = pd.Series([0.8, 0.8, 1.0, 0.0], index=["a", "b", "c", "d"])
+    fam = pd.Series(["cruxeval", "mbpp", "mbpp", "cruxeval"], index=["w", "x", "y", "z"])
+    assert scoring.success(score, fam).tolist() == [True, False, True, False]
+    assert scoring.success(score, fam, strict=True).tolist() == [False, False, True, False]
+    assert scoring.success(score.to_numpy(), fam.tolist()).tolist() == [True, False, True, False]
+
+
+def test_cruxeval_released_values_are_only_0_0_8_1():
+    """A2 rests on CRUXEval's released values being {0, 0.8, 1.0}; any other value would need a
+    new ruling."""
+    from router.data import coderouterbench as crb
+    if not crb.CRB_DIR.exists():
+        pytest.skip("CodeRouterBench release not fetched")
+    vals = set()
+    for split in ("probing", "id_test"):
+        long = crb.long_table(split)
+        vals |= set(long.loc[long.family == "cruxeval", "score"].round(6))
+    assert vals <= {0.0, 0.8, 1.0}
+
+
 # --------------------------------------------------------------------------- legacy names
 def _imported_names(path: Path) -> set[str]:
     names = set()
