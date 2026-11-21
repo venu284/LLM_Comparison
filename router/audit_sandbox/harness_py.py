@@ -92,6 +92,53 @@ elif p["family_kind"] == "ds1000":
         src += "test_string(code)\n"
     r = run_py(src, timeout=p.get("timeout_s", 60))
     out.update(stat=verdict(r), err=r["err"], elapsed=round(r["t"], 3), code_chars=len(code))
+elif p["family_kind"] == "cruxeval" and p.get("rule") == "a2":
+    # Criteria Amendment 8 (CLAIMS A2 value extraction), fixed before this re-check ran.
+    import ast
+
+    def _a2_candidate(t):
+        m = re.findall(r"assert\s+f\(.*\)\s*==\s*(.+)", t)
+        if m:
+            return m[-1], "assert"
+        for tag_body in reversed(re.findall(r"```[^\n`]*\n(.*?)```", t, re.S)):
+            if "def f(" in tag_body:
+                continue
+            b = tag_body.strip()
+            try:
+                ast.parse(b, mode="eval")
+                return b, "block"
+            except SyntaxError:
+                lines = [l for l in b.splitlines() if l.strip()]
+                return (lines[-1] if lines else ""), "block_last_line"
+        lab = list(re.finditer(r"(?im)^[\s*#>]*(?:output|answer)[\s*#]*:[\s*]*(.*)$", t))
+        if lab:
+            rest = lab[-1].group(1)
+            if rest.strip():
+                return rest, "label"
+            after = [l for l in t[lab[-1].end():].splitlines() if l.strip()]
+            if after:
+                return after[0], "label_next_line"
+        spans = [s for s in re.findall(r"`([^`\n]+)`", t) if "f(" not in s]
+        if spans:
+            return spans[-1], "inline_code"
+        return None, "none"
+
+    cand, how = (p["output"], "canonical") if mode == "canonical" else _a2_candidate(text)
+    out["a2_rule"] = how
+    if cand is None:
+        out.update(stat="fail", err="no candidate", elapsed=0.0)
+    else:
+        cand = cand.strip().strip("`*").strip()
+        if cand.endswith(".") and not re.search(r"\d$", cand[:-1]):
+            cand = cand[:-1].strip()
+        out["literal"] = cand[:500]
+        src = (p["code"] + f"\n_res = f({p['input']})\n"
+               f"_cand = {cand!r}\n"
+               "try:\n    _ok = eval(_cand) == _res\n"
+               "except Exception:\n    _ok = isinstance(_res, str) and _cand == str(_res)\n"
+               "assert _ok\n")
+        r = run_py(src)
+        out.update(stat=verdict(r), err=r["err"], elapsed=round(r["t"], 3))
 elif p["family_kind"] == "cruxeval":
     if mode == "canonical":
         lit = p["output"]

@@ -352,9 +352,10 @@ class Mx:
             return re.findall(r"func\s+(\w+)", r["declaration"])[-1]
         if lang == "js":
             return re.findall(r"const\s+(\w+)\s*=", r["declaration"])[-1]
-        if lang in ("cpp", "java"):
-            last = [l for l in r["declaration"].splitlines() if l.strip()][-1]
-            return re.search(r"(\w+)\s*\(", last).group(1)
+        if lang in ("cpp", "java"):   # last signature followed by "{" (CPP/38 ends inside a body)
+            sigs = [n for n in re.findall(r"(\w+)\s*\([^(){};]*\)\s*(?:throws[\w.,\s]+)?\{", r["declaration"])
+                    if n not in ("if", "for", "while", "switch", "catch")]
+            return sigs[-1]
         if lang == "rs":
             return re.findall(r"fn\s+(\w+)", r["prompt"])[-1]
         return re.findall(r"function\s+(\w+)", r["prompt"])[-1]
@@ -617,7 +618,7 @@ def main(part: str) -> None:
         raise SystemExit(part)
 
 
-if __name__ == "__main__" and sys.argv[1] != "probe":
+if __name__ == "__main__" and sys.argv[1] not in ("probe", "cruxeval_a2"):
     main(sys.argv[1])
 
 
@@ -674,3 +675,69 @@ if __name__ == "__main__" and len(sys.argv) > 2 and sys.argv[1] == "probe" and s
     probe_bcb()
 elif __name__ == "__main__" and len(sys.argv) > 2 and sys.argv[1] == "probe":
     probe(sys.argv[2])
+
+
+# --------------------------------------------------------------------------- CRUXEval under A2
+A2_FORMATS = {   # synthetic answers built from CRUXEval's `output` field (controls, no response)
+    "fenced": "Let me trace the function step by step.\n\n```python\n{o}\n```\n",
+    "label": "Tracing the loop gives the result.\n\n**Output:** {o}\n",
+    "assert": "```python\nassert f({i}) == {o}\n```\n",
+    "inline": "So the call returns `{o}`.",
+}
+
+
+def cruxeval_a2() -> pd.DataFrame:
+    """Criteria Amendment 8: CRUXEval value extraction, judged against released >= 0.8 (CLAIMS
+    A2); the 2a literal rule against released = 1.0 is the strict sensitivity."""
+    c = pd.read_csv(OUT / "s1_7_cells_py.csv")
+    c = c[c["sample"].isin(["cruxeval", "cruxeval_0.8"]) & (c.key_role == "graded")
+          & c.has_response.astype(bool) & c.has_tests.astype(bool)]
+    py, cache = Py(), Cache(OUT / "s1_7_runs_py.jsonl")
+    ctl = []
+    for u in sorted(set(c[c["sample"] == "cruxeval"].upstream)):
+        b = py._body(u, None)
+        for name, tpl in A2_FORMATS.items():
+            ctl.append((f"a2ctl:{name}|{u}", {**b, "mode": "response", "rule": "a2",
+                                              "response": tpl.format(o=b["output"], i=b["input"])}, "pass"))
+        wrong = "```python\n" + repr(("not", "the", "output")) + "\n```\n"
+        ctl.append((f"a2ctl:wrong|{u}", {**b, "mode": "response", "rule": "a2", "response": wrong}, "fail"))
+    run_many([(rid, pl) for rid, pl, _ in ctl], cache, "py", PY_SPEC)
+    bad = [(rid, exp, cache.get(rid)["status"]) for rid, _, exp in ctl if cache.get(rid)["status"] != exp]
+    (OUT / "s1_7_cruxeval_a2_controls.json").write_text(json.dumps(
+        {"controls": len(ctl), "unexpected": bad}, indent=2) + "\n")
+    print(f"A2 controls: {len(ctl)}, unexpected {len(bad)}")
+    if len(bad) > 0.10 * len(ctl):
+        print("STOP: A2 extraction controls")
+        return None
+    resp = load_responses(c)
+    rid = lambda r, k: f"a2:{r.task_id}|{r.key}|{k}"
+    run_many([(rid(r, 1), {**py.payload(r.upstream, resp[(r.task_id, r.key)], None), "rule": "a2"})
+              for r in c.itertuples()], cache, "py", PY_SPEC)
+    rel_a2 = c.released_score >= 0.8 - 1e-9
+    dis = [r for r, ra in zip(c.itertuples(), rel_a2) if (cache.get(rid(r, 1))["status"] == "pass") != ra]
+    run_many([(rid(r, k), {**py.payload(r.upstream, resp[(r.task_id, r.key)], None), "rule": "a2"})
+              for r in dis for k in range(2, FLAKY_RUNS + 1)], cache, "py", PY_SPEC)
+    rows = []
+    for r, ra in zip(c.itertuples(), rel_a2):
+        runs = [cache.get(rid(r, k)) for k in range(1, FLAKY_RUNS + 1)]
+        runs = [x for x in runs if x]
+        cell = runs[0].get("cell") or {}
+        rows.append({"sample": r.sample, "task_id": r.task_id, "upstream": r.upstream, "model": r.model,
+                     "key": r.key, "unconfirmed": r.unconfirmed, "released_score": r.released_score,
+                     "released_pass_a2": bool(ra), "released_pass_strict": bool(r.released_pass),
+                     "rerun_strict": r.rerun, "agree_strict": r.agree,
+                     "rerun_a2": runs[0]["status"], "rerun_a2_all": "/".join(x["status"] for x in runs),
+                     "flaky_a2": len({x["status"] for x in runs}) > 1, "a2_rule": cell.get("a2_rule"),
+                     "agree_a2": (runs[0]["status"] == "pass") == bool(ra),
+                     "log": f"s1_7_runs_py.jsonl#{rid(r, 1)}"})
+    out = pd.DataFrame(rows)
+    out.to_csv(OUT / "s1_7_cruxeval_a2.csv", index=False, lineterminator="\n")
+    for smp, g in out.groupby("sample"):
+        ex = g[g.rerun_a2.isin(["pass", "fail"])]
+        print(smp, "n_exec", len(ex), "agree_a2", int(ex.agree_a2.sum()),
+              "| strict agree", int(g.agree_strict.astype(bool).sum()), "of", len(g))
+    return out
+
+
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "cruxeval_a2":
+    cruxeval_a2()
