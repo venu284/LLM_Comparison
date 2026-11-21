@@ -724,6 +724,16 @@ edit them.
       `artefacts.yaml` also records that the paper view is zero-filled and for reproduction only,
       and the empty X13 cells (1,551, of which 877 score 1.0 in the release: X13 lost the
       response, the model did not fail; S0.11 keeps them unavailable, user 2026-11-20).
+      **Checkpoint 1 decisions (user, 2026-11-20).**
+      - **Empty responses** in CodeRouterBench's `response_matrix.json` keep their released
+        scores. There are 3,330 such cells across the 8 models; 895 of them score 1.0, and all
+        but the 148 Qwen3-Max rows carry output tokens. They are left out of the audit's
+        samples only. S3 reports a sensitivity check with them treated as unavailable. No
+        CLAIMS amendment.
+      - **Model mapping:** glm-5, MiniMax-M2.7 and qwen3.5-plus are matched to their responses
+        by name, marked unconfirmed (their released token counts include hidden reasoning).
+      - **Scope:** the 19 flagged eligible families stay in scope as pre-registered.
+        Checkpoint 2 is split by toolchain.
 - [ ] S1.8 `data/llmrouterbench.py` [M1.7]: code subsets; drop zero-cost models from economic
       metrics. Validate the loader early, so it is ready if DP1b makes it the primary corpus.
 - [x] S1.9 `data/phase5.py` [M1.8]: read-only loader (R5), including the stored raw responses
@@ -775,7 +785,8 @@ quick-check code.
 - [ ] S2.4 `sim/stats.py` [M2.3]: S0.8, plus the development split and nested cross-fitting driver
       of S0.6, including automatic per-fold selection from a frozen candidate list. Reuse
       `splits.load_splits` and `splits.r13_violations`. Stream order and the probe draw under a
-      seed use their own SeedSequence stream ids (`[seed, 2]`, `[seed, 3]`, …); ids 0 and 1
+      seed use their own SeedSequence stream ids (`[seed, 2]`, `[seed, 3]`, …, at most 99; 100
+      and up belong to the S1.7 audit samples); ids 0 and 1
       belong to the development split and the folds (S1.6).
 - [ ] S2.5 Baselines [M2.4]: Always-X, Random, DimensionBest (full, k-matched, cost-aware),
       CellBest with true source cells (reference) and with predicted cells (the S0.3(c)
@@ -797,6 +808,13 @@ quick-check code.
 ### S3 — Analyse data and feasibility
 All analyses run on the development split and the S2 infrastructure; the evaluation population is
 not used for any S3 number that feeds a decision.
+**Data notes from S1.7 (2026-11-20):**
+- Qwen3-Max's released `output_tokens` take one fixed value per dimension, so its released
+  cost is a per-dimension constant, not a per-task cost. State this wherever per-task cost
+  matters (S0.2).
+- Every headline number also gets the sensitivity check with empty `response_matrix.json`
+  cells treated as unavailable (S1.7).
+
 - [ ] S3.1 Q1 accuracy headroom: oracle and DimensionBest against the best single model, in all
       three data views.
 - [ ] S3.2 Q2 cost headroom and feasibility bound (**DP1b**): cost at matched acceptance against the
