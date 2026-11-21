@@ -1,4 +1,4 @@
-# PROBE-CASCADE: Cost-Aware Routing for Code-Generation LLMs
+# Cost-Aware Routing for Code-Generation LLMs
 
 A master's project (CSCI 7200) that builds a router for coding tasks. For each task the router
 tries the cheapest model likely to succeed, checks its code with tests, and escalates to a
@@ -9,10 +9,6 @@ The project began as a benchmark comparing five LLMs on 65 web-development tasks
 That study found little to gain from choosing a single best model, so the work moved to
 cost-aware routing on a public, priced benchmark (CodeRouterBench: 8 frontier models, 9,999
 tasks). The 65 web-development tasks remain the live showcase domain.
-
-**Status (November 2026):** the claims and data stages are done and the benchmark audit is in
-progress. The router itself is designed but not yet built. The living plan is
-[docs/IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md).
 
 ---
 
@@ -293,17 +289,6 @@ See [benchmark/README.md](benchmark/README.md) and [pipeline/README.md](pipeline
 details.
 
 ---
-
-## Project history
-
-| Phase | Period | Outcome |
-|---|---|---|
-| 1–2 | Nov 2025 to Mar 2026 | Literature review and evaluation framework |
-| 3–5 | Apr 2026 | 65-task web-dev benchmark, automated pipeline, 325 runs over 5 models; best model 53.8% |
-| 6–7 | May to Jul 2026 | Routing ceiling only +8.6 points; hypothesis H4 rejected; human-evaluation tooling built |
-| Redesign | Aug to Sep 2026 | Move from picking the best model to cheap-model sufficiency; PROBE-CASCADE design |
-| Prototype | Oct 2026 | Quick checks on CodeRouterBench; published numbers reproduced |
-| Plan v3 | Nov 2026 | Claim contract, validated data layer, benchmark audit |
 
 ## Data and licences
 
