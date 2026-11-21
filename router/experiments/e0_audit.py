@@ -39,8 +39,8 @@ def _round(df: pd.DataFrame) -> pd.DataFrame:
     return df.round(DIGITS)
 
 
-def _csv(df: pd.DataFrame, name: str) -> None:
-    _round(df).to_csv(OUT / name, index=False, lineterminator="\n")
+def _csv(df: pd.DataFrame, path: Path) -> None:
+    _round(df).to_csv(path, index=False, lineterminator="\n")
 
 
 def _clean(x):
@@ -55,7 +55,11 @@ def _clean(x):
     return x
 
 
-def main() -> dict:
+OUTPUTS = ("e0_audit.json", "e0_audit_family_model.csv", "e0_audit_coverage.csv",
+           "e0_audit_coverage_name_match.csv", "e0_audit_truncation_cells.csv")
+
+
+def main(out_dir: Path = OUT) -> dict:
     long = audit.released_long()
     flagship = audit.flagship_models()           # §5.1, before the table
     stats = audit.response_stats()
@@ -64,6 +68,7 @@ def main() -> dict:
     corr = audit.length_correlation(stats, long)
     mapping = audit.map_keys(aliases, corr)
     cpt = audit.chars_per_token(stats, long)
+    cpt_control = audit.over_ratio_matrix(stats, long)
     const = audit.constant_token_records(long)
     key_tasks_by_family = (stats[["task_id", "key"]].assign(family=lambda d: d.task_id.map(
         long.drop_duplicates("task_id").set_index("task_id")["family"]))
@@ -100,6 +105,7 @@ def main() -> dict:
         "identical_prompt_bcb_plan_wording": ident_plan,
         "name_match_mapping_not_the_rule": name_map,
         "chars_per_token_diagnostic_not_the_rule": cpt.to_dict("records"),
+        "chars_per_token_control_key_x_model": {k: cpt_control.loc[k].to_dict() for k in cpt_control.index},
         "constant_token_records": const.to_dict("records"),
         "key_tasks_by_family": {f"{k}|{f}": int(n) for (k, f), n in key_tasks_by_family.items()
                                 if k not in audit.RELEASED_MODELS},
@@ -112,12 +118,12 @@ def main() -> dict:
                                         "empty_tokens_zero", "empty_score_one", "empty_unavailable"]},
     }
     res = _clean(res)
-    OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "e0_audit.json").write_text(json.dumps(res, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
-    _csv(table, "e0_audit_family_model.csv")
-    _csv(cov, "e0_audit_coverage.csv")
-    _csv(cov_name, "e0_audit_coverage_name_match.csv")
-    _csv(screened, "e0_audit_truncation_cells.csv")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "e0_audit.json").write_text(json.dumps(res, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
+    _csv(table, out_dir / "e0_audit_family_model.csv")
+    _csv(cov, out_dir / "e0_audit_coverage.csv")
+    _csv(cov_name, out_dir / "e0_audit_coverage_name_match.csv")
+    _csv(screened, out_dir / "e0_audit_truncation_cells.csv")
     print(json.dumps({k: res[k] for k in ("flagship", "flagged_eligible", "flagged_ineligible",
                                           "coverage_graded_keys_total", "coverage_name_match_total_not_the_rule")}, indent=1, ensure_ascii=False))
     print(json.dumps(res["mapping"]["graded_key"], ensure_ascii=False), res["mapping"]["notes"])

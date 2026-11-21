@@ -103,14 +103,21 @@ def test_truncation_screen():
 
 # --------------------------------------------------------------------------- data (pinned)
 @pytest.fixture(scope="module")
-def res():
-    return e0_audit.main()
+def run(tmp_path_factory):
+    out = tmp_path_factory.mktemp("e0_audit")
+    return e0_audit.main(out_dir=out), out
+
+
+@pytest.fixture(scope="module")
+def res(run):
+    return run[0]
 
 
 @needs_data
-def test_e0_audit_reproduces_committed_json(res):
-    committed = json.loads((e0_audit.OUT / "e0_audit.json").read_text())
-    assert json.loads(json.dumps(res, sort_keys=True, ensure_ascii=False)) == committed
+def test_e0_audit_reproduces_committed_outputs_byte_for_byte(run):
+    _, out = run
+    for name in e0_audit.OUTPUTS:
+        assert (out / name).read_bytes() == (e0_audit.OUT / name).read_bytes(), name
 
 
 @needs_data
@@ -126,6 +133,10 @@ def test_checkpoint1_counts(res):
     assert len(res["flagged_eligible"]) == 19 and "he_completion" not in res["flagged_eligible"]
     assert res["identical_prompt_bcb"]["bcb_tasks"] == 499
     assert res["identical_prompt_bcb"]["cells_outcome_differs"] == 638
+    ctl = res["chars_per_token_control_key_x_model"]
+    for m in ("glm-5", "MiniMax-M2.7", "qwen3.5-plus"):
+        col = {k: ctl[k][m] for k in ctl}
+        assert col[m] == 0.0 and sum(v < 0.01 for k, v in col.items() if k != m) >= 4
     const = res["constant_token_records"]
     assert len(const) == 29 and {c["model"] for c in const} == {"Qwen3-Max"}
     assert {f: n for f, n in ((k.split("|")[1], v) for k, v in res["key_tasks_by_family"].items()

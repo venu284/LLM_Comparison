@@ -116,6 +116,17 @@ def chars_per_token(stats: pd.DataFrame, long: pd.DataFrame, ratio: float = 8.0)
                          "median_chars": g.n_chars.median()}).reset_index()
 
 
+def over_ratio_matrix(stats: pd.DataFrame, long: pd.DataFrame, ratio: float = 8.0) -> pd.DataFrame:
+    """Control for `chars_per_token`: the share of cells over `ratio` characters per token for
+    every key's text against every released model's token counts (keys × models). A check that
+    also passes wrong keys cannot confirm a mapping."""
+    st = stats[~stats["is_empty"] & stats.key.isin(RELEASED_MODELS)][["task_id", "key", "n_chars"]]
+    tok = long[long.available][["task_id", "model", "output_tokens"]]
+    m = st.merge(tok, on="task_id")
+    m["over"] = m.n_chars / m.output_tokens.clip(lower=1) > ratio
+    return m.groupby(["key", "model"])["over"].mean().unstack()
+
+
 def constant_token_records(long: pd.DataFrame) -> pd.DataFrame:
     """Score-free: model × family blocks (available cells) where released `output_tokens` takes a
     single value, i.e. token counts that cannot be per-response records."""

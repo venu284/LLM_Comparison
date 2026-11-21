@@ -3,6 +3,88 @@
     "total": 79992,
     "unavailable": 148
   },
+  "chars_per_token_control_key_x_model": {
+    "MiniMax-M2.7": {
+      "MiniMax-M2.7": 0.0,
+      "Qwen3-Max": 0.140648,
+      "claude-opus-4-6": 0.122462,
+      "claude-sonnet-4-6": 0.072758,
+      "glm-5": 0.020093,
+      "gpt-5.4": 0.15662,
+      "kimi-k2.5": 0.255499,
+      "qwen3.5-plus": 0.013748
+    },
+    "Qwen3-Max": {
+      "MiniMax-M2.7": 0.007918,
+      "Qwen3-Max": 0.049437,
+      "claude-opus-4-6": 0.277028,
+      "claude-sonnet-4-6": 0.169526,
+      "glm-5": 0.001117,
+      "gpt-5.4": 0.350624,
+      "kimi-k2.5": 0.377119,
+      "qwen3.5-plus": 0.001523
+    },
+    "claude-opus-4-6": {
+      "MiniMax-M2.7": 0.0004,
+      "Qwen3-Max": 0.099898,
+      "claude-opus-4-6": 0.0,
+      "claude-sonnet-4-6": 0.010602,
+      "glm-5": 0.0002,
+      "gpt-5.4": 0.127926,
+      "kimi-k2.5": 0.113523,
+      "qwen3.5-plus": 0.0003
+    },
+    "claude-sonnet-4-6": {
+      "MiniMax-M2.7": 0.0019,
+      "Qwen3-Max": 0.114303,
+      "claude-opus-4-6": 0.089709,
+      "claude-sonnet-4-6": 0.0,
+      "glm-5": 0.0002,
+      "gpt-5.4": 0.171917,
+      "kimi-k2.5": 0.238824,
+      "qwen3.5-plus": 0.0005
+    },
+    "glm-5": {
+      "MiniMax-M2.7": 0.000234,
+      "Qwen3-Max": 0.096563,
+      "claude-opus-4-6": 0.08746,
+      "claude-sonnet-4-6": 0.056434,
+      "glm-5": 0.0,
+      "gpt-5.4": 0.125746,
+      "kimi-k2.5": 0.19424,
+      "qwen3.5-plus": 0.003512
+    },
+    "gpt-5.4": {
+      "MiniMax-M2.7": 0.001403,
+      "Qwen3-Max": 0.110795,
+      "claude-opus-4-6": 0.078982,
+      "claude-sonnet-4-6": 0.028566,
+      "glm-5": 0.055929,
+      "gpt-5.4": 0.0,
+      "kimi-k2.5": 0.183422,
+      "qwen3.5-plus": 0.044603
+    },
+    "kimi-k2.5": {
+      "MiniMax-M2.7": 0.000403,
+      "Qwen3-Max": 0.090509,
+      "claude-opus-4-6": 0.032375,
+      "claude-sonnet-4-6": 0.020978,
+      "glm-5": 0.001513,
+      "gpt-5.4": 0.112254,
+      "kimi-k2.5": 0.000101,
+      "qwen3.5-plus": 0.001614
+    },
+    "qwen3.5-plus": {
+      "MiniMax-M2.7": 0.001232,
+      "Qwen3-Max": 0.076196,
+      "claude-opus-4-6": 0.174566,
+      "claude-sonnet-4-6": 0.077087,
+      "glm-5": 0.013782,
+      "gpt-5.4": 0.176471,
+      "kimi-k2.5": 0.287955,
+      "qwen3.5-plus": 0.0
+    }
+  },
   "chars_per_token_diagnostic_not_the_rule": [
     {
       "cells": 9456,
