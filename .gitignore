@@ -28,8 +28,5 @@ external/*
 # Local router state (model registry, caches)
 *.sqlite
 
-# Earlier report PDFs kept locally, not versioned
-Reports/Final_Report.pdf
-Reports/Research_Progress_Report_5.pdf
-Reports/Venu_Research_Report3.pdf
-Reports/Venu_Research_Report_4.pdf
+# Reports are kept locally, not versioned
+Reports/
