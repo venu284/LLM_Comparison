@@ -92,6 +92,22 @@ elif p["family_kind"] == "ds1000":
         src += "test_string(code)\n"
     r = run_py(src, timeout=p.get("timeout_s", 60))
     out.update(stat=verdict(r), err=r["err"], elapsed=round(r["t"], 3), code_chars=len(code))
+elif p["family_kind"] == "cruxeval" and probe == "cx_exec":
+    # Mechanism probe (investigation, after the A2 re-check): the grader executes the response's
+    # fenced code and compares what it prints with f(input). Pass if the last printed line equals
+    # repr(result) or str(result).
+    blocks = FENCE.findall(text)
+    ref = run_py(p["code"] + f"\nprint(repr(f({p['input']})))\nprint(str(f({p['input']})))\n")
+    want = [l for l in ref["out"].splitlines() if l.strip()][-2:] if ref["rc"] == 0 else []
+    if not blocks:
+        out.update(stat="fail", err="no fenced block", elapsed=0.0)
+    else:
+        r = run_py("\n".join(blocks))
+        got = [l for l in r["out"].splitlines() if l.strip()]
+        out["printed"] = got[-1][:300] if got else ""
+        ok = r["rc"] == 0 and bool(got) and got[-1].strip() in {w.strip() for w in want}
+        out.update(stat="timeout" if r["timeout"] else ("pass" if ok else "fail"), err=r["err"][-500:],
+                   elapsed=round(r["t"], 3))
 elif p["family_kind"] == "cruxeval" and p.get("rule") == "a2":
     # Criteria Amendment 8 (CLAIMS A2 value extraction), fixed before this re-check ran.
     import ast
@@ -121,6 +137,8 @@ elif p["family_kind"] == "cruxeval" and p.get("rule") == "a2":
         spans = [s for s in re.findall(r"`([^`\n]+)`", t) if "f(" not in s]
         if spans:
             return spans[-1], "inline_code"
+        if p.get("a2_fallback") and t.strip():    # post-hoc sensitivity only: the 2a whole-text fallback
+            return t.strip(), "whole_text"
         return None, "none"
 
     cand, how = (p["output"], "canonical") if mode == "canonical" else _a2_candidate(text)

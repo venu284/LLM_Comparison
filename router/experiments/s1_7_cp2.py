@@ -618,7 +618,7 @@ def main(part: str) -> None:
         raise SystemExit(part)
 
 
-if __name__ == "__main__" and sys.argv[1] not in ("probe", "cruxeval_a2"):
+if __name__ == "__main__" and sys.argv[1] not in ("probe", "cruxeval_a2", "cruxeval_a2_fallback"):
     main(sys.argv[1])
 
 
@@ -673,7 +673,7 @@ def probe_bcb(name: str = "block_sci") -> pd.DataFrame:
 
 if __name__ == "__main__" and len(sys.argv) > 2 and sys.argv[1] == "probe" and sys.argv[2] == "block_sci":
     probe_bcb()
-elif __name__ == "__main__" and len(sys.argv) > 2 and sys.argv[1] == "probe":
+elif __name__ == "__main__" and len(sys.argv) > 2 and sys.argv[1] == "probe" and sys.argv[2] != "cx_exec":
     probe(sys.argv[2])
 
 
@@ -741,3 +741,50 @@ def cruxeval_a2() -> pd.DataFrame:
 
 if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "cruxeval_a2":
     cruxeval_a2()
+
+
+def probe_cx_exec() -> pd.DataFrame:
+    """CRUXEval fault model (investigation after the A2 re-check): the release executed the
+    response's code and compared its printed output. Compared with released >= 0.8."""
+    d = pd.read_csv(OUT / "s1_7_cruxeval_a2.csv")
+    resp = load_responses(d)
+    py, cache = Py(), Cache(OUT / "s1_7_runs_py.jsonl")
+    rid = lambda r: f"probe:cx_exec|{r.task_id}|{r.key}"
+    run_many([(rid(r), {**py.payload(r.upstream, resp[(r.task_id, r.key)], None), "probe": "cx_exec"})
+              for r in d.drop_duplicates(["task_id", "key"]).itertuples()], cache, "py", PY_SPEC)
+    d["probe"] = [cache.get(rid(r))["status"] for r in d.itertuples()]
+    d["printed"] = [(cache.get(rid(r))["cell"] or {}).get("printed") for r in d.itertuples()]
+    d["a2_or_probe"] = (d.rerun_a2 == "pass") | (d.probe == "pass")
+    d[["sample", "task_id", "model", "key", "released_score", "rerun_strict", "rerun_a2", "a2_rule",
+       "probe", "printed", "a2_or_probe"]].to_csv(OUT / "s1_7_probe_cx_exec.csv", index=False,
+                                                  lineterminator="\n")
+    for smp, g in d.groupby("sample"):
+        print(smp); print(pd.crosstab(g.released_score, [g.rerun_a2, g.probe]))
+    return d
+
+
+if __name__ == "__main__" and len(sys.argv) > 2 and sys.argv[1] == "probe" and sys.argv[2] == "cx_exec":
+    probe_cx_exec()
+
+
+def cruxeval_a2_fallback() -> pd.DataFrame:
+    """Post-hoc sensitivity (not pre-registered): Amendment 8's rule plus the 2a whole-text
+    fallback for responses with no candidate."""
+    d = pd.read_csv(OUT / "s1_7_cruxeval_a2.csv")
+    resp = load_responses(d)
+    py, cache = Py(), Cache(OUT / "s1_7_runs_py.jsonl")
+    rid = lambda r: f"a2fb:{r.task_id}|{r.key}"
+    run_many([(rid(r), {**py.payload(r.upstream, resp[(r.task_id, r.key)], None), "rule": "a2",
+                        "a2_fallback": True}) for r in d.drop_duplicates(["task_id", "key"]).itertuples()],
+             cache, "py", PY_SPEC)
+    d["rerun_a2_fallback"] = [cache.get(rid(r))["status"] for r in d.itertuples()]
+    d["agree_a2_fallback"] = (d.rerun_a2_fallback == "pass") == d.released_pass_a2
+    d.to_csv(OUT / "s1_7_cruxeval_a2.csv", index=False, lineterminator="\n")
+    for smp, g in d.groupby("sample"):
+        print(smp, "agree_a2", int(g.agree_a2.sum()), "agree_a2_fallback", int(g.agree_a2_fallback.sum()),
+              "of", len(g)); print(pd.crosstab(g.released_score, g.rerun_a2_fallback))
+    return d
+
+
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "cruxeval_a2_fallback":
+    cruxeval_a2_fallback()

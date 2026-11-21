@@ -76,6 +76,30 @@ def mapping_interim(bm: pd.DataFrame) -> dict:
                for r in bm[bm.unconfirmed].itertuples() for m in [r.model]}}
 
 
+MAIN_SAMPLES = ("bcb", "bcb_v014", "bcb_algo2", "bcb_completion", "bcb_ds", "ds1000", "humaneval",
+                "hex_python", "mbpp", "mbpp_completion", "lcb", "cruxeval", "hex_cpp", "hex_go",
+                "hex_java", "hex_js", "multiple_rs", "multiple_ts", "swebench")
+
+
+def capped_share(c: pd.DataFrame, stats: pd.DataFrame | None = None) -> pd.DataFrame:
+    """Amendment 6: share of each main sample's graded cells whose stored text is exactly 2,000
+    characters, with its Wilson interval; a lower bound >= 0.05 bars `cleared`."""
+    if stats is None:
+        from router.data import audit
+        stats = audit.response_stats()
+    n = stats.set_index(["task_id", "key"])["n_chars"]
+    g = c[(c.key_role == "graded") & c["sample"].isin(MAIN_SAMPLES)
+          & (c.test_version.fillna("plus") == "plus")].drop_duplicates(["sample", "task_id", "key"])
+    rows = []
+    for smp, s in g.groupby("sample"):
+        capped = int(sum(n.get((t, k), -1) == 2000 for t, k in zip(s.task_id, s.key)))
+        lo, hi = wilson(capped, len(s))
+        rows.append({"sample": smp, "cells": len(s), "capped": capped,
+                     "share": round(capped / len(s), 4), "wilson_lo": lo, "wilson_hi": hi,
+                     "bars_cleared": bool(lo >= 0.05)})
+    return pd.DataFrame(rows)
+
+
 def main(parts) -> None:
     c = load(parts)
     smp = by_sample(c)

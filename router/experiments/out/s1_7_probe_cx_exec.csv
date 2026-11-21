@@ -1,0 +1,195 @@
+sample,task_id,model,key,released_score,rerun_strict,rerun_a2,a2_rule,probe,printed,a2_or_probe
+cruxeval,dim4_cruxeval_106,glm-5,glm-5,0.0,fail,fail,none,pass,"[4, 4, 4, 4, 4, 4, 2, 8, -2, 9, 3, 3]",True
+cruxeval,dim4_cruxeval_110,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,1,True
+cruxeval,dim4_cruxeval_116,Qwen3-Max,Qwen3-Max,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_131,kimi-k2.5,kimi-k2.5,0.8,fail,fail,none,fail,,False
+cruxeval,dim4_cruxeval_136,kimi-k2.5,kimi-k2.5,0.0,fail,fail,none,fail,,False
+cruxeval,dim4_cruxeval_141,MiniMax-M2.7,MiniMax-M2.7,0.0,fail,fail,none,pass,"[1, 3, 1, 3, 3, 1, 1, 1, 1, 1, 1]",True
+cruxeval,dim4_cruxeval_162,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,СBISHOPSWIFT,True
+cruxeval,dim4_cruxeval_166,kimi-k2.5,kimi-k2.5,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_167,glm-5,glm-5,0.0,fail,fail,none,pass,aaQwQwQwbbQwQwQwccQwQwQwde,True
+cruxeval,dim4_cruxeval_17,kimi-k2.5,kimi-k2.5,0.8,fail,fail,inline_code,fail,,False
+cruxeval,dim4_cruxeval_171,MiniMax-M2.7,MiniMax-M2.7,0.0,fail,fail,none,pass,"[1, 2, 3]",True
+cruxeval,dim4_cruxeval_174,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval,dim4_cruxeval_179,gpt-5.4,gpt-5.4,0.0,fail,fail,block,fail,,False
+cruxeval,dim4_cruxeval_185,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval,dim4_cruxeval_187,claude-opus-4-6,claude-opus-4-6,0.8,fail,pass,label,fail,,True
+cruxeval,dim4_cruxeval_193,qwen3.5-plus,qwen3.5-plus,0.0,fail,fail,none,pass,1:1,True
+cruxeval,dim4_cruxeval_195,glm-5,glm-5,0.0,fail,fail,none,pass,ilfdoirwirmtoibsac  ,True
+cruxeval,dim4_cruxeval_211,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,fail,inline_code,fail,,False
+cruxeval,dim4_cruxeval_212,glm-5,glm-5,0.8,fail,fail,none,pass,"[1, -9, 7, 2, 6, -3, 3]",True
+cruxeval,dim4_cruxeval_22,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,fail,,False
+cruxeval,dim4_cruxeval_244,claude-opus-4-6,claude-opus-4-6,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_247,MiniMax-M2.7,MiniMax-M2.7,1.0,fail,fail,none,fail,,False
+cruxeval,dim4_cruxeval_250,Qwen3-Max,Qwen3-Max,0.0,fail,fail,none,pass,wlace Alc l  ,True
+cruxeval,dim4_cruxeval_26,claude-sonnet-4-6,claude-sonnet-4-6,1.0,fail,pass,block,fail,,True
+cruxeval,dim4_cruxeval_273,qwen3.5-plus,qwen3.5-plus,0.0,fail,fail,none,pass,NET,True
+cruxeval,dim4_cruxeval_279,claude-opus-4-6,claude-opus-4-6,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_289,MiniMax-M2.7,MiniMax-M2.7,0.0,fail,fail,none,fail,,False
+cruxeval,dim4_cruxeval_297,claude-opus-4-6,claude-opus-4-6,0.8,fail,pass,label,fail,,True
+cruxeval,dim4_cruxeval_304,Qwen3-Max,Qwen3-Max,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_306,claude-opus-4-6,claude-opus-4-6,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_310,Qwen3-Max,Qwen3-Max,0.0,fail,fail,none,pass,__1.00r__j_a6__6,True
+cruxeval,dim4_cruxeval_313,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval,dim4_cruxeval_314,claude-opus-4-6,claude-opus-4-6,1.0,fail,fail,block_last_line,fail,,False
+cruxeval,dim4_cruxeval_321,glm-5,glm-5,0.8,fail,fail,none,pass,{'desciduous': 2},True
+cruxeval,dim4_cruxeval_322,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,"['lsi', 's', 't', 't', 'd']",True
+cruxeval,dim4_cruxeval_334,glm-5,glm-5,1.0,fail,fail,none,fail,,False
+cruxeval,dim4_cruxeval_344,gpt-5.4,gpt-5.4,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_347,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval,dim4_cruxeval_355,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,inline_code,fail,,True
+cruxeval,dim4_cruxeval_356,MiniMax-M2.7,MiniMax-M2.7,0.0,fail,fail,none,pass,"[2, 1]",True
+cruxeval,dim4_cruxeval_358,Qwen3-Max,Qwen3-Max,0.0,fail,fail,block,fail,,False
+cruxeval,dim4_cruxeval_364,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,"[[3, False], [1, True]]",True
+cruxeval,dim4_cruxeval_381,claude-sonnet-4-6,claude-sonnet-4-6,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_385,Qwen3-Max,Qwen3-Max,0.0,fail,fail,block,fail,,False
+cruxeval,dim4_cruxeval_389,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval,dim4_cruxeval_391,glm-5,glm-5,0.0,fail,fail,none,pass,"['9', '+', '+', '+']",True
+cruxeval,dim4_cruxeval_405,qwen3.5-plus,qwen3.5-plus,1.0,pass,fail,none,fail,,False
+cruxeval,dim4_cruxeval_407,gpt-5.4,gpt-5.4,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_41,claude-sonnet-4-6,claude-sonnet-4-6,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_411,glm-5,glm-5,1.0,pass,fail,none,fail,,False
+cruxeval,dim4_cruxeval_419,kimi-k2.5,kimi-k2.5,0.8,fail,fail,inline_code,fail,,False
+cruxeval,dim4_cruxeval_42,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,[],True
+cruxeval,dim4_cruxeval_422,qwen3.5-plus,qwen3.5-plus,1.0,pass,fail,none,fail,,False
+cruxeval,dim4_cruxeval_454,MiniMax-M2.7,MiniMax-M2.7,1.0,pass,fail,none,fail,,False
+cruxeval,dim4_cruxeval_459,glm-5,glm-5,1.0,pass,fail,none,fail,,False
+cruxeval,dim4_cruxeval_475,claude-opus-4-6,claude-opus-4-6,0.8,fail,pass,label,fail,,True
+cruxeval,dim4_cruxeval_477,gpt-5.4,gpt-5.4,0.0,fail,fail,block,fail,,False
+cruxeval,dim4_cruxeval_484,glm-5,glm-5,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_488,Qwen3-Max,Qwen3-Max,0.0,fail,fail,none,pass,5ezmgvn 651h,True
+cruxeval,dim4_cruxeval_489,glm-5,glm-5,0.0,fail,fail,none,pass,cifysu,True
+cruxeval,dim4_cruxeval_502,MiniMax-M2.7,MiniMax-M2.7,1.0,fail,fail,none,fail,,False
+cruxeval,dim4_cruxeval_502,qwen3.5-plus,qwen3.5-plus,0.0,fail,fail,none,pass,Fred*Smith,True
+cruxeval,dim4_cruxeval_505,gpt-5.4,gpt-5.4,1.0,fail,pass,block_last_line,fail,,True
+cruxeval,dim4_cruxeval_514,kimi-k2.5,kimi-k2.5,0.0,fail,fail,inline_code,fail,,False
+cruxeval,dim4_cruxeval_518,glm-5,glm-5,0.0,fail,fail,none,pass,True,True
+cruxeval,dim4_cruxeval_518,qwen3.5-plus,qwen3.5-plus,1.0,pass,fail,none,fail,,False
+cruxeval,dim4_cruxeval_532,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval,dim4_cruxeval_539,gpt-5.4,gpt-5.4,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_542,Qwen3-Max,Qwen3-Max,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_55,gpt-5.4,gpt-5.4,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_555,gpt-5.4,gpt-5.4,0.0,fail,fail,block,fail,,False
+cruxeval,dim4_cruxeval_560,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,0,True
+cruxeval,dim4_cruxeval_574,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,Costanza,True
+cruxeval,dim4_cruxeval_599,kimi-k2.5,kimi-k2.5,0.0,fail,pass,inline_code,fail,,True
+cruxeval,dim4_cruxeval_604,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,inline_code,fail,,True
+cruxeval,dim4_cruxeval_612,MiniMax-M2.7,MiniMax-M2.7,0.8,fail,fail,none,pass,"{'a': 42, 'b': 1337, 'c': -1, 'd': 5}",True
+cruxeval,dim4_cruxeval_636,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval,dim4_cruxeval_645,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,1,True
+cruxeval,dim4_cruxeval_649,kimi-k2.5,kimi-k2.5,0.0,fail,pass,inline_code,fail,,True
+cruxeval,dim4_cruxeval_659,glm-5,glm-5,0.0,fail,fail,none,pass,4,True
+cruxeval,dim4_cruxeval_67,qwen3.5-plus,qwen3.5-plus,0.0,fail,fail,none,pass,"6,8,8",True
+cruxeval,dim4_cruxeval_679,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval,dim4_cruxeval_68,MiniMax-M2.7,MiniMax-M2.7,1.0,fail,fail,none,fail,,False
+cruxeval,dim4_cruxeval_692,glm-5,glm-5,1.0,pass,fail,none,fail,,False
+cruxeval,dim4_cruxeval_696,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,3,True
+cruxeval,dim4_cruxeval_735,Qwen3-Max,Qwen3-Max,0.0,fail,fail,block,fail,,False
+cruxeval,dim4_cruxeval_740,MiniMax-M2.7,MiniMax-M2.7,1.0,pass,fail,none,fail,,False
+cruxeval,dim4_cruxeval_740,Qwen3-Max,Qwen3-Max,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_748,kimi-k2.5,kimi-k2.5,0.8,fail,fail,none,fail,,False
+cruxeval,dim4_cruxeval_755,glm-5,glm-5,1.0,fail,fail,none,fail,,False
+cruxeval,dim4_cruxeval_771,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval,dim4_cruxeval_776,MiniMax-M2.7,MiniMax-M2.7,1.0,pass,fail,none,fail,,False
+cruxeval,dim4_cruxeval_785,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval,dim4_cruxeval_794,gpt-5.4,gpt-5.4,1.0,pass,pass,block,fail,,True
+cruxeval,dim4_cruxeval_797,qwen3.5-plus,qwen3.5-plus,0.0,fail,fail,none,pass,"[('a', 1), ('b', 2), ('c', 3)]",True
+cruxeval,dim4_cruxeval_84,claude-opus-4-6,claude-opus-4-6,1.0,fail,pass,block_last_line,fail,,True
+cruxeval,dim4_cruxeval_96,Qwen3-Max,Qwen3-Max,1.0,pass,pass,block,fail,,True
+cruxeval_0.8,dim4_cruxeval_110,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_110,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,1,True
+cruxeval_0.8,dim4_cruxeval_122,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_137,kimi-k2.5,kimi-k2.5,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_139,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,no,True
+cruxeval_0.8,dim4_cruxeval_139,kimi-k2.5,kimi-k2.5,0.8,fail,fail,inline_code,fail,,False
+cruxeval_0.8,dim4_cruxeval_145,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,8.5,True
+cruxeval_0.8,dim4_cruxeval_154,kimi-k2.5,kimi-k2.5,0.8,fail,fail,none,fail,,False
+cruxeval_0.8,dim4_cruxeval_16,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,zejrohaj,True
+cruxeval_0.8,dim4_cruxeval_160,Qwen3-Max,Qwen3-Max,0.8,fail,fail,inline_code,pass,"{1: 38381, 3: 83607}",True
+cruxeval_0.8,dim4_cruxeval_174,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_183,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_2,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,hbtofdeiequ,True
+cruxeval_0.8,dim4_cruxeval_2,kimi-k2.5,kimi-k2.5,0.8,fail,fail,inline_code,fail,,False
+cruxeval_0.8,dim4_cruxeval_206,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,h e l l o w o r l d!,True
+cruxeval_0.8,dim4_cruxeval_215,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_217,gpt-5.4,gpt-5.4,0.8,pass,pass,block,fail,,True
+cruxeval_0.8,dim4_cruxeval_219,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_22,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_221,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_228,gpt-5.4,gpt-5.4,0.8,pass,pass,block,fail,,True
+cruxeval_0.8,dim4_cruxeval_231,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,2,True
+cruxeval_0.8,dim4_cruxeval_232,qwen3.5-plus,qwen3.5-plus,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_248,claude-opus-4-6,claude-opus-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_282,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,fail,1,False
+cruxeval_0.8,dim4_cruxeval_303,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_320,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_322,kimi-k2.5,kimi-k2.5,0.8,fail,fail,none,fail,,False
+cruxeval_0.8,dim4_cruxeval_323,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,fail,,False
+cruxeval_0.8,dim4_cruxeval_325,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,True,True
+cruxeval_0.8,dim4_cruxeval_326,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,0,True
+cruxeval_0.8,dim4_cruxeval_339,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_35,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_350,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,"[1, 2, 3]",True
+cruxeval_0.8,dim4_cruxeval_351,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_355,kimi-k2.5,kimi-k2.5,0.8,fail,fail,inline_code,fail,,False
+cruxeval_0.8,dim4_cruxeval_363,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_370,glm-5,glm-5,0.8,fail,fail,none,pass,False,True
+cruxeval_0.8,dim4_cruxeval_371,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,0,True
+cruxeval_0.8,dim4_cruxeval_38,kimi-k2.5,kimi-k2.5,0.8,fail,fail,inline_code,fail,,False
+cruxeval_0.8,dim4_cruxeval_383,gpt-5.4,gpt-5.4,0.8,fail,fail,block,pass,ellod!p.nkyp.exa.bi.y.hain,True
+cruxeval_0.8,dim4_cruxeval_407,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,0,True
+cruxeval_0.8,dim4_cruxeval_409,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_41,gpt-5.4,gpt-5.4,0.8,fail,fail,none,pass,"[58, 92, 21]",True
+cruxeval_0.8,dim4_cruxeval_412,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,8,True
+cruxeval_0.8,dim4_cruxeval_440,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,no,True
+cruxeval_0.8,dim4_cruxeval_45,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_462,gpt-5.4,gpt-5.4,0.8,fail,fail,block,pass,oooooooo,True
+cruxeval_0.8,dim4_cruxeval_488,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_500,claude-opus-4-6,claude-opus-4-6,0.8,fail,fail,block_last_line,fail,,False
+cruxeval_0.8,dim4_cruxeval_504,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_505,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_513,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,fail,,False
+cruxeval_0.8,dim4_cruxeval_525,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_526,glm-5,glm-5,0.8,fail,fail,none,pass,rpg,True
+cruxeval_0.8,dim4_cruxeval_533,glm-5,glm-5,0.8,fail,fail,none,pass,0,True
+cruxeval_0.8,dim4_cruxeval_536,claude-opus-4-6,claude-opus-4-6,0.8,fail,fail,inline_code,fail,,False
+cruxeval_0.8,dim4_cruxeval_541,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,True,True
+cruxeval_0.8,dim4_cruxeval_564,kimi-k2.5,kimi-k2.5,0.8,fail,fail,none,fail,,False
+cruxeval_0.8,dim4_cruxeval_579,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_580,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_608,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_612,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_612,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,"{'a': 42, 'b': 1337, 'c': -1, 'd': 5}",True
+cruxeval_0.8,dim4_cruxeval_623,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_626,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,baba,True
+cruxeval_0.8,dim4_cruxeval_634,kimi-k2.5,kimi-k2.5,0.8,fail,fail,none,fail,,False
+cruxeval_0.8,dim4_cruxeval_641,gpt-5.4,gpt-5.4,0.8,fail,fail,block,pass,False,True
+cruxeval_0.8,dim4_cruxeval_643,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,damdrodM,True
+cruxeval_0.8,dim4_cruxeval_646,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,"aBc, ,SzY",True
+cruxeval_0.8,dim4_cruxeval_655,claude-opus-4-6,claude-opus-4-6,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_660,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,4,True
+cruxeval_0.8,dim4_cruxeval_669,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_67,claude-opus-4-6,claude-opus-4-6,0.8,fail,fail,inline_code,fail,,False
+cruxeval_0.8,dim4_cruxeval_68,kimi-k2.5,kimi-k2.5,0.8,fail,fail,inline_code,fail,,False
+cruxeval_0.8,dim4_cruxeval_692,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_704,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,.,True
+cruxeval_0.8,dim4_cruxeval_704,glm-5,glm-5,0.8,fail,fail,none,pass,.,True
+cruxeval_0.8,dim4_cruxeval_709,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,loved a,True
+cruxeval_0.8,dim4_cruxeval_713,claude-opus-4-6,claude-opus-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_713,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,True,True
+cruxeval_0.8,dim4_cruxeval_731,claude-opus-4-6,claude-opus-4-6,0.8,fail,fail,block_last_line,fail,,False
+cruxeval_0.8,dim4_cruxeval_733,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,n,True
+cruxeval_0.8,dim4_cruxeval_742,glm-5,glm-5,0.8,fail,fail,none,pass,False,True
+cruxeval_0.8,dim4_cruxeval_745,kimi-k2.5,kimi-k2.5,0.8,fail,fail,inline_code,fail,,False
+cruxeval_0.8,dim4_cruxeval_752,claude-opus-4-6,claude-opus-4-6,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_758,qwen3.5-plus,qwen3.5-plus,0.8,fail,fail,none,pass,False,True
+cruxeval_0.8,dim4_cruxeval_759,MiniMax-M2.7,MiniMax-M2.7,0.8,fail,fail,none,pass,[],True
+cruxeval_0.8,dim4_cruxeval_759,claude-opus-4-6,claude-opus-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_76,claude-sonnet-4-6,claude-sonnet-4-6,0.8,fail,pass,label,fail,,True
+cruxeval_0.8,dim4_cruxeval_77,kimi-k2.5,kimi-k2.5,0.8,fail,fail,inline_code,fail,,False
+cruxeval_0.8,dim4_cruxeval_771,kimi-k2.5,kimi-k2.5,0.8,fail,pass,inline_code,fail,,True
+cruxeval_0.8,dim4_cruxeval_783,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,pass,0,True
+cruxeval_0.8,dim4_cruxeval_788,Qwen3-Max,Qwen3-Max,0.8,fail,fail,none,fail,,False
+cruxeval_0.8,dim4_cruxeval_788,gpt-5.4,gpt-5.4,0.8,pass,pass,block,fail,,True
+cruxeval_0.8,dim4_cruxeval_82,glm-5,glm-5,0.8,fail,fail,none,pass,BFS,True
+cruxeval_0.8,dim4_cruxeval_84,kimi-k2.5,kimi-k2.5,0.8,fail,fail,inline_code,fail,,False

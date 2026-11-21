@@ -1,0 +1,13 @@
+sample,cells,capped,share,wilson_lo,wilson_hi,bars_cleared
+bcb,97,2,0.0206,0.0057,0.0721,False
+bcb_algo2,97,18,0.1856,0.1207,0.2744,True
+bcb_completion,97,16,0.1649,0.1042,0.2513,True
+bcb_ds,97,4,0.0412,0.0162,0.1013,False
+bcb_v014,97,2,0.0206,0.0057,0.0721,False
+cruxeval,97,0,0.0,0.0,0.0381,False
+ds1000,97,0,0.0,0.0,0.0381,False
+hex_python,97,0,0.0,0.0,0.0381,False
+humaneval,97,0,0.0,0.0,0.0381,False
+lcb,97,22,0.2268,0.1548,0.3196,True
+mbpp,97,2,0.0206,0.0057,0.0721,False
+mbpp_completion,97,0,0.0,0.0,0.0381,False
