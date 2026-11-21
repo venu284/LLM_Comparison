@@ -371,3 +371,93 @@ def identical_frame(differing_cells: list[dict]) -> pd.DataFrame:
     """Amendment 3 frame, sorted by (bcb_task, other_task, model)."""
     return (pd.DataFrame(differing_cells).sort_values(["bcb_task", "other_task", "model"])
             .reset_index(drop=True))
+
+
+# --------------------------------------------------------------------------- checkpoint 3: final labels (step 10)
+# Labels written after 2c and the mapping test (Amendment 2), from the §3.2 rules applied to the
+# main samples plus decision D, and the user's decisions at the checkpoint 2 reviews
+# (2026-11-21). Evidence: docs/research/S1.7_audit.md ("Checkpoint 3: final labels") and the
+# per-sample rows in router/experiments/out/s1_7_interim_*.csv and s1_7_mechanisms_*.csv.
+CRITERIA_COMMIT = "feadbed"      # last criteria amendment (Amendment 10) before any label
+CONFIRMED, CLEARED, UNDECIDED = "confirmed defect", "cleared", "undecided"
+NOT_SUSPECTED = ("he_completion",)       # eligible, never flagged (§5.2): stays in every view
+LCB_SUBSET_PROPERTY = "platform"         # Amendment 7: LiveCodeBench `platform`, non-score
+LCB_EXCLUDED_PLATFORM = "leetcode"
+
+_EV = "docs/research/S1.7_audit.md"
+LABELS: dict[str, dict] = {
+    # unit: family, or a part of one fixed by an approved subset rule (§7)
+    **{f: {"family": f, "label": CONFIRMED, "mechanisms": ["toolchain"], "sample": f,
+           "interim": "s1_7_interim_2a.csv", "mechanism_rows": "s1_7_mechanisms_2a.csv",
+           "evidence": f"{_EV}: 2a §3, decision D (D-BCB-LIB)"}
+       for f in ("bcb", "bcb_v014", "bcb_algo2", "bcb_completion", "bcb_ds")},
+    "ds1000": {"family": "ds1000", "label": CONFIRMED, "mechanisms": ["extraction", "toolchain"],
+               "sample": "ds1000", "interim": "s1_7_interim_2a.csv",
+               "mechanism_rows": "s1_7_mechanisms_2a.csv",
+               "evidence": f"{_EV}: 2a §3, decision D (D-DS-LIB)"},
+    "lcb": {"family": "lcb", "part": "LeetCode-platform tasks (subset rule, Amendment 7)",
+            "label": CONFIRMED, "mechanisms": ["harness_timeout", "test_version"], "sample": "lcb",
+            "interim": "s1_7_interim_2a.csv", "mechanism_rows": "s1_7_mechanisms_2a.csv",
+            "evidence": f"{_EV}: 2a §3 (R-LCB-CALL), decision D (D-LCB-PUBLIC); subset rule "
+                        "accepted by the user 2026-11-21"},
+    "lcb_kept": {"family": "lcb", "part": "AtCoder and Codeforces tasks (subset rule, Amendment 7)",
+                 "label": UNDECIDED, "reason": "capped share (Amendment 6)",
+                 "mechanisms": ["test_version"], "sample": "lcb_kept",
+                 "interim": "s1_7_interim_lcbk.csv", "mechanism_rows": "s1_7_mechanisms_lcbk.csv",
+                 "evidence": f"{_EV}: 2a remainder §1"},
+    "mbpp": {"family": "mbpp", "label": CLEARED, "mechanisms": [], "sample": "mbpp",
+             "interim": "s1_7_interim_2a.csv", "mechanism_rows": "s1_7_mechanisms_2a.csv",
+             "evidence": f"{_EV}: 2a §2"},
+    "hex_python": {"family": "hex_python", "label": CLEARED, "mechanisms": ["release_correct"],
+                   "sample": "hex_python", "interim": "s1_7_interim_2a.csv",
+                   "mechanism_rows": "s1_7_mechanisms_2a.csv",
+                   "evidence": f"{_EV}: decision D (D-EXTRACT, Python/50; reviewer read the "
+                               "response, 2026-11-21)"},
+    "cruxeval": {"family": "cruxeval", "label": CLEARED, "mechanisms": ["release_correct"],
+                 "sample": "cruxeval", "interim": "s1_7_interim_2a.csv",
+                 "mechanism_rows": "s1_7_mechanisms_2a.csv",
+                 "evidence": f"{_EV}: decision D (D-EXTRACT, sample_505; reviewer read the "
+                             "response, 2026-11-21); strict success rule (CLAIMS A3)",
+                 "note": "cleared under the strict rule (released score 1.0, CLAIMS A3). Against "
+                         "the 0.8 sensitivity reading, main-sample agreement is 62/97 under "
+                         "Amendment 8 (s1_7_cruxeval_a2.csv), which would not clear"},
+    "humaneval": {"family": "humaneval", "label": UNDECIDED,
+                  "reason": "a = 0.948 < 0.95; base vs HumanEval+ unresolved (user 2026-11-21)",
+                  "mechanisms": ["test_version"], "sample": "humaneval",
+                  "interim": "s1_7_interim_2a.csv", "mechanism_rows": "s1_7_mechanisms_2a.csv",
+                  "evidence": f"{_EV}: 2a §3, decision D (D-HE-BASE)"},
+    "mbpp_completion": {"family": "mbpp_completion", "label": UNDECIDED,
+                        "reason": "1 unexplained cell (u > 0)", "mechanisms": ["release_correct"],
+                        "sample": "mbpp_completion", "interim": "s1_7_interim_2a.csv",
+                        "mechanism_rows": "s1_7_mechanisms_2a.csv",
+                        "evidence": f"{_EV}: decision D (task 599 unexplained)"},
+    **{f: {"family": f, "label": CONFIRMED, "mechanisms": ["wrong_field"], "sample": f,
+           "interim": "s1_7_interim_2b.csv", "mechanism_rows": "s1_7_mechanisms_2b.csv",
+           "evidence": f"{_EV}: 2b §3 (user decision F for multiple_*)"}
+       for f in ("hex_cpp", "hex_go", "hex_java", "hex_js", "multiple_rs", "multiple_ts")},
+    "swebench": {"family": "swebench", "label": UNDECIDED, "reason": "capped share (Amendment 6)",
+                 "mechanisms": [], "sample": "swebench", "interim": "s1_7_interim_2c.csv",
+                 "mechanism_rows": "s1_7_mechanisms_2c.csv",
+                 "evidence": f"{_EV}: 2c §3 (85 of 97 answers carry no patch)"},
+    **{f: {"family": f, "label": UNDECIDED, "eligible": False,
+           "reason": "reading only (§3.3); ineligible since S1.4; affects no view",
+           "mechanisms": [], "sample": None, "interim": None, "mechanism_rows": None,
+           "evidence": f"{_EV}: 2a §7 (streams 126-128)"}
+       for f in ("lcb_testgen", "he_testgen", "mbpp_testgen")},
+}
+
+
+def lcb_platforms(sources_dir: Path | None = None) -> dict[str, str]:
+    """LiveCodeBench `question_id` -> `platform`, from the pinned text extract (Amendment 7)."""
+    from router.settings import EXTERNAL_DIR
+    path = (sources_dir or EXTERNAL_DIR / "sources") / "livecodebench.jsonl"
+    rows = (json.loads(l) for l in path.read_text().splitlines() if l.strip())
+    return {r["question_id"]: r[LCB_SUBSET_PROPERTY] for r in rows}
+
+
+def label_unit(task_id: str, family: str, leetcode: set[str]) -> str | None:
+    """The LABELS key that governs a task: its family, `lcb` split by the subset rule, or None
+    for a family that was never suspected."""
+    if family == "lcb":
+        return "lcb" if task_id in leetcode else "lcb_kept"
+    return family if family in LABELS else None
