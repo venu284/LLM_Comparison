@@ -53,7 +53,7 @@ SCI_LIBS = {"matplotlib", "sklearn", "seaborn", "scipy", "wordcloud"}
 RELEASE_SIDE = {"extraction", "toolchain", "harness_timeout", "truncation", "test_version", "wrong_field"}
 MAIN = ("bcb", "bcb_v014", "bcb_algo2", "bcb_completion", "bcb_ds", "ds1000", "humaneval",
         "hex_python", "mbpp", "mbpp_completion", "lcb", "cruxeval",
-        "hex_cpp", "hex_go", "hex_java", "hex_js", "multiple_rs", "multiple_ts")
+        "hex_cpp", "hex_go", "hex_java", "hex_js", "multiple_rs", "multiple_ts", "lcb_kept")
 MX_HEX = ("hex_cpp", "hex_go", "hex_java", "hex_js")
 MX_CONST = ("multiple_rs", "multiple_ts")
 
@@ -62,8 +62,9 @@ def _runs(part):
     return {json.loads(l)["run_id"]: json.loads(l) for l in open(OUT / f"s1_7_runs_{part}.jsonl")}
 
 
-def assign() -> pd.DataFrame:
-    parts = [("bcb", "s1_7_cells_bcb.csv"), ("py", "s1_7_cells_py.csv"), ("mx", "s1_7_cells_mx.csv")]
+def assign(apply_d: bool = True) -> pd.DataFrame:
+    parts = [("bcb", "s1_7_cells_bcb.csv"), ("py", "s1_7_cells_py.csv"), ("mx", "s1_7_cells_mx.csv"),
+             ("lcbk", "s1_7_cells_lcbk.csv")]
     c = pd.concat([pd.read_csv(OUT / f).assign(part=p) for p, f in parts if (OUT / f).exists()],
                   ignore_index=True)
     c = c[c.key_role == "graded"].copy()
@@ -72,6 +73,8 @@ def assign() -> pd.DataFrame:
               .set_index(["task_id", "key"])["probe_agrees_release"].to_dict()
               for n in ("lcb_stdin", "ds_raw", "block_sci")}
     runs = _runs("py")
+    if (OUT / "s1_7_runs_lcbk.jsonl").exists():
+        runs.update(_runs("lcbk"))
     he_base = (c[(c.family == "humaneval") & (c.test_version == "base")]
                .drop_duplicates(["task_id", "key"]).set_index(["task_id", "key"])["rerun"].to_dict())
 
@@ -103,7 +106,27 @@ def assign() -> pd.DataFrame:
         return "unexplained"
 
     c["mechanism"] = [mech(r) for r in c.itertuples()]
+    d_file = OUT / "s1_7_d_reassignments.csv"
+    if apply_d and d_file.exists():          # decision D (s1_7_decision_d): unexplained cells only
+        d = pd.read_csv(d_file)
+        d = d[d["to"] != "unexplained"].set_index(["sample", "task_id", "key"])["to"].to_dict()
+        c["mechanism"] = [d.get((r.sample, r.task_id, r.key), r.mechanism) if r.mechanism == "unexplained"
+                          else r.mechanism for r in c.itertuples()]
     return c
+
+
+_NCHARS = None
+
+
+def _capped(s: pd.DataFrame) -> tuple[int, float]:
+    """Amendment 6: capped cells (stored text exactly 2,000 characters) and the Wilson lower
+    bound of their share among the drawn cells."""
+    global _NCHARS
+    if _NCHARS is None:
+        from router.data import audit
+        _NCHARS = audit.response_stats().set_index(["task_id", "key"])["n_chars"]
+    k = int(sum(_NCHARS.get((t, key), -1) == 2000 for t, key in zip(s.task_id, s.key)))
+    return k, wilson(k, len(s))[0]
 
 
 def interim(c: pd.DataFrame) -> pd.DataFrame:
@@ -118,32 +141,38 @@ def interim(c: pd.DataFrame) -> pd.DataFrame:
         lo_r = wilson(d, n)[0]
         harness_err = int((~s.rerun.isin(["pass", "fail"]) | (s.mechanism == "our_harness")).sum())
         drawn = len(s)
+        capped, cap_lo = _capped(s)
         if harness_err > 0.10 * drawn:
             label = "undecided (harness, §3.4)"
         elif lo_r >= 0.05:
             label = "confirmed defect"
         elif n and agree / n >= 0.95 and u == 0:
-            label = "cleared"
+            label = "cleared" if cap_lo < 0.05 else "undecided (capped, Amendment 6)"
         else:
             label = "undecided"
         mech = s[ok & s.mechanism.notna()].mechanism.value_counts().to_dict()
         rows.append({"family": fam, "drawn": drawn, "n_exec": n, "agree": agree,
                      "a": round(agree / n, 4) if n else None, "d": d,
                      "r": round(d / n, 4) if n else None, "r_wilson_lo": lo_r, "u": u,
-                     "our_harness_or_error": harness_err, "mechanisms": mech,
+                     "our_harness_or_error": harness_err, "capped": capped, "capped_wilson_lo": cap_lo,
+                     "mechanisms": mech,
                      "interim_label": label})
     return pd.DataFrame(rows)
 
 
 def main():
     c = assign()
-    a2 = c[c.part != "mx"]
+    a2 = c[c.part.isin(["bcb", "py"])]
     a2.to_csv(OUT / "s1_7_mechanisms_2a.csv", index=False, lineterminator="\n")
     interim(a2).to_csv(OUT / "s1_7_interim_2a.csv", index=False, lineterminator="\n")
     b = c[c.part == "mx"]
     if len(b):
         b.to_csv(OUT / "s1_7_mechanisms_2b.csv", index=False, lineterminator="\n")
         interim(b).to_csv(OUT / "s1_7_interim_2b.csv", index=False, lineterminator="\n")
+    k = c[c.part == "lcbk"]
+    if len(k):
+        k.to_csv(OUT / "s1_7_mechanisms_lcbk.csv", index=False, lineterminator="\n")
+        interim(k).to_csv(OUT / "s1_7_interim_lcbk.csv", index=False, lineterminator="\n")
     t = interim(c)
     pd.set_option("display.width", 250)
     print(t.to_string(index=False))

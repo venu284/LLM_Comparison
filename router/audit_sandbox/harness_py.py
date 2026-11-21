@@ -88,6 +88,14 @@ elif p["family_kind"] == "ds1000":
             code = text
     ctx = p["code_context"]
     src = ctx + f"\ncode = {code!r}\ntest_execution(code)\n"
+    if probe == "block_libs":                  # decision D probe: these packages cannot be imported
+        src = ("import sys, importlib.abc\n"
+               f"_B = set({sorted(p['block'])!r})\n"
+               "class _Block(importlib.abc.MetaPathFinder):\n"
+               "    def find_spec(self, name, path=None, target=None):\n"
+               "        if name.split('.')[0] in _B:\n"
+               "            raise ModuleNotFoundError('probe: ' + name + ' blocked')\n"
+               "sys.meta_path.insert(0, _Block())\n") + src
     if "test_string(" in ctx:
         src += "test_string(code)\n"
     r = run_py(src, timeout=p.get("timeout_s", 60))

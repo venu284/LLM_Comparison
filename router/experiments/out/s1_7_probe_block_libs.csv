@@ -1,0 +1,17 @@
+task_id,key,upstream,blocked,probe,share
+dim1_bcb_BigCodeBench/166,claude-opus-4-6,BigCodeBench/166,holidays,fail,holidays:0.000
+dim1_bcb_BigCodeBench/340,MiniMax-M2.7,BigCodeBench/340,blake3,fail,blake3:0.000
+dim1_bcb_BigCodeBench/431,glm-5,BigCodeBench/431,cv2,fail,cv2:0.000
+dim1_bcb_BigCodeBench/500,gpt-5.4,BigCodeBench/500,xlwt,fail,xlwt:0.000
+dim1_bcb_v014_BigCodeBench/21,glm-5,BigCodeBench/21,psutil,fail,psutil:0.000
+dim1_bcb_v014_BigCodeBench/21,kimi-k2.5,BigCodeBench/21,psutil,fail,psutil:0.000
+dim1_bcb_v014_BigCodeBench/78,glm-5,BigCodeBench/78,django,fail,django:0.016
+dim1_bcb_v014_BigCodeBench/80,gpt-5.4,BigCodeBench/80,flask,fail,flask:0.000
+dim2_bcb_algo2_BigCodeBench/21,glm-5,BigCodeBench/21,psutil,fail,psutil:0.000
+dim2_bcb_algo2_BigCodeBench/21,gpt-5.4,BigCodeBench/21,psutil,fail,psutil:0.000
+dim2_bcb_algo2_BigCodeBench/26,glm-5,BigCodeBench/26,cryptography,fail,cryptography:0.000
+dim4_bcb_completion_BigCodeBench/17,claude-sonnet-4-6,BigCodeBench/17,psutil,fail,psutil:0.000
+dim4_bcb_completion_BigCodeBench/76,MiniMax-M2.7,BigCodeBench/76,django,fail,django:0.016
+dim4_bcb_completion_BigCodeBench/79,claude-opus-4-6,BigCodeBench/79,django,fail,django:0.016
+dim4_bcb_completion_BigCodeBench/81,glm-5,BigCodeBench/81,"flask,flask_restful",fail,"flask:0.000,flask_restful:0.000"
+dim4_bcb_completion_BigCodeBench/81,gpt-5.4,BigCodeBench/81,"flask,flask_restful",fail,"flask:0.000,flask_restful:0.000"

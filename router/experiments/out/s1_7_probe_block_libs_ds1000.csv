@@ -1,0 +1,7 @@
+task_id,key,upstream,blocked,probe
+dim6_ds1000_552,claude-opus-4-6,ds1000::552,matplotlib,fail
+dim6_ds1000_562,gpt-5.4,ds1000::562,matplotlib,fail
+dim6_ds1000_562,kimi-k2.5,ds1000::562,matplotlib,fail
+dim6_ds1000_608,claude-opus-4-6,ds1000::608,matplotlib,fail
+dim6_ds1000_692,kimi-k2.5,ds1000::692,tensorflow,fail
+dim6_ds1000_957,claude-sonnet-4-6,ds1000::957,torch,fail

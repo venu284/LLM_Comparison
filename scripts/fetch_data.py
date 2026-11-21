@@ -189,6 +189,16 @@ EXTRACTS: dict[str, Extract] = {
         },
         ("language", "name", "prompt", "tests", "stop_tokens"),
     ),
+    # S1.7 Amendment 7: tests of the stream-140 `lcb` kept-subset tasks not already in
+    # livecodebench_tests (ids recorded from the draw, which uses no test field).
+    "livecodebench_tests_140": Extract(
+        "livecodebench/code_generation_lite", "0fe84c3912ea0c4d4a78037083943e8f0c4dd505",
+        _LCB_FILES,
+        ("question_id", "platform", "starter_code", "public_test_cases", "private_test_cases",
+         "metadata"),
+        keep=("question_id", tuple(
+            (REPO_ROOT / "router/audit_sandbox/lcb_kept140_question_ids.txt").read_text().split())),
+    ),
     # HumanEval-X in four languages (Python is fully covered by tasks.jsonl).
     "humaneval_x": Extract(
         "THUDM/humaneval-x", "62c78627f3072a1454fa0cb0184737cafe5e4198",
@@ -230,7 +240,7 @@ EXTRACTS: dict[str, Extract] = {
 AUDIT_EXTRACTS: frozenset[str] = frozenset({"bigcodebench_tests", "ds1000_tests", "humanevalplus_tests",
                                           "humaneval_x_python_tests", "mbppplus_tests", "cruxeval_tests",
                                           "livecodebench_tests", "humaneval_x_tests", "humaneval_x_go_tests",
-                                          "multipl_e_tests"})
+                                          "multipl_e_tests", "livecodebench_tests_140"})
 
 CHECKSUMS_NAME = "CHECKSUMS"
 COMMITTED_CHECKSUMS = REPO_ROOT / "external" / CHECKSUMS_NAME

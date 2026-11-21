@@ -23,14 +23,16 @@ from bigcodebench.sanitize import sanitize
 
 p = json.load(open("cell.json"))
 out = {}
-if p.get("probe") == "block_sci":
+if p.get("probe") in ("block_sci", "block_libs"):
     # Mechanism probe (S1.7 §1.1): the task's own code cannot import these libraries. The block
     # is installed after bigcodebench's reliability_guard (which itself imports matplotlib).
     import importlib.abc
     import bigcodebench.eval as _ev
 
     class _Block(importlib.abc.MetaPathFinder):
-        BLOCKED = {"matplotlib", "sklearn", "seaborn", "scipy", "wordcloud"}
+        # block_libs (decision D investigation): the payload names the third-party packages.
+        BLOCKED = (set(p["block"]) if p.get("probe") == "block_libs"
+                   else {"matplotlib", "sklearn", "seaborn", "scipy", "wordcloud"})
 
         def find_spec(self, name, path=None, target=None):
             if name.split(".")[0] in self.BLOCKED:

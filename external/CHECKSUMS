@@ -15,6 +15,7 @@
 # extract: humaneval_x_tests <- THUDM/humaneval-x@62c78627f3072a1454fa0cb0184737cafe5e4198 files=data/cpp/data/humaneval.jsonl,data/java/data/humaneval.jsonl,data/js/data/humaneval.jsonl fields=task_id,prompt,declaration,canonical_solution,test
 # extract: humaneval_x_go_tests <- THUDM/humaneval-x@62c78627f3072a1454fa0cb0184737cafe5e4198 files=data/go/data/humaneval.jsonl fields=task_id,prompt,import,declaration,canonical_solution,test,test_setup
 # extract: multipl_e_tests <- nuprl/MultiPL-E@28441b6024e71d4a1c1c0f6bf171c935cd5a43f2 files=humaneval-rs/test-00000-of-00001.parquet,humaneval-ts/test-00000-of-00001.parquet fields=language,name,prompt,tests,stop_tokens
+# extract: livecodebench_tests_140 <- livecodebench/code_generation_lite@0fe84c3912ea0c4d4a78037083943e8f0c4dd505 files=test.jsonl,test2.jsonl,test3.jsonl,test4.jsonl,test5.jsonl,test6.jsonl fields=question_id,platform,starter_code,public_test_cases,private_test_cases,metadata keep=question_id:75:f708cc872d4e3ac8
 # extract: humaneval_x <- THUDM/humaneval-x@62c78627f3072a1454fa0cb0184737cafe5e4198 files=data/cpp/data/humaneval.jsonl,data/go/data/humaneval.jsonl,data/java/data/humaneval.jsonl,data/js/data/humaneval.jsonl fields=task_id,prompt
 # extract: humanevalplus <- evalplus/humanevalplus@d32357cf319e50e9c8d8dab5ea876c72b0fd321b files=data/test-00000-of-00001-5973903632b82d40.parquet fields=task_id,prompt
 # extract: multipl_e <- nuprl/MultiPL-E@28441b6024e71d4a1c1c0f6bf171c935cd5a43f2 files=humaneval-rs/test-00000-of-00001.parquet,humaneval-ts/test-00000-of-00001.parquet fields=language,name,prompt
@@ -220,6 +221,7 @@ e9fe529ee3b47b479e31a4b5c85069520a17fe0fb1c894ce3f78409ccd970d3b  sources/humane
 8778f6f31e78d1630709eb36e296fe4705466e6aa2b50dea7db67959ae0ef158  sources/humanevalplus_tests.jsonl
 7395649e7cf79897ac102ea7c006c22da1d8e56e8da6dd9f72346473d7b8ee00  sources/livecodebench.jsonl
 457f14fba6bb7e417ae37196990307d5ab7f3ab51ccec592dfbe76ff058279ca  sources/livecodebench_tests.jsonl
+503e889e6e511125bf203bc098f74c21c3111b28b9f67cd8a1903e0e03e817e3  sources/livecodebench_tests_140.jsonl
 b006180194f2d9d470170f0c49dc67b06fe3e1e313e95eeb334193a25fd8cb27  sources/mbppplus_tests.jsonl
 a7678241127d5e56e507ac0e907e63bd89db14be013a7d3c0dab40a2060c0205  sources/multipl_e.jsonl
 e8adaf1c09fd81ace490735e3f95bb0714c866057e62f312ce06f50b2253ec8b  sources/multipl_e_tests.jsonl

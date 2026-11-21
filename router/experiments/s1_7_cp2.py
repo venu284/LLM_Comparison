@@ -212,6 +212,8 @@ class Py:
                    else str(r["metadata.problem_id"]): r for r in _jsonl(SOURCES / "ds1000_tests.jsonl")}
         self.cx = _index("cruxeval_tests", "id")
         self.lcb = _index("livecodebench_tests", "question_id") if (SOURCES / "livecodebench_tests.jsonl").exists() else {}
+        if (SOURCES / "livecodebench_tests_140.jsonl").exists():         # Amendment 7
+            self.lcb.update(_index("livecodebench_tests_140", "question_id"))
 
     @staticmethod
     def fam_up(task_id, family):
@@ -607,6 +609,12 @@ def main(part: str) -> None:
         run_part("bcb", bcb_samples(long, stats), Bcb(), long)
     elif part == "py":
         run_part("py", py_samples(long, stats), Py(), long)
+    elif part == "lcbk":                                             # Amendment 7
+        plat = {r["question_id"]: r["platform"] for r in _jsonl(SOURCES / "livecodebench.jsonl")}
+        lt = long.loc[long.family == "lcb", "task_id"].unique()
+        kept = [t for t in lt if plat.get(upstream_id(t, "lcb")) != "leetcode"]
+        s = audit.draw(audit.frame(long, stats, kept), 140).assign(sample="lcb_kept")
+        run_part("lcbk", _with_keys(s), Py(), long)
     elif part == "mx":
         s, mx = mx_samples(long, stats), Mx()
         s.drop(columns=["cell_id"]).to_csv(OUT / "s1_7_samples_mx.csv", index=False, lineterminator="\n")
@@ -788,3 +796,20 @@ def cruxeval_a2_fallback() -> pd.DataFrame:
 
 if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "cruxeval_a2_fallback":
     cruxeval_a2_fallback()
+
+
+def probe_bcb_libs(cells: list[tuple[str, str, str, list[str]]]) -> pd.DataFrame:
+    """Decision D probe: for each (task_id, key, upstream, libs), the task's code cannot import
+    `libs` (third-party packages with a release pass share <= 2%). Recorded per cell."""
+    resp = load_responses(pd.DataFrame([(t, k) for t, k, _, _ in cells], columns=["task_id", "key"]))
+    b, cache = Bcb(), Cache(OUT / "s1_7_runs_bcb.jsonl")
+
+    def gt(u):
+        r = cache.get(f"canonical|{u}|None")
+        return (r["cell"] or {}).get("elapsed") if r and r["status"] == "pass" else None
+
+    rid = lambda t, k, libs: f"probe:block_libs:{','.join(sorted(libs))}|{t}|{k}"
+    run_many([(rid(t, k, libs), {**b.payload(u, resp[(t, k)], gt(u)), "probe": "block_libs", "block": libs})
+              for t, k, u, libs in cells], cache, "bcb", BCB_SPEC)
+    return pd.DataFrame([{"task_id": t, "key": k, "upstream": u, "blocked": ",".join(sorted(libs)),
+                          "probe": cache.get(rid(t, k, libs))["status"]} for t, k, u, libs in cells])
