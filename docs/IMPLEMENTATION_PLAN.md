@@ -15,7 +15,7 @@
 | Field | Value |
 |---|---|
 | Current stage | **S1 — Validate data** (§4). Pre-S0 and S0 done; `docs/CLAIMS.md` signed off 2026-11-20 |
-| Next action | **S1 gate passed (2026-11-21).** Next: S2 (evaluation infrastructure and baselines) on the S1.7 views, with S1.8 (LLMRouterBench) as a hedge in parallel, because a DP1b failure on CodeRouterBench is now likely. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Next action | **S1 gate passed (2026-11-21).** Next: S2 (evaluation infrastructure and baselines) on the S1.7 views. Whether to start S1.8 (LLMRouterBench) early is open with the user (see the 2026-11-21 log: the earlier "DP1b failure likely" reason was wrong). `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
 | Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0 · Write-up: Report 8 |
 | Last updated | 2026-11-20 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
@@ -773,11 +773,13 @@ edit them.
         - the two single-cell reassignments were read and confirmed;
         - the views were recounted.
       - 428 tests pass.
-- [~] S1.8 `data/llmrouterbench.py` [M1.7]: code subsets; drop zero-cost models from economic
+- [ ] S1.8 `data/llmrouterbench.py` [M1.7]: code subsets; drop zero-cost models from economic
       metrics. Validate the loader early, so it is ready if DP1b makes it the primary corpus.
-      **Started 2026-11-21 as a hedge (user):** S1.7's headline makes a DP1b failure on
-      CodeRouterBench likely. In-sample DimensionBest is +1 task, the oracle gain is mostly
-      CRUXEval format, and 90.8% of tasks have no verifier signal.
+      Whether to start it early is open with the user (2026-11-21). S1.7 does **not** point to a
+      DP1b failure: DP1b's bound takes oracle decisions on the 90.8% of headline tasks with no
+      verifier signal, so it sits near the full oracle. The case for starting early is breadth.
+      The headline is four families, 62% CRUXEval, and its headroom is mostly CRUXEval answer
+      format.
 - [x] S1.9 `data/phase5.py` [M1.8]: read-only loader (R5), including the stored raw responses
       (324 non-empty of 325) read from the database without writing to it. **Done 2026-11-20 (A2,
       merged `e2a572f`):** CSV refused on a hash mismatch; one read-only fetch (connection option,
@@ -1893,6 +1895,6 @@ Two further reviews were checked against the data; all fixes approved by the use
   - The oracle's +14.3-point headroom on the headline is 91% CRUXEval (+3.3 under the 0.8
     sensitivity).
   - 90.8% of headline tasks have no visible-test signal.
-  - A DP1b failure on CodeRouterBench is therefore likely.
-- **User decision:** start S1.8 (the LLMRouterBench loader) now as a hedge, alongside S2.
-- **Next:** the S1.8 brief, then S2.
+  - DP1b is not indicated either way. Its bound takes oracle decisions on the no-signal cells, so it sits near the full oracle and is more likely to pass than fail. The open question is whether a learned router can approach it (S4–S5).
+- **Correction (reviewer, same day):** S1.8 was first recorded as started because "a DP1b failure is likely". That reasoning was wrong (see above). S1.8 stays `[ ]`, and starting it early for breadth is put back to the user.
+- **Next:** S2; the user decides whether S1.8 starts now.
