@@ -1,0 +1,76 @@
+{
+  "hex_cpp": {
+    "failures": [
+      {
+        "expected": "fail",
+        "got": "pass",
+        "run": "control:negative|hex_cpp::CPP/23"
+      }
+    ],
+    "share": 0.0132,
+    "tasks": 76,
+    "tasks_with_failed_control": 1
+  },
+  "hex_go": {
+    "failures": [
+      {
+        "expected": "pass",
+        "got": "fail",
+        "run": "canonical|hex_go::Go/158|None"
+      },
+      {
+        "expected": "pass",
+        "got": "fail",
+        "run": "control:synthetic_full_main|hex_go::Go/158"
+      }
+    ],
+    "share": 0.0123,
+    "tasks": 81,
+    "tasks_with_failed_control": 1
+  },
+  "hex_java": {
+    "failures": [],
+    "share": 0.0,
+    "tasks": 74,
+    "tasks_with_failed_control": 0
+  },
+  "hex_js": {
+    "failures": [
+      {
+        "expected": "fail",
+        "got": "pass",
+        "run": "control:negative|hex_js::JavaScript/119"
+      },
+      {
+        "expected": "pass",
+        "got": "fail",
+        "run": "canonical|hex_js::JavaScript/162|None"
+      },
+      {
+        "expected": "pass",
+        "got": "fail",
+        "run": "control:synthetic_full_main|hex_js::JavaScript/162"
+      },
+      {
+        "expected": "fail",
+        "got": "pass",
+        "run": "control:negative|hex_js::JavaScript/32"
+      }
+    ],
+    "share": 0.0429,
+    "tasks": 70,
+    "tasks_with_failed_control": 3
+  },
+  "multiple_rs": {
+    "failures": [],
+    "share": 0.0,
+    "tasks": 78,
+    "tasks_with_failed_control": 0
+  },
+  "multiple_ts": {
+    "failures": [],
+    "share": 0.0,
+    "tasks": 67,
+    "tasks_with_failed_control": 0
+  }
+}
