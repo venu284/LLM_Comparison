@@ -16,8 +16,10 @@ Rules (each with its evidence; written after the cell rows, as investigation):
                 test is a released pass (0 of 147): `test_version` (public tests only).
   D-HE-BASE     humaneval, released pass, our HumanEval+ run fails, our base-test run passes (the
                 release's notes name base tests): `test_version`.
-  D-HARNESS     our extraction or image is at fault, shown by the log and the response:
-                `our_harness`.
+  D-HARNESS     our image is at fault (the canonical solution also fails): `our_harness`.
+  D-EXTRACT     our extraction misread a correct answer, shown by the log and the response; the
+                released outcome is right: `release_correct` (§1.1, "our run is wrong for a
+                stated reason").
 
     PYTHONPATH=.:pipeline pipeline/venv/bin/python -m router.experiments.s1_7_decision_d
 """
@@ -107,7 +109,8 @@ def build() -> pd.DataFrame:
         to, rule, ev = None, None, None
         key = (r.sample, r.task_id, r.model)
         if key in HARNESS:
-            to, rule, ev = "our_harness", "D-HARNESS", HARNESS[key]
+            to, rule, ev = ("our_harness", "D-HARNESS", HARNESS[key]) if key[0] == "bcb" \
+                else ("release_correct", "D-EXTRACT", HARNESS[key])
         elif r.part == "bcb" and not r.released_pass and r.rerun == "pass":
             cand = [l for l in libs(r.upstream) if l not in sys.stdlib_module_names
                     and bshare[l] <= BCB_LIB_SHARE_MAX]
