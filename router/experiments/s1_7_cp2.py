@@ -43,11 +43,13 @@ WORKERS = 4
 FLAKY_RUNS = 3                      # §8.1: each disagreeing cell runs three times in all
 
 BCB_IMAGE = ("bigcodebench/bigcodebench-evaluate@sha256:"
-             "a3cd34ec3840a49d6b7afb240f4bdd47c350bc5991043fd0a91773830f7cd405")   # v0.2.4
+             "ff56521c31aa9a9d31679ed94a0869875abf68cb7eba352d0c2b1d0b3cb1758b")   # v0.2.1, arm64 (Amendment 4)
+PLATFORM = "linux/arm64"
+GATE_MAX_CANONICAL_FAIL = 0.10                                                  # Amendment 4
 BCB_FAMILIES = ("bcb", "bcb_v014", "bcb_algo2", "bcb_completion", "bcb_ds")
-BCB_SPEC = runner.Spec(image=BCB_IMAGE, cpus=2.0, memory="4g", pids=512, tmpfs_size="1g",
-                       wall_s=330.0)   # 240 s BigCodeBench task limit + start-up under emulation
-PY_SPEC = runner.Spec(image=BCB_IMAGE, cpus=2.0, memory="4g", pids=512, tmpfs_size="1g",
+BCB_SPEC = runner.Spec(image=BCB_IMAGE, platform=PLATFORM, cpus=2.0, memory="4g", pids=512, tmpfs_size="1g",
+                       wall_s=330.0)   # 240 s BigCodeBench task limit + start-up
+PY_SPEC = runner.Spec(image=BCB_IMAGE, platform=PLATFORM, cpus=2.0, memory="4g", pids=512, tmpfs_size="1g",
                       wall_s=600.0)
 HARNESS = {"bcb": (SANDBOX / "harness_bcb.py").read_text(),
            "py": (SANDBOX / "harness_py.py").read_text()}
@@ -303,7 +305,8 @@ READ_ONLY = ("read_lcb_testgen", "read_he_testgen", "read_mbpp_testgen")
 def run_part(part: str, s: pd.DataFrame, fam_obj, long: pd.DataFrame) -> pd.DataFrame:
     s.drop(columns=["cell_id"]).to_csv(OUT / f"s1_7_samples_{part}.csv", index=False,
                                        lineterminator="\n")
-    resp = load_responses(s)
+    gate_only = "--gate-only" in sys.argv          # Amendment 4: no response is loaded
+    resp = {} if gate_only else load_responses(s)
     s = s.copy()
     s["upstream"] = [fam_obj.up(t, f) if not smp.startswith("read_") else upstream_id(t, f)
                      for t, f, smp in zip(s.task_id, s.family, s["sample"])]
@@ -313,15 +316,18 @@ def run_part(part: str, s: pd.DataFrame, fam_obj, long: pd.DataFrame) -> pd.Data
                       for u, smp in zip(s.upstream, s["sample"])]
 
     # 2. reading, blind to released scores
-    reading = []
-    for r in s.drop_duplicates("cell_id").itertuples():
+    reading = [] if not gate_only else None
+    for r in ([] if gate_only else s.drop_duplicates("cell_id").itertuples()):
         ep = fam_obj.entry(r.upstream) if r.has_tests else None
         reading.append({"cell_id": r.cell_id, **read_cell(resp.get((r.task_id, r.key)), "python", ep)})
-    pd.DataFrame(reading).sort_values("cell_id").to_csv(OUT / f"s1_7_reading_{part}.csv",
-                                                         index=False, lineterminator="\n")
+    if not gate_only:
+        pd.DataFrame(reading).sort_values("cell_id").to_csv(OUT / f"s1_7_reading_{part}.csv",
+                                                             index=False, lineterminator="\n")
 
     cache = Cache(OUT / f"s1_7_runs_{part}.jsonl")
     ex = s[~s["sample"].isin(READ_ONLY) & s.has_tests]
+    if gate_only:
+        ex = ex[ex["sample"].isin(BCB_FAMILIES)]
     versions = {u: fam_obj.versions(u) if hasattr(fam_obj, "versions") else (None,) for u in set(ex.upstream)}
 
     # 3a. harness controls
@@ -332,6 +338,20 @@ def run_part(part: str, s: pd.DataFrame, fam_obj, long: pd.DataFrame) -> pd.Data
             if c is not None:
                 jobs.append((f"canonical|{u}|{v}", c))
     run_many(jobs, cache, fam_obj.kind, fam_obj.spec)
+
+    if fam_obj.kind == "bcb":                                    # Amendment 4 harness gate
+        gate = {}
+        main = ex[ex["sample"].isin(BCB_FAMILIES)]
+        for fam, g in main.groupby("family"):
+            ups = sorted(set(g.upstream))
+            bad = [u for u in ups if (cache.get(f"canonical|{u}|None") or {}).get("status") != "pass"]
+            gate[fam] = {"tasks": len(ups), "canonical_fail": len(bad), "share": len(bad) / len(ups),
+                         "failed": bad}
+        (OUT / "s1_7_gate_bcb.json").write_text(json.dumps(gate, indent=2, sort_keys=True) + "\n")
+        print({f: round(v["share"], 3) for f, v in gate.items()})
+        if any(v["share"] > GATE_MAX_CANONICAL_FAIL for v in gate.values()) or "--gate-only" in sys.argv:
+            print("STOP: harness gate (Amendment 4)" if "--gate-only" not in sys.argv else "gate only")
+            return None
 
     def gt(u, v):
         c = cache.get(f"canonical|{u}|{v}")
