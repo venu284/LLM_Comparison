@@ -76,27 +76,30 @@ def test_success_follows_the_setting(monkeypatch):
     assert bool(scoring.success(0.5))
 
 
-# --------------------------------------------------------------------------- amendment A2
-def test_cruxeval_succeeds_at_0_8_and_other_families_still_need_1_0():
-    assert scoring.success_threshold("cruxeval") == 0.8
-    assert bool(scoring.success(0.8, "cruxeval")) and not bool(scoring.success(0.0, "cruxeval"))
-    for fam in sorted(set(scoring.RULES) - {"cruxeval"}):
+# --------------------------------------------------------------------------- amendments A2, A3
+def test_headline_success_is_1_0_for_every_family_cruxeval_included():
+    """A3: the headline rule is 1.0 everywhere; A2's CRUXEval 0.8 is not the default."""
+    for fam in sorted(scoring.RULES):
         assert scoring.success_threshold(fam) == 1.0, fam
         assert not bool(scoring.success(0.8, fam)), fam
-    assert not bool(scoring.success(0.8))                     # no family: 1.0
+    assert not bool(scoring.success(0.8))
 
 
-def test_strict_reading_is_the_pre_a2_rule():
-    assert scoring.success_threshold("cruxeval", strict=True) == 1.0
-    assert not bool(scoring.success(0.8, "cruxeval", strict=True))
+def test_cruxeval_lenient_is_the_sensitivity_reading_only():
+    assert scoring.success_threshold("cruxeval", cruxeval_lenient=True) == 0.8
+    assert bool(scoring.success(0.8, "cruxeval", cruxeval_lenient=True))
+    assert not bool(scoring.success(0.0, "cruxeval", cruxeval_lenient=True))
+    for fam in sorted(set(scoring.RULES) - {"cruxeval"}):
+        assert not bool(scoring.success(0.8, fam, cruxeval_lenient=True)), fam
 
 
 def test_success_with_a_family_series_is_positional():
     score = pd.Series([0.8, 0.8, 1.0, 0.0], index=["a", "b", "c", "d"])
     fam = pd.Series(["cruxeval", "mbpp", "mbpp", "cruxeval"], index=["w", "x", "y", "z"])
-    assert scoring.success(score, fam).tolist() == [True, False, True, False]
-    assert scoring.success(score, fam, strict=True).tolist() == [False, False, True, False]
-    assert scoring.success(score.to_numpy(), fam.tolist()).tolist() == [True, False, True, False]
+    assert scoring.success(score, fam).tolist() == [False, False, True, False]
+    assert scoring.success(score, fam, cruxeval_lenient=True).tolist() == [True, False, True, False]
+    assert scoring.success(score.to_numpy(), fam.tolist(),
+                           cruxeval_lenient=True).tolist() == [True, False, True, False]
 
 
 def test_cruxeval_released_values_are_only_0_0_8_1():

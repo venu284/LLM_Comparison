@@ -14,7 +14,7 @@ CLAIMS_MD = S.REPO_ROOT / "docs" / "CLAIMS.md"
 # Name -> value as written in docs/IMPLEMENTATION_PLAN.md (source item in the comment).
 DOCUMENTED = {
     "SUCCESS_SCORE": 1.0,                     # S0.1
-    "CRUXEVAL_SUCCESS_SCORE": 0.8,            # S0.1 (amendment A2)
+    "CRUXEVAL_SUCCESS_SCORE": 0.8,            # S0.1 sensitivity threshold (amendments A2, A3)
     "VERIFIER_RUN_S": 0.200,                  # S0.2 (amendment A1)
     "VERIFIER_RUN_USD": 6.9e-6,               # S0.2 (amendment A1)
     "VERIFIER_COST_SWEEP": (1, 10, 100),      # S0.2
@@ -86,8 +86,8 @@ P0_RECORD_VERIFIER_RUN_USD = 1e-6
 
 
 def test_p0_5_record_keeps_the_strict_success_rule():
-    """Amendment A2 (CRUXEval success at 0.8) applies from S3 on; the P0.5 record scores success
-    as released score == 1.0 for every family, CRUXEval included."""
+    """The P0.5 record scores success as released score == 1.0 for every family, CRUXEval
+    included. That is also the headline rule after amendment A3."""
     src = (S.REPO_ROOT / "router" / "experiments" / "p0_5_recount.py").read_text()
     assert '(d["S"].loc[self.ids] == 1.0)' in src
     assert "CRUXEVAL_SUCCESS_SCORE" not in src

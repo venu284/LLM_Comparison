@@ -359,10 +359,11 @@ every count that depends on eligibility (S0.12) or on the audit (S0.10) is froze
       on 87.7% of cells and has 2,051 harness-mismatch and 2,718 extraction-failure cells, so it is
       reported only as a sensitivity check. In live runs the ground truth is the reserved hidden
       test pool. The router's own verifier decides escalation but never counts as acceptance.
-      **Amendment A2 (2026-11-21):** for CRUXEval, success means a released score ≥ 0.8
-      (`CRUXEVAL_SUCCESS_SCORE`). Its 0.8 marks a correct output with extra text, a format
-      penalty; see `CLAIMS.md` A2. The strict 1.0 reading is a sensitivity check, and the P0
-      records keep it. Code: `scoring.success(score, family)`.
+      **Amendments A2 and A3 (2026-11-21):** A2 made CRUXEval's 0.8 a success. A3 reversed that
+      for the headline, because the evidence that 0.8 means a stated correct value is only
+      partial (`CLAIMS.md` A3). The headline is 1.0 for every family. CRUXEval ≥ 0.8
+      (`CRUXEVAL_SUCCESS_SCORE`) is a sensitivity check:
+      `scoring.success(score, family, cruxeval_lenient=True)`.
 - [x] **S0.2 Cost.** Cost = model tokens × published price (source URL and access date in
       `router/data/prices.py`) + verifier runs + retries + probe calls, spread over the stream.
       Actual spend is not the metric. Verifier runs are reported as a count and in dollars at a
@@ -1774,3 +1775,28 @@ Two further reviews were checked against the data; all fixes approved by the use
   - Tests: 390 pass on `main`.
 - **Next:** S1.7 checkpoint 2b (C++, Go, Java, JavaScript, Rust, TypeScript), after the agent
   commits the capped-response amendment.
+
+### 2026-11-21 (S1.7 checkpoint 2b reviewed; amendment A3)
+
+- **Checkpoint 2b** (C++, Go, Java, JavaScript, Rust and TypeScript families) on `s1-c-audit`:
+  - The amendments, harness, images and reference-solution gate were each committed before any
+    2b response was loaded.
+  - The reviewer re-ran 12 sandbox cells, and all matched.
+  - Interim labels: all six families are confirmed defects, mechanism `wrong_field`.
+    - HumanEval-X: the released values are fractions, not pass/fail; for example 0.74 on an
+      answer that passes every test.
+    - MultiPL-E: every one of 2,328 cells is 0, while our sandbox passes 87–95%.
+- **Amendment A3 (`CLAIMS.md`):** A2 is reversed for the headline, so CRUXEval success is again
+  1.0.
+  - A2 rested on a substring check. The expected value also appears in 17% of 0-scored cells, and
+    a fixed rule confirms a stated value in only 39 of 97 cells scored 0.8.
+  - CRUXEval ≥ 0.8 is kept as a sensitivity check. Code:
+    `scoring.success(score, family, cruxeval_lenient=False)`. 390 tests pass.
+- **User decisions:**
+  - MultiPL-E is a confirmed defect (`wrong_field`; not "undecided");
+  - the whole-text CRUXEval fallback is not adopted (sensitivity only);
+  - SWE-bench gets one attempt within the half-day limit, otherwise undecided.
+- **Headline so far:** 3,466 of 5,626 eligible tasks are interim defects: BigCodeBench 1,097,
+  DS-1000 1,000, LeetCode 422, HumanEval-X C++/Go/Java/JS 656, MultiPL-E 291.
+- **Next:** finish 2a (the kept `lcb` sample on stream 140; unexplained cells in every family),
+  then 2c (SWE-bench).

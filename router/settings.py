@@ -33,8 +33,10 @@ BENCHMARK_DIR = REPO_ROOT / "benchmark"
 
 # S0.1 Acceptance: success means all tests pass (released score = 1.0).
 SUCCESS_SCORE = 1.0
-# S0.1, CLAIMS amendment A2 (2026-11-21): CRUXEval's released 0.8 marks a correct output wrapped
-# in extra text (a CodeRouterBench format penalty; S1.7 audit), so CRUXEval success is >= 0.8.
+# S0.1 sensitivity threshold for CRUXEval (CLAIMS amendments A2 and A3, 2026-11-21). A2 made 0.8
+# CRUXEval's success threshold. A3 reversed that for the headline, because the S1.7 audit could
+# confirm a stated correct value in only part of the 0.8 cells. The headline uses SUCCESS_SCORE;
+# this value is used only by the sensitivity check (scoring.success(..., cruxeval_lenient=True)).
 CRUXEVAL_SUCCESS_SCORE = 0.8
 CRUXEVAL_FAMILY = "cruxeval"
 

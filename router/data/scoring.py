@@ -294,25 +294,26 @@ def eligible_families() -> list[str]:
 
 
 # --------------------------------------------------------------------------- success rule
-def success_threshold(family: str | None, strict: bool = False) -> float:
-    """The released score that counts as success for `family` (S0.1).
+def success_threshold(family: str | None, cruxeval_lenient: bool = False) -> float:
+    """The released score that counts as success for `family` (S0.1): 1.0 for every family.
 
-    1.0 for every family, except CRUXEval under CLAIMS amendment A2 (0.8: a correct output with
-    extra text). `strict=True` gives the pre-A2 reading (1.0 everywhere), the A2 sensitivity check.
+    `cruxeval_lenient=True` gives the CRUXEval sensitivity reading (CLAIMS amendments A2 and A3):
+    a CRUXEval score of 0.8 also counts. It is a sensitivity check only, never the headline.
     """
-    if not strict and family == CRUXEVAL_FAMILY:
+    if cruxeval_lenient and family == CRUXEVAL_FAMILY:
         return CRUXEVAL_SUCCESS_SCORE
     return SUCCESS_SCORE
 
 
-def success(score, family=None, strict: bool = False):
-    """S0.1: success means the released score reaches the family's threshold: 1.0 (every test
-    passes), or 0.8 for CRUXEval (amendment A2). Partial credit below the threshold is never
-    success. `family` is a family name, a Series aligned with `score`, or None (threshold 1.0).
-    `strict=True` applies 1.0 to every family (the A2 sensitivity check)."""
+def success(score, family=None, cruxeval_lenient: bool = False):
+    """S0.1: success means the released score is 1.0 (every test passes), for every family.
+    Partial credit below 1.0 is never success.
+
+    `family` is a family name, a sequence aligned position by position with `score`, or None. It
+    matters only with `cruxeval_lenient=True`, the CRUXEval 0.8 sensitivity check (A2, A3)."""
     if family is None or isinstance(family, str):
-        return score >= success_threshold(family, strict)
-    threshold = [success_threshold(f, strict) for f in family]      # positional, like `score`
+        return score >= success_threshold(family, cruxeval_lenient)
+    threshold = [success_threshold(f, cruxeval_lenient) for f in family]   # positional
     return score >= pd.Series(threshold, dtype=float).to_numpy()
 
 
