@@ -101,3 +101,104 @@ def gate(iid: str) -> dict:
 
 if __name__ == "__main__" and sys.argv[1] == "gate":
     gate(sys.argv[2])
+
+
+def _free_gib() -> float:
+    st = os.statvfs("/")
+    return st.f_bavail * st.f_frsize / 2**30
+
+
+def _rmi(key: str) -> None:
+    subprocess.run(["docker", "rmi", "-f", key], capture_output=True)
+
+
+def run() -> pd.DataFrame:
+    from router.audit_sandbox.reading import read_cell
+    long, stats = audit.released_long(), audit.response_stats()
+    fam = long[long.family == "swebench"]
+    s = audit.draw(audit.frame(long, stats, fam.task_id.unique()), 108).assign(sample="swebench")
+    s = _with_keys(s)
+    s.drop(columns=["cell_id"]).to_csv(OUT / "s1_7_samples_swe.csv", index=False, lineterminator="\n")
+    resp = load_responses(s)
+    s["iid"] = s.task_id.str.replace("dim3_swebench_", "", regex=False)
+    pd.DataFrame([{"cell_id": r.cell_id, **read_cell(resp.get((r.task_id, r.key)), "python", None)}
+                  for r in s.itertuples()]).sort_values("cell_id").to_csv(
+        OUT / "s1_7_reading_swe.csv", index=False, lineterminator="\n")
+    ext = {r.cell_id: swe.extract_patch(resp.get((r.task_id, r.key)) or "") for r in s.itertuples()}
+    cache = Cache(OUT / "s1_7_runs_swe.jsonl")
+    lite = {r["instance_id"]: r for r in _jsonl(EXTRACT)}
+    for r in s.itertuples():                              # no patch: fails without running
+        if ext[r.cell_id][0] is None and cache.get(f"{r.cell_id}|1") is None:
+            cache.put({"run_id": f"{r.cell_id}|1", "status": "fail", "phase": "no_patch",
+                       "extraction": "no_patch"})
+    todo = s[[ext[c][0] is not None for c in s.cell_id]]
+    order = sorted(set(todo.iid), key=lambda i: (lite[i]["repo"], lite[i]["version"], i))
+    rel = long.set_index(["task_id", "model"])["score"]
+    prev_env = None
+    for iid in ([] if "--rows-only" in sys.argv else order):
+        cells = todo[todo.iid == iid]
+        if all(cache.get(f"{c}|1") for c in cells.cell_id) and cache.get(f"control:gold|{iid}"):
+            continue
+        if _free_gib() < 3.0:
+            print("disk below 3 GiB: stop building", iid, flush=True)
+            for c in cells.cell_id:
+                if cache.get(f"{c}|1") is None:
+                    cache.put({"run_id": f"{c}|1", "status": "not_run", "phase": "disk"})
+            continue
+        print("instance", iid, len(cells), "cells; free", round(_free_gib(), 1), "GiB", flush=True)
+        subprocess.run([SWE_PY, str(TOOL), "build", str(EXTRACT), iid], capture_output=True, text=True)
+        key = tool("spec", str(EXTRACT), iid)["image_key"]
+        if image_id(key) is None:
+            for c in cells.cell_id:
+                cache.put({"run_id": f"{c}|1", "status": "error", "phase": "build"})
+            continue
+        if cache.get(f"control:gold|{iid}") is None:
+            cache.put({"run_id": f"control:gold|{iid}", **run_patch(iid, lite[iid]["patch"], "gold")})
+        for r in cells.itertuples():
+            patch, how = ext[r.cell_id]
+            if cache.get(f"{r.cell_id}|1") is None:
+                cache.put({"run_id": f"{r.cell_id}|1", **run_patch(iid, patch, how)})
+            first = cache.get(f"{r.cell_id}|1")["status"]
+            if (first == "pass") != (rel[(r.task_id, r.model)] >= SUCCESS_SCORE):
+                for k in range(2, FLAKY_RUNS + 1):
+                    if cache.get(f"{r.cell_id}|{k}") is None:
+                        cache.put({"run_id": f"{r.cell_id}|{k}", **run_patch(iid, patch, how)})
+        _rmi(key)
+        env = subprocess.run([SWE_PY, "-c", "import sys,json;sys.path.insert(0,%r);" % str(TOOL.parent)
+                              + "from swe_tool import _instance;"
+                              + "from swebench.harness.test_spec.test_spec import make_test_spec;"
+                              + f"print(make_test_spec(_instance({str(EXTRACT)!r},{iid!r}),namespace=None).env_image_key)"],
+                             capture_output=True, text=True).stdout.strip()
+        nxt = order[order.index(iid) + 1] if order.index(iid) + 1 < len(order) else None
+        if nxt is None or (lite[nxt]["repo"], lite[nxt]["version"]) != (lite[iid]["repo"], lite[iid]["version"]):
+            _rmi(env)                                      # environment no longer needed
+        subprocess.run(["docker", "builder", "prune", "-f"], capture_output=True)
+    rows = []
+    for r in s.itertuples():
+        runs = [cache.get(f"{r.cell_id}|{k}") for k in range(1, FLAKY_RUNS + 1)]
+        runs = [x for x in runs if x]
+        st = [x["status"] for x in runs]
+        score = float(rel[(r.task_id, r.model)])
+        gold = cache.get(f"control:gold|{r.iid}")
+        rerun = st[0] if st else "not_run"
+        no_patch = bool(runs) and runs[0].get("phase") == "no_patch"
+        if gold is not None and gold["status"] != "pass" and rerun in ("pass", "fail") and not no_patch:
+            rerun = "error"                                 # instance control failed: our_harness
+        rows.append({"sample": "swebench", "stream": 108, "pair": None, "pair_side": None,
+                     "task_id": r.task_id, "upstream": r.iid, "family": "swebench", "model": r.model,
+                     "key": r.key, "key_role": r.key_role, "test_version": None,
+                     "unconfirmed": r.model in audit.UNCONFIRMED, "released_score": score,
+                     "released_pass": score >= SUCCESS_SCORE, "has_response": True, "has_tests": True,
+                     "canonical": gold["status"] if gold else None, "rerun": rerun,
+                     "rerun_all": "/".join(st), "flaky": len(set(st)) > 1,
+                     "agree": (rerun == "pass") == (score >= SUCCESS_SCORE) if rerun in ("pass", "fail") else None,
+                     "phase": runs[0].get("phase") if runs else None,
+                     "extraction": ext[r.cell_id][1], "log": f"s1_7_runs_swe.jsonl#{r.cell_id}|1"})
+    out = pd.DataFrame(rows)
+    out.to_csv(OUT / "s1_7_cells_swe.csv", index=False, lineterminator="\n")
+    print("cell rows written:", len(out))
+    return out
+
+
+if __name__ == "__main__" and sys.argv[1] == "run":
+    run()

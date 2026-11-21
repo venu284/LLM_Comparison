@@ -53,7 +53,7 @@ SCI_LIBS = {"matplotlib", "sklearn", "seaborn", "scipy", "wordcloud"}
 RELEASE_SIDE = {"extraction", "toolchain", "harness_timeout", "truncation", "test_version", "wrong_field"}
 MAIN = ("bcb", "bcb_v014", "bcb_algo2", "bcb_completion", "bcb_ds", "ds1000", "humaneval",
         "hex_python", "mbpp", "mbpp_completion", "lcb", "cruxeval",
-        "hex_cpp", "hex_go", "hex_java", "hex_js", "multiple_rs", "multiple_ts", "lcb_kept")
+        "hex_cpp", "hex_go", "hex_java", "hex_js", "multiple_rs", "multiple_ts", "lcb_kept", "swebench")
 MX_HEX = ("hex_cpp", "hex_go", "hex_java", "hex_js")
 MX_CONST = ("multiple_rs", "multiple_ts")
 
@@ -64,7 +64,7 @@ def _runs(part):
 
 def assign(apply_d: bool = True) -> pd.DataFrame:
     parts = [("bcb", "s1_7_cells_bcb.csv"), ("py", "s1_7_cells_py.csv"), ("mx", "s1_7_cells_mx.csv"),
-             ("lcbk", "s1_7_cells_lcbk.csv")]
+             ("lcbk", "s1_7_cells_lcbk.csv"), ("swe", "s1_7_cells_swe.csv")]
     c = pd.concat([pd.read_csv(OUT / f).assign(part=p) for p, f in parts if (OUT / f).exists()],
                   ignore_index=True)
     c = c[c.key_role == "graded"].copy()
@@ -173,6 +173,10 @@ def main():
     if len(k):
         k.to_csv(OUT / "s1_7_mechanisms_lcbk.csv", index=False, lineterminator="\n")
         interim(k).to_csv(OUT / "s1_7_interim_lcbk.csv", index=False, lineterminator="\n")
+    w = c[c.part == "swe"]
+    if len(w):
+        w.to_csv(OUT / "s1_7_mechanisms_2c.csv", index=False, lineterminator="\n")
+        interim(w).to_csv(OUT / "s1_7_interim_2c.csv", index=False, lineterminator="\n")
     t = interim(c)
     pd.set_option("display.width", 250)
     print(t.to_string(index=False))

@@ -50,11 +50,11 @@ HARNESS = {
         "canonical solution also fails: nltk LookupError 'tokenizers/punkt/PY3/english.pickle' "
         "(the image has no nltk data)",
     ("hex_python", "dim7_hex_python_Python/50", "qwen3.5-plus"):
-        "NameError: name 'encode_shift' is not defined; the response defines encode_shift, and "
-        "EvalPlus sanitize keeps only the entry point and its dependencies",
+        "NameError: name 'encode_shift' is not defined; the response defines encode_shift, so "
+        "our extraction (EvalPlus sanitize with the entry point decode_shift) lost it",
     ("mbpp_completion", "dim4_mbpp_completion_103", "glm-5"):
-        "NameError: name 'eulerian_num' is not defined; the response defines it under "
-        "@lru_cache(maxsize=None), which sanitize drops",
+        "NameError: name 'eulerian_num' is not defined; the response defines it (under "
+        "@lru_cache(maxsize=None)), so our extraction (EvalPlus sanitize) lost it",
     ("cruxeval", "dim4_cruxeval_505", "gpt-5.4"):
         "our 2a rule took the first assert line (== '--4/0-209'); the response's final line is "
         "'' which equals CRUXEval's output ''",
