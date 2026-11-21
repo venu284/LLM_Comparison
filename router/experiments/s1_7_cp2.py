@@ -449,5 +449,31 @@ def probe(name: str) -> pd.DataFrame:
     return c
 
 
-if __name__ == "__main__" and len(sys.argv) > 2 and sys.argv[1] == "probe":
+def probe_bcb(name: str = "block_sci") -> pd.DataFrame:
+    """BigCodeBench fault model: the five scientific libraries cannot be imported."""
+    c = pd.read_csv(OUT / "s1_7_cells_bcb.csv")
+    c = c[c["sample"].isin(BCB_FAMILIES + ("allzero_bcb",)) & (c.key_role == "graded")
+          & c.rerun.isin(["pass", "fail"])].drop_duplicates(["task_id", "key"])
+    resp = load_responses(c)
+    b = Bcb()
+    cache = Cache(OUT / "s1_7_runs_bcb.jsonl")
+
+    def gt(u):
+        r = cache.get(f"canonical|{u}|None")
+        return (r["cell"] or {}).get("elapsed") if r and r["status"] == "pass" else None
+
+    jobs = [(f"probe:{name}|{r.task_id}|{r.key}",
+             {**b.payload(r.upstream, resp[(r.task_id, r.key)], gt(r.upstream)), "probe": name})
+            for r in c.itertuples()]
+    run_many(jobs, cache, "bcb", BCB_SPEC)
+    c = c.assign(probe=[cache.get(f"probe:{name}|{t}|{k}")["status"] for t, k in zip(c.task_id, c.key)])
+    c["probe_agrees_release"] = (c.probe == "pass") == c.released_pass
+    c[["sample", "task_id", "upstream", "model", "key", "released_pass", "rerun", "probe",
+       "probe_agrees_release"]].to_csv(OUT / f"s1_7_probe_{name}.csv", index=False, lineterminator="\n")
+    return c
+
+
+if __name__ == "__main__" and len(sys.argv) > 2 and sys.argv[1] == "probe" and sys.argv[2] == "block_sci":
+    probe_bcb()
+elif __name__ == "__main__" and len(sys.argv) > 2 and sys.argv[1] == "probe":
     probe(sys.argv[2])

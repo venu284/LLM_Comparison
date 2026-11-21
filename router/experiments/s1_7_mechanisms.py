@@ -2,10 +2,11 @@
 evidence rules written after the cell rows were recorded, then compute the interim §3 numbers.
 
 Rules (each with the evidence it rests on; see docs/research/S1.7_audit.md, checkpoint 2a):
-  R-BCB-LIB   BigCodeBench, released fail, our run passes, task imports a library in SCI_LIBS:
-              `toolchain`. Evidence: across all 1,097 BigCodeBench tasks the release passes 0.18%
-              of cells on the 500 tasks importing these libraries against 41% on the rest, while
-              the pinned evaluation image runs their canonical solutions.
+  R-BCB-LIB   BigCodeBench, released fail, our run passes, and the `block_sci` probe (the task's
+              own code cannot import matplotlib, sklearn, seaborn, scipy or wordcloud) reproduces
+              the release: `toolchain`. Supporting population pattern: the release passes 0.18% of
+              cells on the 500 tasks importing these libraries against 41% on the rest. The
+              library list was chosen from those release pass shares.
   R-LCB-CALL  lcb, released fail, our run passes, and the `lcb_stdin` probe (every task run as a
               stdin program, LeetCode `Solution()` never called) reproduces the release:
               `harness_timeout` (call convention).
@@ -57,7 +58,7 @@ def assign() -> pd.DataFrame:
     bcb = _bcb_tests()
     probes = {n: pd.read_csv(OUT / f"s1_7_probe_{n}.csv").drop_duplicates(["task_id", "key"])
               .set_index(["task_id", "key"])["probe_agrees_release"].to_dict()
-              for n in ("lcb_stdin", "ds_raw")}
+              for n in ("lcb_stdin", "ds_raw", "block_sci")}
     runs = _runs("py")
     he_base = (c[(c.family == "humaneval") & (c.test_version == "base")]
                .drop_duplicates(["task_id", "key"]).set_index(["task_id", "key"])["rerun"].to_dict())
@@ -69,8 +70,7 @@ def assign() -> pd.DataFrame:
             return "flaky"
         rel_fail_run_pass = (not r.released_pass) and r.rerun == "pass"
         if r.part == "bcb" and rel_fail_run_pass:
-            libs = set(ast.literal_eval(bcb[r.upstream]["libs"]))
-            return "toolchain" if libs & SCI_LIBS else "unexplained"
+            return "toolchain" if bool(probes["block_sci"].get((r.task_id, r.key), False)) else "unexplained"
         if r.family == "lcb" and rel_fail_run_pass:
             return "harness_timeout" if bool(probes["lcb_stdin"].get((r.task_id, r.key), False)) else "unexplained"
         if r.family == "ds1000" and rel_fail_run_pass:

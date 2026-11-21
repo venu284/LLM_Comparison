@@ -23,6 +23,29 @@ from bigcodebench.sanitize import sanitize
 
 p = json.load(open("cell.json"))
 out = {}
+if p.get("probe") == "block_sci":
+    # Mechanism probe (S1.7 §1.1): the task's own code cannot import these libraries. The block
+    # is installed after bigcodebench's reliability_guard (which itself imports matplotlib).
+    import importlib.abc
+    import bigcodebench.eval as _ev
+
+    class _Block(importlib.abc.MetaPathFinder):
+        BLOCKED = {"matplotlib", "sklearn", "seaborn", "scipy", "wordcloud"}
+
+        def find_spec(self, name, path=None, target=None):
+            if name.split(".")[0] in self.BLOCKED:
+                raise ModuleNotFoundError(f"probe: {name} blocked")
+            return None
+
+    _guard = _ev.reliability_guard
+
+    def _guard_then_block(*a, **k):
+        _guard(*a, **k)
+        for m in [m for m in sys.modules if m.split(".")[0] in _Block.BLOCKED]:
+            del sys.modules[m]
+        sys.meta_path.insert(0, _Block())
+
+    _ev.reliability_guard = _guard_then_block
 if p["mode"] == "canonical":
     code = p["complete_prompt"] + "\n" + p["canonical_solution"]
 else:
