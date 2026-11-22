@@ -71,8 +71,8 @@ _SWE_SOURCE = ('arXiv:2310.06770v3 (SWE-bench) §2.2: "If the patch applies succ
                'these tests pass we consider the proposed solution to have successfully resolved '
                'the issue." SWE-bench Verified is the 500-instance subset pinned as the '
                '`swebench_verified_ids` extract (princeton-nlp/SWE-bench_Verified@c104f84).')
-_ARENA_SOURCE = ('Arena-Hard-Auto (arXiv:2406.11939) scores by pairwise LLM-judge comparison against '
-                 'a baseline answer; there is nothing to execute.')
+_ARENA_SOURCE = ('Arena-Hard-Auto (arXiv:2406.11939) was not read for S1.8 and is not quoted. '
+                 'Ineligibility rests on LLMRouterBench\'s own judge rule, quoted in lrb_rule.')
 
 
 @dataclass(frozen=True)

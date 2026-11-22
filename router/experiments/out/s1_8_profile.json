@@ -1,0 +1,1780 @@
+{
+ "audit_2026_08_18": {
+  "binary_subsets": [
+   "humaneval",
+   "livecodebench",
+   "mbpp"
+  ],
+  "code_rows": 70678,
+  "models": 39,
+  "models_in_all_four": 0,
+  "null_scores": 1,
+  "presence_density": 0.609,
+  "zero_cost_models": {
+   "humaneval": [
+    9,
+    22
+   ],
+   "livecodebench": [
+    9,
+    38
+   ],
+   "mbpp": [
+    9,
+    20
+   ],
+   "swe-bench/verified": [
+    0,
+    15
+   ]
+  }
+ },
+ "audit_flags": {
+  "lrb_humaneval": {
+   "all_zero_models": [],
+   "empty_raw_output_by_model": {},
+   "empty_raw_output_cells": 0,
+   "empty_raw_output_scored_0": 0,
+   "far_below_median_models": [
+    "DeepSeek-R1-0528-Qwen3-8B",
+    "OpenThinker3-7B"
+   ],
+   "median_pass_rate": 0.609756,
+   "near_zero_models": [],
+   "output_token_caps": {
+    "MiMo-7B-RL-0530": {
+     "cells_at_max": 149,
+     "max_output_tokens": 2048
+    },
+    "gemma-2-9b-it": {
+     "cells_at_max": 2,
+     "max_output_tokens": 1164
+    }
+   },
+   "processing_failed_cells": 0,
+   "tests_shown_in_prompt": 164,
+   "zero_cost_cells_of_priced_models": 0,
+   "zero_cost_cells_of_priced_models_with_empty_output": 0,
+   "zero_cost_cells_of_priced_models_with_zero_tokens": 0,
+   "zero_output_token_cells": 0
+  },
+  "lrb_livecodebench": {
+   "all_zero_models": [],
+   "empty_raw_output_by_model": {
+    "glm-4.6": 5,
+    "intern-s1": 514,
+    "qwen3-235b-a22b-thinking-2507": 29
+   },
+   "empty_raw_output_cells": 548,
+   "empty_raw_output_scored_0": 548,
+   "far_below_median_models": [
+    "DeepHermes-3-Llama-3-8B-Preview",
+    "Fin-R1",
+    "Intern-S1-mini",
+    "Llama-3.1-8B-Instruct",
+    "Llama-3.1-8B-UltraMedical",
+    "MiMo-7B-RL-0530",
+    "Qwen2.5-Coder-7B-Instruct",
+    "cogito-v1-preview-llama-8B",
+    "gemma-2-9b-it",
+    "glm-4-9b-chat",
+    "granite-3.3-8b-instruct",
+    "internlm3-8b-instruct"
+   ],
+   "median_pass_rate": 0.581043,
+   "near_zero_models": [],
+   "output_token_caps": {
+    "MiMo-7B-RL-0530": {
+     "cells_at_max": 991,
+     "max_output_tokens": 2048
+    },
+    "qwen3-235b-a22b-thinking-2507": {
+     "cells_at_max": 8,
+     "max_output_tokens": 32000
+    }
+   },
+   "processing_failed_cells": 0,
+   "tests_shown_in_prompt": 0,
+   "zero_cost_cells_of_priced_models": 355,
+   "zero_cost_cells_of_priced_models_with_empty_output": 0,
+   "zero_cost_cells_of_priced_models_with_zero_tokens": 355,
+   "zero_output_token_cells": 355
+  },
+  "lrb_mbpp": {
+   "all_zero_models": [],
+   "empty_raw_output_by_model": {},
+   "empty_raw_output_cells": 0,
+   "empty_raw_output_scored_0": 0,
+   "far_below_median_models": [
+    "OpenThinker3-7B"
+   ],
+   "median_pass_rate": 0.543634,
+   "near_zero_models": [],
+   "output_token_caps": {
+    "DeepSeek-R1-Distill-Qwen-7B": {
+     "cells_at_max": 2,
+     "max_output_tokens": 16315
+    },
+    "Llama-3.1-Nemotron-Nano-8B-v1": {
+     "cells_at_max": 2,
+     "max_output_tokens": 8116
+    },
+    "MiMo-7B-RL-0530": {
+     "cells_at_max": 747,
+     "max_output_tokens": 2048
+    }
+   },
+   "processing_failed_cells": 1,
+   "tests_shown_in_prompt": 974,
+   "zero_cost_cells_of_priced_models": 0,
+   "zero_cost_cells_of_priced_models_with_empty_output": 0,
+   "zero_cost_cells_of_priced_models_with_zero_tokens": 0,
+   "zero_output_token_cells": 1
+  },
+  "lrb_swebench_verified": {
+   "all_zero_models": [],
+   "empty_raw_output_by_model": {
+    "deepseek-r1-0528": 12,
+    "deepseek-v3-0324": 2,
+    "gemini-2.5-pro": 1,
+    "glm-4.6": 15,
+    "gpt-5": 9,
+    "intern-s1": 39,
+    "qwen3-235b-a22b-thinking-2507": 43
+   },
+   "empty_raw_output_cells": 121,
+   "empty_raw_output_scored_0": 121,
+   "far_below_median_models": [
+    "gpt-5-chat",
+    "intern-s1"
+   ],
+   "median_pass_rate": 0.226,
+   "near_zero_models": [],
+   "output_token_caps": {},
+   "processing_failed_cells": 0,
+   "tests_shown_in_prompt": 0,
+   "zero_cost_cells_of_priced_models": 100,
+   "zero_cost_cells_of_priced_models_with_empty_output": 0,
+   "zero_cost_cells_of_priced_models_with_zero_tokens": 88,
+   "zero_output_token_cells": 111
+  }
+ },
+ "crb_overlap": {
+  "lrb_humaneval": {
+   "crb_families": {
+    "he_completion": 98,
+    "he_testgen": 131,
+    "hex_cpp": 164,
+    "hex_go": 164,
+    "hex_java": 164,
+    "hex_js": 164,
+    "hex_python": 164,
+    "humaneval": 100,
+    "multiple_rs": 156,
+    "multiple_ts": 135
+   },
+   "crb_filtered_tasks_sharing_a_key": 262,
+   "crb_problem_ids_sharing_a_key": 164,
+   "crb_tasks_sharing_a_key": 1440,
+   "lrb_tasks": 164,
+   "shared_keys_any_crb_task": 164,
+   "shared_keys_eligible_crb": 164,
+   "shared_keys_filtered_view": 164,
+   "text_equal_exact_crb_tasks": 491,
+   "text_equal_whitespace_crb_tasks": 491
+  },
+  "lrb_livecodebench": {
+   "crb_families": {
+    "lcb": 1000,
+    "lcb_testgen": 869
+   },
+   "crb_filtered_tasks_sharing_a_key": 0,
+   "crb_problem_ids_sharing_a_key": 1045,
+   "crb_tasks_sharing_a_key": 1869,
+   "lrb_tasks": 1055,
+   "shared_keys_any_crb_task": 1045,
+   "shared_keys_eligible_crb": 1000,
+   "shared_keys_filtered_view": 0,
+   "text_equal_exact_crb_tasks": 1078,
+   "text_equal_whitespace_crb_tasks": 1078
+  },
+  "lrb_mbpp": {
+   "crb_families": {
+    "mbpp": 225,
+    "mbpp_completion": 124,
+    "mbpp_testgen": 111
+   },
+   "crb_filtered_tasks_sharing_a_key": 225,
+   "crb_problem_ids_sharing_a_key": 297,
+   "crb_tasks_sharing_a_key": 460,
+   "lrb_tasks": 974,
+   "shared_keys_any_crb_task": 298,
+   "shared_keys_eligible_crb": 271,
+   "shared_keys_filtered_view": 225,
+   "text_equal_exact_crb_tasks": 88,
+   "text_equal_whitespace_crb_tasks": 88
+  },
+  "lrb_swebench_verified": {
+   "crb_families": {
+    "swebench": 19
+   },
+   "crb_filtered_tasks_sharing_a_key": 0,
+   "crb_problem_ids_sharing_a_key": 19,
+   "crb_tasks_sharing_a_key": 19,
+   "lrb_tasks": 500,
+   "shared_keys_any_crb_task": 19,
+   "shared_keys_eligible_crb": 19,
+   "shared_keys_filtered_view": 0,
+   "text_equal_exact_crb_tasks": 0,
+   "text_equal_whitespace_crb_tasks": 0
+  }
+ },
+ "humaneval_index_is_number_plus_1": 164,
+ "implied_prices": {
+  "DeepHermes-3-Llama-3-8B-Preview": {
+   "cells": 2193,
+   "input_per_m": 0.03,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.11
+  },
+  "DeepSeek-R1-0528-Qwen3-8B": {
+   "cells": 2193,
+   "input_per_m": 0.03,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.11
+  },
+  "DeepSeek-R1-Distill-Qwen-7B": {
+   "cells": 2193,
+   "input_per_m": 0.04,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.1
+  },
+  "Fin-R1": {
+   "cells": 2193,
+   "input_per_m": 0.04,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.1
+  },
+  "Intern-S1-mini": {
+   "cells": 2193,
+   "input_per_m": 0.035,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.138
+  },
+  "Llama-3.1-8B-Instruct": {
+   "cells": 2193,
+   "input_per_m": 0.015,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.02
+  },
+  "Llama-3.1-8B-UltraMedical": {
+   "cells": 2193,
+   "input_per_m": 0.015,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.02
+  },
+  "Llama-3.1-Nemotron-Nano-8B-v1": {
+   "cells": 2193,
+   "input_per_m": 0.015,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.02
+  },
+  "NVIDIA-Nemotron-Nano-9B-v2": {
+   "cells": 2193,
+   "input_per_m": 0.04,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.16
+  },
+  "Qwen3-8B": {
+   "cells": 2193,
+   "input_per_m": 0.035,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.138
+  },
+  "claude-opus-4.1": {
+   "cells": 499,
+   "input_per_m": 15.0,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 75.0
+  },
+  "claude-sonnet-4": {
+   "cells": 1554,
+   "input_per_m": 3.0,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 15.0
+  },
+  "deepseek-r1-0528": {
+   "cells": 1554,
+   "input_per_m": 0.5,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 2.15
+  },
+  "deepseek-v3-0324": {
+   "cells": 1554,
+   "input_per_m": 0.25,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.88
+  },
+  "deepseek-v3.1-terminus": {
+   "cells": 1554,
+   "input_per_m": 0.227543,
+   "max_abs_rel_residual": 0.129634,
+   "output_per_m": 1.001939
+  },
+  "gemini-2.5-flash": {
+   "cells": 1555,
+   "input_per_m": 0.303797,
+   "max_abs_rel_residual": 2.975171,
+   "output_per_m": 1.990217
+  },
+  "gemini-2.5-pro": {
+   "cells": 1460,
+   "input_per_m": 1.629935,
+   "max_abs_rel_residual": 0.345848,
+   "output_per_m": 9.870896
+  },
+  "gemma-2-9b-it": {
+   "cells": 2193,
+   "input_per_m": 0.02,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.036
+  },
+  "glm-4.6": {
+   "cells": 1551,
+   "input_per_m": 0.5,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 1.9
+  },
+  "gpt-4.1": {
+   "cells": 1218,
+   "input_per_m": 2.0,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 8.0
+  },
+  "gpt-5": {
+   "cells": 1555,
+   "input_per_m": 1.25,
+   "max_abs_rel_residual": 0.000208,
+   "output_per_m": 10.000001
+  },
+  "gpt-5-chat": {
+   "cells": 1717,
+   "input_per_m": 1.25,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 10.0
+  },
+  "intern-s1": {
+   "cells": 1540,
+   "input_per_m": 0.18,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.54
+  },
+  "intern-s1-new": {
+   "cells": 917,
+   "input_per_m": 0.18,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.54
+  },
+  "kimi-k2-0905": {
+   "cells": 1553,
+   "input_per_m": 0.5,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 2.0
+  },
+  "qwen3-235b-a22b-2507": {
+   "cells": 1554,
+   "input_per_m": 0.129996,
+   "max_abs_rel_residual": 0.789412,
+   "output_per_m": 0.601242
+  },
+  "qwen3-235b-a22b-no-thinking": {
+   "cells": 1055,
+   "input_per_m": 0.18,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.54
+  },
+  "qwen3-235b-a22b-thinking": {
+   "cells": 1055,
+   "input_per_m": 0.18,
+   "max_abs_rel_residual": 0.0,
+   "output_per_m": 0.54
+  },
+  "qwen3-235b-a22b-thinking-2507": {
+   "cells": 1363,
+   "input_per_m": 0.614464,
+   "max_abs_rel_residual": 1.671474,
+   "output_per_m": 1.435902
+  }
+ },
+ "model_names_vs_crb": {
+  "crb_models": [
+   "MiniMax-M2.7",
+   "Qwen3-Max",
+   "claude-opus-4-6",
+   "claude-sonnet-4-6",
+   "glm-5",
+   "gpt-5.4",
+   "kimi-k2.5",
+   "qwen3.5-plus"
+  ],
+  "exact_name_matches": [],
+  "lrb_models": [
+   "DeepHermes-3-Llama-3-8B-Preview",
+   "DeepSeek-R1-0528-Qwen3-8B",
+   "DeepSeek-R1-Distill-Qwen-7B",
+   "Fin-R1",
+   "GLM-Z1-9B-0414",
+   "Intern-S1-mini",
+   "Llama-3.1-8B-Instruct",
+   "Llama-3.1-8B-UltraMedical",
+   "Llama-3.1-Nemotron-Nano-8B-v1",
+   "MiMo-7B-RL-0530",
+   "MiniCPM4.1-8B",
+   "NVIDIA-Nemotron-Nano-9B-v2",
+   "OpenThinker3-7B",
+   "Qwen2.5-Coder-7B-Instruct",
+   "Qwen3-8B",
+   "claude-opus-4.1",
+   "claude-sonnet-4",
+   "cogito-v1-preview-llama-8B",
+   "deepseek-r1-0528",
+   "deepseek-v3-0324",
+   "deepseek-v3.1-terminus",
+   "gemini-2.5-flash",
+   "gemini-2.5-pro",
+   "gemma-2-9b-it",
+   "glm-4-9b-chat",
+   "glm-4.6",
+   "gpt-4.1",
+   "gpt-5",
+   "gpt-5-chat",
+   "granite-3.3-8b-instruct",
+   "intern-s1",
+   "intern-s1-new",
+   "internlm3-8b-instruct",
+   "kimi-k2-0905",
+   "qwen3-235b-a22b-2507",
+   "qwen3-235b-a22b-no-thinking",
+   "qwen3-235b-a22b-thinking",
+   "qwen3-235b-a22b-thinking-2507"
+  ]
+ },
+ "per_model": {
+  "lrb_humaneval": {
+   "DeepHermes-3-Llama-3-8B-Preview": {
+    "available_cells": 164,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.000212,
+    "mean_input_tokens": 338.981707,
+    "mean_output_tokens": 1835.445122,
+    "pass_rate": 0.512195
+   },
+   "DeepSeek-R1-0528-Qwen3-8B": {
+    "available_cells": 164,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.000733,
+    "mean_input_tokens": 344.969512,
+    "mean_output_tokens": 6566.939024,
+    "pass_rate": 0.25
+   },
+   "DeepSeek-R1-Distill-Qwen-7B": {
+    "available_cells": 164,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.000561,
+    "mean_input_tokens": 346.969512,
+    "mean_output_tokens": 5467.164634,
+    "pass_rate": 0.45122
+   },
+   "Fin-R1": {
+    "available_cells": 164,
+    "cost_excluded": false,
+    "mean_cost_usd": 8.9e-05,
+    "mean_input_tokens": 370.969512,
+    "mean_output_tokens": 742.810976,
+    "pass_rate": 0.77439
+   },
+   "GLM-Z1-9B-0414": {
+    "available_cells": 164,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 338.902439,
+    "mean_output_tokens": 6016.737805,
+    "pass_rate": 0.603659
+   },
+   "Intern-S1-mini": {
+    "available_cells": 164,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.002088,
+    "mean_input_tokens": 411.969512,
+    "mean_output_tokens": 15023.871951,
+    "pass_rate": 0.432927
+   },
+   "Llama-3.1-8B-Instruct": {
+    "available_cells": 164,
+    "cost_excluded": false,
+    "mean_cost_usd": 1.2e-05,
+    "mean_input_tokens": 363.981707,
+    "mean_output_tokens": 314.52439,
+    "pass_rate": 0.615854
+   },
+   "Llama-3.1-8B-UltraMedical": {
+    "available_cells": 164,
+    "cost_excluded": false,
+    "mean_cost_usd": 1.4e-05,
+    "mean_input_tokens": 338.981707,
+    "mean_output_tokens": 453.676829,
+    "pass_rate": 0.560976
+   },
+   "Llama-3.1-Nemotron-Nano-8B-v1": {
+    "available_cells": 164,
+    "cost_excluded": false,
+    "mean_cost_usd": 6.2e-05,
+    "mean_input_tokens": 343.981707,
+    "mean_output_tokens": 2841.439024,
+    "pass_rate": 0.628049
+   },
+   "MiMo-7B-RL-0530": {
+    "available_cells": 164,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 366.969512,
+    "mean_output_tokens": 2006.060976,
+    "pass_rate": 0.52439
+   },
+   "MiniCPM4.1-8B": {
+    "available_cells": 164,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 409.859756,
+    "mean_output_tokens": 9301.597561,
+    "pass_rate": 0.329268
+   },
+   "NVIDIA-Nemotron-Nano-9B-v2": {
+    "available_cells": 164,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.00068,
+    "mean_input_tokens": 363.359756,
+    "mean_output_tokens": 4157.04878,
+    "pass_rate": 0.481707
+   },
+   "OpenThinker3-7B": {
+    "available_cells": 164,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 370.969512,
+    "mean_output_tokens": 7405.237805,
+    "pass_rate": 0.073171
+   },
+   "Qwen2.5-Coder-7B-Instruct": {
+    "available_cells": 164,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 370.969512,
+    "mean_output_tokens": 382.036585,
+    "pass_rate": 0.77439
+   },
+   "Qwen3-8B": {
+    "available_cells": 164,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.0008,
+    "mean_input_tokens": 349.969512,
+    "mean_output_tokens": 5706.27439,
+    "pass_rate": 0.621951
+   },
+   "cogito-v1-preview-llama-8B": {
+    "available_cells": 164,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 338.981707,
+    "mean_output_tokens": 648.481707,
+    "pass_rate": 0.695122
+   },
+   "gemma-2-9b-it": {
+    "available_cells": 164,
+    "cost_excluded": false,
+    "mean_cost_usd": 2.9e-05,
+    "mean_input_tokens": 371.353659,
+    "mean_output_tokens": 610.530488,
+    "pass_rate": 0.646341
+   },
+   "glm-4-9b-chat": {
+    "available_cells": 164,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 335.335366,
+    "mean_output_tokens": 622.743902,
+    "pass_rate": 0.743902
+   },
+   "gpt-4.1": {
+    "available_cells": 164,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.002574,
+    "mean_input_tokens": 336.762195,
+    "mean_output_tokens": 237.54878,
+    "pass_rate": 0.908537
+   },
+   "gpt-5-chat": {
+    "available_cells": 164,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.004654,
+    "mean_input_tokens": 336.762195,
+    "mean_output_tokens": 423.29878,
+    "pass_rate": 0.786585
+   },
+   "granite-3.3-8b-instruct": {
+    "available_cells": 164,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 408.963415,
+    "mean_output_tokens": 280.658537,
+    "pass_rate": 0.512195
+   },
+   "internlm3-8b-instruct": {
+    "available_cells": 164,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 376.926829,
+    "mean_output_tokens": 516.75,
+    "pass_rate": 0.658537
+   }
+  },
+  "lrb_livecodebench": {
+   "DeepHermes-3-Llama-3-8B-Preview": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 6.5e-05,
+    "mean_input_tokens": 568.866351,
+    "mean_output_tokens": 435.992417,
+    "pass_rate": 0.130806
+   },
+   "DeepSeek-R1-0528-Qwen3-8B": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.001841,
+    "mean_input_tokens": 583.633175,
+    "mean_output_tokens": 16573.298578,
+    "pass_rate": 0.647393
+   },
+   "DeepSeek-R1-Distill-Qwen-7B": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.00171,
+    "mean_input_tokens": 585.633175,
+    "mean_output_tokens": 16861.301422,
+    "pass_rate": 0.411374
+   },
+   "Fin-R1": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.00029,
+    "mean_input_tokens": 609.633175,
+    "mean_output_tokens": 2656.784834,
+    "pass_rate": 0.068246
+   },
+   "GLM-Z1-9B-0414": {
+    "available_cells": 1055,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 571.436967,
+    "mean_output_tokens": 10504.88436,
+    "pass_rate": 0.615166
+   },
+   "Intern-S1-mini": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.00336,
+    "mean_input_tokens": 650.672038,
+    "mean_output_tokens": 24181.34218,
+    "pass_rate": 0.262559
+   },
+   "Llama-3.1-8B-Instruct": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 1.6e-05,
+    "mean_input_tokens": 593.866351,
+    "mean_output_tokens": 334.875829,
+    "pass_rate": 0.167773
+   },
+   "Llama-3.1-8B-UltraMedical": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 1.7e-05,
+    "mean_input_tokens": 568.866351,
+    "mean_output_tokens": 405.065403,
+    "pass_rate": 0.133649
+   },
+   "Llama-3.1-Nemotron-Nano-8B-v1": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.000117,
+    "mean_input_tokens": 573.866351,
+    "mean_output_tokens": 5394.769668,
+    "pass_rate": 0.460664
+   },
+   "MiMo-7B-RL-0530": {
+    "available_cells": 1055,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 605.633175,
+    "mean_output_tokens": 2007.480569,
+    "pass_rate": 0.064455
+   },
+   "MiniCPM4.1-8B": {
+    "available_cells": 1055,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 669.796209,
+    "mean_output_tokens": 16681.675829,
+    "pass_rate": 0.636967
+   },
+   "NVIDIA-Nemotron-Nano-9B-v2": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.002434,
+    "mean_input_tokens": 598.751659,
+    "mean_output_tokens": 15064.166825,
+    "pass_rate": 0.654976
+   },
+   "OpenThinker3-7B": {
+    "available_cells": 1055,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 609.633175,
+    "mean_output_tokens": 14560.944076,
+    "pass_rate": 0.441706
+   },
+   "Qwen2.5-Coder-7B-Instruct": {
+    "available_cells": 1055,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 609.633175,
+    "mean_output_tokens": 273.536493,
+    "pass_rate": 0.278673
+   },
+   "Qwen3-8B": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.001767,
+    "mean_input_tokens": 588.633175,
+    "mean_output_tokens": 12652.899526,
+    "pass_rate": 0.676777
+   },
+   "claude-sonnet-4": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.013462,
+    "mean_input_tokens": 622.72891,
+    "mean_output_tokens": 772.90237,
+    "pass_rate": 0.581043
+   },
+   "cogito-v1-preview-llama-8B": {
+    "available_cells": 1055,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 568.866351,
+    "mean_output_tokens": 746.937441,
+    "pass_rate": 0.172512
+   },
+   "deepseek-r1-0528": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.028872,
+    "mean_input_tokens": 564.011374,
+    "mean_output_tokens": 13297.817062,
+    "pass_rate": 0.800948
+   },
+   "deepseek-v3-0324": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.001447,
+    "mean_input_tokens": 564.011374,
+    "mean_output_tokens": 1484.202844,
+    "pass_rate": 0.666351
+   },
+   "deepseek-v3.1-terminus": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.001125,
+    "mean_input_tokens": 565.011374,
+    "mean_output_tokens": 972.384834,
+    "pass_rate": 0.672986
+   },
+   "gemini-2.5-flash": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.005834,
+    "mean_input_tokens": 608.131754,
+    "mean_output_tokens": 3134.305213,
+    "pass_rate": 0.6
+   },
+   "gemini-2.5-pro": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.135154,
+    "mean_input_tokens": 543.296682,
+    "mean_output_tokens": 13447.479621,
+    "pass_rate": 0.791469
+   },
+   "gemma-2-9b-it": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 2.4e-05,
+    "mean_input_tokens": 618.131754,
+    "mean_output_tokens": 310.418009,
+    "pass_rate": 0.172512
+   },
+   "glm-4-9b-chat": {
+    "available_cells": 1055,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 567.436967,
+    "mean_output_tokens": 285.837915,
+    "pass_rate": 0.16872
+   },
+   "glm-4.6": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.002202,
+    "mean_input_tokens": 568.966825,
+    "mean_output_tokens": 1009.167773,
+    "pass_rate": 0.63128
+   },
+   "gpt-4.1": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.004027,
+    "mean_input_tokens": 565.709005,
+    "mean_output_tokens": 361.930806,
+    "pass_rate": 0.545972
+   },
+   "gpt-5": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.052053,
+    "mean_input_tokens": 569.07109,
+    "mean_output_tokens": 5134.211374,
+    "pass_rate": 0.864455
+   },
+   "gpt-5-chat": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.003806,
+    "mean_input_tokens": 570.07109,
+    "mean_output_tokens": 309.381043,
+    "pass_rate": 0.621801
+   },
+   "granite-3.3-8b-instruct": {
+    "available_cells": 1055,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 695.565877,
+    "mean_output_tokens": 280.275829,
+    "pass_rate": 0.14218
+   },
+   "intern-s1": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.006733,
+    "mean_input_tokens": 737.672038,
+    "mean_output_tokens": 12222.295735,
+    "pass_rate": 0.491943
+   },
+   "intern-s1-new": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.004532,
+    "mean_input_tokens": 545.886256,
+    "mean_output_tokens": 8211.161137,
+    "pass_rate": 0.756398
+   },
+   "internlm3-8b-instruct": {
+    "available_cells": 1055,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 636.627488,
+    "mean_output_tokens": 501.907109,
+    "pass_rate": 0.212322
+   },
+   "kimi-k2-0905": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.003681,
+    "mean_input_tokens": 578.892891,
+    "mean_output_tokens": 1695.859716,
+    "pass_rate": 0.672986
+   },
+   "qwen3-235b-a22b-2507": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.00099,
+    "mean_input_tokens": 593.649289,
+    "mean_output_tokens": 1508.890047,
+    "pass_rate": 0.641706
+   },
+   "qwen3-235b-a22b-no-thinking": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.000277,
+    "mean_input_tokens": 591.633175,
+    "mean_output_tokens": 316.665403,
+    "pass_rate": 0.50237
+   },
+   "qwen3-235b-a22b-thinking": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.005688,
+    "mean_input_tokens": 588.633175,
+    "mean_output_tokens": 10337.023697,
+    "pass_rate": 0.781043
+   },
+   "qwen3-235b-a22b-thinking-2507": {
+    "available_cells": 1055,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.013968,
+    "mean_input_tokens": 507.41327,
+    "mean_output_tokens": 9236.147867,
+    "pass_rate": 0.783886
+   }
+  },
+  "lrb_mbpp": {
+   "DeepHermes-3-Llama-3-8B-Preview": {
+    "available_cells": 974,
+    "cost_excluded": false,
+    "mean_cost_usd": 1.3e-05,
+    "mean_input_tokens": 128.556468,
+    "mean_output_tokens": 78.862423,
+    "pass_rate": 0.540041
+   },
+   "DeepSeek-R1-0528-Qwen3-8B": {
+    "available_cells": 974,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.000512,
+    "mean_input_tokens": 131.259754,
+    "mean_output_tokens": 4621.150924,
+    "pass_rate": 0.350103
+   },
+   "DeepSeek-R1-Distill-Qwen-7B": {
+    "available_cells": 974,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.000511,
+    "mean_input_tokens": 133.259754,
+    "mean_output_tokens": 5053.696099,
+    "pass_rate": 0.535934
+   },
+   "Fin-R1": {
+    "available_cells": 974,
+    "cost_excluded": false,
+    "mean_cost_usd": 8.3e-05,
+    "mean_input_tokens": 157.259754,
+    "mean_output_tokens": 764.854209,
+    "pass_rate": 0.689938
+   },
+   "GLM-Z1-9B-0414": {
+    "available_cells": 974,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 128.734086,
+    "mean_output_tokens": 7407.678645,
+    "pass_rate": 0.629363
+   },
+   "Intern-S1-mini": {
+    "available_cells": 974,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.002274,
+    "mean_input_tokens": 198.259754,
+    "mean_output_tokens": 16426.103696,
+    "pass_rate": 0.440452
+   },
+   "Llama-3.1-8B-Instruct": {
+    "available_cells": 974,
+    "cost_excluded": false,
+    "mean_cost_usd": 1.1e-05,
+    "mean_input_tokens": 153.556468,
+    "mean_output_tokens": 438.649897,
+    "pass_rate": 0.606776
+   },
+   "Llama-3.1-8B-UltraMedical": {
+    "available_cells": 974,
+    "cost_excluded": false,
+    "mean_cost_usd": 1.1e-05,
+    "mean_input_tokens": 128.556468,
+    "mean_output_tokens": 436.451745,
+    "pass_rate": 0.539014
+   },
+   "Llama-3.1-Nemotron-Nano-8B-v1": {
+    "available_cells": 974,
+    "cost_excluded": false,
+    "mean_cost_usd": 6e-05,
+    "mean_input_tokens": 133.556468,
+    "mean_output_tokens": 2912.755647,
+    "pass_rate": 0.61499
+   },
+   "MiMo-7B-RL-0530": {
+    "available_cells": 974,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 153.259754,
+    "mean_output_tokens": 1914.694045,
+    "pass_rate": 0.567762
+   },
+   "MiniCPM4.1-8B": {
+    "available_cells": 974,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 154.032854,
+    "mean_output_tokens": 5599.392197,
+    "pass_rate": 0.340862
+   },
+   "NVIDIA-Nemotron-Nano-9B-v2": {
+    "available_cells": 974,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.000808,
+    "mean_input_tokens": 143.725873,
+    "mean_output_tokens": 5014.871663,
+    "pass_rate": 0.420945
+   },
+   "OpenThinker3-7B": {
+    "available_cells": 974,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 157.259754,
+    "mean_output_tokens": 7286.812115,
+    "pass_rate": 0.11807
+   },
+   "Qwen2.5-Coder-7B-Instruct": {
+    "available_cells": 974,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 157.259754,
+    "mean_output_tokens": 357.106776,
+    "pass_rate": 0.759754
+   },
+   "Qwen3-8B": {
+    "available_cells": 974,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.000859,
+    "mean_input_tokens": 136.259754,
+    "mean_output_tokens": 6190.488706,
+    "pass_rate": 0.547228
+   },
+   "cogito-v1-preview-llama-8B": {
+    "available_cells": 974,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 128.556468,
+    "mean_output_tokens": 570.934292,
+    "pass_rate": 0.519507
+   },
+   "gemma-2-9b-it": {
+    "available_cells": 974,
+    "cost_excluded": false,
+    "mean_cost_usd": 2.2e-05,
+    "mean_input_tokens": 143.919918,
+    "mean_output_tokens": 519.304928,
+    "pass_rate": 0.62423
+   },
+   "glm-4-9b-chat": {
+    "available_cells": 974,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 124.76078,
+    "mean_output_tokens": 341.455852,
+    "pass_rate": 0.628337
+   },
+   "granite-3.3-8b-instruct": {
+    "available_cells": 974,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 196.460986,
+    "mean_output_tokens": 334.732033,
+    "pass_rate": 0.365503
+   },
+   "internlm3-8b-instruct": {
+    "available_cells": 973,
+    "cost_excluded": true,
+    "mean_cost_usd": null,
+    "mean_input_tokens": 144.99384,
+    "mean_output_tokens": 113.668378,
+    "pass_rate": 0.605344
+   }
+  },
+  "lrb_swebench_verified": {
+   "claude-opus-4.1": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.367136,
+    "mean_input_tokens": 20642.652,
+    "mean_output_tokens": 871.986,
+    "pass_rate": 0.416
+   },
+   "claude-sonnet-4": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.071432,
+    "mean_input_tokens": 20642.652,
+    "mean_output_tokens": 738.98,
+    "pass_rate": 0.346
+   },
+   "deepseek-r1-0528": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.020062,
+    "mean_input_tokens": 17712.098,
+    "mean_output_tokens": 5334.42,
+    "pass_rate": 0.286
+   },
+   "deepseek-v3-0324": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.004612,
+    "mean_input_tokens": 17716.942,
+    "mean_output_tokens": 357.836,
+    "pass_rate": 0.25
+   },
+   "deepseek-v3.1-terminus": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.004597,
+    "mean_input_tokens": 17718.106,
+    "mean_output_tokens": 714.814,
+    "pass_rate": 0.254
+   },
+   "gemini-2.5-flash": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.007889,
+    "mean_input_tokens": 22642.674,
+    "mean_output_tokens": 438.422,
+    "pass_rate": 0.182
+   },
+   "gemini-2.5-pro": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.160631,
+    "mean_input_tokens": 22646.402,
+    "mean_output_tokens": 13116.094,
+    "pass_rate": 0.346
+   },
+   "glm-4.6": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.010193,
+    "mean_input_tokens": 17569.936,
+    "mean_output_tokens": 879.686,
+    "pass_rate": 0.218
+   },
+   "gpt-5": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.048542,
+    "mean_input_tokens": 16948.976,
+    "mean_output_tokens": 2735.578,
+    "pass_rate": 0.158
+   },
+   "gpt-5-chat": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.023034,
+    "mean_input_tokens": 16890.21,
+    "mean_output_tokens": 290.448,
+    "pass_rate": 0.088
+   },
+   "intern-s1": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.005715,
+    "mean_input_tokens": 16847.432,
+    "mean_output_tokens": 5143.0,
+    "pass_rate": 0.078
+   },
+   "kimi-k2-0905": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.009588,
+    "mean_input_tokens": 16881.71,
+    "mean_output_tokens": 705.052,
+    "pass_rate": 0.234
+   },
+   "qwen3-235b-a22b-2507": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.002725,
+    "mean_input_tokens": 19796.634,
+    "mean_output_tokens": 366.926,
+    "pass_rate": 0.162
+   },
+   "qwen3-235b-a22b-thinking-2507": {
+    "available_cells": 500,
+    "cost_excluded": false,
+    "mean_cost_usd": 0.017758,
+    "mean_input_tokens": 13847.474,
+    "mean_output_tokens": 4745.394,
+    "pass_rate": 0.214
+   }
+  }
+ },
+ "pin": {
+  "archive": "NPULH/LLMRouterBench@b95870f9e60c589e82f7972c91ffa8de9ca89f85",
+  "tarball_sha256": "b79f8cde1a6f029c2efa663a3a3b6f7748defb22341fe59f328cebef6648c8f1"
+ },
+ "presence": {
+  "cell_density": 0.675465,
+  "matrix": {
+   "DeepHermes-3-Llama-3-8B-Preview": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "DeepSeek-R1-0528-Qwen3-8B": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "DeepSeek-R1-Distill-Qwen-7B": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "Fin-R1": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "GLM-Z1-9B-0414": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "Intern-S1-mini": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "Llama-3.1-8B-Instruct": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "Llama-3.1-8B-UltraMedical": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "Llama-3.1-Nemotron-Nano-8B-v1": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "MiMo-7B-RL-0530": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "MiniCPM4.1-8B": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "NVIDIA-Nemotron-Nano-9B-v2": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "OpenThinker3-7B": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "Qwen2.5-Coder-7B-Instruct": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "Qwen3-8B": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "claude-opus-4.1": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": false,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   },
+   "claude-sonnet-4": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   },
+   "cogito-v1-preview-llama-8B": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "deepseek-r1-0528": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   },
+   "deepseek-v3-0324": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   },
+   "deepseek-v3.1-terminus": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   },
+   "gemini-2.5-flash": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   },
+   "gemini-2.5-pro": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   },
+   "gemma-2-9b-it": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "glm-4-9b-chat": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "glm-4.6": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   },
+   "gpt-4.1": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": false
+   },
+   "gpt-5": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   },
+   "gpt-5-chat": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   },
+   "granite-3.3-8b-instruct": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "intern-s1": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   },
+   "intern-s1-new": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": false
+   },
+   "internlm3-8b-instruct": {
+    "lrb_humaneval": true,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": true,
+    "lrb_swebench_verified": false
+   },
+   "kimi-k2-0905": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   },
+   "qwen3-235b-a22b-2507": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   },
+   "qwen3-235b-a22b-no-thinking": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": false
+   },
+   "qwen3-235b-a22b-thinking": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": false
+   },
+   "qwen3-235b-a22b-thinking-2507": {
+    "lrb_humaneval": false,
+    "lrb_livecodebench": true,
+    "lrb_mbpp": false,
+    "lrb_swebench_verified": true
+   }
+  },
+  "models": 38,
+  "models_in_all_subsets": [],
+  "presence_density": 0.611842,
+  "shared_models_per_pair": {
+   "lrb_humaneval&lrb_livecodebench": [
+    "DeepHermes-3-Llama-3-8B-Preview",
+    "DeepSeek-R1-0528-Qwen3-8B",
+    "DeepSeek-R1-Distill-Qwen-7B",
+    "Fin-R1",
+    "GLM-Z1-9B-0414",
+    "Intern-S1-mini",
+    "Llama-3.1-8B-Instruct",
+    "Llama-3.1-8B-UltraMedical",
+    "Llama-3.1-Nemotron-Nano-8B-v1",
+    "MiMo-7B-RL-0530",
+    "MiniCPM4.1-8B",
+    "NVIDIA-Nemotron-Nano-9B-v2",
+    "OpenThinker3-7B",
+    "Qwen2.5-Coder-7B-Instruct",
+    "Qwen3-8B",
+    "cogito-v1-preview-llama-8B",
+    "gemma-2-9b-it",
+    "glm-4-9b-chat",
+    "gpt-4.1",
+    "gpt-5-chat",
+    "granite-3.3-8b-instruct",
+    "internlm3-8b-instruct"
+   ],
+   "lrb_humaneval&lrb_mbpp": [
+    "DeepHermes-3-Llama-3-8B-Preview",
+    "DeepSeek-R1-0528-Qwen3-8B",
+    "DeepSeek-R1-Distill-Qwen-7B",
+    "Fin-R1",
+    "GLM-Z1-9B-0414",
+    "Intern-S1-mini",
+    "Llama-3.1-8B-Instruct",
+    "Llama-3.1-8B-UltraMedical",
+    "Llama-3.1-Nemotron-Nano-8B-v1",
+    "MiMo-7B-RL-0530",
+    "MiniCPM4.1-8B",
+    "NVIDIA-Nemotron-Nano-9B-v2",
+    "OpenThinker3-7B",
+    "Qwen2.5-Coder-7B-Instruct",
+    "Qwen3-8B",
+    "cogito-v1-preview-llama-8B",
+    "gemma-2-9b-it",
+    "glm-4-9b-chat",
+    "granite-3.3-8b-instruct",
+    "internlm3-8b-instruct"
+   ],
+   "lrb_humaneval&lrb_swebench_verified": [
+    "gpt-5-chat"
+   ],
+   "lrb_livecodebench&lrb_mbpp": [
+    "DeepHermes-3-Llama-3-8B-Preview",
+    "DeepSeek-R1-0528-Qwen3-8B",
+    "DeepSeek-R1-Distill-Qwen-7B",
+    "Fin-R1",
+    "GLM-Z1-9B-0414",
+    "Intern-S1-mini",
+    "Llama-3.1-8B-Instruct",
+    "Llama-3.1-8B-UltraMedical",
+    "Llama-3.1-Nemotron-Nano-8B-v1",
+    "MiMo-7B-RL-0530",
+    "MiniCPM4.1-8B",
+    "NVIDIA-Nemotron-Nano-9B-v2",
+    "OpenThinker3-7B",
+    "Qwen2.5-Coder-7B-Instruct",
+    "Qwen3-8B",
+    "cogito-v1-preview-llama-8B",
+    "gemma-2-9b-it",
+    "glm-4-9b-chat",
+    "granite-3.3-8b-instruct",
+    "internlm3-8b-instruct"
+   ],
+   "lrb_livecodebench&lrb_swebench_verified": [
+    "claude-sonnet-4",
+    "deepseek-r1-0528",
+    "deepseek-v3-0324",
+    "deepseek-v3.1-terminus",
+    "gemini-2.5-flash",
+    "gemini-2.5-pro",
+    "glm-4.6",
+    "gpt-5",
+    "gpt-5-chat",
+    "intern-s1",
+    "kimi-k2-0905",
+    "qwen3-235b-a22b-2507",
+    "qwen3-235b-a22b-thinking-2507"
+   ],
+   "lrb_mbpp&lrb_swebench_verified": []
+  }
+ },
+ "raw_counts_with_router_baseline": {
+  "cells": 70678,
+  "files": 95,
+  "models": 39,
+  "models_in_all_four": 0,
+  "null_scores": 1,
+  "presence_density": 0.608974
+ },
+ "router_baselines_excluded": [
+  "openrouter"
+ ],
+ "source_keys": {
+  "lrb_humaneval": {
+   "distinct": 164,
+   "mapped": 164,
+   "method": "he/N: origin_query equals the `prompt` of exactly one task in the pinned openai_humaneval extract (HumanEval/N).",
+   "tasks": 164
+  },
+  "lrb_livecodebench": {
+   "distinct": 1055,
+   "mapped": 1055,
+   "method": "lcb/<question_id>: origin_query equals the `question_content` of exactly one problem in the pinned livecodebench extract (release v1-v6).",
+   "tasks": 1055
+  },
+  "lrb_mbpp": {
+   "distinct": 974,
+   "mapped": 974,
+   "method": "mbpp/N: the record prompt equals, after collapsing whitespace, LLMRouterBench's MBPP template (mbpp.py l.14-19) filled with the `text` and `test_list` of exactly one task in the pinned mbpp_full extract. The text alone is shared by four pairs of MBPP tasks; the tests separate them.",
+   "tasks": 974
+  },
+  "lrb_swebench_verified": {
+   "distinct": 500,
+   "mapped": 500,
+   "method": "swe/<instance_id>: the record's own `instance_id`, checked against the pinned swebench_verified_ids extract.",
+   "tasks": 500
+  }
+ },
+ "subsets": {
+  "lrb_humaneval": {
+   "cells": 3608,
+   "density": 1.0,
+   "distinct_score_values": [
+    0.0,
+    1.0
+   ],
+   "models": 22,
+   "null_scores": 0,
+   "partial_zero_cost_models": {},
+   "subset": "humaneval/test",
+   "tasks": 164,
+   "zero_cost_models": [
+    "GLM-Z1-9B-0414",
+    "MiMo-7B-RL-0530",
+    "MiniCPM4.1-8B",
+    "OpenThinker3-7B",
+    "Qwen2.5-Coder-7B-Instruct",
+    "cogito-v1-preview-llama-8B",
+    "glm-4-9b-chat",
+    "granite-3.3-8b-instruct",
+    "internlm3-8b-instruct"
+   ],
+   "zero_file_cost_models": [
+    "GLM-Z1-9B-0414",
+    "MiMo-7B-RL-0530",
+    "MiniCPM4.1-8B",
+    "OpenThinker3-7B",
+    "Qwen2.5-Coder-7B-Instruct",
+    "cogito-v1-preview-llama-8B",
+    "glm-4-9b-chat",
+    "granite-3.3-8b-instruct",
+    "internlm3-8b-instruct"
+   ]
+  },
+  "lrb_livecodebench": {
+   "cells": 39035,
+   "density": 1.0,
+   "distinct_score_values": [
+    0.0,
+    1.0
+   ],
+   "models": 37,
+   "null_scores": 0,
+   "partial_zero_cost_models": {
+    "gemini-2.5-pro": [
+     95,
+     1055
+    ],
+    "glm-4.6": [
+     3,
+     1055
+    ],
+    "gpt-4.1": [
+     1,
+     1055
+    ],
+    "intern-s1-new": [
+     138,
+     1055
+    ],
+    "kimi-k2-0905": [
+     1,
+     1055
+    ],
+    "qwen3-235b-a22b-thinking-2507": [
+     117,
+     1055
+    ]
+   },
+   "subset": "livecodebench/test",
+   "tasks": 1055,
+   "zero_cost_models": [
+    "GLM-Z1-9B-0414",
+    "MiMo-7B-RL-0530",
+    "MiniCPM4.1-8B",
+    "OpenThinker3-7B",
+    "Qwen2.5-Coder-7B-Instruct",
+    "cogito-v1-preview-llama-8B",
+    "glm-4-9b-chat",
+    "granite-3.3-8b-instruct",
+    "internlm3-8b-instruct"
+   ],
+   "zero_file_cost_models": [
+    "GLM-Z1-9B-0414",
+    "MiMo-7B-RL-0530",
+    "MiniCPM4.1-8B",
+    "OpenThinker3-7B",
+    "Qwen2.5-Coder-7B-Instruct",
+    "cogito-v1-preview-llama-8B",
+    "glm-4-9b-chat",
+    "granite-3.3-8b-instruct",
+    "internlm3-8b-instruct"
+   ]
+  },
+  "lrb_mbpp": {
+   "cells": 19480,
+   "density": 1.0,
+   "distinct_score_values": [
+    0.0,
+    1.0
+   ],
+   "models": 20,
+   "null_scores": 1,
+   "partial_zero_cost_models": {},
+   "subset": "mbpp/test",
+   "tasks": 974,
+   "zero_cost_models": [
+    "GLM-Z1-9B-0414",
+    "MiMo-7B-RL-0530",
+    "MiniCPM4.1-8B",
+    "OpenThinker3-7B",
+    "Qwen2.5-Coder-7B-Instruct",
+    "cogito-v1-preview-llama-8B",
+    "glm-4-9b-chat",
+    "granite-3.3-8b-instruct",
+    "internlm3-8b-instruct"
+   ],
+   "zero_file_cost_models": [
+    "GLM-Z1-9B-0414",
+    "MiMo-7B-RL-0530",
+    "MiniCPM4.1-8B",
+    "OpenThinker3-7B",
+    "Qwen2.5-Coder-7B-Instruct",
+    "cogito-v1-preview-llama-8B",
+    "glm-4-9b-chat",
+    "granite-3.3-8b-instruct",
+    "internlm3-8b-instruct"
+   ]
+  },
+  "lrb_swebench_verified": {
+   "cells": 7000,
+   "density": 1.0,
+   "distinct_score_values": [
+    0.0,
+    1.0
+   ],
+   "models": 14,
+   "null_scores": 0,
+   "partial_zero_cost_models": {
+    "claude-opus-4.1": [
+     1,
+     500
+    ],
+    "claude-sonnet-4": [
+     1,
+     500
+    ],
+    "deepseek-r1-0528": [
+     1,
+     500
+    ],
+    "deepseek-v3-0324": [
+     1,
+     500
+    ],
+    "deepseek-v3.1-terminus": [
+     1,
+     500
+    ],
+    "glm-4.6": [
+     1,
+     500
+    ],
+    "gpt-5-chat": [
+     2,
+     500
+    ],
+    "intern-s1": [
+     15,
+     500
+    ],
+    "kimi-k2-0905": [
+     1,
+     500
+    ],
+    "qwen3-235b-a22b-2507": [
+     1,
+     500
+    ],
+    "qwen3-235b-a22b-thinking-2507": [
+     75,
+     500
+    ]
+   },
+   "subset": "swe-bench/verified",
+   "tasks": 500,
+   "zero_cost_models": [],
+   "zero_file_cost_models": []
+  }
+ },
+ "thresholds": {
+  "cap_min_cells": 2,
+  "far_below_median": 0.5,
+  "near_zero_pass": 0.02,
+  "success_score": 1.0
+ }
+}
