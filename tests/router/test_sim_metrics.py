@@ -60,7 +60,7 @@ def test_metric_separation_on_partial_credit():
 
 def test_claim_metrics_refuse_the_paper_view():
     m = tiny("crb/id_test/paper")
-    res = replay(SingleChoice(lambda t, a: "strong"), ReplayView.from_matrix(m),
+    res = replay(SingleChoice(lambda t, a: "strong", verify=True), ReplayView.from_matrix(m),
                  ReplayVerifier(tiny_verdicts(m)), seed=0)
     with pytest.raises(ValueError, match="paper view"):
         metrics.task_outcomes(res, m)
@@ -114,7 +114,7 @@ def test_cost_at_matched_acceptance():
 
 def test_regret_against_the_cost_aware_oracle():
     m = tiny()
-    _, o = run(m, SingleChoice(lambda t, a: "strong"), probe_usd=1.5, n_probes=3)
+    _, o = run(m, SingleChoice(lambda t, a: "strong", verify=True), probe_usd=1.5, n_probes=3)
     r = metrics.regret(o, m)
     # oracle: a -> cheap (1), b -> none (gives up, 0), c -> strong (10)
     assert r["oracle_cost_usd"] == pytest.approx(11.0)

@@ -19,7 +19,10 @@ What a router sees:
 
 What a router does on each task, one decision at a time (`decide`):
 - name a model to call (each model at most once per task: replay holds one run per cell, so a
-  retry would return the same output; retries are therefore not simulated and count as 0);
+  retry would return the same output; retries are therefore not simulated and count as 0). A bare
+  model name is a verified call: the verifier runs and its verdict comes back. `Call(model,
+  verify=False)` calls without the verifier (direct dispatch): no verifier run is charged and the
+  observation is UNKNOWN with state `not_run`;
 - `Accept(model)` to submit one of the outputs it has called (default: the last one);
 - `GIVE_UP` to submit nothing (C2's give-up action): the task is not accepted, and nothing more is
   spent on it.
@@ -39,9 +42,10 @@ from typing import Mapping, Protocol, Sequence, Union
 import pandas as pd
 
 from router.sim.stats import rng
-from router.sim.verifier import Check, Unavailable
+from router.sim.verifier import UNKNOWN, Check, Unavailable
 
 INFO_FIELDS = ("family", "dimension")
+NOT_RUN = "not_run"          # state of a call made without the verifier
 
 
 # ------------------------------------------------------------------------ router-facing objects
@@ -61,6 +65,13 @@ class Observation:
 
 
 @dataclass(frozen=True)
+class Call:
+    """Call `model`; with `verify=False` the verifier does not run (direct dispatch)."""
+    model: str
+    verify: bool = True
+
+
+@dataclass(frozen=True)
 class Accept:
     model: str | None = None     # None: the last model called
 
@@ -71,7 +82,7 @@ class GiveUp:
 
 
 GIVE_UP = GiveUp()
-Decision = Union[str, Accept, GiveUp]
+Decision = Union[str, Call, Accept, GiveUp]
 
 
 class Router(Protocol):
@@ -178,16 +189,22 @@ def replay(router: Router, view: ReplayView, verifier, *, seed: int,
                     raise ValueError(f"Accept names {final}, which was not called on this task")
                 action = "accept"
                 break
+            verify = True
+            if isinstance(d, Call):
+                d, verify = d.model, d.verify
             if not isinstance(d, str):
                 raise TypeError(f"unknown decision {d!r}")
             if d not in avail:
                 raise ValueError(f"{d} is not available for this task")
             if d in called:
                 raise ValueError(f"{d} was already called on this task (retries are not simulated)")
-            try:
-                c: Check = verifier.check(tid, d)
-            except Unavailable as e:          # guarded above; kept as a hard stop
-                raise AssertionError(str(e)) from e
+            if verify:
+                try:
+                    c: Check = verifier.check(tid, d)
+                except Unavailable as e:          # guarded above; kept as a hard stop
+                    raise AssertionError(str(e)) from e
+            else:
+                c = Check(UNKNOWN, False, NOT_RUN)
             cost = float(view.cost.at[tid, d])
             obs = Observation(handle.key, d, c.verdict, len(history))
             router.feedback(obs)
@@ -210,20 +227,23 @@ def replay(router: Router, view: ReplayView, verifier, *, seed: int,
 
 # ------------------------------------------------------------------------------ simple routers
 class SingleChoice:
-    """Adapter: a policy that picks one model per task, calls it and accepts its output.
+    """Adapter: a policy that picks one model per task, calls it and accepts its output. By
+    default the call is direct dispatch (no verifier, no verifier cost); `verify=True` runs it.
 
     `choose(task, available) -> model` gets the TaskHandle and the available models only."""
 
-    def __init__(self, choose, more_information: tuple[str, ...] = ()):
+    def __init__(self, choose, more_information: tuple[str, ...] = (), verify: bool = False):
         self._choose = choose
         self.more_information = more_information
+        self.verify = verify
 
     def decide(self, task, available, history):
         if history:
             return Accept()
         if not available:
             return GIVE_UP
-        return self._choose(task, available)
+        d = self._choose(task, available)
+        return Call(d, verify=self.verify) if isinstance(d, str) else d
 
     def feedback(self, obs) -> None:
         pass

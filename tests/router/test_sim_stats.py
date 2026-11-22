@@ -245,3 +245,20 @@ def test_cross_fit_rejects_development_tasks_and_bad_rules():
     with pytest.raises(ValueError, match="unique"):
         stats.cross_fit(problems.task_id, [Spy("a", 0), Spy("a", 1)], lambda i: "a",
                         problems=problems, splits=splits)
+
+
+# ------------------------------------------------------------------- development-split folds
+def test_dev_folds_are_problem_grouped_seeded_and_dev_only():
+    t = S.task_splits()
+    dev = t[t.split == S.DEV]
+    ids = dev.task_id.iloc[:400]
+    f0, f0b, f1 = stats.dev_folds(ids, 0), stats.dev_folds(ids, 0), stats.dev_folds(ids, 1)
+    assert f0.equals(f0b) and not f0.equals(f1)
+    assert sorted(f0.unique()) == list(range(N_FOLDS))
+    pid = dev.set_index("task_id").problem_id.loc[ids]
+    assert (pid.groupby(f0.values).apply(set).pipe(
+        lambda s: sum(len(a & b) for i, a in enumerate(s) for b in list(s)[i + 1:])) == 0)
+    assert (f0.groupby(pid.values).nunique() == 1).all()
+    ev = t[t.split == S.EVAL].task_id.iloc[:5]
+    with pytest.raises(stats.EvaluationPopulationRefused):
+        stats.dev_folds(list(ids) + list(ev), 0)

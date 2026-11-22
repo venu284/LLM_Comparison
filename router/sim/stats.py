@@ -11,7 +11,9 @@ What lives here:
   `gate_interval`, which fixes the problem clusters, `N_BOOT_GATE` and `GATE_SEED`;
 - `across_seeds` and `threshold_label`: the five seeds with the gate seed marked (R12), and the
   "at the threshold" reporting label (S0.8, O12);
-- `cross_fit`: the nested cross-fitting driver (S0.6, O7).
+- `cross_fit`: the nested cross-fitting driver (S0.6, O7);
+- `dev_folds`: problem-grouped folds inside the development split, so that S2 and S5 can fit and
+  score baselines out of sample without touching the evaluation population (S0.6, S0.7, R14).
 
 Stream ids (`SeedSequence([seed, id])`). Ids 0 and 1 belong to S1.6 (development split and
 outer folds, `router/data/splits.py`), 100 and up to the S1.7 audit samples. S2 owns 2-99:
@@ -25,7 +27,10 @@ outer folds, `router/data/splits.py`), 100 and up to the S1.7 audit samples. S2 
 | 6 | `bootstrap_task` | paired bootstrap over tasks |
 | 7 | `bootstrap_cluster` | cluster bootstrap over problems |
 | 8 | `tie_break` | random tie-breaks inside baselines |
-| 9-99 | unassigned | add a row here before using one |
+| 9 | `dev_folds` | problem-grouped folds inside the development split (`dev_folds`) |
+| 10 | `route_mixture` | per-task draw of a mixed lookup route (`baselines/lookup.py`) |
+| 11 | `label_shuffle` | shuffled-label check: model permutation per training task (`baselines/run.py`) |
+| 12-99 | unassigned | add a row here before using one |
 
 A seed is the fold assignment plus the stream order plus the probe draw (S0.8); `GATE_SEED` (0) is
 the one gates use, and the other four are reported next to it, never averaged into a gate (R12).
@@ -53,6 +58,9 @@ STREAM_IDS = {
     "bootstrap_task": 6,
     "bootstrap_cluster": 7,
     "tie_break": 8,
+    "dev_folds": 9,
+    "route_mixture": 10,
+    "label_shuffle": 11,
 }
 STREAM_ID_MIN, STREAM_ID_MAX = 2, 99
 SEEDS = tuple(range(N_SEEDS))
@@ -325,3 +333,38 @@ def cross_fit(task_ids, candidates: Sequence[Candidate], select: SelectionRule, 
     scores = scores[["outer_fold", "candidate"] + [c for c in scores.columns
                                                     if c not in ("outer_fold", "candidate")]]
     return CrossFitResult(scores, selected, fits, seed, tuple(names), tag if frozen else None)
+
+
+# ---------------------------------------------------------------------- development-split folds
+def dev_folds(task_ids, seed: int, n_folds: int = N_FOLDS, *, problems: pd.DataFrame | None = None,
+              splits: pd.DataFrame | None = None) -> pd.Series:
+    """Problem-grouped folds inside the development split: task id -> fold 0..n_folds-1.
+
+    The development split has no outer folds (S0.6); these are drawn here, from stream
+    `dev_folds`, over the sorted problem ids of `task_ids`, round-robin after a seeded
+    permutation, so every problem sits in one fold. Every task must be in the development split:
+    a task of the evaluation population is refused (R14), and `splits.r13_violations` runs first.
+    """
+    problems = splits_mod.load_problems() if problems is None else problems
+    splits = splits_mod.load_splits() if splits is None else splits
+    task_ids = pd.Index(task_ids)
+    if task_ids.has_duplicates:
+        raise ValueError("duplicate task ids")
+    if touches_evaluation_population(task_ids, problems):
+        raise EvaluationPopulationRefused("dev_folds takes development-split tasks only (R14)")
+    viol = splits_mod.r13_violations(problems, splits)
+    if viol:
+        raise ValueError(f"R13 violations in the split tables: {viol[:3]} ...")
+    t = splits_mod.task_splits(problems, splits).set_index("task_id")
+    missing = task_ids.difference(t.index)
+    if len(missing):
+        raise KeyError(f"{len(missing)} tasks are not in the problems table, e.g. {list(missing[:3])}")
+    t = t.loc[task_ids]
+    if (t.split != splits_mod.DEV).any():
+        raise ValueError("dev_folds takes development-split tasks only")
+    probs = np.array(sorted(t.problem_id.unique()))
+    if len(probs) < n_folds:
+        raise ValueError(f"{len(probs)} problems cannot fill {n_folds} folds")
+    perm = probs[rng(seed, "dev_folds").permutation(len(probs))]
+    fold_of = {p: i % n_folds for i, p in enumerate(perm)}
+    return pd.Series([fold_of[p] for p in t.problem_id], index=task_ids, name="dev_fold")

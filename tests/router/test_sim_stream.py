@@ -285,3 +285,26 @@ def test_garbage_scores_on_the_development_split_headline_tasks():
         a = replay(make(), ReplayView.from_matrix(sub), rv, seed=0)
         b = replay(make(), ReplayView.from_matrix(toy.with_scores(sub, garbage)), rv, seed=0)
         assert _decisions(a) == _decisions(b)
+
+
+def test_direct_dispatch_runs_no_verifier(m, rv):
+    """`Call(model, verify=False)`: no verifier run is charged and the router learns nothing."""
+    from router.sim.stream import NOT_RUN, Call
+    seen = []
+
+    class Direct:
+        more_information = ()
+
+        def decide(self, task, available, history):
+            return Accept() if history else Call(available[-1], verify=False)
+
+        def feedback(self, obs):
+            seen.append(obs.verdict)
+
+    res = replay(Direct(), ReplayView.from_matrix(m), rv, seed=0)
+    assert set(seen) == {UNKNOWN} and set(res.calls.state) == {NOT_RUN}
+    assert res.tasks.n_verifier_runs.sum() == 0 and not res.calls.verifier_ran.any()
+    verified = replay(SingleChoice(lambda t, a: a[-1], verify=True), ReplayView.from_matrix(m), rv,
+                      seed=0)
+    assert verified.tasks.n_verifier_runs.sum() > 0
+    assert list(verified.calls.model) == list(res.calls.model)
