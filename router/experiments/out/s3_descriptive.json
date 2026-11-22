@@ -1,0 +1,97 @@
+{
+ "checks_against_artefacts": {
+  "filtered_complete_case_no_signal_tasks": {
+   "artefacts_yaml": 1148,
+   "equal": true,
+   "here": 1148
+  },
+  "filtered_complete_case_tasks": {
+   "artefacts_yaml": 1264,
+   "equal": true,
+   "here": 1264
+  },
+  "filtered_signal_cells": {
+   "artefacts_yaml": 956,
+   "equal": true,
+   "here": 956
+  },
+  "filtered_unsolved_lenient": {
+   "artefacts_yaml": 161,
+   "equal": true,
+   "here": 161
+  },
+  "filtered_unsolved_strict": {
+   "artefacts_yaml": 198,
+   "equal": true,
+   "here": 198
+  }
+ },
+ "filtered_equals_headline": true,
+ "historical_old_definition": {
+  "always_usd": 34.02037,
+  "ladder_usd": 41.047805350000004,
+  "perfect_stop_usd": 5.989757520000001,
+  "tasks": 2919,
+  "unsolved_share": 0.3932853717026379
+ },
+ "historical_price_sweep_range": {
+  "all_eligible|main": {
+   "always_usd_max": 65.52785,
+   "always_usd_min": 16.3819625,
+   "ladder_usd_max": 116.15905669,
+   "ladder_usd_min": 82.41043669000001,
+   "perfect_stop_usd_max": 9.96720577,
+   "perfect_stop_usd_min": 7.68931927
+  },
+  "filtered = headline|main": {
+   "always_usd_max": 14.45867,
+   "always_usd_min": 3.6146675,
+   "ladder_usd_max": 11.125092809999998,
+   "ladder_usd_min": 7.66505181,
+   "perfect_stop_usd_max": 5.56281165,
+   "perfect_stop_usd_min": 3.88349715
+  },
+  "sensitivity|main": {
+   "always_usd_max": 28.04319,
+   "always_usd_min": 7.0107975,
+   "ladder_usd_max": 28.05559685,
+   "ladder_usd_min": 18.01673435,
+   "perfect_stop_usd_max": 6.992775160000001,
+   "perfect_stop_usd_min": 4.8713146599999995
+  }
+ },
+ "n_boot": 1000,
+ "notes": [
+  "Qwen3-Max's released cost is a per-dimension constant (S1.7 data note)",
+  "cells: available (not an empty X13 response, not a missing token record) with an X13 record; artefacts.yaml's signal counts keep missing-token cells",
+  "rates with a zero denominator are empty in the CSVs: 'no signal' when there are no signal cells, 'none' when there are cells but no failures or no successes"
+ ],
+ "plan_verifier_bridge": {
+  "no_visible_tests_heuristic": {
+   "cells": 12472,
+   "false_pass_pct": 66.54509283819628,
+   "false_reject_pct": 17.624223602484474
+  },
+  "visible_tests": {
+   "cells": 8420,
+   "false_pass_pct": 14.969393433500278,
+   "false_reject_pct": 26.95814338997099
+  }
+ },
+ "rm_empty_cells": 3330,
+ "spec": "docs/research/S3_analysis_spec.md \u00a75",
+ "views": {
+  "all_eligible": {
+   "task_ids_sha256": "664e091f33844fa559b2021cdf046acd95d88f0e6445b3e2afc376e4da82da56",
+   "tasks": 5626
+  },
+  "filtered = headline": {
+   "task_ids_sha256": "7652b5e1b548894e3d9b92cd7d382a90432877f6f5805948a38bd4552f072d9a",
+   "tasks": 1287
+  },
+  "sensitivity": {
+   "task_ids_sha256": "9f79633f23c5d49fa5c4b8e806e9829224f5ec85d522c0f9c988632dd81f802e",
+   "tasks": 2160
+  }
+ }
+}

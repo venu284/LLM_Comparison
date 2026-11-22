@@ -1,0 +1,33 @@
+view,family,dimension,tasks,share,complete_case_tasks,development_tasks,evaluation_tasks
+all_eligible,bcb,code_generation,675,0.11997867045858514,654,128,547
+all_eligible,bcb_algo2,algorithm,111,0.019729825808745112,107,17,94
+all_eligible,bcb_completion,code_completion,89,0.015819409882687523,89,12,77
+all_eligible,bcb_ds,data_science,111,0.019729825808745112,111,18,93
+all_eligible,bcb_v014,code_generation,111,0.019729825808745112,111,17,94
+all_eligible,cruxeval,code_completion,800,0.14219694276573053,792,151,649
+all_eligible,ds1000,data_science,1000,0.17774617845716317,986,211,789
+all_eligible,he_completion,code_completion,98,0.01741912548880199,96,15,83
+all_eligible,hex_cpp,multi_language,164,0.02915037326697476,164,30,134
+all_eligible,hex_go,multi_language,164,0.02915037326697476,164,30,134
+all_eligible,hex_java,multi_language,164,0.02915037326697476,164,30,134
+all_eligible,hex_js,multi_language,164,0.02915037326697476,164,30,134
+all_eligible,hex_python,multi_language,164,0.02915037326697476,158,30,134
+all_eligible,humaneval,code_generation,100,0.017774617845716316,98,21,79
+all_eligible,lcb,algorithm,1000,0.17774617845716317,419,217,783
+all_eligible,mbpp,code_generation,225,0.03999289015286171,218,52,173
+all_eligible,mbpp_completion,code_completion,124,0.022040526128688235,118,26,98
+all_eligible,multiple_rs,multi_language,156,0.027728403839317455,156,29,127
+all_eligible,multiple_ts,multi_language,135,0.023995734091717028,135,29,106
+all_eligible,swebench,bug_fixing,71,0.012619978670458585,70,11,60
+filtered = headline,cruxeval,code_completion,800,0.6216006216006216,792,151,649
+filtered = headline,he_completion,code_completion,98,0.07614607614607614,96,15,83
+filtered = headline,hex_python,multi_language,164,0.12742812742812742,158,30,134
+filtered = headline,mbpp,code_generation,225,0.17482517482517482,218,52,173
+sensitivity,cruxeval,code_completion,800,0.37037037037037035,792,151,649
+sensitivity,he_completion,code_completion,98,0.04537037037037037,96,15,83
+sensitivity,hex_python,multi_language,164,0.07592592592592592,158,30,134
+sensitivity,humaneval,code_generation,100,0.046296296296296294,98,21,79
+sensitivity,lcb,algorithm,578,0.2675925925925926,204,120,458
+sensitivity,mbpp,code_generation,225,0.10416666666666667,218,52,173
+sensitivity,mbpp_completion,code_completion,124,0.05740740740740741,118,26,98
+sensitivity,swebench,bug_fixing,71,0.03287037037037037,70,11,60
