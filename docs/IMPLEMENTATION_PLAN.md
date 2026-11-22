@@ -14,10 +14,10 @@
 
 | Field | Value |
 |---|---|
-| Current stage | **S1 — Validate data** (§4). Pre-S0 and S0 done; `docs/CLAIMS.md` signed off 2026-11-20 |
-| Next action | S2 checkpoint B (S2.5 baselines, S2.6 reproductions, the S2 gate) on `s2-eval-infra`; checkpoint A (S2.1–S2.4) is reviewed, not merged. S1 and S1.8 are on `main`. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
-| Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0 · Write-up: Report 8 |
-| Last updated | 2026-11-20 |
+| Current stage | **S3 — Analyse data and feasibility** (§4). Pre-S0, S0, S1 (with S1.8) and S2 done; `docs/CLAIMS.md` signed off 2026-11-20 |
+| Next action | S3 (S3.1–S3.7, then DP1a and DP1b) on the development split, using the S2 infrastructure on `main`. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0, S1, S2 · Write-up: Report 8 |
+| Last updated | 2026-11-21 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
 | Budget | $20 for the paid top-rung model in live runs (S0.9) |
 
@@ -862,20 +862,35 @@ edit them.
 ### S2 — Evaluation infrastructure and baselines
 Validated before any analysis that feeds a decision point, so that DP1 does not rest on the
 quick-check code.
-- [~] S2.1 `sim/stream.py` [M2.1]: seeded task order, model-arrival events, bandit feedback only,
+- [x] S2.1 `sim/stream.py` [M2.1]: seeded task order, model-arrival events, bandit feedback only,
       observations as PASS / FAIL / UNKNOWN from the verifier (S0.13). Test: the router never
       receives the released score.
-- [~] S2.2 `sim/verifier.py`: real-verdict replay (S0.11) with per-cell "no signal"; simulated noise
+- [x] S2.2 `sim/verifier.py`: real-verdict replay (S0.11) with per-cell "no signal"; simulated noise
       kept for the E3 sensitivity analysis.
-- [~] S2.3 `sim/metrics.py` [M2.2]: AvgPerf, cost (S0.2), acceptance rate (S0.1), CPAT@floor, cost at
+- [x] S2.3 `sim/metrics.py` [M2.2]: AvgPerf, cost (S0.2), acceptance rate (S0.1), CPAT@floor, cost at
       matched acceptance rate, and regret that includes probe cost in dollars and in probe count.
-- [~] S2.4 `sim/stats.py` [M2.3]: S0.8, plus the development split and nested cross-fitting driver
+- [x] S2.4 `sim/stats.py` [M2.3]: S0.8, plus the development split and nested cross-fitting driver
       of S0.6, including automatic per-fold selection from a frozen candidate list. Reuse
       `splits.load_splits` and `splits.r13_violations`. Stream order and the probe draw under a
       seed use their own SeedSequence stream ids (`[seed, 2]`, `[seed, 3]`, …, at most 99; 100
       and up belong to the S1.7 audit samples); ids 0 and 1
       belong to the development split and the folds (S1.6).
-- [ ] S2.5 Baselines [M2.4]: Always-X, Random, DimensionBest (full, k-matched, cost-aware),
+      **Done 2026-11-21** (S2.1–S2.4; `router/sim/`):
+      - Routers see an opaque task key, the available models and their own verdicts. Cost is
+        withheld from routers, because Qwen3-Max's per-dimension cost would reveal the dimension.
+      - A bare model name is a verified call. `Call(model, verify=False)` is direct dispatch: no
+        verifier run, no verifier cost, an UNKNOWN observation. This follows S0.2, which charges
+        per verifier run. `SingleChoice` dispatches directly by default, as P0.6 did.
+      - Paper metrics live in `sim/paper.py`, which only the reproduction scripts may import;
+        `sim/metrics.py` refuses the paper view.
+      - Gate intervals are fixed to the cluster bootstrap over problems (`N_BOOT` resamples,
+        seed 0).
+      - Stream ids in use: 2–8 (stream order, probes and the other checkpoint A streams),
+        9 `dev_folds`, 10 `route_mixture`, 11 `label_shuffle`.
+      - The 2026-11-10 quick-check simulator and baselines moved unchanged to
+        `router/experiments/m2_quickcheck_sim.py` and `m2_quickcheck_baselines/`; `m2`'s
+        outputs are byte-identical.
+- [x] S2.5 Baselines [M2.4]: Always-X, Random, DimensionBest (full, k-matched, cost-aware),
       CellBest with true source cells (reference) and with predicted cells (the S0.3(c)
       comparator), using a cell predictor that infers dimension × source from the task content
       (`content_text`, the router's field; S1.5) (Route Anything Table 11) with its accuracy
@@ -885,12 +900,55 @@ quick-check code.
       SourceBest (on the S1.1 families), fixed cascade, released ACRouter decisions, LinUCB with
       stated features, kNN on prompt embeddings (joined tasks only). Baselines that use labels the
       router may not use (source, dimension) are labelled as given more information.
-- [ ] S2.6 Tests [M2.5]: oracle 57.00, Always-Opus 43.83 and released ACRouter 50.14 reproduced on
+      **Done 2026-11-21** (`router/baselines/`; development results in
+      `router/experiments/out/s2_baselines*`):
+      - Built: Always-X, always-best, Random, DimensionBest (full, cost-aware), SourceBest,
+        CellBest-pred (the S0.3(c) comparator) and CellBest-true, P0.6 Rules A and B × accept or
+        escalate × predicted or true cells, Route Anything's zero-loss route, the fixed cascade,
+        released ACRouter, LinUCB and kNN.
+      - Each baseline is fitted on training tasks only and routed through the replay simulator.
+        Labels "given more information" and "our definition" are in every output table.
+      - Cell predictor: trained on the headline development split (user decision). Held-out
+        accuracy 93.5% on `content_text`, 99.6% on the wrapped prompt; 87.5% and 95.2% when
+        trained on all eligible development tasks (sensitivity).
+      - Zero-loss route: no release file holds it. It is rebuilt from the data with P0.5's port,
+        which reproduced Table 10, using acceptance in place of the released score.
+      - Rules A and B equal P0.6's `rule_tables` on 20 random tables and a hand-checked toy cell.
+      - k-matched DimensionBest: interface and toy test only; it runs on real data in E1.
+      - kNN embeddings: all-MiniLM-L6-v2, revision `1110a24…`, with the sha256 of all 10 files,
+        pinned in `router/baselines/embeddings.py` and loaded from the local cache only. **Before
+        any claim-facing kNN number**, `scripts/fetch_data.py` gains a model-file kind and the pin
+        moves there; until then a fresh machine cannot rerun `s2_baselines`.
+      - Not done here: the price and verifier-cost sweeps (S0.2). They apply to headline numbers,
+        which S3 produces.
+- [x] S2.6 Tests [M2.5]: oracle 57.00, Always-Opus 43.83 and released ACRouter 50.14 reproduced on
       the paper view; a shuffled-label test in which each learned baseline falls to Random.
+      **Done 2026-11-21** (`router/experiments/s2_reproduce.py`,
+      `tests/router/test_baselines_reproduce.py`):
+      - All three match exactly with the paper's AvgPerf (57.005, 43.832, 50.144). The reviewer
+        recomputed them from the raw release files.
+      - ACRouter target 50.14 is the release's `outputs/current/summary.json`, which the released
+        decisions reproduce (CumReg 202.0, $22.31). The paper's 49.98 (Table 3; also Table 12)
+        comes from a different run (CumReg 205.5, $13.21) and cannot be rebuilt from the release.
+      - The paper's oracle cost ($6.95, Table 12) is not reproduced: the cheapest tie-break gives
+        $5.41 and no other tie-break gives $6.95. It is not a target.
+      - Reference: DimensionBest − ACRouter is +1.535 [0.85, 2.18] on the complete view and
+        −0.045 [−0.33, 0.23] on the paper view (cluster bootstrap).
+      - Shuffled labels: all 20 learned baselines fall to Random's level (38.8–42.6 against
+        42.3), and each beats Random with a CI above 0 when unshuffled.
 - **Gate:** S2.6 passes; the no-ground-truth test passes; every comparison table carries a paired
   CI; baselines that would need the paper's unavailable code are labelled "our definition", with
   the definition difference documented. Reference: DimensionBest vs ACRouter is +1.54 on the
   complete view and −0.05 [−0.31, 0.23] on the paper view.
+  **Passed 2026-11-21** (merged as `07e9625`; 580 tests pass, 304 files verify):
+  - S2.6 passes (see above).
+  - No-ground-truth test: every baseline's decisions stay identical when the scored fold's scores
+    or costs are replaced by garbage, on toy data; scores also on the development split.
+  - Paired CIs: every comparison column in `out/s2_*.csv` has one (cluster bootstrap over
+    problems).
+  - Labels: a test checks that each "given more information" label equals the fields the router
+    read during replay; "our definition" baselines document the difference.
+  - Evidence in detail: the S2 brief's checkpoint B Outcome (`.claude/handover/`, local).
 
 ### S3 — Analyse data and feasibility
 All analyses run on the development split and the S2 infrastructure; the evaluation population is
@@ -901,6 +959,25 @@ not used for any S3 number that feeds a decision.
   matters (S0.2).
 - Every headline number also gets the sensitivity check with empty `response_matrix.json`
   cells treated as unavailable (S1.7).
+
+**Data notes from S2 (2026-11-21; development split, headline complete case, 247 tasks on 232
+problems, seed 0; development figures, not results):**
+- Best single model is Opus in every fold (72.1% acceptance). Only Always-Opus and the fixed
+  cascade with escalation reach that acceptance on point estimates.
+- Rule A escalated with predicted cells (C2's bar, O19) saves 11.3% [6.4, 16.4] against the best
+  single model at a gap of −0.8 points, and 2.6% [0.3, 4.8] against CellBest-pred. C2's margin
+  over CellBest will be small.
+- kNN saves 22.0% [16.4, 28.6] against the best single model at a gap of −1.6 points
+  [−5.4, 2.4], below the best single model's acceptance. It is the strongest cost saver; report
+  it next to C2 even though it is not C2's bar.
+- Rules A and B coincide on this population; zero-loss with predicted cells equals CellBest-pred;
+  DimensionBest equals cost-aware DimensionBest. With 4 cells and Opus dominant, the lookups have
+  few distinct choices.
+- Released ACRouter chooses Opus on all 387 headline ID-test tasks, so on the headline it equals
+  the best single model.
+- Verifier runs are rare (20–32 per 247 tasks for the ladders): most headline development cells
+  have no visible tests (S0.11).
+- S3 owes the price and verifier-cost sweeps (S0.2) on its headline numbers.
 
 - [ ] S3.1 Q1 accuracy headroom: oracle and DimensionBest against the best single model, in all
       three data views.
@@ -1959,3 +2036,28 @@ Two further reviews were checked against the data; all fixes approved by the use
 - `scoring.py`: the legacy-threshold comment now says it is kept only for the records.
 - **Next:** S2 checkpoint B. `s2-eval-infra` merges `main` (`39670bb` or later) before its final
   review.
+
+### 2026-11-21 (S2 merged; S2 gate passed)
+
+- **S2 checkpoint B** reviewed and `s2-eval-infra` merged (`07e9625`); on `main` 580 tests pass
+  and 304 files verify. Reviewer checks:
+  - the full suite on the branch; rerunning `s2_reproduce` and `s2_baselines` reproduces the
+    committed outputs byte for byte;
+  - the three reproductions recomputed from the raw release files without the repo loaders
+    (57.005, 43.832, 50.144; DimensionBest − ACRouter −0.045 on the paper view); no oracle
+    tie-break gives the paper's $6.95;
+  - development-split Always-X acceptance and Random's expected 42.26 recomputed;
+  - the Rule A toy case is checked against P0.6's own `rule_tables`;
+  - every comparison column carries a paired CI; LinUCB still runs the verifier (30 runs), so
+    direct dispatch did not turn it into a static table.
+- **Accepted deviations:**
+  - direct dispatch without the verifier (consistent with S0.2, which charges per verifier run;
+    no CLAIMS amendment);
+  - the kNN embedding pin in code, with the move to `fetch_data.py` required before any
+    claim-facing kNN number;
+  - baseline garbage tests in `test_baselines.py`, with the cost variant on toy data only (the
+    stream already withholds cost);
+  - price and verifier-cost sweeps deferred to S3; k-matched DimensionBest on real data deferred
+    to E1.
+- S2 data notes for S3 are recorded under S3.
+- **Next:** S3 on `main`.
