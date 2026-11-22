@@ -12,7 +12,9 @@ from router.settings import SUCCESS_SCORE
 
 REPO = Path(__file__).resolve().parents[2]
 LEGACY_NAMES = {"LEGACY_ACCEPT_THRESHOLD", "legacy_accepted", "ACCEPT_THRESHOLD", "accepted"}
-LEGACY_IMPORTERS = {"router/sim/metrics.py", "router/sim/verifier.py",
+# S2 checkpoint A retired the threshold from router/sim/; the 2026-11-10 quick-check simulator
+# lives on, frozen, in router/experiments/m2_quickcheck_sim.py (tests/router/test_sim_legacy.py).
+LEGACY_IMPORTERS = {"router/experiments/m2_quickcheck_sim.py",
                     "router/experiments/m3_irt.py", "router/experiments/m3_difficulty.py"}
 ID_FAMILIES = {f for f, v in sources.FAMILIES.items() if v.split_kind == "id"}
 OOD_FAMILIES = {f for f, v in sources.FAMILIES.items() if v.split_kind == "ood"}
@@ -144,7 +146,7 @@ def test_legacy_threshold_and_its_importers_are_unchanged():
     assert bool(scoring.legacy_accepted(pd.Series([0.5])).iloc[0])
     for rel in LEGACY_IMPORTERS:
         assert "LEGACY_ACCEPT_THRESHOLD" in _imported_names(REPO / rel), rel
-    from router.sim.verifier import Verifier
+    from router.experiments.m2_quickcheck_sim import Verifier
     assert Verifier().threshold == 0.5
 
 

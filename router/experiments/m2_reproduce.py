@@ -15,9 +15,7 @@ from router.data import coderouterbench as crb
 from router.data.prompts import join
 from router.data.scoring import score_types
 from router.settings import REPO_ROOT
-from router.sim.metrics import bootstrap_ci, from_choice, summary
-from router.sim.stream import replay
-from router.sim.verifier import Verifier
+from router.experiments.m2_quickcheck_sim import bootstrap_ci, from_choice, replay, summary, Verifier
 
 OUT = REPO_ROOT / "router" / "experiments" / "out"
 OPUS = "claude-opus-4-6"

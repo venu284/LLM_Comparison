@@ -9,8 +9,7 @@ from router.core import irt
 from router.core.anchors import onboard
 from router.data import coderouterbench as crb
 from router.data.schema import OutcomeMatrix
-from router.sim.metrics import from_choice, summary
-from router.sim.verifier import Verifier
+from router.experiments.m2_quickcheck_sim import Verifier, from_choice, summary
 
 HAVE_DATA = (crb.CRB_DIR / "id_test_results_long.csv").exists()
 

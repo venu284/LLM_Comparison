@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 
 from router.data.schema import OutcomeMatrix
-from router.sim.metrics import LAMBDA
+from router.experiments.m2_quickcheck_sim import LAMBDA  # quick-check; checkpoint B rebuilds on router.sim
 
 
 def metadata_features(m: OutcomeMatrix, vocab: list[str] | None = None) -> tuple[dict[str, np.ndarray], list[str]]:
