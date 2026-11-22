@@ -965,8 +965,7 @@ problems, seed 0; development figures, not results):**
 - Best single model is Opus in every fold (72.1% acceptance). Only Always-Opus and the fixed
   cascade with escalation reach that acceptance on point estimates.
 - Rule A escalated with predicted cells (C2's bar, O19) saves 11.3% [6.4, 16.4] against the best
-  single model at a gap of −0.8 points, and 2.6% [0.3, 4.8] against CellBest-pred. C2's margin
-  over CellBest will be small.
+  single model at a gap of −0.8 points, and 2.6% [0.3, 4.8] against CellBest-pred.
 - kNN saves 22.0% [16.4, 28.6] against the best single model at a gap of −1.6 points
   [−5.4, 2.4], below the best single model's acceptance. It is the strongest cost saver; report
   it next to C2 even though it is not C2's bar.
@@ -985,6 +984,9 @@ problems, seed 0; development figures, not results):**
       best single model, verifier cost included (S0.2), with the real verifier (S0.11), on the
       headline set. DP1b is decided on the **oracle-on-no-signal bound** (§1); fixed cascades
       with the no-signal cells bracketed (all accepted / all escalated) are reported next to it.
+      **Population (user, 2026-11-22):** the headline **development split** (complete case: 247
+      tasks, 232 problems, 4 cells), as the S3 header requires. DP1a's full-pool exception does
+      not extend to DP1b.
       Provisional check on 2026-11-19 (P0.5; complete-case headline set, 1,907 tasks, success =
       all tests pass, point estimates, verifier cost at S0.2's rate, Opus best at 67.3% and chosen
       in every training fold of a 5-fold cross-fit, five seeds):
@@ -2061,3 +2063,21 @@ Two further reviews were checked against the data; all fixes approved by the use
     to E1.
 - S2 data notes for S3 are recorded under S3.
 - **Next:** S3 on `main`.
+
+### 2026-11-22 (`main` rebased onto `origin/main`; branches deleted; S3 started)
+
+- `main` was rebased onto `origin/main` and pushed (now equal at `f5e1750`; 580 tests pass, 304
+  files verify). The rebase dropped the merge commits and rewrote hashes, so some hashes cited
+  above no longer exist on `main`. Mapping (old → new):
+  - merge `b5d5bc0` (S1.7) → `bccc014` (last S1.7 commit); merge `39670bb` (S1.8) → `708f282`;
+    merge `07e9625` (S2) → `5061835`;
+  - `471ddb5` → `af69d3c`, `a865dfb` → `16f902f`, `5e9acb4` → `665ba24`, `bdf833f` → `25e00b6`,
+    `c72db93` → `bccc014`, `ee783d3` → `71a360a`, `f9877bf` → `2232568`;
+  - plan commits `17d4c43` → `bb3e994`, `6d1f73e` → `f5e1750`.
+  Hashes not listed were already on `origin/main` and are unchanged.
+- All 15 local branches and their worktrees were deleted (each had no commit missing from
+  `main`). The 5 branches on `origin` are untouched.
+- The S2 data note predicting C2's margin over CellBest was removed; the measured numbers stay.
+- **User decision:** DP1b runs on the headline development split (S3.2).
+- S3 started on branch `s3-analysis` (brief `.claude/handover/2026-11-21-s3-analysis.md`);
+  checkpoint 1 (frozen analysis spec, descriptive S3.3 and S3.6) is under review.
