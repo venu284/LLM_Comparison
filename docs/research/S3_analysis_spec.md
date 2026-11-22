@@ -151,6 +151,14 @@ every caller. No tag is created.
   stops the same code from being reused for a router.
 - **(c) A git tag.** Ruled out by the brief.
 
+**Views the path may read.** CLAIMS' DP1a exception names only the artefact-filtered pool. Two
+readings:
+- **(α) `filtered` only (recommended).** The path reads evaluation tasks of `filtered` (= the
+  headline) and nothing else. DP1a's `all_eligible` and `sensitivity` columns are then reported on
+  their development splits only (1,104 and 426 tasks), with `stats.dev_folds`, and labelled so.
+- **(β) every view.** The path also reads the evaluation tasks of `all_eligible` and `sensitivity`,
+  so all three columns use the same six-group cross-fit. Wider than CLAIMS' wording.
+
 The function is written at checkpoint 2, after this ruling. **Ruling:** _open_.
 
 ### D4. DP1b: the oracle-on-no-signal bound
@@ -166,8 +174,8 @@ labelled so.
 - **Options for the single statistic that decides DP1b:**
   - **(a) Per-cell Rule A in bound mode (recommended).** In each training fold and true cell, the
     cheapest column whose bound-mode training acceptance is at least CellBest's; held-out tasks are
-    routed by their predicted cell (the S2.5 predictor, fitted per fold as S2 does). Fitted on
-    training folds only, so there is no selection on the scored tasks. It is the same class as C2's
+    routed by their predicted cell. Fitted on training folds only, so there is no selection on the
+    scored tasks. It is the same class as C2's
     bar (Rule A with no-signal cells escalated, O19), so the difference between them is exactly the
     value of the no-signal decision. In P0.6 it gave the largest point saving against CellBest at a
     gap of −2 or better.
@@ -181,6 +189,11 @@ labelled so.
   cells. Savings are `stats.saving_pct` on cost totals; gaps are paired acceptance differences.
   Margins and the at-threshold label are reported for all four quantities. CIs (`gate_interval`)
   are information only; so are seeds 1 to 4, the sweeps and every other row.
+- **Which cell predictor.** On the development split the predictor is refit in each training fold
+  (S2.5's settings, `cells.fit_predictor`), as S2's `run_dev` does, for the bound, the rules and
+  CellBest-pred alike. The frozen S2.5 predictor was trained on every headline development task's
+  cell, so using it here would let each scored task's own cell label into its route. The frozen
+  predictor is kept for the evaluation run (O3).
 - **Reported beside it:** Rule B in bound mode; Rules A and B with no-signal cells accepted and
   escalated; the 84 fixed ladders in accept, escalate and bound mode (count meeting (a) and (b),
   count meeting (c), best gap among ladders saving ≥ 20%, best gap among ladders with saving > 0
@@ -254,8 +267,11 @@ Open sub-items of the descriptive part:
 - **Features** (observable at decision time, S0.13): the predicted cell, the verdict history of the
   rungs tried (FAIL or UNKNOWN per rung) and the task's `content_text` (TF-IDF as in
   `cells.make_classifier`). Logistic regression; no released score, family or dimension.
-- **Policy.** Stop (give up) when the predicted P(y = 1) < t; t is set on the training folds as the
-  largest value whose training acceptance loss is at most 2 points.
+- **Policy.** Stop (give up) when the predicted P(y = 1) < t. t is the largest value whose
+  acceptance loss is at most 2 points on **out-of-fold** predictions inside the training folds
+  (each training fold predicted by a classifier fitted on the other training folds). In-sample
+  predictions of a TF-IDF logistic regression are close to perfect on its own training data, so a
+  t set on them would be badly calibrated.
 - **Perfect-information bound.** Stop exactly when y = 0: same acceptance as the full ladder,
   largest cost saving.
 - **Capture.** Held-out cost saving of the classifier policy divided by the perfect-information
@@ -434,3 +450,4 @@ rescored (range reported).
 | Date | Change | Reason |
 |---|---|---|
 | 2026-11-22 | Drafted for checkpoint 1 | |
+| 2026-11-22 | D3: which views the path may read, options (α) and (β). D4: the cell predictor is refit per training fold on the development split; the frozen S2.5 predictor is kept for the evaluation run. D8: t is set on out-of-fold predictions inside the training folds. §5.1: `rm_empty_unavailable` complete-case counts checked against `artefacts.yaml` | Pre-review tightening before any DP number exists (commit order unchanged: no DP number has been computed) |

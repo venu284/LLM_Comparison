@@ -320,6 +320,11 @@ def checks(pop, ns, pooled, art) -> dict:
     """Recounts against artefacts.yaml (S1.7) and the plan."""
     f = pop[(pop.view == "filtered = headline")].set_index("variant")
     h = art["views"]["headline"]
+    rm = pop[pop.variant == "rm_empty_unavailable"].set_index("view").tasks_scored
+    rm_checks = {f"{v}_complete_case_if_empty_responses_unavailable":
+                 [int(rm[v]), art["views"][k]["complete_case_tasks_if_empty_responses_unavailable"]]
+                 for v, k in (("all_eligible", "all_eligible"), ("filtered = headline", "headline"),
+                              ("sensitivity", "sensitivity"))}
     nsf = ns[(ns.view == "filtered = headline") & (ns.family == "all")].iloc[0]
     out = {
         "filtered_complete_case_tasks": [int(f.loc["main", "tasks_scored"]), h["complete_case_tasks"]],
@@ -331,6 +336,7 @@ def checks(pop, ns, pooled, art) -> dict:
                                                    h["verifier_signal"]["complete_case_tasks_no_signal_any_model"]],
         "filtered_signal_cells": [int(nsf.cells - nsf.no_signal_cells),
                                   h["verifier_signal"]["cells_with_signal"]],
+        **rm_checks,
     }
     return {k: {"here": v[0], "artefacts_yaml": v[1], "equal": v[0] == v[1]} for k, v in out.items()}
 

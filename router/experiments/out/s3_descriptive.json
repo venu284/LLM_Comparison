@@ -1,5 +1,15 @@
 {
  "checks_against_artefacts": {
+  "all_eligible_complete_case_if_empty_responses_unavailable": {
+   "artefacts_yaml": 4737,
+   "equal": true,
+   "here": 4737
+  },
+  "filtered = headline_complete_case_if_empty_responses_unavailable": {
+   "artefacts_yaml": 1264,
+   "equal": true,
+   "here": 1264
+  },
   "filtered_complete_case_no_signal_tasks": {
    "artefacts_yaml": 1148,
    "equal": true,
@@ -24,6 +34,11 @@
    "artefacts_yaml": 198,
    "equal": true,
    "here": 198
+  },
+  "sensitivity_complete_case_if_empty_responses_unavailable": {
+   "artefacts_yaml": 1707,
+   "equal": true,
+   "here": 1707
   }
  },
  "filtered_equals_headline": true,

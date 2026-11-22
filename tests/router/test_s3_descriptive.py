@@ -44,6 +44,20 @@ def test_committed_checks_against_artefacts():
     assert checks["filtered_unsolved_strict"]["here"] == 198
     assert checks["filtered_unsolved_lenient"]["here"] == 161
     assert checks["filtered_complete_case_no_signal_tasks"]["here"] == 1148
+    # the response_matrix-empty sensitivity uses the same cells as S1.7 (response_key mapping)
+    assert checks["all_eligible_complete_case_if_empty_responses_unavailable"]["here"] == 4737
+    assert checks["sensitivity_complete_case_if_empty_responses_unavailable"]["here"] == 1707
+    assert checks["filtered = headline_complete_case_if_empty_responses_unavailable"]["here"] == 1264
+
+
+def test_label_empty_rates():
+    from router.experiments.s3_descriptive import label_empty_rates
+    df = pd.DataFrame({"signal_cells": [0, 5, 5], "failures": [0, 0, 2], "successes": [0, 5, 3],
+                       "false_pass_rate": [float("nan"), float("nan"), 0.5],
+                       "false_reject_rate": [float("nan"), 0.2, float("nan")]})
+    out = label_empty_rates(df)
+    assert out.false_pass_rate.tolist() == ["no signal", "none", 0.5]
+    assert out.false_reject_rate.tolist()[:2] == ["no signal", 0.2]
 
 
 def _raw_family(prefix: str):
