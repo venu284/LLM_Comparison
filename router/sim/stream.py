@@ -12,7 +12,10 @@ What a router sees:
   recorded as **given more information**;
 - the models available for the task: arrived (model-arrival events) and with a response;
 - its own calls on this task so far, as `Observation`s: model, verdict (PASS / FAIL / UNKNOWN,
-  S0.13), cost. Never another model's outcome, never a score.
+  S0.13) and call index. Never another model's outcome, never a score, and not the realised cell
+  cost either: Qwen3-Max's released cost is a per-dimension constant (S1.7 data note), so the
+  cost would reveal the dimension. Cost-aware routers use published prices (`data/prices.py`) or
+  what they fitted on training folds.
 
 What a router does on each task, one decision at a time (`decide`):
 - name a model to call (each model at most once per task: replay holds one run per cell, so a
@@ -53,8 +56,7 @@ class TaskHandle:
 class Observation:
     task: str          # the TaskHandle key
     model: str
-    verdict: str       # PASS, FAIL or UNKNOWN
-    cost_usd: float    # tokens x price of this call (S0.2); a run-time quantity, not a score
+    verdict: str       # PASS, FAIL or UNKNOWN (S0.13)
     call_index: int    # 0 for the first call on the task
 
 
@@ -187,7 +189,7 @@ def replay(router: Router, view: ReplayView, verifier, *, seed: int,
             except Unavailable as e:          # guarded above; kept as a hard stop
                 raise AssertionError(str(e)) from e
             cost = float(view.cost.at[tid, d])
-            obs = Observation(handle.key, d, c.verdict, cost, len(history))
+            obs = Observation(handle.key, d, c.verdict, len(history))
             router.feedback(obs)
             history.append(obs)
             called.add(d)

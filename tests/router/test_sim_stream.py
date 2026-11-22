@@ -115,6 +115,19 @@ def test_garbage_scores_leave_every_decision_unchanged(name, m, rv):
             assert _decisions(a) == _decisions(b)
 
 
+@pytest.mark.parametrize("name", sorted(routers()))
+def test_garbage_costs_leave_every_decision_unchanged(name, m, rv):
+    """Realised cell costs are not router-visible either (Qwen3-Max's cost is a per-dimension
+    constant, so it would reveal the dimension). Keep availability and verdicts, scramble costs."""
+    make = routers()[name]
+    garbage = m.cost.sample(frac=1.0, random_state=1).set_axis(m.tasks) * 7.3 + 0.01
+    scrambled = toy.with_scores(m, m.score)
+    scrambled.cost.loc[:, :] = garbage.to_numpy()
+    a = replay(make(), ReplayView.from_matrix(m), rv, seed=0, arrivals={"strong": 5})
+    b = replay(make(), ReplayView.from_matrix(scrambled), rv, seed=0, arrivals={"strong": 5})
+    assert _decisions(a) == _decisions(b)
+
+
 class NoScore:
     """A matrix stand-in whose score raises on access."""
 
@@ -155,6 +168,9 @@ def _walk(obj, seen=None):
 def test_no_router_facing_object_carries_a_score(m, rv):
     for cls in (TaskHandle, Observation):
         assert {f.name for f in dataclasses.fields(cls)}.isdisjoint({"score", "truth", "released"})
+    # S0.13: an observation is the verdict on the router's own call, nothing more
+    assert [f.name for f in dataclasses.fields(Observation)] == ["task", "model", "verdict",
+                                                                 "call_index"]
     spy = Spy(("family", "dimension"))
     replay(spy, ReplayView.from_matrix(m), rv, seed=1)
     kinds = set()

@@ -84,6 +84,15 @@ def test_cluster_bootstrap_resamples_whole_problems():
     assert all(np.sum(w) == len(f) for w in seen)
 
 
+def test_gate_interval_is_the_cluster_bootstrap_at_gate_settings():
+    from router.settings import N_BOOT_GATE
+    f = _frame()
+    iv = stats.gate_interval(f, stats.mean_diff("a", "b"), f.problem_id)
+    assert iv.unit == "problem" and iv.n_boot == N_BOOT_GATE == 2000 and iv.seed == GATE_SEED
+    with pytest.raises(ValueError):
+        stats.gate_interval(f, stats.mean_diff("a", "b"), None)
+
+
 def test_bootstrap_is_paired():
     f = _frame()
     f["a2"] = f["a"]

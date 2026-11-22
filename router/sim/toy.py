@@ -1,5 +1,8 @@
 """Toy data for the sim tests and examples: a small OutcomeMatrix with partial credit, an
-unavailable cell, and a matching X13-style verdict table. No external data is read."""
+unavailable cell, and a matching X13-style verdict table. No external data is read.
+
+Toy draws use bare `default_rng(seed)`: they build fixtures, not experiment streams, so they sit
+outside the stream-id table of `sim/stats.py`."""
 
 from __future__ import annotations
 

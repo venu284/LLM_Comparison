@@ -2,11 +2,13 @@
 
 What lives here:
 
-- `rng(seed, stream)`: every random draw in `router/sim/` and `router/baselines/` comes from
-  `np.random.SeedSequence([seed, stream_id])`, with the stream id taken from the table below;
+- `rng(seed, stream)`: every random draw in `router/sim/` (except the test fixtures in
+  `sim/toy.py`) and `router/baselines/` comes from `np.random.SeedSequence([seed, stream_id])`,
+  with the stream id taken from the table below;
 - `bootstrap`: the paired bootstrap over tasks and the cluster bootstrap over problems
   (`problem_id`, from `problems.csv`). Both arms of a comparison are columns of one frame, so they
-  share every resample. The cluster bootstrap is the one the gates use (S0.8);
+  share every resample. The cluster bootstrap is the one the gates use (S0.8): gate code calls
+  `gate_interval`, which fixes the problem clusters, `N_BOOT_GATE` and `GATE_SEED`;
 - `across_seeds` and `threshold_label`: the five seeds with the gate seed marked (R12), and the
   "at the threshold" reporting label (S0.8, O12);
 - `cross_fit`: the nested cross-fitting driver (S0.6, O7).
@@ -39,8 +41,8 @@ import numpy as np
 import pandas as pd
 
 from router.data import splits as splits_mod
-from router.settings import (AT_THRESHOLD_MARGIN, CI_LEVEL, GATE_SEED, N_BOOT, N_FOLDS,
-                             N_INNER_FOLDS, N_SEEDS, REPO_ROOT)
+from router.settings import (AT_THRESHOLD_MARGIN, CI_LEVEL, GATE_SEED, N_BOOT, N_BOOT_GATE,
+                             N_FOLDS, N_INNER_FOLDS, N_SEEDS, REPO_ROOT)
 
 # ----------------------------------------------------------------------------------- stream ids
 STREAM_IDS = {
@@ -115,6 +117,14 @@ def bootstrap(frame: pd.DataFrame, statistic: Statistic, *, clusters: pd.Series 
     lo, hi = np.nanpercentile(draws, [tail, 100 - tail])
     return Interval(float(statistic(frame, np.ones(n))), float(lo), float(hi), level, n_boot, unit,
                     k, n, seed, draws)
+
+
+def gate_interval(frame: pd.DataFrame, statistic: Statistic, clusters: pd.Series) -> Interval:
+    """The interval every gate reads (S0.3, S0.8, O4, O5): the cluster bootstrap over problems,
+    `N_BOOT_GATE` resamples, `GATE_SEED`. No task bootstrap, no other resample count or seed."""
+    if clusters is None:
+        raise ValueError("gate intervals use the cluster bootstrap over problems (S0.8)")
+    return bootstrap(frame, statistic, clusters=clusters, n_boot=N_BOOT_GATE, seed=GATE_SEED)
 
 
 def rate(col: str, scale: float = 100.0) -> Statistic:
