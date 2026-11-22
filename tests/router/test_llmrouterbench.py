@@ -16,7 +16,7 @@ import pandas as pd
 import pytest
 
 from router.data import llmrouterbench as L
-from router.data.schema import NULL_SCORE
+from router.data.schema import MISSING_TOKEN_RECORD, NULL_SCORE
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 HAVE_DATA = L.ROOT.is_dir() and (L.SOURCES / "mbpp_full.jsonl").is_file()
@@ -96,17 +96,17 @@ def test_extract_keeps_only_allowlisted_members(tmp_path):
     assert not (tmp_path / "out/.part").exists()
 
 
-@pytest.mark.parametrize("bad", [
-    _file("bench-release/humaneval/test/../../../evil.json"),           # '..'
-    _file("/tmp/evil.json"),                                              # absolute path
-    _link("bench-release/humaneval/test/m/link.json", "a.json"),          # symlink inside the target
-    _link("bench-release/humaneval/test/m/link2.json", "/etc/passwd"),    # symlink outside
-    _link("bench-release/humaneval/test/m/hard.json", GOOD, tarfile.LNKTYPE),   # hard link
-    _link("bench-release/arenahard/x", "/etc/passwd"),                    # unsafe even outside the allowlist
+@pytest.mark.parametrize("bad,why", [
+    (_file("bench-release/humaneval/test/../../../evil.json"), "'..' component"),
+    (_file("/tmp/evil.json"), "absolute path"),
+    (_link("bench-release/humaneval/test/m/link.json", "a.json"), "not a regular file"),     # inside
+    (_link("bench-release/humaneval/test/m/link2.json", "/etc/passwd"), "not a regular file"),
+    (_link("bench-release/humaneval/test/m/hard.json", GOOD, tarfile.LNKTYPE), "not a regular file"),
+    (_link("bench-release/arenahard/x", "/etc/passwd"), "not a regular file"),   # outside the allowlist
 ])
-def test_extract_rejects_unsafe_members_and_writes_nothing(tmp_path, bad):
+def test_extract_rejects_unsafe_members_and_writes_nothing(tmp_path, bad, why):
     tar = _tar(tmp_path / "a.tar.gz", [_file(GOOD), bad], {GOOD: b"{}", bad.name: b"x"})
-    with pytest.raises(fd.UnsafeArchive):
+    with pytest.raises(fd.UnsafeArchive, match=why):
         fd.extract_archive(tar, tmp_path / "out", ALLOW)
     assert not (tmp_path / "out" / "bench-release").exists()    # nothing moved into place
     assert not (tmp_path / "out" / ".part").exists()
@@ -170,12 +170,25 @@ def test_ragged_cells_are_absent_not_zero_filled(toy):
     assert len(L.load(toy, include_router_baselines=True).long) == 15
 
 
-def test_null_score_is_unavailable_with_a_reason(toy):
+def test_null_score_and_zero_token_records_are_unavailable_with_a_reason(toy):
     d = L.load(toy)
-    bad = d.long[~d.long.available]
-    assert len(bad) == 1 and bad.iloc[0].unavailable_reason == NULL_SCORE and np.isnan(bad.iloc[0].score)
+    bad = d.long[~d.long.available].set_index(["task_id", "model"])
+    assert dict(bad.unavailable_reason) == {("lrb_humaneval_3", "a"): NULL_SCORE,
+                                           ("lrb_humaneval_1", "p"): MISSING_TOKEN_RECORD}
+    assert np.isnan(bad.loc[("lrb_humaneval_3", "a")].score)
+    assert bad.loc[("lrb_humaneval_1", "p")].score == 0.0           # kept as released, not scored
     m = d.matrices["lrb_humaneval"]
-    assert not m.available.loc["lrb_humaneval_3", "a"]
+    assert not m.available.loc["lrb_humaneval_3", "a"] and not m.available.loc["lrb_humaneval_1", "p"]
+
+
+def test_zero_token_rule_reads_tokens_and_cost_not_the_score(toy):
+    for f in toy.rglob("p/*.json"):               # a passing zero-token record is still unavailable
+        doc = json.loads(f.read_text())
+        doc["records"][0]["score"] = 1.0
+        f.write_text(json.dumps(doc))
+    d = L.load(toy)
+    row = d.long.set_index(["task_id", "model"]).loc[("lrb_humaneval_1", "p")]
+    assert not row.available and row.unavailable_reason == MISSING_TOKEN_RECORD
 
 
 def test_zero_cost_models_are_excluded_from_cost_but_kept_for_accuracy(toy):
@@ -248,7 +261,7 @@ def test_real_data_is_not_zero_filled_and_matches_the_files():
     assert (d.files.records == d.files.counts).all()
     for fam, m in d.matrices.items():
         assert m.available.sum().sum() + (~m.available).sum().sum() == len(d.long[d.long.family == fam])
-    assert int((~d.long.available).sum()) == 1 and set(d.long.unavailable_reason.dropna()) == {NULL_SCORE}
+    assert d.long.unavailable_reason.value_counts().to_dict() == {MISSING_TOKEN_RECORD: 443, NULL_SCORE: 1}
     assert not d.long[d.long.cost_usd.isna()].merge(
         d.cost_flags[~d.cost_flags.zero_cost], on=["family", "model"]).shape[0]
 

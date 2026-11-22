@@ -148,7 +148,7 @@
     "gpt-5-chat",
     "intern-s1"
    ],
-   "median_pass_rate": 0.226,
+   "median_pass_rate": 0.242,
    "near_zero_models": [],
    "output_token_caps": {},
    "processing_failed_cells": 0,
@@ -808,12 +808,12 @@
     "pass_rate": 0.6
    },
    "gemini-2.5-pro": {
-    "available_cells": 1055,
+    "available_cells": 960,
     "cost_excluded": false,
     "mean_cost_usd": 0.135154,
     "mean_input_tokens": 543.296682,
     "mean_output_tokens": 13447.479621,
-    "pass_rate": 0.791469
+    "pass_rate": 0.869792
    },
    "gemma-2-9b-it": {
     "available_cells": 1055,
@@ -832,20 +832,20 @@
     "pass_rate": 0.16872
    },
    "glm-4.6": {
-    "available_cells": 1055,
+    "available_cells": 1052,
     "cost_excluded": false,
     "mean_cost_usd": 0.002202,
     "mean_input_tokens": 568.966825,
     "mean_output_tokens": 1009.167773,
-    "pass_rate": 0.63128
+    "pass_rate": 0.63308
    },
    "gpt-4.1": {
-    "available_cells": 1055,
+    "available_cells": 1054,
     "cost_excluded": false,
     "mean_cost_usd": 0.004027,
     "mean_input_tokens": 565.709005,
     "mean_output_tokens": 361.930806,
-    "pass_rate": 0.545972
+    "pass_rate": 0.54649
    },
    "gpt-5": {
     "available_cells": 1055,
@@ -880,12 +880,12 @@
     "pass_rate": 0.491943
    },
    "intern-s1-new": {
-    "available_cells": 1055,
+    "available_cells": 917,
     "cost_excluded": false,
     "mean_cost_usd": 0.004532,
     "mean_input_tokens": 545.886256,
     "mean_output_tokens": 8211.161137,
-    "pass_rate": 0.756398
+    "pass_rate": 0.870229
    },
    "internlm3-8b-instruct": {
     "available_cells": 1055,
@@ -896,12 +896,12 @@
     "pass_rate": 0.212322
    },
    "kimi-k2-0905": {
-    "available_cells": 1055,
+    "available_cells": 1054,
     "cost_excluded": false,
     "mean_cost_usd": 0.003681,
     "mean_input_tokens": 578.892891,
     "mean_output_tokens": 1695.859716,
-    "pass_rate": 0.672986
+    "pass_rate": 0.673624
    },
    "qwen3-235b-a22b-2507": {
     "available_cells": 1055,
@@ -928,12 +928,12 @@
     "pass_rate": 0.781043
    },
    "qwen3-235b-a22b-thinking-2507": {
-    "available_cells": 1055,
+    "available_cells": 938,
     "cost_excluded": false,
     "mean_cost_usd": 0.013968,
     "mean_input_tokens": 507.41327,
     "mean_output_tokens": 9236.147867,
-    "pass_rate": 0.783886
+    "pass_rate": 0.881663
    }
   },
   "lrb_mbpp": {
@@ -1180,12 +1180,12 @@
     "pass_rate": 0.088
    },
    "intern-s1": {
-    "available_cells": 500,
+    "available_cells": 486,
     "cost_excluded": false,
     "mean_cost_usd": 0.005715,
     "mean_input_tokens": 16847.432,
     "mean_output_tokens": 5143.0,
-    "pass_rate": 0.078
+    "pass_rate": 0.080247
    },
    "kimi-k2-0905": {
     "available_cells": 500,
@@ -1204,12 +1204,12 @@
     "pass_rate": 0.162
    },
    "qwen3-235b-a22b-thinking-2507": {
-    "available_cells": 500,
+    "available_cells": 426,
     "cost_excluded": false,
     "mean_cost_usd": 0.017758,
     "mean_input_tokens": 13847.474,
     "mean_output_tokens": 4745.394,
-    "pass_rate": 0.214
+    "pass_rate": 0.251174
    }
   }
  },
@@ -1592,6 +1592,7 @@
    "partial_zero_cost_models": {},
    "subset": "humaneval/test",
    "tasks": 164,
+   "unavailable_cells": {},
    "zero_cost_models": [
     "GLM-Z1-9B-0414",
     "MiMo-7B-RL-0530",
@@ -1652,6 +1653,9 @@
    },
    "subset": "livecodebench/test",
    "tasks": 1055,
+   "unavailable_cells": {
+    "missing_token_record": 355
+   },
    "zero_cost_models": [
     "GLM-Z1-9B-0414",
     "MiMo-7B-RL-0530",
@@ -1687,6 +1691,9 @@
    "partial_zero_cost_models": {},
    "subset": "mbpp/test",
    "tasks": 974,
+   "unavailable_cells": {
+    "null_score": 1
+   },
    "zero_cost_models": [
     "GLM-Z1-9B-0414",
     "MiMo-7B-RL-0530",
@@ -1767,6 +1774,9 @@
    },
    "subset": "swe-bench/verified",
    "tasks": 500,
+   "unavailable_cells": {
+    "missing_token_record": 88
+   },
    "zero_cost_models": [],
    "zero_file_cost_models": []
   }

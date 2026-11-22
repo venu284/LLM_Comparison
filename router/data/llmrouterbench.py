@@ -157,7 +157,7 @@ from pathlib import Path  # noqa: E402
 
 import pandas as pd  # noqa: E402
 
-from router.data.schema import NULL_SCORE, OutcomeMatrix, long_frame  # noqa: E402
+from router.data.schema import MISSING_TOKEN_RECORD, NULL_SCORE, OutcomeMatrix, long_frame  # noqa: E402
 from router.settings import EXTERNAL_DIR  # noqa: E402
 
 ROOT = EXTERNAL_DIR / "llmrouterbench" / "bench-release"
@@ -307,7 +307,15 @@ def load(root: Path = ROOT, include_router_baselines: bool = False) -> LrbData:
     zero = set(zip(flags.family[flags.zero_cost], flags.model[flags.zero_cost]))
     cells["cost_excluded"] = [(f, m) in zero for f, m in zip(cells.family, cells.model)]
 
-    available = cells.score.notna()
+    # S0.11: missing is not failure. A null score is unavailable (NULL_SCORE). A cell with zero
+    # input tokens, zero output tokens and zero cost is the pattern S0.11 already makes unavailable
+    # for CodeRouterBench's zero-score, zero-cost Qwen3-Max rows (MISSING_TOKEN_RECORD). The test
+    # reads tokens and cost only, never the score (R16).
+    no_record = (cells.input_tokens == 0) & (cells.output_tokens == 0) & (cells.recorded_cost == 0)
+    reason = [NULL_SCORE if pd.isna(sc) else MISSING_TOKEN_RECORD if nr else None
+              for sc, nr in zip(cells.score, no_record)]
+    available = pd.Series([r is None for r in reason], index=cells.index)
+    cells["available"], cells["unavailable_reason"] = available, reason
     long = pd.DataFrame({
         "task_id": cells.task_id, "model": cells.model, "run": 1,
         "score": cells.score.astype(float),
@@ -318,7 +326,7 @@ def load(root: Path = ROOT, include_router_baselines: bool = False) -> LrbData:
         "score_type": [RULES[s].score_type for s in cells.subset],
         "eligible": [RULES[s].eligible for s in cells.subset],
         "available": available,
-        "unavailable_reason": [None if a else NULL_SCORE for a in available],
+        "unavailable_reason": reason,
     })
     long = long_frame(long)
     matrices = {fam: OutcomeMatrix.from_long(long[long.family == fam], name=fam)

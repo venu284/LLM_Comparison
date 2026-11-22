@@ -63,7 +63,9 @@ def subset_counts(d: L.LrbData) -> dict:
         out[fam] = {
             "subset": subset, "tasks": tasks, "models": models, "cells": len(g),
             "density": len(g) / (tasks * models),
-            "null_scores": int((~g.available).sum()),
+            "null_scores": int((g.unavailable_reason == "null_score").sum()),
+            "unavailable_cells": {k: int(v) for k, v in
+                                  g.unavailable_reason.value_counts().sort_index().items()},
             "distinct_score_values": sorted(float(v) for v in avail.score.unique()),
             "zero_cost_models": sorted(flags.model[flags.zero_cost]),
             "partial_zero_cost_models": {m: [int(z), int(c)] for m, z, c in
@@ -105,7 +107,7 @@ def per_model(d: L.LrbData) -> dict:
     out = {}
     c = d.cells.assign(passed=d.cells.score >= SUCCESS_SCORE)
     for (fam, model), g in c.groupby(["family", "model"]):
-        a = g[g.score.notna()]
+        a = g[g.available]
         cost = g.recorded_cost[~g.cost_excluded]
         out.setdefault(fam, {})[model] = {
             "pass_rate": float(a.passed.mean()), "available_cells": len(a),
