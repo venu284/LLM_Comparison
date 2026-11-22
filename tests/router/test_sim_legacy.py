@@ -8,9 +8,8 @@ REPO = Path(__file__).resolve().parents[2]
 LEGACY_NAMES = {"LEGACY_ACCEPT_THRESHOLD", "legacy_accepted"}
 LEGACY_MODULE = "router.experiments.m2_quickcheck_sim"
 PAPER_MODULE = "router.sim.paper"
-# Checkpoint A keeps the 2026-11-10 baselines on the frozen quick-check simulator so the m2 record
-# still reproduces; checkpoint B rebuilds them on router.sim and empties this set.
-TEMPORARY_LEGACY_BASELINES = {"router/baselines/cascade.py", "router/baselines/online.py"}
+# Checkpoint B moved the 2026-11-10 baselines to experiments/m2_quickcheck_baselines/ and rebuilt
+# router/baselines/ on router.sim; no baseline may import the quick-check simulator any more.
 PAPER_IMPORTERS = ("router/experiments/s2_reproduce",)     # prefix: s2_reproduce*.py
 
 
@@ -68,8 +67,8 @@ def test_baselines_do_not_import_the_legacy_threshold():
         mods, names = _imports(p)
         rel = str(p.relative_to(REPO))
         assert not (names & LEGACY_NAMES), rel
-        if LEGACY_MODULE in mods:
-            assert rel in TEMPORARY_LEGACY_BASELINES, rel
+        assert not any(x.startswith(LEGACY_MODULE) or x.startswith("router.experiments")
+                       for x in mods), rel
 
 
 def test_only_reproductions_import_the_paper_metric():

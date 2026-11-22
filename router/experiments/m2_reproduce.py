@@ -9,8 +9,8 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from router.baselines import cascade, static
-from router.baselines.online import KNN, LinUCB, metadata_features
+from router.experiments.m2_quickcheck_baselines import cascade, static
+from router.experiments.m2_quickcheck_baselines.online import KNN, LinUCB, metadata_features
 from router.data import coderouterbench as crb
 from router.data.prompts import join
 from router.data.scoring import score_types

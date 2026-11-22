@@ -31,8 +31,8 @@ def test_stream_ids_are_in_s2_range_unique_and_documented():
     assert np.array_equal(a, b)
 
 
-def test_sim_draws_only_through_stats_rng():
-    for f in (REPO / "router" / "sim").glob("*.py"):
+def test_sim_and_baselines_draw_only_through_stats_rng():
+    for f in [*(REPO / "router" / "sim").glob("*.py"), *(REPO / "router" / "baselines").glob("*.py")]:
         if f.name in ("stats.py", "toy.py"):
             continue
         src = f.read_text()

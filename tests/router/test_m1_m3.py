@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from router.baselines import cascade, static
+from router.experiments.m2_quickcheck_baselines import cascade, static
 from router.core import irt
 from router.core.anchors import onboard
 from router.data import coderouterbench as crb

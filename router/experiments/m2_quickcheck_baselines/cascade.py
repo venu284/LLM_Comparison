@@ -5,8 +5,8 @@ from __future__ import annotations
 import pandas as pd
 
 from router.data.schema import OutcomeMatrix
-from router.experiments.m2_quickcheck_sim import Outcome  # quick-check; checkpoint B rebuilds on router.sim
-from router.experiments.m2_quickcheck_sim import Verifier  # quick-check; checkpoint B rebuilds on router.sim
+from router.experiments.m2_quickcheck_sim import Outcome
+from router.experiments.m2_quickcheck_sim import Verifier
 
 
 def run(m: OutcomeMatrix, ladder: list[str], verifier: Verifier) -> Outcome:
