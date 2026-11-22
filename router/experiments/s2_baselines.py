@@ -12,8 +12,8 @@ Per baseline, on the gate seed (0): acceptance (S0.1), cost per task (S0.2, veri
 included), CPAT at the best single model's acceptance as the floor (R3), regret against the
 cost-aware oracle (our definition), and paired CIs against the best single model and against
 CellBest with predicted cells (the S0.3(c) comparator): acceptance gap in points and cost saving in
-percent, cluster bootstrap over problems (`N_BOOT`, seed 0). The other four seeds are reported as
-point estimates next to it (R12).
+percent, cluster bootstrap over problems (`N_BOOT`, seed 0). The other four seeds are reported next
+to it with the same paired CIs (`s2_baselines_seeds.csv`), never averaged into one number (R12).
 
 Also: the released ACRouter decisions on the development tasks they cover; the cell predictor's
 held-out accuracy on `content_text` and, as a sensitivity, on the wrapped prompt, for both
@@ -164,14 +164,14 @@ def run() -> dict:
         if s == stats.GATE_SEED:
             outcomes0 = outs
         for name, o in outs.items():
-            ref_b, ref_c = outs[REF_BEST], outs[REF_C]
-            per_seed_rows.append({
-                "seed": s, "gate_seed": s == stats.GATE_SEED, "baseline": name,
-                "acceptance": metrics.acceptance(o), "cost_musd_per_task": 1e3 * o.cost_usd.mean(),
-                "gap_vs_best_single": metrics.acceptance(o) - metrics.acceptance(ref_b),
-                "saving_vs_best_single": 100 * (1 - o.cost_usd.sum() / ref_b.cost_usd.sum()),
-                "gap_vs_cellbest_pred": metrics.acceptance(o) - metrics.acceptance(ref_c),
-                "saving_vs_cellbest_pred": 100 * (1 - o.cost_usd.sum() / ref_c.cost_usd.sum())})
+            r = {"seed": s, "gate_seed": s == stats.GATE_SEED, "baseline": name,
+                 "acceptance": metrics.acceptance(o), "cost_musd_per_task": 1e3 * o.cost_usd.mean()}
+            for tag, ref in (("best_single", outs[REF_BEST]), ("cellbest_pred", outs[REF_C])):
+                c = compare(o, ref, problems)          # paired, cluster bootstrap, every seed
+                r[f"gap_vs_{tag}"], r[f"gap_vs_{tag}_lo"], r[f"gap_vs_{tag}_hi"] = c["gap_points"]
+                r[f"saving_vs_{tag}"], r[f"saving_vs_{tag}_lo"], r[f"saving_vs_{tag}_hi"] = \
+                    c["saving_pct"]
+            per_seed_rows.append(r)
         res["seeds"][s] = {name: fits_summary(o) for name, o in outs.items()}
 
     # gate-seed table with paired CIs
