@@ -19,12 +19,25 @@ written to `<dest>/sources/<name>.jsonl`, whose SHA-256 goes into CHECKSUMS like
 file. Solution, test and expected-output columns therefore never reach the disk, and
 LiveCodeBench (4.5 GB, mostly private tests) costs a few MB.
 
+LLMRouterBench (S1.8) is pinned as an archive (ARCHIVES below): one tarball at a pinned commit,
+with the Hub's own sha256 of it. The tarball is untrusted data. It is downloaded into a fresh
+empty temporary directory outside `external/`, checked against the pinned sha256, and only the
+allowlisted member prefixes are extracted, through `extract_archive`, which rejects absolute
+paths, `..` components and every member that is not a regular file or a directory (symlinks,
+hard links, devices), before Python's `data` filter is applied as well. Extraction goes to a
+staging directory first and replaces the old files only when it completes. The tarball is then
+deleted: the pin allows a re-download. Each extracted file's SHA-256 goes into CHECKSUMS; the
+tarball's own hash is in the `# archive:` header line, not the body, since the file is not kept.
+
 Normal run: read CHECKSUMS, hash the local files, download only the missing or mismatched
 ones (rebuilding a missing or mismatched extract from its upstream files), re-hash, exit
 non-zero on any mismatch, print `fetched: N, verified: M`. When every file already matches, no
 network call is made (works under HF_HUB_OFFLINE=1).
 
-`--write-checksums` is the only mode that creates or overwrites CHECKSUMS. It takes the file
+`--write-new-checksums` adds the entries of pins that CHECKSUMS does not hold yet (a new
+extract or archive), after the same Hub checks; every existing line is kept byte for byte.
+
+`--write-checksums` is the only mode that creates or overwrites CHECKSUMS as a whole. It takes the file
 list from the Hub API at the pinned revision and checks every file against the Hub's own hash
 (LFS sha256, or the git blob SHA-1 for non-LFS files) before writing anything. For extracts it
 checks that the pinned per-file hashes are the Hub's at the pinned revision, then builds them.
@@ -34,6 +47,7 @@ Usage:
     pipeline/venv/bin/python scripts/fetch_data.py --dest /path/to/dir
     pipeline/venv/bin/python scripts/fetch_data.py --verify-only
     pipeline/venv/bin/python scripts/fetch_data.py --write-checksums
+    pipeline/venv/bin/python scripts/fetch_data.py --write-new-checksums [--archive-from TARBALL]
 """
 
 from __future__ import annotations
@@ -43,7 +57,10 @@ import hashlib
 import io
 import json
 import os
+import shutil
 import sys
+import tarfile
+import tempfile
 from collections.abc import Callable, Iterable, Iterator
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
@@ -240,6 +257,30 @@ EXTRACTS: dict[str, Extract] = {
         _LCB_FILES,
         ("platform", "question_content", "question_id", "starter_code"),
     ),
+    # S1.8: task text with the source ids, to map LLMRouterBench records (which carry only a list
+    # position and the task text) to source keys. Full MBPP (974 tasks, all four splits) and the
+    # original HumanEval prompts (HumanEval+ edits HumanEval/115's prompt).
+    "mbpp_full": Extract(
+        "google-research-datasets/mbpp", "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+        {
+            "full/prompt-00000-of-00001.parquet": ("sha256", "a053e4bb85ceb77430ae80592addb4ca4dc6ba087592f9e04537800ee88b7431"),
+            "full/test-00000-of-00001.parquet": ("sha256", "566fd53060ffba5766dace1d1e2f4c38906781526de222b0dfbdbc325b696c77"),
+            "full/train-00000-of-00001.parquet": ("sha256", "09d125ca31edacb7800be8c67c45abff618faf0214ff551291817d06bdb914ae"),
+            "full/validation-00000-of-00001.parquet": ("sha256", "3f0ec060987432d99fe8fb409d31e6c67445b208a01741c5583517c80a10fe80"),
+        },
+        ("task_id", "text"),
+    ),
+    "openai_humaneval": Extract(
+        "openai/openai_humaneval", "7dce6050a7d6d172f3cc5c32aa97f52fa1a2e544",
+        {"openai_humaneval/test-00000-of-00001.parquet": ("sha256", "2f2871a15fbc95b6c683043359f4ed8e144c5a1c4f24f25f66bc51f598dfcfb6")},
+        ("task_id", "prompt"),
+    ),
+    # S1.8: the 500 SWE-bench Verified instance ids, to check the ids LLMRouterBench records.
+    "swebench_verified_ids": Extract(
+        "princeton-nlp/SWE-bench_Verified", "c104f840cc67f8b6eec6f759ebc8b2693d585d4a",
+        {"data/test-00000-of-00001.parquet": ("sha256", "a45b1fe4e2f0c8390b2b2938ac83e92ed5979000856808f3679c07812e9e6dcd")},
+        ("instance_id", "repo"),
+    ),
 }
 
 # Extracts that deliberately hold test, solution or expected-output fields, for the S1.7 artefact
@@ -251,10 +292,48 @@ AUDIT_EXTRACTS: frozenset[str] = frozenset({"bigcodebench_tests", "ds1000_tests"
                                           "multipl_e_tests", "livecodebench_tests_140",
                                           "swebench_lite_tests"})
 
+# S1.8 extracts: source ids with task text, read only by router/data/llmrouterbench.py to map
+# LLMRouterBench records to source keys. router/data/prompts.py does not read them.
+S1_8_EXTRACTS: frozenset[str] = frozenset({"mbpp_full", "openai_humaneval", "swebench_verified_ids"})
+
+
+
+@dataclass(frozen=True)
+class Archive:
+    """Allowlisted members of one pinned tarball, extracted under `<dest>/<name>/`.
+
+    `sha256` is the Hub's LFS hash of `path` at `revision`. `members` are path prefixes inside the
+    tarball; nothing else is written.
+    """
+
+    repo_id: str
+    revision: str
+    path: str
+    sha256: str
+    members: tuple[str, ...]
+
+    def spec(self) -> str:
+        return (f"{self.repo_id}@{self.revision} file={self.path} sha256={self.sha256} "
+                f"members={','.join(self.members)}")
+
+
+# S1.8: LLMRouterBench (arXiv 2601.07206). The tarball (1,283,503,080 bytes) is unchanged since
+# 2025-12-08: the same LFS sha256 at 374c617, 0e5af1b and b95870f (2026-11-02, adds LICENSE).
+# Only the four execution-scored code subsets are extracted; arenahard_coding is judge-scored.
+ARCHIVES: dict[str, Archive] = {
+    "llmrouterbench": Archive(
+        "NPULH/LLMRouterBench", "b95870f9e60c589e82f7972c91ffa8de9ca89f85", "bench-release.tar.gz",
+        "b79f8cde1a6f029c2efa663a3a3b6f7748defb22341fe59f328cebef6648c8f1",
+        ("bench-release/humaneval/test/", "bench-release/mbpp/test/",
+         "bench-release/livecodebench/test/", "bench-release/swe-bench/verified/"),
+    ),
+}
+
 CHECKSUMS_NAME = "CHECKSUMS"
 COMMITTED_CHECKSUMS = REPO_ROOT / "external" / CHECKSUMS_NAME
 PIN_PREFIX = "# pin: "
 EXTRACT_PREFIX = "# extract: "
+ARCHIVE_PREFIX = "# archive: "
 EXTRACT_DIR = "sources"
 WORKERS = 8
 CHUNK = 1 << 20
@@ -316,20 +395,27 @@ def format_checksums(entries: dict[str, str]) -> str:
     ]
     header += [f"{PIN_PREFIX}{repo_id}@{sha}" for repo_id, sha in REPOS.values()]
     header += [f"{EXTRACT_PREFIX}{name} <- {ex.spec()}" for name, ex in EXTRACTS.items()]
+    header += [f"{ARCHIVE_PREFIX}{name} <- {ar.spec()}" for name, ar in ARCHIVES.items()]
     body = [f"{entries[p]}  {p}" for p in sorted(entries)]
     return "\n".join(header + body) + "\n"
 
 
-def parse_extract_pins(text: str) -> dict[str, str]:
-    """{extract name: spec} from the `# extract:` lines of a CHECKSUMS file."""
+def parse_extract_pins(text: str, prefix: str = EXTRACT_PREFIX) -> dict[str, str]:
+    """{name: spec} from the `# extract:` (or, with `prefix`, `# archive:`) lines of CHECKSUMS."""
     pins: dict[str, str] = {}
     for line in text.splitlines():
-        if line.startswith(EXTRACT_PREFIX):
-            name, sep, spec = line[len(EXTRACT_PREFIX):].strip().partition(" <- ")
+        if line.startswith(prefix):
+            name, sep, spec = line[len(prefix):].strip().partition(" <- ")
             if not sep:
-                raise ValueError(f"malformed extract pin: {line!r}")
+                raise ValueError(f"malformed pin: {line!r}")
             pins[name] = spec
     return pins
+
+
+def archive_name(path: str) -> str | None:
+    """'llmrouterbench/bench-release/...' -> 'llmrouterbench' when it is a pinned archive's file."""
+    head, _, rel = path.partition("/")
+    return head if head in ARCHIVES and rel else None
 
 
 def extract_name(path: str) -> str | None:
@@ -457,6 +543,95 @@ def build_extract(dest: Path, name: str, opener: Opener = open_hub) -> None:
         tmp.unlink(missing_ok=True)
 
 
+# --- archives ---------------------------------------------------------------------------------
+
+
+class UnsafeArchive(ValueError):
+    """A tar member that could write outside the target, or is not a plain file or directory."""
+
+
+def check_member(m: tarfile.TarInfo) -> None:
+    """Reject absolute paths, `..` components, and every member type except regular files and
+    directories (symlinks, hard links, devices, FIFOs). Applied to every member of the archive."""
+    name = m.name
+    if name.startswith(("/", "\\")) or (len(name) > 1 and name[1] == ":"):
+        raise UnsafeArchive(f"absolute path in archive: {name!r}")
+    if ".." in name.replace("\\", "/").split("/"):
+        raise UnsafeArchive(f"'..' component in archive: {name!r}")
+    if not (m.isfile() or m.isdir()):
+        raise UnsafeArchive(f"not a regular file or directory ({m.type!r}): {name!r}")
+
+
+def extract_archive(tar_path: Path, root: Path, members: tuple[str, ...]) -> list[str]:
+    """Extract the members of `tar_path` under the `members` prefixes into `root`.
+
+    Every member is checked (`check_member`), allowlisted or not, so a malformed archive is
+    rejected as a whole. Allowlisted members also pass Python's `data` filter. Files are written
+    to `root/.part/` first and moved into place only when the whole archive has been read.
+    Returns the extracted file paths relative to `root`, sorted.
+    """
+    root.mkdir(parents=True, exist_ok=True)
+    root = root.resolve()
+    staging = root / ".part"
+    shutil.rmtree(staging, ignore_errors=True)
+    staging.mkdir()
+    written: list[str] = []
+    try:
+        with tarfile.open(tar_path, "r|*") as tar:
+            for m in tar:
+                check_member(m)
+                if not m.name.startswith(members):
+                    continue
+                tarfile.data_filter(m, str(staging))
+                target = (staging / m.name).resolve()
+                if staging not in target.parents:
+                    raise UnsafeArchive(f"member resolves outside the target: {m.name!r}")
+                if m.isdir():
+                    target.mkdir(parents=True, exist_ok=True)
+                    continue
+                target.parent.mkdir(parents=True, exist_ok=True)
+                src = tar.extractfile(m)
+                with open(target, "wb") as f:
+                    shutil.copyfileobj(src, f, CHUNK)
+                written.append(m.name)
+        tops = sorted({w.split("/")[0] for w in written})
+        for top in tops:
+            shutil.rmtree(root / top, ignore_errors=True)
+            os.replace(staging / top, root / top)
+    finally:
+        shutil.rmtree(staging, ignore_errors=True)
+    return sorted(written)
+
+
+def download_to(opener: Opener, repo_id: str, path: str, revision: str, out: Path, sha256: str) -> None:
+    """Stream one Hub file to `out` and check its sha256; the file is removed on a mismatch."""
+    h = hashlib.sha256()
+    with open(out, "wb") as f:
+        for chunk in opener(repo_id, path, revision):
+            h.update(chunk)
+            f.write(chunk)
+    if h.hexdigest() != sha256:
+        out.unlink()
+        raise ValueError(f"{repo_id}@{revision}/{path}: sha256 {h.hexdigest()}, pinned {sha256}")
+
+
+def fetch_archive(dest: Path, name: str, local: Path | None = None, opener: Opener = open_hub) -> list[str]:
+    """Download (or take `local`), verify and extract one pinned archive under `<dest>/<name>/`;
+    the tarball never stays on disk unless it was given as `local`. Returns CHECKSUMS paths."""
+    ar = ARCHIVES[name]
+    with tempfile.TemporaryDirectory(prefix=f"{name}-download-") as tmp:
+        if local is not None:
+            got = sha256_file(local)
+            if got != ar.sha256:
+                raise ValueError(f"{local}: sha256 {got}, pinned {ar.sha256}")
+            tar_path = local
+        else:
+            tar_path = Path(tmp) / Path(ar.path).name
+            download_to(opener, ar.repo_id, ar.path, ar.revision, tar_path, ar.sha256)
+        files = extract_archive(tar_path, dest / name, ar.members)
+    return [f"{name}/{f}" for f in files]
+
+
 def download(dest: Path, repo_name: str, rel: str) -> None:
     from huggingface_hub import hf_hub_download
 
@@ -477,7 +652,7 @@ def hash_all(dest: Path, wanted: dict[str, str]) -> dict[str, str | None]:
         return dict(zip(wanted, ex.map(one, wanted)))
 
 
-def run_fetch(dest: Path, verify_only: bool) -> int:
+def run_fetch(dest: Path, verify_only: bool, archive_from: Path | None = None) -> int:
     checksums = dest / CHECKSUMS_NAME if (dest / CHECKSUMS_NAME).is_file() else COMMITTED_CHECKSUMS
     if not checksums.is_file():
         print(f"error: no CHECKSUMS at {dest / CHECKSUMS_NAME} or {COMMITTED_CHECKSUMS}", file=sys.stderr)
@@ -494,8 +669,14 @@ def run_fetch(dest: Path, verify_only: bool) -> int:
             print(f"error: {checksums} pins extract {name} as {extract_pins.get(name)}, script as {ex.spec()}",
                   file=sys.stderr)
             return 2
+    archive_pins = parse_extract_pins(text, ARCHIVE_PREFIX)
+    for name, ar in ARCHIVES.items():
+        if name in archive_pins and archive_pins[name] != ar.spec():
+            print(f"error: {checksums} pins archive {name} as {archive_pins[name]}, script as {ar.spec()}",
+                  file=sys.stderr)
+            return 2
     for path in wanted:
-        if extract_name(path) is None:
+        if extract_name(path) is None and archive_name(path) is None:
             split_entry(path)
 
     local = hash_all(dest, wanted)
@@ -503,12 +684,14 @@ def run_fetch(dest: Path, verify_only: bool) -> int:
     fetched = 0
     if todo and not verify_only:
         print(f"{len(todo)} of {len(wanted)} files missing or mismatched; downloading")
-        mirror = [p for p in todo if extract_name(p) is None]
+        mirror = [p for p in todo if extract_name(p) is None and archive_name(p) is None]
         with ThreadPoolExecutor(WORKERS) as ex:
             list(ex.map(lambda p: download(dest, *split_entry(p)), mirror))
         for p in todo:
             if (name := extract_name(p)) is not None:
                 build_extract(dest, name)
+        for name in sorted({archive_name(p) for p in todo} - {None}):
+            fetch_archive(dest, name, local=archive_from)
         fetched = len(todo)
         local.update(hash_all(dest, {p: wanted[p] for p in todo}))
 
@@ -577,6 +760,15 @@ def run_write_checksums(dest: Path) -> int:
         print(f"building extract {name} from {len(ex.files)} upstream file(s)")
         build_extract(dest, name)
         entries[extract_path(name)] = sha256_file(dest / extract_path(name))
+    for name, ar in ([] if errors else ARCHIVES.items()):
+        info = api.dataset_info(ar.repo_id, revision=ar.revision, files_metadata=True)
+        hub = {s.rfilename: hub_expected(s) for s in info.siblings}
+        if info.sha != ar.revision or hub.get(ar.path) != ("sha256", ar.sha256):
+            errors.append(f"{ar.repo_id}@{ar.revision}/{ar.path}: Hub {hub.get(ar.path)}, pinned {ar.sha256}")
+            break
+        print(f"fetching archive {name}")
+        for path in fetch_archive(dest, name):
+            entries[path] = sha256_file(dest / path)
     if errors:
         for e in errors:
             print(f"MISMATCH vs Hub: {e}", file=sys.stderr)
@@ -587,6 +779,67 @@ def run_write_checksums(dest: Path) -> int:
     return 0
 
 
+def _hub_check_extract(api, ex: Extract) -> list[str]:
+    info = api.dataset_info(ex.repo_id, revision=ex.revision, files_metadata=True)
+    hub = {s.rfilename: hub_expected(s) for s in info.siblings}
+    errors = [f"{ex.repo_id}@{ex.revision} resolved to {info.sha}"] if info.sha != ex.revision else []
+    return errors + [f"{ex.repo_id}/{p}: Hub {hub.get(p)}, pinned {h}" for p, h in ex.files.items()
+                     if hub.get(p) != h]
+
+
+def run_write_new_checksums(dest: Path, archive_from: Path | None = None) -> int:
+    """Add CHECKSUMS entries for extracts and archives the committed file does not pin yet.
+
+    Existing pins must match the script (a changed pin needs --write-checksums); every existing
+    line is kept byte for byte, which is checked before writing.
+    """
+    from huggingface_hub import HfApi
+
+    source = dest / CHECKSUMS_NAME if (dest / CHECKSUMS_NAME).is_file() else COMMITTED_CHECKSUMS
+    old = source.read_text()
+    entries, pins = parse_checksums(old)
+    if any(pins.get(r) != sha for r, sha in REPOS.values()):
+        print("error: repo pins differ from the script; use --write-checksums", file=sys.stderr)
+        return 2
+    ex_pins, ar_pins = parse_extract_pins(old), parse_extract_pins(old, ARCHIVE_PREFIX)
+    changed = [n for n, ex in EXTRACTS.items() if n in ex_pins and ex_pins[n] != ex.spec()]
+    changed += [n for n, ar in ARCHIVES.items() if n in ar_pins and ar_pins[n] != ar.spec()]
+    if changed:
+        print(f"error: pins changed for {changed}; use --write-checksums", file=sys.stderr)
+        return 2
+    api = HfApi()
+    for name, ex in EXTRACTS.items():
+        if name in ex_pins:
+            continue
+        errors = _hub_check_extract(api, ex)
+        if errors:
+            print("\n".join(f"MISMATCH vs Hub: {e}" for e in errors), file=sys.stderr)
+            return 1
+        print(f"building new extract {name}")
+        build_extract(dest, name)
+        entries[extract_path(name)] = sha256_file(dest / extract_path(name))
+    for name, ar in ARCHIVES.items():
+        if name in ar_pins:
+            continue
+        info = api.dataset_info(ar.repo_id, revision=ar.revision, files_metadata=True)
+        hub = {s.rfilename: hub_expected(s) for s in info.siblings}
+        if info.sha != ar.revision or hub.get(ar.path) != ("sha256", ar.sha256):
+            print(f"MISMATCH vs Hub: {ar.repo_id}@{info.sha}/{ar.path}: {hub.get(ar.path)}, pinned "
+                  f"{ar.revision} sha256 {ar.sha256}", file=sys.stderr)
+            return 1
+        print(f"fetching new archive {name}")
+        for path in fetch_archive(dest, name, local=archive_from):
+            entries[path] = sha256_file(dest / path)
+    new = format_checksums(entries)
+    lost = set(old.splitlines()) - set(new.splitlines())
+    if lost:
+        print(f"error: {len(lost)} existing CHECKSUMS lines would change; nothing written", file=sys.stderr)
+        return 1
+    (dest / CHECKSUMS_NAME).write_text(new)
+    print(f"wrote {dest / CHECKSUMS_NAME}: {len(new.splitlines()) - len(old.splitlines())} lines added")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--dest", type=Path, default=EXTERNAL_DIR, help="mirror root (default: <repo>/external)")
@@ -594,12 +847,18 @@ def main(argv: list[str] | None = None) -> int:
     mode.add_argument("--write-checksums", action="store_true",
                       help="download the pinned snapshot, check it against the Hub's hashes, write CHECKSUMS")
     mode.add_argument("--verify-only", action="store_true", help="hash local files only; never download")
+    mode.add_argument("--write-new-checksums", action="store_true",
+                      help="add entries for pins CHECKSUMS does not hold yet; keep every existing line")
+    ap.add_argument("--archive-from", type=Path, default=None,
+                    help="use this local copy of a pinned tarball (checked against its sha256)")
     args = ap.parse_args(argv)
     dest = args.dest.resolve()
     dest.mkdir(parents=True, exist_ok=True)
     if args.write_checksums:
         return run_write_checksums(dest)
-    return run_fetch(dest, args.verify_only)
+    if args.write_new_checksums:
+        return run_write_new_checksums(dest, args.archive_from)
+    return run_fetch(dest, args.verify_only, args.archive_from)
 
 
 if __name__ == "__main__":
