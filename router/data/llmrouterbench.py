@@ -146,3 +146,186 @@ def rule(subset: str) -> SubsetRule:
 
 def eligible_subsets() -> list[str]:
     return sorted(CODE_SUBSETS)
+
+
+# --------------------------------------------------------------------------- loader
+import hashlib  # noqa: E402
+import json  # noqa: E402
+import re  # noqa: E402
+from functools import lru_cache  # noqa: E402
+from pathlib import Path  # noqa: E402
+
+import pandas as pd  # noqa: E402
+
+from router.data.schema import NULL_SCORE, OutcomeMatrix, long_frame  # noqa: E402
+from router.settings import EXTERNAL_DIR  # noqa: E402
+
+ROOT = EXTERNAL_DIR / "llmrouterbench" / "bench-release"
+SOURCES = EXTERNAL_DIR / "sources"
+DIMENSION = "code"   # LLMRouterBench's own category for all four subsets (Table 9)
+
+# How each subset's records were mapped to source keys (the `splits.source_key` namespace). No
+# record carries a source id except SWE-bench's `instance_id`; `index` is a 1-based list position
+# (runner.py l.280 "index=index + 1,  # 1-based indexing") and is never used as an id.
+MAPPING = {
+    "humaneval/test": "he/N: origin_query equals the `prompt` of exactly one task in the pinned "
+                      "openai_humaneval extract (HumanEval/N).",
+    "mbpp/test": "mbpp/N: the record prompt equals, after collapsing whitespace, LLMRouterBench's "
+                 "MBPP template (mbpp.py l.14-19) filled with the `text` and `test_list` of exactly "
+                 "one task in the pinned mbpp_full extract. The text alone is shared by four "
+                 "pairs of MBPP tasks; the tests separate them.",
+    "livecodebench/test": "lcb/<question_id>: origin_query equals the `question_content` of "
+                          "exactly one problem in the pinned livecodebench extract (release v1-v6).",
+    "swe-bench/verified": "swe/<instance_id>: the record's own `instance_id`, checked against the "
+                          "pinned swebench_verified_ids extract.",
+}
+_MBPP_TEMPLATE = ("You are an expert Python programmer, and here is your task:\n{question}\n\n"
+                  "Your code should pass these tests:\n{test}")
+
+
+def _ws(text: str) -> str:
+    return re.sub(r"\s+", " ", text or "").strip()
+
+
+def sha256_text(text: str | None) -> str | None:
+    return None if text is None else hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _extract(name: str) -> list[dict]:
+    with open(SOURCES / f"{name}.jsonl", encoding="utf-8") as f:
+        return [json.loads(line) for line in f if line.strip()]
+
+
+def _unique(pairs) -> dict:
+    """{key: value} for keys that occur once; keys seen twice map to None (ambiguous)."""
+    out: dict = {}
+    for k, v in pairs:
+        out[k] = None if k in out else v
+    return out
+
+
+@lru_cache(maxsize=1)
+def _source_indexes() -> dict[str, dict]:
+    he = _unique((r["prompt"], f"he/{int(r['task_id'].split('/')[1])}") for r in _extract("openai_humaneval"))
+    mbpp = _unique((_ws(_MBPP_TEMPLATE.format(question=r["text"], test="\n".join(r["test_list"]))),
+                    f"mbpp/{int(r['task_id'])}") for r in _extract("mbpp_full"))
+    lcb = _unique((r["question_content"], f"lcb/{r['question_id']}") for r in _extract("livecodebench"))
+    swe = {r["instance_id"] for r in _extract("swebench_verified_ids")}
+    return {"he": he, "mbpp": mbpp, "lcb": lcb, "swe": swe}
+
+
+def source_key(subset: str, record: dict) -> str | None:
+    """The `splits.source_key`-namespace key of a record, or None when no unique match exists."""
+    ix = _source_indexes()
+    if subset == "humaneval/test":
+        return ix["he"].get(record["origin_query"])
+    if subset == "mbpp/test":
+        return ix["mbpp"].get(_ws(record["prompt"]))
+    if subset == "livecodebench/test":
+        return ix["lcb"].get(record["origin_query"])
+    if subset == "swe-bench/verified":
+        iid = record.get("instance_id")
+        return f"swe/{iid}" if iid in ix["swe"] else None
+    raise KeyError(subset)
+
+
+def task_id(subset: str, index: int) -> str:
+    return f"{FAMILY[subset]}_{int(index)}"
+
+
+@dataclass
+class LrbData:
+    """Everything the loader reads. `long` is in `schema.LONG_COLUMNS` form and holds only the
+    cells a model ran (ragged across subsets, never zero-filled); `matrices` has one dense
+    OutcomeMatrix per subset; `cells` adds per-cell fields the schema has no column for."""
+
+    long: pd.DataFrame
+    cells: pd.DataFrame
+    tasks: pd.DataFrame
+    files: pd.DataFrame
+    cost_flags: pd.DataFrame
+    matrices: dict[str, OutcomeMatrix]
+
+    @property
+    def zero_cost(self) -> dict[str, list[str]]:
+        """{family: models whose every recorded cost is 0}: excluded from cost metrics, kept for accuracy."""
+        z = self.cost_flags[self.cost_flags.zero_cost]
+        return {f: sorted(g.model) for f, g in z.groupby("family")}
+
+
+def _read(path: Path) -> dict:
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def load(root: Path = ROOT, include_router_baselines: bool = False) -> LrbData:
+    """Read the extracted code subsets. Files of ROUTER_BASELINES are listed in `files` and left out
+    of every other table unless `include_router_baselines` (for raw counts only)."""
+    files, cells, tasks = [], [], {}
+    for subset in CODE_SUBSETS:
+        fam = FAMILY[subset]
+        for path in sorted((root / subset).glob("*/*.json")):
+            d = _read(path)
+            model = d["model_name"]
+            router = model in ROUTER_BASELINES
+            files.append({"subset": subset, "family": fam, "model_dir": path.parent.name,
+                          "model": model, "file": str(path.relative_to(root)),
+                          "records": len(d["records"]), "counts": d["counts"],
+                          "file_cost": d["cost"], "performance": d["performance"],
+                          "router_baseline": router})
+            if router and not include_router_baselines:
+                continue
+            for r in d["records"]:
+                tid = task_id(subset, r["index"])
+                if tid not in tasks:
+                    tasks[tid] = {"task_id": tid, "family": fam, "subset": subset, "index": r["index"],
+                                  "source_key": source_key(subset, r),
+                                  "instance_id": r.get("instance_id"),
+                                  "origin_query": r["origin_query"], "prompt": r["prompt"],
+                                  "origin_query_sha256": sha256_text(r["origin_query"]),
+                                  "prompt_sha256": sha256_text(r["prompt"])}
+                elif tasks[tid]["origin_query_sha256"] != sha256_text(r["origin_query"]):
+                    raise ValueError(f"{path}: index {r['index']} holds a different task than in other files")
+                raw = r.get("raw_output") or ""
+                cells.append({"task_id": tid, "model": model, "family": fam, "subset": subset,
+                              "score": r["score"], "recorded_cost": r["cost"],
+                              "input_tokens": r["prompt_tokens"], "output_tokens": r["completion_tokens"],
+                              "raw_output_chars": len(raw), "raw_output_empty": not raw.strip(),
+                              "processing_failed": raw.startswith("Processing failed")})
+    files = pd.DataFrame(files)
+    cells = pd.DataFrame(cells)
+    tasks = pd.DataFrame(list(tasks.values()))
+    if cells.duplicated(["task_id", "model"]).any():
+        raise ValueError("a (task, model) cell appears twice")
+
+    flags = (cells.groupby(["family", "model"])
+             .agg(cells=("recorded_cost", "size"), zero_cost_cells=("recorded_cost", lambda c: int((c == 0).sum())),
+                  recorded_cost_total=("recorded_cost", "sum"))
+             .reset_index())
+    flags["zero_cost"] = flags.zero_cost_cells == flags.cells
+    flags["partial_zero_cost"] = (flags.zero_cost_cells > 0) & ~flags.zero_cost
+    zero = set(zip(flags.family[flags.zero_cost], flags.model[flags.zero_cost]))
+    cells["cost_excluded"] = [(f, m) in zero for f, m in zip(cells.family, cells.model)]
+
+    available = cells.score.notna()
+    long = pd.DataFrame({
+        "task_id": cells.task_id, "model": cells.model, "run": 1,
+        "score": cells.score.astype(float),
+        # Zero-cost models: excluded from cost metrics (plan S1.8), so no cost, not a cost of 0.
+        "cost_usd": cells.recorded_cost.where(~cells.cost_excluded).astype(float),
+        "input_tokens": cells.input_tokens, "output_tokens": cells.output_tokens,
+        "problem_id": None, "family": cells.family, "dimension": DIMENSION, "split": None,
+        "score_type": [RULES[s].score_type for s in cells.subset],
+        "eligible": [RULES[s].eligible for s in cells.subset],
+        "available": available,
+        "unavailable_reason": [None if a else NULL_SCORE for a in available],
+    })
+    long = long_frame(long)
+    matrices = {fam: OutcomeMatrix.from_long(long[long.family == fam], name=fam)
+                for fam in sorted(long.family.unique())}
+    return LrbData(long, cells, tasks, files, flags, matrices)
+
+
+@lru_cache(maxsize=1)
+def load_cached() -> LrbData:
+    return load()

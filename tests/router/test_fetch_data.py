@@ -97,7 +97,19 @@ def test_every_pinned_field_allowlist_excludes_solutions_tests_and_outputs():
         if name in fd.AUDIT_EXTRACTS:          # S1.7 audit: tests on purpose, sandbox only
             continue
         for field in ex.fields:
+            if (name, field) in fd.S1_8_TEST_FIELDS:   # S1.8: matched as text, never executed
+                continue
             assert field not in FORBIDDEN and field.split(".")[-1] not in FORBIDDEN, (name, field)
+
+
+def test_s1_8_extracts_are_named_and_unused_by_the_prompt_loader():
+    from pathlib import Path
+
+    assert fd.S1_8_EXTRACTS <= set(fd.EXTRACTS)
+    assert {n for n, _ in fd.S1_8_TEST_FIELDS} <= fd.S1_8_EXTRACTS
+    prompts_src = (Path(fd.REPO_ROOT) / "router/data/prompts.py").read_text()
+    for name in fd.S1_8_EXTRACTS:
+        assert name not in prompts_src, name
 
 
 def test_audit_extracts_are_named_and_unused_by_the_prompt_loader():

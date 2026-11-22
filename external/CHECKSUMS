@@ -21,7 +21,7 @@
 # extract: humanevalplus <- evalplus/humanevalplus@d32357cf319e50e9c8d8dab5ea876c72b0fd321b files=data/test-00000-of-00001-5973903632b82d40.parquet fields=task_id,prompt
 # extract: multipl_e <- nuprl/MultiPL-E@28441b6024e71d4a1c1c0f6bf171c935cd5a43f2 files=humaneval-rs/test-00000-of-00001.parquet,humaneval-ts/test-00000-of-00001.parquet fields=language,name,prompt
 # extract: livecodebench <- livecodebench/code_generation_lite@0fe84c3912ea0c4d4a78037083943e8f0c4dd505 files=test.jsonl,test2.jsonl,test3.jsonl,test4.jsonl,test5.jsonl,test6.jsonl fields=platform,question_content,question_id,starter_code
-# extract: mbpp_full <- google-research-datasets/mbpp@4bb6404fdc6cacfda99d4ac4205087b89d32030c files=full/prompt-00000-of-00001.parquet,full/test-00000-of-00001.parquet,full/train-00000-of-00001.parquet,full/validation-00000-of-00001.parquet fields=task_id,text
+# extract: mbpp_full <- google-research-datasets/mbpp@4bb6404fdc6cacfda99d4ac4205087b89d32030c files=full/prompt-00000-of-00001.parquet,full/test-00000-of-00001.parquet,full/train-00000-of-00001.parquet,full/validation-00000-of-00001.parquet fields=task_id,text,test_list
 # extract: openai_humaneval <- openai/openai_humaneval@7dce6050a7d6d172f3cc5c32aa97f52fa1a2e544 files=openai_humaneval/test-00000-of-00001.parquet fields=task_id,prompt
 # extract: swebench_verified_ids <- princeton-nlp/SWE-bench_Verified@c104f840cc67f8b6eec6f759ebc8b2693d585d4a files=data/test-00000-of-00001.parquet fields=instance_id,repo
 # archive: llmrouterbench <- NPULH/LLMRouterBench@b95870f9e60c589e82f7972c91ffa8de9ca89f85 file=bench-release.tar.gz sha256=b79f8cde1a6f029c2efa663a3a3b6f7748defb22341fe59f328cebef6648c8f1 members=bench-release/humaneval/test/,bench-release/mbpp/test/,bench-release/livecodebench/test/,bench-release/swe-bench/verified/
@@ -322,7 +322,7 @@ e9fe529ee3b47b479e31a4b5c85069520a17fe0fb1c894ce3f78409ccd970d3b  sources/humane
 7395649e7cf79897ac102ea7c006c22da1d8e56e8da6dd9f72346473d7b8ee00  sources/livecodebench.jsonl
 457f14fba6bb7e417ae37196990307d5ab7f3ab51ccec592dfbe76ff058279ca  sources/livecodebench_tests.jsonl
 503e889e6e511125bf203bc098f74c21c3111b28b9f67cd8a1903e0e03e817e3  sources/livecodebench_tests_140.jsonl
-6ff85806fc1cab072de81c17d5faaee96ed4eb9b3d064731fad0ec2e3a9647ba  sources/mbpp_full.jsonl
+9b9b24583c32869525fb3f4f764bfd53a726af0660d134a2fffbf8cb6082d21a  sources/mbpp_full.jsonl
 b006180194f2d9d470170f0c49dc67b06fe3e1e313e95eeb334193a25fd8cb27  sources/mbppplus_tests.jsonl
 a7678241127d5e56e507ac0e907e63bd89db14be013a7d3c0dab40a2060c0205  sources/multipl_e.jsonl
 e8adaf1c09fd81ace490735e3f95bb0714c866057e62f312ce06f50b2253ec8b  sources/multipl_e_tests.jsonl

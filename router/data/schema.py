@@ -22,7 +22,11 @@ LONG_COLUMNS = ["task_id", "model", "run", "score", "cost_usd", "input_tokens", 
 
 MISSING_TOKEN_RECORD = "missing_token_record"   # CodeRouterBench cost_source == missing_token_record_zero_total
 EMPTY_RESPONSE = "empty_response"               # empty X13 response (CLAIMS S0.11), supplied by the verdict loader
-UNAVAILABLE_REASONS = (MISSING_TOKEN_RECORD, EMPTY_RESPONSE)
+UNAVAILABLE_REASONS = (MISSING_TOKEN_RECORD, EMPTY_RESPONSE)   # CodeRouterBench (artefacts.yaml counts these)
+NULL_SCORE = "null_score"                       # released score is null: the scorer failed on the cell (S1.8, LLMRouterBench)
+# Every reason a cell may carry. Kept apart from UNAVAILABLE_REASONS so the CodeRouterBench
+# artefacts (S1.7, frozen) do not change when another corpus adds a reason.
+ALL_UNAVAILABLE_REASONS = UNAVAILABLE_REASONS + (NULL_SCORE,)
 
 # Columns filled after loading: score_type and eligible by scoring.annotate (S1.4), problem_id by
 # splits.annotate (S1.6). long_frame leaves them null when a loader has not filled them.
@@ -56,7 +60,7 @@ def _check_reasons(available, reason) -> None:
     has_reason = reason.notna()
     if (has_reason == available).any(axis=None):
         raise ValueError("a cell is unavailable exactly when it has an unavailable_reason")
-    bad = set(reason.to_numpy()[has_reason.to_numpy(dtype=bool)]) - set(UNAVAILABLE_REASONS)
+    bad = set(reason.to_numpy()[has_reason.to_numpy(dtype=bool)]) - set(ALL_UNAVAILABLE_REASONS)
     if bad:
         raise ValueError(f"unknown unavailable_reason {sorted(bad)}")
 
@@ -158,7 +162,7 @@ class OutcomeMatrix:
         Cells outside this matrix are skipped (a verdict set spans both splits). A cell that is
         already unavailable keeps its first reason. Scores are left as they are.
         """
-        if reason not in UNAVAILABLE_REASONS:
+        if reason not in ALL_UNAVAILABLE_REASONS:
             raise ValueError(f"unknown unavailable_reason {reason!r}")
         tasks, models = set(self.tasks), set(self.models)
         hit = pd.DataFrame(False, index=self.tasks, columns=self.models)

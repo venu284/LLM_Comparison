@@ -259,7 +259,9 @@ EXTRACTS: dict[str, Extract] = {
     ),
     # S1.8: task text with the source ids, to map LLMRouterBench records (which carry only a list
     # position and the task text) to source keys. Full MBPP (974 tasks, all four splits) and the
-    # original HumanEval prompts (HumanEval+ edits HumanEval/115's prompt).
+    # original HumanEval prompts (HumanEval+ edits HumanEval/115's prompt). MBPP keeps `test_list`:
+    # LLMRouterBench's MBPP prompt embeds it, and it separates the four pairs of MBPP tasks that
+    # share a text. It is data only; nothing executes it.
     "mbpp_full": Extract(
         "google-research-datasets/mbpp", "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
         {
@@ -268,7 +270,7 @@ EXTRACTS: dict[str, Extract] = {
             "full/train-00000-of-00001.parquet": ("sha256", "09d125ca31edacb7800be8c67c45abff618faf0214ff551291817d06bdb914ae"),
             "full/validation-00000-of-00001.parquet": ("sha256", "3f0ec060987432d99fe8fb409d31e6c67445b208a01741c5583517c80a10fe80"),
         },
-        ("task_id", "text"),
+        ("task_id", "text", "test_list"),
     ),
     "openai_humaneval": Extract(
         "openai/openai_humaneval", "7dce6050a7d6d172f3cc5c32aa97f52fa1a2e544",
@@ -295,6 +297,10 @@ AUDIT_EXTRACTS: frozenset[str] = frozenset({"bigcodebench_tests", "ds1000_tests"
 # S1.8 extracts: source ids with task text, read only by router/data/llmrouterbench.py to map
 # LLMRouterBench records to source keys. router/data/prompts.py does not read them.
 S1_8_EXTRACTS: frozenset[str] = frozenset({"mbpp_full", "openai_humaneval", "swebench_verified_ids"})
+# The one test field outside AUDIT_EXTRACTS: MBPP `test_list`, matched as text against
+# LLMRouterBench's MBPP prompt (which embeds it) to tell apart MBPP tasks that share a text.
+# Nothing executes it.
+S1_8_TEST_FIELDS: frozenset[tuple[str, str]] = frozenset({("mbpp_full", "test_list")})
 
 
 
