@@ -15,7 +15,7 @@
 | Field | Value |
 |---|---|
 | Current stage | **S1 — Validate data** (§4). Pre-S0 and S0 done; `docs/CLAIMS.md` signed off 2026-11-20 |
-| Next action | **S1 gate passed (2026-11-21).** Next: S2 (evaluation infrastructure and baselines) on the S1.7 views. Whether to start S1.8 (LLMRouterBench) early is open with the user (see the 2026-11-21 log: the earlier "DP1b failure likely" reason was wrong). `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Next action | S2 checkpoint B (S2.5 baselines, S2.6 reproductions, the S2 gate) on `s2-eval-infra`; checkpoint A (S2.1–S2.4) is reviewed, not merged. S1 and S1.8 are on `main`. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
 | Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0 · Write-up: Report 8 |
 | Last updated | 2026-11-20 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
@@ -773,13 +773,45 @@ edit them.
         - the two single-cell reassignments were read and confirmed;
         - the views were recounted.
       - 428 tests pass.
-- [ ] S1.8 `data/llmrouterbench.py` [M1.7]: code subsets; drop zero-cost models from economic
+- [x] S1.8 `data/llmrouterbench.py` [M1.7]: code subsets; drop zero-cost models from economic
       metrics. Validate the loader early, so it is ready if DP1b makes it the primary corpus.
-      Whether to start it early is open with the user (2026-11-21). S1.7 does **not** point to a
-      DP1b failure: DP1b's bound takes oracle decisions on the 90.8% of headline tasks with no
-      verifier signal, so it sits near the full oracle. The case for starting early is breadth.
-      The headline is four families, 62% CRUXEval, and its headroom is mostly CRUXEval answer
+      Started early for breadth (user, 2026-11-21). S1.7 does **not** point to a DP1b failure:
+      the headline is four families, 62% CRUXEval, and its headroom is mostly CRUXEval answer
       format.
+      **Done 2026-11-21** (merged `39670bb`; 450 tests; 304 files verify).
+      Note: `docs/research/S1.8_llmrouterbench.md`.
+      - **Data:** pinned `NPULH/LLMRouterBench@b95870f`; the tarball's sha256 has been
+        unchanged since 2025-12-08. Only the four code subsets are extracted, with every member
+        checked first.
+      - **Eligibility,** by documented rule and committed before any score distribution:
+        HumanEval, MBPP, LiveCodeBench and SWE-bench Verified are eligible; `arenahard_coding`
+        (judge) is not.
+      - **Loader:** a ragged long table of 69,123 cells (never zero-filled; `openrouter` is a
+        router baseline, so it is excluded). Source keys use the `splits` namespace, mapped by
+        text, for all 2,693 tasks.
+      - **Profile:**
+        - HumanEval 164 × 22 models, MBPP 974 × 20, LiveCodeBench 1,055 × 37, SWE-bench
+          Verified 500 × 14; scores are binary;
+        - nine zero-cost models per small-model subset;
+        - the pools overlap: 13 of the 14 SWE-bench models are also in LiveCodeBench;
+        - HumanEval and MBPP prompts include the test code;
+        - LLMRouterBench publishes no SWE-bench scorer.
+      - **User decisions (2026-11-21):**
+        - SWE-bench stays eligible (documented rule; audit before any primary use);
+        - the 443 zero-token, zero-cost cells are **unavailable** (S0.11, "missing is not
+          failure", now applied to LLMRouterBench);
+        - the 12 zero-cost SWE-bench cells with tokens keep their scores and leave cost metrics;
+        - the nine zero-cost models are excluded from cost; pricing them is deferred until a
+          cost claim uses LLMRouterBench.
+      - **Overlap:** every CodeRouterBench HumanEval, MBPP and LiveCodeBench problem is in
+        LLMRouterBench, including 487 of the 1,287 headline tasks. Any joint use keeps each
+        shared problem on one side of every split.
+      - **Before LLMRouterBench could be a primary corpus,** it needs:
+        - an eligibility review;
+        - task text;
+        - problem ids and splits across both corpora;
+        - an artefact audit, including the SWE-bench scorer;
+        - pricing for the zero-cost models.
 - [x] S1.9 `data/phase5.py` [M1.8]: read-only loader (R5), including the stored raw responses
       (324 non-empty of 325) read from the database without writing to it. **Done 2026-11-20 (A2,
       merged `e2a572f`):** CSV refused on a hash mismatch; one read-only fetch (connection option,
@@ -830,14 +862,14 @@ edit them.
 ### S2 — Evaluation infrastructure and baselines
 Validated before any analysis that feeds a decision point, so that DP1 does not rest on the
 quick-check code.
-- [ ] S2.1 `sim/stream.py` [M2.1]: seeded task order, model-arrival events, bandit feedback only,
+- [~] S2.1 `sim/stream.py` [M2.1]: seeded task order, model-arrival events, bandit feedback only,
       observations as PASS / FAIL / UNKNOWN from the verifier (S0.13). Test: the router never
       receives the released score.
-- [ ] S2.2 `sim/verifier.py`: real-verdict replay (S0.11) with per-cell "no signal"; simulated noise
+- [~] S2.2 `sim/verifier.py`: real-verdict replay (S0.11) with per-cell "no signal"; simulated noise
       kept for the E3 sensitivity analysis.
-- [ ] S2.3 `sim/metrics.py` [M2.2]: AvgPerf, cost (S0.2), acceptance rate (S0.1), CPAT@floor, cost at
+- [~] S2.3 `sim/metrics.py` [M2.2]: AvgPerf, cost (S0.2), acceptance rate (S0.1), CPAT@floor, cost at
       matched acceptance rate, and regret that includes probe cost in dollars and in probe count.
-- [ ] S2.4 `sim/stats.py` [M2.3]: S0.8, plus the development split and nested cross-fitting driver
+- [~] S2.4 `sim/stats.py` [M2.3]: S0.8, plus the development split and nested cross-fitting driver
       of S0.6, including automatic per-fold selection from a frozen candidate list. Reuse
       `splits.load_splits` and `splits.r13_violations`. Stream order and the probe draw under a
       seed use their own SeedSequence stream ids (`[seed, 2]`, `[seed, 3]`, …, at most 99; 100
@@ -1659,7 +1691,7 @@ Two further reviews were checked against the data; all fixes approved by the use
   it against the `CLAIMS.md` table and against the P0.5/P0.6 scripts); `e0_power.py` ports the four
   power scripts onto the current definitions. A reviewer re-run reproduced every number (only the
   runtime field differs).
-- **Power (provisional):** the originals reproduce the plan's 0.85 and 1.38. Ported: no-oracle
+ - **Power (provisional):** the originals reproduce the plan's 0.85 and 1.38. Ported: no-oracle
   per-cell policies ±1.8–1.9 points against the best single model on the evaluation population
   (power at −2 about 55–60%), ±0.3–0.6 against CellBest. CellBest's saving against the best single
   model ranges from 15.4% to 32.9% across development-split seeds (`code_generation|bcb` flips
@@ -1898,3 +1930,32 @@ Two further reviews were checked against the data; all fixes approved by the use
   - DP1b is not indicated either way. Its bound takes oracle decisions on the no-signal cells, so it sits near the full oracle and is more likely to pass than fail. The open question is whether a learned router can approach it (S4–S5).
 - **Correction (reviewer, same day):** S1.8 was first recorded as started because "a DP1b failure is likely". That reasoning was wrong (see above). S1.8 stays `[ ]`, and starting it early for breadth is put back to the user.
 - **Next:** S2; the user decides whether S1.8 starts now.
+
+### 2026-11-21 (S1.8 merged; S2 checkpoint A reviewed)
+
+- **S1.8** merged from `s1-8-llmrouterbench` (`39670bb`). Reviewer checks:
+  - 450 tests pass; 304 files verify; no existing `CHECKSUMS` line changed;
+  - the eligibility rules were committed before any score distribution;
+  - the subset counts were recounted from the extracted JSON and match the loader (69,123 cells
+    without `openrouter`; 70,678 and 39 models with it, as in the 2026-08-18 audit).
+  - The user's decisions are recorded under S1.8.
+- **S2 checkpoint A** (S2.1–S2.4, on `s2-eval-infra`, `ee783d3`; 494 tests). Reviewer checks:
+  - the no-ground-truth test substitutes random, −1e9 and inverted scores and also scrambles
+    costs, and every router's decisions stay identical, on toy data and on the development-split
+    headline tasks;
+  - the cross-fitting driver refuses the evaluation population, even through relabelled
+    substitute tables and with `frozen=True` but no real tag;
+  - an independent cluster bootstrap agrees ([5.74, 19.0] vs [5.5, 19.0]);
+  - random streams use ids 2–8.
+  - Accepted deviations:
+    - the quick-check simulator moved unchanged to `experiments/m2_quickcheck_sim.py`;
+    - `test_scoring.py` now points its legacy check at that module;
+    - `cascade.py` and `online.py` keep temporary legacy imports until checkpoint B.
+  - Routers see an opaque task key, and cost is withheld from routers, because Qwen3-Max's cost
+    per dimension would reveal the dimension.
+- **User decision:** the S2.5 cell predictor is trained on the **headline's development split**
+  (248 tasks, 4 cells; consistent with O1). Training on the development split of all eligible
+  tasks is a sensitivity check.
+- `scoring.py`: the legacy-threshold comment now says it is kept only for the records.
+- **Next:** S2 checkpoint B. `s2-eval-infra` merges `main` (`39670bb` or later) before its final
+  review.

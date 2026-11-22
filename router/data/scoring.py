@@ -331,8 +331,8 @@ def annotate(long: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-# --------------------------------------------------------------------------- legacy (S2 removes)
-LEGACY_ACCEPT_THRESHOLD = 0.5   # 2026-11-10 quick check; contradicts S0.1, kept for m3 and sim/*
+# --------------------------------------------------------------------------- legacy (records only)
+LEGACY_ACCEPT_THRESHOLD = 0.5   # 2026-11-10 quick check; contradicts S0.1, kept only for the m3 records and the moved quick-check simulator (S2 checkpoint A); new sim/ and baselines/ code must not import it
 
 
 def legacy_accepted(score: pd.DataFrame | pd.Series, threshold: float = LEGACY_ACCEPT_THRESHOLD):
