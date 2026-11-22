@@ -359,3 +359,23 @@ def test_baselines_draw_from_their_streams():
     c = run_dev(RandomChoice(), m, ctx, folds, seed=1)
     assert a.final_model.equals(b.final_model) and not a.final_model.equals(c.final_model)
     assert task_key("x") != "x"
+
+
+@pytest.mark.skipif(not HAVE_X13, reason="route-anything-data not downloaded to external/")
+@pytest.mark.parametrize("name", ["best_single", "cellbest_pred", "ruleA_escalate_pred",
+                                  "fixed_cascade_escalate"])
+def test_real_dev_shuffled_labels_fall_to_random(name):
+    """On the development-split headline tasks: unshuffled, the baseline beats Random (paired
+    cluster-bootstrap CI above 0); with shuffled labels, the paired CI against Random holds 0."""
+    from router.sim import stats
+    m, ctx, folds = real_dev()
+    b = next(x for x in default_baselines(m.models) if x.name == name)
+    rnd = run_dev(next(x for x in default_baselines(m.models) if x.name == "random"), m, ctx,
+                  folds, seed=0)
+    pid = ctx.problem_of
+    for shuffle, expect_gain in ((None, True), (0, False), (1, False)):
+        o = run_dev(b, m, ctx, folds, seed=0, shuffle_seed=shuffle)
+        f = metrics.paired_frame(o, rnd, ("b", "r"))
+        iv = stats.bootstrap(f, stats.mean_diff("accepted_b", "accepted_r"),
+                             clusters=pid.reindex(f.index), n_boot=300)
+        assert (iv.lo > 0) if expect_gain else (iv.lo <= 0 <= iv.hi), (name, shuffle, iv)

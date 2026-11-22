@@ -1,0 +1,116 @@
+{"headline_dev_tasks": 248, "complete_case": 247, "dropped_unavailable_by_family": {"cruxeval": 1}, "problems": 232}
+                 baseline given_more_information  acceptance  acceptance_lo  acceptance_hi  cost_musd_per_task  gap_vs_best_single  gap_vs_best_single_lo  gap_vs_best_single_hi  saving_vs_best_single  saving_vs_best_single_lo  saving_vs_best_single_hi  gap_vs_cellbest_pred  saving_vs_cellbest_pred
+              best_single                              72.06          66.12          77.34                5.69                 NaN                    NaN                    NaN                    NaN                       NaN                       NaN                  0.40                    -9.79
+                   random                              42.11          35.22          48.64                2.96              -29.96                 -36.78                 -23.11                  47.92                     41.40                     53.95                -29.55                    42.82
+      always:MiniMax-M2.7                              44.13          37.14          50.40                4.05              -27.94                 -34.84                 -21.37                  28.85                     22.55                     34.46                -27.53                    21.88
+         always:Qwen3-Max                              31.98          25.41          38.00                0.22              -40.08                 -46.50                 -34.12                  96.12                     95.77                     96.41                -39.68                    95.74
+   always:claude-opus-4-6                              72.06          66.12          77.34                5.69                0.00                   0.00                   0.00                   0.00                      0.00                      0.00                  0.40                    -9.79
+ always:claude-sonnet-4-6                              32.39          25.51          38.28                4.26              -39.68                 -46.89                 -32.66                  25.02                     19.00                     30.77                -39.27                    17.68
+             always:glm-5                              41.30          34.30          48.02                5.86              -30.77                 -37.75                 -24.21                  -3.04                    -10.85                      3.73                -30.36                   -13.12
+           always:gpt-5.4                              58.70          52.19          65.08                1.18              -13.36                 -19.51                  -6.88                  79.30                     76.20                     82.56                -12.96                    77.28
+         always:kimi-k2.5                              23.08          18.14          27.49                0.43              -48.99                 -55.20                 -42.62                  92.47                     91.87                     93.12                -48.58                    91.73
+      always:qwen3.5-plus                              34.41          27.64          40.88                1.99              -37.65                 -44.58                 -30.86                  64.95                     60.84                     68.80                -37.25                    61.52
+           dimension_best              dimension       71.66          65.71          77.02                5.56               -0.40                  -1.25                   0.00                   2.27                      1.00                      3.55                  0.00                    -7.30
+dimension_best_cost_aware              dimension       71.66          65.71          77.02                5.56               -0.40                  -1.25                   0.00                   2.27                      1.00                      3.55                  0.00                    -7.30
+              source_best                 family       71.26          65.29          76.71                5.14               -0.81                  -2.04                   0.00                   9.64                      5.21                     14.44                 -0.40                     0.80
+            cellbest_pred                              71.66          65.71          77.02                5.18               -0.40                  -1.25                   0.00                   8.92                      4.79                     13.23                   NaN                      NaN
+            cellbest_true       family,dimension       71.26          65.29          76.71                5.14               -0.81                  -2.04                   0.00                   9.64                      5.21                     14.44                 -0.40                     0.80
+        ruleA_accept_pred                              71.26          65.31          76.59                5.24               -0.81                  -2.04                   0.00                   7.92                      4.06                     12.03                 -0.40                    -1.09
+        ruleB_accept_pred                              71.26          65.31          76.59                5.24               -0.81                  -2.04                   0.00                   7.92                      4.06                     12.03                 -0.40                    -1.09
+      ruleA_escalate_pred                              71.26          65.31          76.59                5.05               -0.81                  -2.04                   0.00                  11.29                      6.39                     16.44                 -0.40                     2.60
+      ruleB_escalate_pred                              71.26          65.31          76.59                5.05               -0.81                  -2.04                   0.00                  11.29                      6.39                     16.44                 -0.40                     2.60
+        ruleA_accept_true       family,dimension       70.85          64.80          76.21                5.13               -1.21                  -2.75                   0.00                   9.76                      5.31                     14.41                 -0.81                     0.93
+        ruleB_accept_true       family,dimension       70.85          64.80          76.21                5.13               -1.21                  -2.75                   0.00                   9.76                      5.31                     14.41                 -0.81                     0.93
+      ruleA_escalate_true       family,dimension       70.85          64.80          76.21                4.96               -1.21                  -2.75                   0.00                  12.86                      7.50                     18.48                 -0.81                     4.33
+      ruleB_escalate_true       family,dimension       70.85          64.80          76.21                4.96               -1.21                  -2.75                   0.00                  12.86                      7.50                     18.48                 -0.81                     4.33
+           zero_loss_true       family,dimension       71.26          65.29          76.71                5.14               -0.81                  -2.04                   0.00                   9.64                      5.21                     14.44                 -0.40                     0.80
+           zero_loss_pred                              71.66          65.71          77.02                5.18               -0.40                  -1.25                   0.00                   8.92                      4.79                     13.23                  0.00                     0.00
+     fixed_cascade_accept                              69.23          63.11          75.00                4.80               -2.83                  -6.12                   0.40                  15.58                     10.18                     20.96                 -2.43                     7.31
+   fixed_cascade_escalate                              72.06          66.12          77.34                5.40                0.00                   0.00                   0.00                   5.05                      0.54                     10.18                  0.40                    -4.24
+                   linucb                              71.26          65.31          76.66                5.48               -0.81                  -3.32                   1.24                   3.58                      0.49                      6.88                 -0.40                    -5.86
+                      knn                              70.45          64.34          76.13                4.44               -1.62                  -5.35                   2.42                  21.98                     16.41                     28.58                 -1.21                    14.34
+                                  baseline given_more_information  acceptance  acceptance_lo  acceptance_hi  cost_musd_per_task  gap_vs_best_single  gap_vs_best_single_lo  gap_vs_best_single_hi  saving_vs_best_single  saving_vs_best_single_lo  saving_vs_best_single_hi  gap_vs_cellbest_pred  saving_vs_cellbest_pred
+      cellbest_pred__pool_all_eligible_dev                              71.66          65.71          77.02                5.37                -0.4                  -1.25                    0.0                   5.67                      2.33                      9.37                   0.0                    -3.57
+ruleA_escalate_pred__pool_all_eligible_dev                              71.66          65.71          77.02                5.32                -0.4                  -1.25                    0.0                   6.51                      2.69                     10.18                   0.0                    -2.64
+                 baseline  unshuffled  shuffled_mean  shuffled_min  shuffled_max  random_expected  random_run  shuffle0_gap_vs_random  shuffle0_gap_vs_random_lo  shuffle0_gap_vs_random_hi  unshuffled_gap_vs_random  unshuffled_gap_vs_random_lo  unshuffled_gap_vs_random_hi
+              best_single       72.06          38.79         35.63         43.32            42.26       42.11                    0.00                      -6.18                       6.40                     29.96                        23.11                        36.78
+           dimension_best       71.66          39.11         32.39         44.53            42.26       42.11                    1.21                      -4.88                       7.35                     29.55                        22.80                        36.55
+dimension_best_cost_aware       71.66          38.87         32.39         44.94            42.26       42.11                    2.83                      -3.25                       9.13                     29.55                        22.80                        36.55
+              source_best       71.26          40.57         34.82         44.13            42.26       42.11                    0.00                      -6.48                       6.30                     29.15                        22.27                        36.29
+            cellbest_pred       71.66          41.30         38.06         44.13            42.26       42.11                    0.40                      -5.77                       6.56                     29.55                        22.80                        36.55
+            cellbest_true       71.26          40.57         34.82         44.13            42.26       42.11                    0.00                      -6.48                       6.30                     29.15                        22.27                        36.29
+        ruleA_accept_pred       71.26          41.78         38.06         44.53            42.26       42.11                    0.40                      -5.77                       6.56                     29.15                        22.26                        36.33
+        ruleB_accept_pred       71.26          41.78         38.06         44.53            42.26       42.11                    0.40                      -5.77                       6.56                     29.15                        22.26                        36.33
+      ruleA_escalate_pred       71.26          41.38         38.46         44.13            42.26       42.11                    0.40                      -5.77                       6.56                     29.15                        22.26                        36.33
+      ruleB_escalate_pred       71.26          41.38         38.46         44.13            42.26       42.11                    0.40                      -5.77                       6.56                     29.15                        22.26                        36.33
+        ruleA_accept_true       70.85          41.94         38.06         44.53            42.26       42.11                    1.21                      -4.88                       7.35                     28.74                        21.81                        36.18
+        ruleB_accept_true       70.85          41.94         38.06         44.53            42.26       42.11                    1.21                      -4.88                       7.35                     28.74                        21.81                        36.18
+      ruleA_escalate_true       70.85          41.05         36.84         44.53            42.26       42.11                    0.00                      -6.48                       6.30                     28.74                        21.81                        36.18
+      ruleB_escalate_true       70.85          41.05         36.84         44.53            42.26       42.11                    0.00                      -6.48                       6.30                     28.74                        21.81                        36.18
+           zero_loss_true       71.26          39.92         38.06         42.91            42.26       42.11                    0.81                      -5.33                       6.94                     29.15                        22.27                        36.29
+           zero_loss_pred       71.66          39.76         38.06         42.11            42.26       42.11                    0.00                      -6.12                       6.22                     29.55                        22.80                        36.55
+     fixed_cascade_accept       69.23          40.00         36.84         42.91            42.26       42.11                    0.00                      -6.18                       6.40                     27.13                        20.73                        33.88
+   fixed_cascade_escalate       72.06          40.16         36.03         43.32            42.26       42.11                   -0.40                      -6.20                       5.69                     29.96                        23.11                        36.78
+                   linucb       71.26          42.59         37.65         46.56            42.26       42.11                    4.45                      -2.07                      11.20                     29.15                        22.67                        35.80
+                      knn       70.45          41.46         37.25         45.34            42.26       42.11                    3.24                      -2.83                       9.13                     28.34                        21.95                        35.27
+{
+ "n_covered": 82,
+ "n_population": 247,
+ "note": "ID-test tasks only: the release has no decisions for probing tasks",
+ "acceptance": 76.82926829268293,
+ "cost_musd_per_task": 5.6952439024390245,
+ "best_single_on_covered": 76.82926829268293,
+ "vs_best_single": {
+  "gap_points": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "saving_pct": [
+   0.0,
+   0.0,
+   0.0
+  ]
+ },
+ "vs_cellbest_pred": {
+  "gap_points": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "saving_pct": [
+   -10.379669095928556,
+   -19.996652501984403,
+   -2.8890401788071998
+  ]
+ }
+}
+{
+ "training_population": "headline development split (user decision 2026-11-21)",
+ "n_headline_dev": 248,
+ "headline_cells": [
+  "code_completion|cruxeval",
+  "code_completion|he_completion",
+  "code_generation|mbpp",
+  "multi_language|hex_python"
+ ],
+ "n_all_eligible_dev": 1104,
+ "all_eligible_dev_cells": 20,
+ "all_eligible_dev_with_text": 1093,
+ "folds": "stats.dev_folds(seed 0) over the headline development split",
+ "frozen": {
+  "n_train": 248,
+  "cells": [
+   "code_completion|cruxeval",
+   "code_completion|he_completion",
+   "code_generation|mbpp",
+   "multi_language|hex_python"
+  ],
+  "field": "content_text",
+  "training_record_sha256": "721de9559f6dac48b37e6d76eaff9c66c46e355138d079e3704709a62ee9b64b",
+  "settings": "P0.6 make_classifier: TF-IDF word 1-2 + char_wb 2-5, LogisticRegression C=10, random_state 0",
+  "training_accuracy": 0.9395161290322581
+ }
+}
+content_text {'headline_dev': (0.9354838709677419, 16), 'all_eligible_dev_sensitivity': (0.875, 31)}
+wrapped_prompt {'headline_dev': (0.9959677419354839, 1), 'all_eligible_dev_sensitivity': (0.9516129032258065, 12)}

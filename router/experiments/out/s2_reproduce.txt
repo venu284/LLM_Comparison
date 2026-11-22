@@ -1,0 +1,11 @@
+    view            router  paper_table3  target  PaperAvgPerf  ci_lo  ci_hi  $Total  Perf/$  CumReg matches_target
+   paper            oracle         57.00   57.00        57.005 55.423 58.483   5.410  10.536   0.004           True
+   paper       always_opus         43.83   43.83        43.832 42.193 45.356  34.020   1.288 387.370           True
+   paper acrouter_released         49.98   50.14        50.144 48.556 51.675  22.309   2.248 201.975           True
+   paper    dimension_best           NaN     NaN        50.098 48.491 51.653  12.466   4.019 202.311           None
+complete            oracle         57.00     NaN        60.024 58.564 61.464   5.678  10.571   0.004           None
+complete       always_opus         43.83     NaN        43.832 42.193 45.356  34.020   1.288 475.477           None
+complete acrouter_released         49.98     NaN        50.144 48.556 51.675  22.309   2.248 290.082           None
+complete    dimension_best           NaN     NaN        51.679 50.101 53.278  13.085   3.950 244.346           None
+paper DimensionBest - ACRouter: {'task': (-0.045, -0.314, 0.249), 'problem': (-0.045, -0.33, 0.234)} reference {'point': -0.05, 'lo': -0.31, 'hi': 0.23}
+complete DimensionBest - ACRouter: {'task': (1.535, 0.912, 2.182), 'problem': (1.535, 0.845, 2.181)} reference {'point': 1.54}

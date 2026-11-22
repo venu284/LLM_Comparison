@@ -1,0 +1,6880 @@
+{
+ "population": {
+  "headline_dev_tasks": 248,
+  "complete_case": 247,
+  "dropped_unavailable_by_family": {
+   "cruxeval": 1
+  },
+  "problems": 232
+ },
+ "seeds": {
+  "0": {
+   "best_single": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    }
+   ],
+   "random": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:MiniMax-M2.7": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:Qwen3-Max": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:claude-opus-4-6": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:claude-sonnet-4-6": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:glm-5": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:gpt-5.4": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:kimi-k2.5": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:qwen3.5-plus": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "dimension_best": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "dimension_best_cost_aware": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "source_best": [
+    {
+     "fold": 0,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:Qwen3-Max",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:Qwen3-Max",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "cellbest_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "cellbest_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_accept_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_accept_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_escalate_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_escalate_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_accept_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_accept_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_escalate_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_escalate_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "zero_loss_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "zero_loss_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "fixed_cascade_accept": [
+    {
+     "fold": 0,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "all": "gpt-5.4>qwen3.5-plus@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "fixed_cascade_escalate": [
+    {
+     "fold": 0,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "linucb": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "knn": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    }
+   ]
+  },
+  "1": {
+   "best_single": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    }
+   ],
+   "random": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:MiniMax-M2.7": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:Qwen3-Max": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:claude-opus-4-6": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:claude-sonnet-4-6": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:glm-5": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:gpt-5.4": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:kimi-k2.5": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:qwen3.5-plus": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "dimension_best": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "dimension_best_cost_aware": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "source_best": [
+    {
+     "fold": 0,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:Qwen3-Max",
+      "hex_python": "direct:Qwen3-Max",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "cellbest_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "cellbest_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_accept_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_accept_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_escalate_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_escalate_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_accept_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_accept_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_escalate_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_escalate_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "zero_loss_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:Qwen3-Max 0.000",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "zero_loss_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:Qwen3-Max 0.000",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "fixed_cascade_accept": [
+    {
+     "fold": 0,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "fixed_cascade_escalate": [
+    {
+     "fold": 0,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "linucb": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "knn": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    }
+   ]
+  },
+  "2": {
+   "best_single": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    }
+   ],
+   "random": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:MiniMax-M2.7": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:Qwen3-Max": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:claude-opus-4-6": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:claude-sonnet-4-6": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:glm-5": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:gpt-5.4": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:kimi-k2.5": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:qwen3.5-plus": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "dimension_best": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:kimi-k2.5"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "dimension_best_cost_aware": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:kimi-k2.5"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "source_best": [
+    {
+     "fold": 0,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:Qwen3-Max",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:kimi-k2.5",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:Qwen3-Max",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "cellbest_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:kimi-k2.5"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "cellbest_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:kimi-k2.5"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_accept_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:kimi-k2.5"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_accept_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:kimi-k2.5"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_escalate_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_escalate_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_accept_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:kimi-k2.5"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_accept_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:kimi-k2.5"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_escalate_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_escalate_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "zero_loss_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:Qwen3-Max 0.000",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:kimi-k2.5"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "zero_loss_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:Qwen3-Max 0.000",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:kimi-k2.5"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "fixed_cascade_accept": [
+    {
+     "fold": 0,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "all": "gpt-5.4>qwen3.5-plus@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "fixed_cascade_escalate": [
+    {
+     "fold": 0,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "linucb": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "knn": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    }
+   ]
+  },
+  "3": {
+   "best_single": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    }
+   ],
+   "random": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:MiniMax-M2.7": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:Qwen3-Max": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:claude-opus-4-6": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:claude-sonnet-4-6": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:glm-5": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:gpt-5.4": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:kimi-k2.5": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:qwen3.5-plus": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "dimension_best": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "dimension_best_cost_aware": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "source_best": [
+    {
+     "fold": 0,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:Qwen3-Max",
+      "hex_python": "direct:Qwen3-Max",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "cellbest_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "cellbest_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_accept_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_accept_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_escalate_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_escalate_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_accept_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_accept_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_escalate_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_escalate_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "zero_loss_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "zero_loss_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "fixed_cascade_accept": [
+    {
+     "fold": 0,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "fixed_cascade_escalate": [
+    {
+     "fold": 0,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "linucb": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "knn": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    }
+   ]
+  },
+  "4": {
+   "best_single": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": "claude-opus-4-6"
+    }
+   ],
+   "random": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:MiniMax-M2.7": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:Qwen3-Max": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:claude-opus-4-6": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:claude-sonnet-4-6": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:glm-5": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:gpt-5.4": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:kimi-k2.5": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "always:qwen3.5-plus": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "dimension_best": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "dimension_best_cost_aware": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion": "direct:claude-opus-4-6",
+      "code_generation": "direct:claude-opus-4-6",
+      "multi_language": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "source_best": [
+    {
+     "fold": 0,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:Qwen3-Max",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "cruxeval": "direct:claude-opus-4-6",
+      "he_completion": "direct:Qwen3-Max",
+      "hex_python": "direct:qwen3.5-plus",
+      "mbpp": "direct:claude-opus-4-6"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "cellbest_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "cellbest_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_accept_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_accept_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_escalate_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_escalate_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_accept_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_accept_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleA_escalate_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "ruleB_escalate_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "zero_loss_true": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:Qwen3-Max 0.000",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "zero_loss_pred": [
+    {
+     "fold": 0,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:Qwen3-Max 0.000",
+      "multi_language|hex_python": "direct:Qwen3-Max"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+     },
+     "fallback": "direct:claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "fixed_cascade_accept": [
+    {
+     "fold": 0,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "all": "claude-opus-4-6>glm-5@accept"
+     },
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "fixed_cascade_escalate": [
+    {
+     "fold": 0,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": {
+      "all": "Qwen3-Max>claude-opus-4-6@escalate"
+     },
+     "fallback": null,
+     "chosen": null
+    }
+   ],
+   "linucb": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    }
+   ],
+   "knn": [
+    {
+     "fold": 0,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 1,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 2,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 3,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    },
+    {
+     "fold": 4,
+     "table": null,
+     "fallback": "claude-opus-4-6",
+     "chosen": null
+    }
+   ]
+  }
+ },
+ "n_boot": 1000,
+ "embedding": {
+  "repo": "sentence-transformers/all-MiniLM-L6-v2",
+  "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+ },
+ "oracle": {
+  "definition": "our definition",
+  "acceptance": 82.99595141700405,
+  "cost_musd_per_task": 1.150405951417004
+ },
+ "floor": {
+  "acceptance": 72.06477732793523,
+  "source": "best single model, gate seed"
+ },
+ "acrouter_released_dev": {
+  "n_covered": 82,
+  "n_population": 247,
+  "note": "ID-test tasks only: the release has no decisions for probing tasks",
+  "acceptance": 76.82926829268293,
+  "cost_musd_per_task": 5.6952439024390245,
+  "best_single_on_covered": 76.82926829268293,
+  "vs_best_single": {
+   "gap_points": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "saving_pct": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "vs_cellbest_pred": {
+   "gap_points": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "saving_pct": [
+    -10.379669095928556,
+    -19.996652501984403,
+    -2.8890401788071998
+   ]
+  }
+ },
+ "predictor": {
+  "training_population": "headline development split (user decision 2026-11-21)",
+  "n_headline_dev": 248,
+  "headline_cells": [
+   "code_completion|cruxeval",
+   "code_completion|he_completion",
+   "code_generation|mbpp",
+   "multi_language|hex_python"
+  ],
+  "n_all_eligible_dev": 1104,
+  "all_eligible_dev_cells": 20,
+  "all_eligible_dev_with_text": 1093,
+  "folds": "stats.dev_folds(seed 0) over the headline development split",
+  "held_out_accuracy": {
+   "content_text": {
+    "headline_dev": {
+     "n": 248,
+     "accuracy": 0.9354838709677419,
+     "n_wrong": 16,
+     "per_cell": {
+      "code_completion|cruxeval": {
+       "tasks": 151,
+       "accuracy": 1.0
+      },
+      "code_completion|he_completion": {
+       "tasks": 15,
+       "accuracy": 0.0
+      },
+      "code_generation|mbpp": {
+       "tasks": 52,
+       "accuracy": 1.0
+      },
+      "multi_language|hex_python": {
+       "tasks": 30,
+       "accuracy": 0.9666666666666667
+      }
+     },
+     "confusion": {
+      "code_completion|cruxeval": {
+       "code_completion|cruxeval": 151,
+       "code_completion|he_completion": 1,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 1
+      },
+      "code_generation|mbpp": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 0,
+       "code_generation|mbpp": 52,
+       "multi_language|hex_python": 0
+      },
+      "multi_language|hex_python": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 14,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 29
+      }
+     }
+    },
+    "all_eligible_dev_sensitivity": {
+     "n": 248,
+     "accuracy": 0.875,
+     "n_wrong": 31,
+     "per_cell": {
+      "code_completion|cruxeval": {
+       "tasks": 151,
+       "accuracy": 1.0
+      },
+      "code_completion|he_completion": {
+       "tasks": 15,
+       "accuracy": 0.0
+      },
+      "code_generation|mbpp": {
+       "tasks": 52,
+       "accuracy": 1.0
+      },
+      "multi_language|hex_python": {
+       "tasks": 30,
+       "accuracy": 0.4666666666666667
+      }
+     },
+     "confusion": {
+      "algorithm|lcb": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 4,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 8
+      },
+      "code_completion|cruxeval": {
+       "code_completion|cruxeval": 151,
+       "code_completion|he_completion": 4,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 5
+      },
+      "code_generation|mbpp": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 0,
+       "code_generation|mbpp": 52,
+       "multi_language|hex_python": 0
+      },
+      "data_science|ds1000": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 1,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 2
+      },
+      "multi_language|hex_js": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 0,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 1
+      },
+      "multi_language|hex_python": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 6,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 14
+      }
+     }
+    }
+   },
+   "wrapped_prompt": {
+    "headline_dev": {
+     "n": 248,
+     "accuracy": 0.9959677419354839,
+     "n_wrong": 1,
+     "per_cell": {
+      "code_completion|cruxeval": {
+       "tasks": 151,
+       "accuracy": 1.0
+      },
+      "code_completion|he_completion": {
+       "tasks": 15,
+       "accuracy": 0.9333333333333333
+      },
+      "code_generation|mbpp": {
+       "tasks": 52,
+       "accuracy": 1.0
+      },
+      "multi_language|hex_python": {
+       "tasks": 30,
+       "accuracy": 1.0
+      }
+     },
+     "confusion": {
+      "code_completion|cruxeval": {
+       "code_completion|cruxeval": 151,
+       "code_completion|he_completion": 0,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 0
+      },
+      "code_completion|he_completion": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 14,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 0
+      },
+      "code_generation|mbpp": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 0,
+       "code_generation|mbpp": 52,
+       "multi_language|hex_python": 0
+      },
+      "multi_language|hex_python": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 1,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 30
+      }
+     }
+    },
+    "all_eligible_dev_sensitivity": {
+     "n": 248,
+     "accuracy": 0.9516129032258065,
+     "n_wrong": 12,
+     "per_cell": {
+      "code_completion|cruxeval": {
+       "tasks": 151,
+       "accuracy": 1.0
+      },
+      "code_completion|he_completion": {
+       "tasks": 15,
+       "accuracy": 0.4
+      },
+      "code_generation|mbpp": {
+       "tasks": 52,
+       "accuracy": 1.0
+      },
+      "multi_language|hex_python": {
+       "tasks": 30,
+       "accuracy": 0.9
+      }
+     },
+     "confusion": {
+      "algorithm|lcb": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 1,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 3
+      },
+      "code_completion|cruxeval": {
+       "code_completion|cruxeval": 151,
+       "code_completion|he_completion": 0,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 0
+      },
+      "code_completion|he_completion": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 6,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 0
+      },
+      "code_generation|bcb": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 4,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 0
+      },
+      "code_generation|mbpp": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 0,
+       "code_generation|mbpp": 52,
+       "multi_language|hex_python": 0
+      },
+      "multi_language|hex_python": {
+       "code_completion|cruxeval": 0,
+       "code_completion|he_completion": 4,
+       "code_generation|mbpp": 0,
+       "multi_language|hex_python": 27
+      }
+     }
+    }
+   }
+  },
+  "frozen": {
+   "n_train": 248,
+   "cells": [
+    "code_completion|cruxeval",
+    "code_completion|he_completion",
+    "code_generation|mbpp",
+    "multi_language|hex_python"
+   ],
+   "field": "content_text",
+   "training_record_sha256": "721de9559f6dac48b37e6d76eaff9c66c46e355138d079e3704709a62ee9b64b",
+   "settings": "P0.6 make_classifier: TF-IDF word 1-2 + char_wb 2-5, LogisticRegression C=10, random_state 0",
+   "training_accuracy": 0.9395161290322581
+  }
+ }
+}

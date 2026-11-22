@@ -1,0 +1,236 @@
+{
+ "release_summary_id": {
+  "$Total": 22.31,
+  "AvgPerf%": 50.14,
+  "CumReg": 202.0,
+  "Perf/$": 2.25,
+  "eval_split": "test",
+  "leakage_risk": "none",
+  "missing_score": 1,
+  "n": 2919,
+  "policy": "hierarchical",
+  "rAcc_perf_oracle": 0.2395,
+  "selection_protocol": "hierarchical_group_model_map",
+  "tune_split": "train+val"
+ },
+ "paper": {
+  "oracle": {
+   "PaperAvgPerf": 57.0,
+   "CumReg": 0.0,
+   "Perf/$": 8.2,
+   "$Total": 6.95
+  },
+  "always_opus": {
+   "PaperAvgPerf": 43.83,
+   "CumReg": 387.1,
+   "Perf/$": 1.29,
+   "$Total": 34.02
+  },
+  "acrouter_released": {
+   "PaperAvgPerf": 49.98,
+   "CumReg": 205.5,
+   "Perf/$": 3.79,
+   "$Total": 13.21
+  }
+ },
+ "target": {
+  "oracle": 57.0,
+  "always_opus": 43.83,
+  "acrouter_released": 50.14
+ },
+ "views": {
+  "paper": {
+   "n_test": 2919,
+   "n_train": 7080,
+   "routers": {
+    "oracle": {
+     "PaperAvgPerf": 57.00488180883864,
+     "$Total": 5.41032812,
+     "Perf/$": 10.536307696036491,
+     "CumReg": 0.003966658999999817,
+     "ci_task": {
+      "point": 57.00488180883864,
+      "lo": 55.42304407902249,
+      "hi": 58.483139574055045,
+      "unit": "task",
+      "n_units": 2919,
+      "n_boot": 1000,
+      "seed": 0
+     },
+     "target": 57.0,
+     "matches_target": true,
+     "minus_paper_table3": 0.004881808838639756
+    },
+    "always_opus": {
+     "PaperAvgPerf": 43.832387804042476,
+     "$Total": 34.02037,
+     "Perf/$": 1.2884159638487904,
+     "CumReg": 387.37007084699997,
+     "ci_task": {
+      "point": 43.832387804042476,
+      "lo": 42.19343214000229,
+      "hi": 45.356036570743406,
+      "unit": "task",
+      "n_units": 2919,
+      "n_boot": 1000,
+      "seed": 0
+     },
+     "target": 43.83,
+     "matches_target": true,
+     "minus_paper_table3": 0.002387804042477626
+    },
+    "acrouter_released": {
+     "PaperAvgPerf": 50.1435834189791,
+     "$Total": 22.30935981,
+     "Perf/$": 2.247647796531688,
+     "CumReg": 201.975169828,
+     "ci_task": {
+      "point": 50.1435834189791,
+      "lo": 48.556207120018264,
+      "hi": 51.674948926573016,
+      "unit": "task",
+      "n_units": 2919,
+      "n_boot": 1000,
+      "seed": 0
+     },
+     "target": 50.14,
+     "matches_target": true,
+     "minus_paper_table3": 0.16358341897910122
+    },
+    "dimension_best": {
+     "PaperAvgPerf": 50.09836245289483,
+     "$Total": 12.46585089,
+     "Perf/$": 4.018848203381232,
+     "CumReg": 202.310818936,
+     "ci_task": {
+      "point": 50.09836245289483,
+      "lo": 48.49061964713943,
+      "hi": 51.65310999771612,
+      "unit": "task",
+      "n_units": 2919,
+      "n_boot": 1000,
+      "seed": 0
+     }
+    }
+   },
+   "dimension_best_minus_acrouter": {
+    "task": {
+     "point": -0.04522096608427546,
+     "lo": -0.31441803699897236,
+     "hi": 0.24948475505310036,
+     "unit": "task",
+     "n_units": 2919,
+     "n_boot": 1000,
+     "seed": 0
+    },
+    "problem": {
+     "point": -0.04522096608427546,
+     "lo": -0.32956919965225984,
+     "hi": 0.2338828112333595,
+     "unit": "problem",
+     "n_units": 2446,
+     "n_boot": 1000,
+     "seed": 0
+    },
+    "reference": {
+     "point": -0.05,
+     "lo": -0.31,
+     "hi": 0.23
+    },
+    "point_matches_reference_2dp": true
+   },
+   "clusters_missing": 0
+  },
+  "complete": {
+   "n_test": 2919,
+   "n_train": 7080,
+   "routers": {
+    "oracle": {
+     "PaperAvgPerf": 60.024180655475625,
+     "$Total": 5.678359260000001,
+     "Perf/$": 10.570690917410467,
+     "CumReg": 0.003966658999999817,
+     "ci_task": {
+      "point": 60.024180655475625,
+      "lo": 58.56442800045677,
+      "hi": 61.46362552814891,
+      "unit": "task",
+      "n_units": 2919,
+      "n_boot": 1000,
+      "seed": 0
+     }
+    },
+    "always_opus": {
+     "PaperAvgPerf": 43.832387804042476,
+     "$Total": 34.02037,
+     "Perf/$": 1.2884159638487904,
+     "CumReg": 475.47660106633333,
+     "ci_task": {
+      "point": 43.832387804042476,
+      "lo": 42.19343214000229,
+      "hi": 45.356036570743406,
+      "unit": "task",
+      "n_units": 2919,
+      "n_boot": 1000,
+      "seed": 0
+     }
+    },
+    "acrouter_released": {
+     "PaperAvgPerf": 50.1435834189791,
+     "$Total": 22.30935981,
+     "Perf/$": 2.247647796531688,
+     "CumReg": 290.0817000473333,
+     "ci_task": {
+      "point": 50.1435834189791,
+      "lo": 48.556207120018264,
+      "hi": 51.674948926573016,
+      "unit": "task",
+      "n_units": 2919,
+      "n_boot": 1000,
+      "seed": 0
+     }
+    },
+    "dimension_best": {
+     "PaperAvgPerf": 51.678812378668496,
+     "$Total": 13.08476763,
+     "Perf/$": 3.949539941403491,
+     "CumReg": 244.34590749600002,
+     "ci_task": {
+      "point": 51.678812378668496,
+      "lo": 50.100829336530786,
+      "hi": 53.27788985954093,
+      "unit": "task",
+      "n_units": 2919,
+      "n_boot": 1000,
+      "seed": 0
+     }
+    }
+   },
+   "dimension_best_minus_acrouter": {
+    "task": {
+     "point": 1.5352289596893913,
+     "lo": 0.9118542309009937,
+     "hi": 2.181542508850063,
+     "unit": "task",
+     "n_units": 2919,
+     "n_boot": 1000,
+     "seed": 0
+    },
+    "problem": {
+     "point": 1.5352289596893913,
+     "lo": 0.8452983213062879,
+     "hi": 2.1814008964954446,
+     "unit": "problem",
+     "n_units": 2446,
+     "n_boot": 1000,
+     "seed": 0
+    },
+    "reference": {
+     "point": 1.54
+    },
+    "point_matches_reference_2dp": true
+   },
+   "clusters_missing": 0
+  }
+ }
+}
