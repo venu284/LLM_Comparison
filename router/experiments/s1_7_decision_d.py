@@ -70,7 +70,7 @@ def _runs(part):
 
 def build() -> pd.DataFrame:
     from router.experiments.s1_7_mechanisms import MAIN, assign
-    c = assign(apply_d=False)
+    c = assign(apply_d=False, amend11=False)          # decision D predates Amendment 11
     u = c[(c.mechanism == "unexplained") & c["sample"].isin(MAIN)
           & (c.test_version.fillna("plus") == "plus")]
     long = audit.released_long()
