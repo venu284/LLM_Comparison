@@ -53,6 +53,8 @@ class Context:
     - `problem_of`: task id -> problem id (`problems.csv`).
     - `embed`: texts -> unit vectors, for kNN (`baselines/embeddings.py`; tests pass a stub).
     - `seed`: the run's seed, for the baselines' own random streams.
+    - `verifier_usd`: verifier cost per run used when a ladder's training outcomes are computed
+      (A1 by default; S3's verifier-cost sweep refits with it scaled, spec D11).
     """
     verifier: object
     content: pd.Series | None = None
@@ -61,6 +63,7 @@ class Context:
     problem_of: pd.Series | None = None
     embed: Callable[[Sequence[str]], np.ndarray] | None = None
     seed: int = 0
+    verifier_usd: float = VERIFIER_RUN_USD
 
     def for_fold(self, scored_problems) -> "Context":
         return replace(self, exclude_problems=frozenset(scored_problems))

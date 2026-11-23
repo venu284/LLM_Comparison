@@ -182,7 +182,7 @@ class CellRule:
         if self.rule not in ("A", "B"):
             raise ValueError(self.rule)
         pols = candidates(train, self.mode)
-        A, C = policy_outcomes(train, ctx.verifier, pols)
+        A, C = policy_outcomes(train, ctx.verifier, pols, verifier_usd=ctx.verifier_usd)
         groups = true_cells(train)
         names = sorted(groups.unique())
         v, seen = group_means(groups.to_numpy(), A, names)

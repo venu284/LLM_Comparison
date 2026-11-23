@@ -335,6 +335,141 @@ def cross_fit(task_ids, candidates: Sequence[Candidate], select: SelectionRule, 
     return CrossFitResult(scores, selected, fits, seed, tuple(names), tag if frozen else None)
 
 
+# ------------------------------------------------------- DP1a: the fit-free evaluation path (D3)
+EVALUATION_PATH = "S3 spec D3 whitelist"
+DP1A_VIEW = "filtered"
+
+
+class RouteRefused(PermissionError):
+    """Raised when the DP1a path is handed anything but its own fit-free routes (S3 spec D3)."""
+
+
+def _fit_free_routes() -> dict:
+    """The two fitted fit-free routes of DP1a, built here and nowhere else (S3 spec D3 (a)). The
+    oracle needs no fit and is computed from the outcomes."""
+    from router.baselines.lookup import GroupBest
+    from router.baselines.static import BestSingle
+    return {"best_single": BestSingle(), "dimension_best": GroupBest("dimension")}
+
+
+def check_fit_free_routes(routes: Mapping[str, object]) -> None:
+    """Class identity and default settings, never names (a router can call itself anything)."""
+    from router.baselines.lookup import GroupBest
+    from router.baselines.static import BestSingle
+    if set(routes) != {"best_single", "dimension_best"}:
+        raise RouteRefused(f"the DP1a path runs exactly two fitted routes, got {sorted(routes)}")
+    b, d = routes["best_single"], routes["dimension_best"]
+    if type(b) is not BestSingle or b != BestSingle():
+        raise RouteRefused(f"not the default BestSingle: {b!r}")
+    if type(d) is not GroupBest or d != GroupBest("dimension"):
+        raise RouteRefused(f"not the default DimensionBest (GroupBest('dimension')): {d!r}")
+
+
+@dataclass
+class HeadroomResult:
+    tasks: pd.DataFrame          # one row per scored task: group, problem_id, the three routes' outcomes
+    fits: list[dict]             # one per group: training and scored problems, the fitted tables
+    record: dict                 # the evaluation-population path record (S3 spec D3)
+
+
+def fit_free_headroom(seed: int, *, cruxeval_lenient: bool = False,
+                      empty_unavailable: bool = False, all_tasks: bool = False) -> HeadroomResult:
+    """DP1a's evaluation-population path (S3 spec D1 (i), D2, D3 (a) with (α)).
+
+    Closed by design: no argument takes a view, a matrix, a router or a candidate. It builds the
+    `filtered` view itself (the only view whose evaluation tasks it reads), splits its tasks into
+    the six committed groups (the development split, and S1.6's five outer folds `fold_seed{seed}`)
+    and scores each group with BestSingle and DimensionBest fitted on the other five groups, plus
+    the oracle (any available model succeeds). Plain group-wise cross-fitting: nothing is selected.
+    `cross_fit` is unchanged and still refuses evaluation tasks without a tag.
+
+    Flags (sensitivities, S3 spec §1): CRUXEval >= 0.8 counts as success when scoring (tables are
+    chosen under S0.1, as `run_dev` does); empty `response_matrix.json` cells unavailable; every
+    task instead of the complete case (a dispatch to an unavailable model gives up). The result
+    also carries the chosen model's released score per task, for the mean-score sensitivity (O10).
+    """
+    from router.baselines.common import Context, success
+    from router.data import audit
+    from router.data.schema import EMPTY_RESPONSE
+    from router.sim.metrics import task_outcomes
+    from router.sim.stream import ReplayView, replay
+    from router.sim.verifier import ReplayVerifier
+
+    routes = _fit_free_routes()
+    check_fit_free_routes(routes)
+    problems = splits_mod.load_problems()
+    splits = splits_mod.load_splits()
+    viol = splits_mod.r13_violations(problems, splits)
+    if viol:
+        raise ValueError(f"R13 violations in the split tables: {viol[:3]} ...")
+
+    release = audit.load_release()
+    m = audit.build_views(release)[DP1A_VIEW]
+    want = audit.load_artefacts()["views"]["headline"]["task_ids_sha256"]
+    if audit._sha(m.tasks) != want:
+        raise RouteRefused("the DP1a path reads the filtered view only (S3 spec D3 (α))")
+    if empty_unavailable:
+        st = audit.response_stats()
+        keys = {audit.response_key(x): x for x in m.models}
+        st = st[st.is_empty & st.key.isin(set(keys))]
+        m = m.mark_unavailable([(t, keys[k]) for t, k in zip(st.task_id, st.key)], EMPTY_RESPONSE)
+    if not all_tasks:
+        m = m.subset(list(m.tasks[m.available.astype(bool).all(axis=1).to_numpy()]))
+
+    t = splits_mod.task_splits(problems, splits).set_index("task_id").loc[list(m.tasks)]
+    col = splits_mod.fold_column(seed)
+    group = pd.Series(np.where(t.split == splits_mod.DEV, "dev",
+                               "fold" + t[col].fillna(-1).astype(int).astype(str)), index=t.index)
+    if (group == "fold-1").any():
+        raise ValueError("an evaluation task has no outer fold under this seed")
+    names = ["dev"] + [f"fold{k}" for k in range(N_FOLDS)]
+    if sorted(group.unique()) != sorted(names):
+        raise ValueError(f"expected six groups {names}, got {sorted(group.unique())}")
+
+    verifier = ReplayVerifier.from_x13()
+    ctx = Context(verifier, seed=seed)
+    ok_all = success(m, cruxeval_lenient)
+    av = m.available.astype(bool)
+    rows, fits = [], []
+    for g in names:
+        test_ids = list(group.index[group == g])
+        train_ids = list(group.index[group != g])
+        train_p, test_p = set(t.problem_id.loc[train_ids]), set(t.problem_id.loc[test_ids])
+        if train_p & test_p:
+            raise AssertionError("a problem is on both sides of a fit")
+        train, test = m.subset(train_ids), m.subset(test_ids)
+        out = {}
+        fit_rec = {"group": g, "n_train": len(train_ids), "n_scored": len(test_ids),
+                   "train_problems": frozenset(train_p), "scored_problems": frozenset(test_p)}
+        for key, route in routes.items():
+            router = route.fit(train, ctx)
+            res = replay(router, ReplayView.from_matrix(test), verifier, seed=seed)
+            o = task_outcomes(res, test, cruxeval_lenient=cruxeval_lenient)
+            chosen = o.final_model.where(o.action == "accept")
+            score = [float(m.score.at[i, c]) if isinstance(c, str) else 0.0
+                     for i, c in zip(o.index, chosen)]
+            out[key] = pd.DataFrame({f"{key}_accepted": o["accepted"].astype(bool),
+                                     f"{key}_model": chosen, f"{key}_score": score}, index=o.index)
+            fit_rec[key] = getattr(router, "table", None) or getattr(router, "chosen", None)
+        fits.append(fit_rec)
+        sc = m.score.loc[test_ids].where(av.loc[test_ids])
+        orc = pd.DataFrame({"oracle_accepted": ok_all.loc[test_ids].any(axis=1),
+                            "oracle_score": sc.max(axis=1).fillna(0.0)}, index=test_ids)
+        rows.append(pd.concat([out["best_single"], out["dimension_best"], orc], axis=1)
+                    .assign(group=g, problem_id=t.problem_id.loc[test_ids]))
+    tasks = pd.concat(rows).loc[list(m.tasks)]
+    n_eval = int((group != "dev").sum())
+    record = {"evaluation_population_path": EVALUATION_PATH, "view": DP1A_VIEW,
+              "routes": {k: f"{type(v).__module__}.{type(v).__qualname__}" for k, v in routes.items()}
+              | {"oracle": "any available model succeeds (computed, not fitted)"},
+              "groups": names, "fold_column": col, "seed": seed,
+              "n_tasks": len(tasks), "n_evaluation_tasks_read": n_eval,
+              "n_development_tasks": int((group == "dev").sum()),
+              "cruxeval_lenient": cruxeval_lenient, "empty_unavailable": empty_unavailable,
+              "all_tasks": all_tasks}
+    return HeadroomResult(tasks, fits, record)
+
+
 # ---------------------------------------------------------------------- development-split folds
 def dev_folds(task_ids, seed: int, n_folds: int = N_FOLDS, *, problems: pd.DataFrame | None = None,
               splits: pd.DataFrame | None = None) -> pd.Series:
