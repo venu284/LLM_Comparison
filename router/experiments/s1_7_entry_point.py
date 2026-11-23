@@ -156,6 +156,8 @@ class Names:
             return self.mx.entry(upstream) if self.mx.has_tests(upstream) else None
         if family.startswith("bcb"):
             return self.bcb.entry(upstream) if self.bcb.has_tests(upstream) else None
+        if "::" not in upstream:            # reading-only and identical-pair rows: bare upstream id
+            upstream = f"{family}::{upstream}"
         if not self.py.has_tests(upstream):
             return None
         if family == "lcb":                  # LeetCode: Solution().<func_name>; stdin: none

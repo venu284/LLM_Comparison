@@ -379,7 +379,7 @@ def identical_frame(differing_cells: list[dict]) -> pd.DataFrame:
 # main samples plus decision D, and the user's decisions at the checkpoint 2 reviews
 # (2026-11-21). Evidence: docs/research/S1.7_audit.md ("Checkpoint 3: final labels") and the
 # per-sample rows in router/experiments/out/s1_7_interim_*.csv and s1_7_mechanisms_*.csv.
-CRITERIA_COMMIT = "feadbed"      # last criteria amendment (Amendment 10) before any label
+CRITERIA_COMMIT = "24e7c69"      # last criteria amendment (Amendment 11) before the labels it governs
 CONFIRMED, CLEARED, UNDECIDED = "confirmed defect", "cleared", "undecided"
 NOT_SUSPECTED = ("he_completion",)       # eligible, never flagged (§5.2): stays in every view
 LCB_SUBSET_PROPERTY = "platform"         # Amendment 7: LiveCodeBench `platform`, non-score
@@ -406,9 +406,12 @@ LABELS: dict[str, dict] = {
                  "mechanisms": ["test_version"], "sample": "lcb_kept",
                  "interim": "s1_7_interim_lcbk.csv", "mechanism_rows": "s1_7_mechanisms_lcbk.csv",
                  "evidence": f"{_EV}: 2a remainder §1"},
-    "mbpp": {"family": "mbpp", "label": CLEARED, "mechanisms": [], "sample": "mbpp",
+    "mbpp": {"family": "mbpp", "label": CONFIRMED, "mechanisms": ["extraction"],
+             "mechanism_detail": "entry_point_unstated (criteria Amendment 11)", "sample": "mbpp",
              "interim": "s1_7_interim_2a.csv", "mechanism_rows": "s1_7_mechanisms_2a.csv",
-             "evidence": f"{_EV}: 2a §2"},
+             "evidence": f"{_EV}: 2a §2; criteria Amendment 11 (s1_7_amend11_funnel.csv)",
+             "note": "cleared before Amendment 11 (a = 1.000, d = 0): the release and our harness "
+                     "both call an entry-point name that 219 of 225 prompts do not state"},
     "hex_python": {"family": "hex_python", "label": CLEARED, "mechanisms": ["release_correct"],
                    "sample": "hex_python", "interim": "s1_7_interim_2a.csv",
                    "mechanism_rows": "s1_7_mechanisms_2a.csv",
@@ -428,7 +431,10 @@ LABELS: dict[str, dict] = {
                   "interim": "s1_7_interim_2a.csv", "mechanism_rows": "s1_7_mechanisms_2a.csv",
                   "evidence": f"{_EV}: 2a §3, decision D (D-HE-BASE)"},
     "mbpp_completion": {"family": "mbpp_completion", "label": UNDECIDED,
-                        "reason": "1 unexplained cell (u > 0)", "mechanisms": ["release_correct"],
+                        "reason": "1 unexplained cell (u > 0)",
+                        "mechanisms": ["extraction", "release_correct"],
+                        "mechanism_detail": "extraction: entry_point_unstated on 4 cells, below "
+                                            "§3.2's threshold (criteria Amendment 11)",
                         "sample": "mbpp_completion", "interim": "s1_7_interim_2a.csv",
                         "mechanism_rows": "s1_7_mechanisms_2a.csv",
                         "evidence": f"{_EV}: decision D (task 599 unexplained)"},
@@ -641,7 +647,8 @@ def build_artefacts(root: Path = crb.CRB_DIR) -> dict:
     for key, u in LABELS.items():
         tasks = [t for t in m.tasks if label_unit(t, m.family[t], set(leetcode)) == key]
         units[key] = {k: u[k] for k in ("family", "part", "label", "reason", "mechanisms",
-                                         "sample", "evidence", "note") if u.get(k) is not None}
+                                         "mechanism_detail", "sample", "evidence", "note")
+                      if u.get(k) is not None}
         units[key].update(tasks=len(tasks), eligible=u.get("eligible", True),
                           main_sample=_interim(u),
                           mechanism_rows=(f"router/experiments/out/{u['mechanism_rows']}"

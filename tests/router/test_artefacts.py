@@ -34,7 +34,9 @@ def test_lcb_is_split_by_the_subset_rule():
 
 
 def test_views_nest_and_follow_the_labels():
-    fam = pd.Series({"a": "mbpp", "b": "bcb", "c": "humaneval", "d": "he_completion",
+    # "a" was an mbpp task until criteria Amendment 11 made mbpp a confirmed defect; hex_python
+    # is the cleared family now
+    fam = pd.Series({"a": "hex_python", "b": "bcb", "c": "humaneval", "d": "he_completion",
                      "e": "lcb", "f": "lcb", "g": "he_testgen", "h": "cruxeval"})
     v = audit.view_task_ids(fam, leetcode={"e"}, x13={"a", "d", "e", "f"})
     assert v["all_eligible"] == ["a", "b", "c", "d", "e", "f", "h"]     # no ineligible task

@@ -1,0 +1,21 @@
+family,n_exec_before,a_before,d_before,r_before,r_wilson_lo_before,u_before,interim_label_before,n_exec_after,a_after,d_after,r_after,r_wilson_lo_after,u_after,interim_label_after,changed
+bcb,96,0.7292,24,0.25,0.1741,2,confirmed defect,96,0.7292,24,0.25,0.1741,2,confirmed defect,False
+bcb_algo2,97,0.6804,29,0.299,0.2169,2,confirmed defect,97,0.6804,29,0.299,0.2169,2,confirmed defect,False
+bcb_completion,97,0.6495,34,0.3505,0.2629,0,confirmed defect,97,0.6495,34,0.3505,0.2629,0,confirmed defect,False
+bcb_ds,97,0.6392,35,0.3608,0.2722,0,confirmed defect,97,0.6392,35,0.3608,0.2722,0,confirmed defect,False
+bcb_v014,97,0.6804,31,0.3196,0.2352,0,confirmed defect,97,0.6804,31,0.3196,0.2352,0,confirmed defect,False
+cruxeval,89,0.9888,0,0.0,0.0,0,cleared,89,0.9888,0,0.0,0.0,0,cleared,False
+ds1000,97,0.5773,38,0.3918,0.3005,3,confirmed defect,97,0.5773,38,0.3918,0.3005,3,confirmed defect,False
+hex_cpp,97,0.0515,92,0.9485,0.885,0,confirmed defect,97,0.0515,92,0.9485,0.885,0,confirmed defect,False
+hex_go,97,0.1134,86,0.8866,0.8083,0,confirmed defect,97,0.1134,86,0.8866,0.8083,0,confirmed defect,False
+hex_java,97,0.1753,80,0.8247,0.7371,0,confirmed defect,97,0.1753,80,0.8247,0.7371,0,confirmed defect,False
+hex_js,97,0.0722,90,0.9278,0.8585,0,confirmed defect,97,0.0722,90,0.9278,0.8585,0,confirmed defect,False
+hex_python,97,0.9897,0,0.0,0.0,0,cleared,97,0.9897,0,0.0,0.0,0,cleared,False
+humaneval,97,0.9485,5,0.0515,0.0222,0,undecided,97,0.9485,5,0.0515,0.0222,0,undecided,False
+lcb,97,0.7629,23,0.2371,0.1635,0,confirmed defect,97,0.7629,23,0.2371,0.1635,0,confirmed defect,False
+lcb_kept,96,0.9792,2,0.0208,0.0057,0,"undecided (capped, Amendment 6)",96,0.9792,2,0.0208,0.0057,0,"undecided (capped, Amendment 6)",False
+mbpp,97,1.0,0,0.0,0.0,0,cleared,97,1.0,78,0.8041,0.7142,0,confirmed defect,True
+mbpp_completion,97,0.9794,0,0.0,0.0,1,undecided,97,0.9794,4,0.0412,0.0162,1,undecided,True
+multiple_rs,97,0.0619,91,0.9381,0.8716,0,confirmed defect,97,0.0619,91,0.9381,0.8716,0,confirmed defect,False
+multiple_ts,97,0.0619,91,0.9381,0.8716,0,confirmed defect,97,0.0619,91,0.9381,0.8716,0,confirmed defect,False
+swebench,89,1.0,0,0.0,0.0,0,"undecided (capped, Amendment 6)",89,1.0,0,0.0,0.0,0,"undecided (capped, Amendment 6)",False
