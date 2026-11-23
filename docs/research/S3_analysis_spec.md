@@ -1,16 +1,17 @@
 # S3 analysis spec (pre-registration)
 
 _Written 2026-11-22 on branch `s3-analysis` (from `main` at `f5e1750`), before any DP1a or DP1b
-number was computed. Status: **draft for the reviewer at S3 checkpoint 1.** Every item marked
-"Ruling" is open until the reviewer rules; the ruled text is then frozen and checkpoint 2 runs on
-it. A change after a DP number exists needs a dated entry in §7 giving the reason._
+number was computed. Status: **rulings final (reviewer, user approval 2026-11-23); population
+counts restated after CLAIMS A4 (`main` at `06c21f7`); frozen for checkpoint 2, pending the
+checkpoint 1b review.** No DP number exists. A change after a DP number exists needs a dated entry
+in §7 giving the reason._
 
 This document fixes, for every S3 item (plan §4 S3, S3.1 to S3.7) and for DP1a and DP1b, the
 population, view, metric, estimator, seeds, CI, sensitivity checks and output file. It follows
 `docs/CLAIMS.md` (the contract) and the plan; where it settles something they leave open, it lists
 the options and a recommendation, and the reviewer picks.
 
-Sources read: plan §1, §4 S2 and S3, §6; CLAIMS §1 to §3, O1 to O19, A1 to A3;
+Sources read: plan §1, §4 S2 and S3, §6; CLAIMS §1 to §3, O1 to O19, A1 to A4;
 `docs/research/P0.4_power.md`, `P0.5_recount.md`, `P0.6_cellbest_bound.md`, `S1.7_audit.md`;
 `router/sim/`, `router/baselines/`, `router/experiments/s2_baselines.py`.
 
@@ -18,12 +19,16 @@ Sources read: plan §1, §4 S2 and S3, §6; CLAIMS §1 to §3, O1 to O19, A1 to 
 
 ## 1. Rules common to every S3 item
 
-**Views.** Every number is reported in the four `audit.VIEW_NAMES`. `filtered` and `headline` are
-the same 1,287 tasks (S1.7; the code asserts that their task ids are identical), so they appear as
-one column, "filtered = headline". `sensitivity` (2,160 tasks) and `all_eligible` (5,626 tasks) are
-their own columns. Where an item is defined only on tasks with X13 verdicts (cascade claims,
-S0.11), the `all_eligible` and `sensitivity` columns use their X13 tasks (2,911 and 2,080) and say
-so.
+**Views** (after CLAIMS A4: S1.7 Amendment 11 moved `mbpp` out of `filtered`, `headline` and
+`sensitivity`). Every number is reported in the four `audit.VIEW_NAMES`. `filtered` and `headline`
+are the same 1,062 tasks (964 problems; complete case 1,046; S1.7, the code asserts that their task
+ids are identical), so they appear as one column, "filtered = headline". `sensitivity` (1,935
+tasks) and `all_eligible` (5,626 tasks, unchanged by A4) are their own columns. Where an item is
+defined only on tasks with X13 verdicts (cascade claims, S0.11), the `all_eligible` and
+`sensitivity` columns use their X13 tasks (2,911 and 1,855, all tasks) and say so.
+
+**Populations.** Every table and report names its population: "complete case" (O2) or "all tasks
+(available cells)". A count with no population named is not reported.
 
 **Success** (S0.1, A3). Released score = 1.0 for every family (`scoring.success`).
 
@@ -71,23 +76,27 @@ defined them for, and takes new ids from 12 to 19 only for new kinds of draw. A 
 | 3 | `probe_draw` (S2) | S3.4 probe draw inside `KMatchedDimensionBest` | checkpoint 2 |
 | 6, 7 | `bootstrap_task`, `bootstrap_cluster` (S2) | every bootstrap CI, through `stats.bootstrap` | both |
 | 9 | `dev_folds` (S2) | problem-grouped folds inside the development split (DP1b, S3.3 fitted, S3.4, S3.7) | checkpoint 2 |
-| 12 | `s3_dp1a_folds` | DP1a folds over the whole filtered pool, **only if D1 option (ii) is ruled** | checkpoint 2 |
-| 13 | `s3_power_resample` | S3.7 resampling of development problems, **only if D10 option (c) is ruled** | checkpoint 2 |
+| 12 | reserved | not used: D1 ruled (i), so DP1a makes no new fold draw | |
+| 13 | `s3_power_resample` | S3.7 resampling of development problems (D10 ruled (c)) | checkpoint 2 |
 | 14 to 19 | reserved | none planned | |
 
 Checkpoint 1 makes no new draw: S3.6 and the descriptive S3.3 use only the bootstrap streams 6
 and 7.
 
-## 3. Open definitions (the reviewer rules on each)
+## 3. Definitions (ruled 2026-11-23)
+
+The options and recommendations below are kept as written for checkpoint 1; each item ends with
+the ruling, which is what checkpoint 2 implements.
 
 ### D1. DP1a folds on the full filtered pool
 
-DP1a is scored on the whole `filtered` view (CLAIMS §3): 1,287 tasks, 1,188 problems, complete case
-1,264. Each task needs a prediction from a best single model and a DimensionBest table fitted
+DP1a is scored on the whole `filtered` view (CLAIMS §3): 1,062 tasks, 964 problems, complete case
+1,046. Each task needs a prediction from a best single model and a DimensionBest table fitted
 without its problem.
 
-- **(i) The committed splits as six groups.** The development split (248 tasks) is a sixth group
-  next to S1.6's five outer folds (`fold_seed{s}`, 200 to 215 tasks each under seed 0). Each group
+- **(i) The committed splits as six groups.** The development split (196 tasks; complete case 195)
+  is a sixth group next to S1.6's five outer folds (`fold_seed{s}`; under seed 0, 164 to 186
+  evaluation tasks per fold, all tasks). Each group
   is scored by tables fitted on the other five. No new draw; the R13 test already covers these
   tables. Weakness: the development group is the same on every seed, so seeds 1 to 4 vary only the
   evaluation folds and the spread across seeds understates the fold-draw spread.
@@ -107,20 +116,26 @@ without its problem.
   group.
 
 **Recommendation: (i).** It uses only committed, tested split tables and adds no draw. The
-narrower seed spread is stated next to the seed table. **Ruling:** _open_.
+narrower seed spread is stated next to the seed table.
+
+**Ruling (2026-11-23): (i).** The six committed groups (the development split plus S1.6's five
+outer folds); no new draw, stream 12 unused. The seed table states that the development group is
+the same on every seed, so seeds 1 to 4 vary only the evaluation folds and their spread is narrower
+than a full fold redraw would give.
 
 ### D2. DP1a statistic
 
 - Headroom = acceptance of cross-fitted DimensionBest minus acceptance of the cross-fitted best
-  single model, paired per task, in points, on the `filtered` complete case (1,264 tasks).
+  single model, paired per task, in points, on the `filtered` complete case (1,046 tasks).
 - CI: `stats.gate_interval` (cluster bootstrap over problems, 2,000 resamples, seed 0).
 - DP1a holds when the gate seed's CI lower bound is ≥ 3.0 (`DP1A_MIN_LOWER`). The margin (lower
   bound minus 3.0) and the at-threshold label are reported.
 - The oracle's headroom (any available model succeeds, minus the cross-fitted best single model,
   paired) is reported as the ceiling with the same CI. It decides nothing (O18).
 - "Dimension" is CodeRouterBench's `dimension` field (`OutcomeMatrix.dimension`), as in `m2` and S2.
-  On `filtered` there are three: `code_completion` (CRUXEval and HumanEval completion),
-  `code_generation` (MBPP) and `multi_language` (HumanEval-X Python).
+  On `filtered` after A4 there are two: `code_completion` (CRUXEval and HumanEval completion; 888
+  complete-case tasks) and `multi_language` (HumanEval-X Python; 158 complete-case tasks). Before A4
+  a third, MBPP's dimension, was also present.
 - Reported in every view; the verdict reads `filtered` only.
 - Sensitivities (information only): CRUXEval ≥ 0.8; mean released score (O10; tables still chosen
   by acceptance, the metric is the chosen model's mean released score, the oracle takes the maximum
@@ -128,7 +143,7 @@ narrower seed spread is stated next to the seed table. **Ruling:** _open_.
   (a direct dispatch to an unavailable model gives up, as `PlanRouter` does, and the count is
   reported).
 
-**Ruling:** _open_ (confirm the statistic and the dimension field).
+**Ruling (2026-11-23): as specified.** `dimension` is CodeRouterBench's field.
 
 ### D3. The evaluation-population path for DP1a
 
@@ -155,11 +170,16 @@ every caller. No tag is created.
 readings:
 - **(α) `filtered` only (recommended).** The path reads evaluation tasks of `filtered` (= the
   headline) and nothing else. DP1a's `all_eligible` and `sensitivity` columns are then reported on
-  their development splits only (1,104 and 426 tasks), with `stats.dev_folds`, and labelled so.
+  their development splits only (1,104 and 374 tasks; complete case 966 and 294), with
+  `stats.dev_folds`, and labelled so.
 - **(β) every view.** The path also reads the evaluation tasks of `all_eligible` and `sensitivity`,
   so all three columns use the same six-group cross-fit. Wider than CLAIMS' wording.
 
-The function is written at checkpoint 2, after this ruling. **Ruling:** _open_.
+The function is written at checkpoint 2, after this ruling.
+
+**Ruling (2026-11-23): (a) with (α).** The closed fit-free function reads `filtered` evaluation
+tasks only; the other views' DP1a columns are on their development splits. `cross_fit` is
+unchanged and no tag is created.
 
 ### D4. DP1b: the oracle-on-no-signal bound
 
@@ -205,7 +225,11 @@ labelled so.
   `verifier_mode = "oracle_on_no_signal"`, and the S2 test that routers never see the released score
   gets an explicit exemption for this mode only.
 
-**Ruling:** _open_ (option and decision rule).
+**Ruling (2026-11-23): (a), with the decision rule above.** Per-cell Rule A in bound mode decides;
+the cell predictor is refit per training fold on the development split. **Added by the ruling:** a
+test that only the S3.2 experiment module can import the `OracleOnNoSignal` wrapper or use the
+`oracle` ladder mode, enforced the same way as the import restriction on `sim/paper.py`
+(checkpoint 2 deliverable).
 
 ### D5. The gap the learned router must close
 
@@ -221,12 +245,15 @@ difference in saving alone mixes cost and acceptance.
   model. A single number, but the curve construction is a new definition and the mixing is not a
   policy anyone would run.
 
-**Recommendation: (a).** **Ruling:** _open_.
+**Recommendation: (a).**
+
+**Ruling (2026-11-23): (a).** The pair (Δsaving, Δgap), against CellBest with predicted cells and
+against the best single model.
 
 ### D6. DP1b population (user decision, passed on by the reviewer)
 
-Default until the user decides: the headline development split, complete case (247 tasks, 232
-problems, 4 cells; S2 data note), with `stats.dev_folds` per seed. Options:
+Options as written at checkpoint 1 (the default then was the headline development split, complete
+case, 247 tasks with `mbpp`):
 - **(a) Development split only** (the plan's S3 header).
 - **(b) The full headline pool**, through an extension of the D3 path to the fitted baselines
   (CellBest-pred, Rules A and B, best single). This widens the whitelist to fitted lookups and
@@ -235,7 +262,11 @@ problems, 4 cells; S2 data note), with `stats.dev_folds` per seed. Options:
 
 Other views for S3.2: the development split's X13 tasks of `all_eligible` and `sensitivity`, with
 the cell predictor fitted on that view's training folds (the headline predictor cannot predict
-cells it never saw). **Ruling:** _user_.
+cells it never saw).
+
+**Ruling (user, 2026-11-22; restated after A4 on 2026-11-23): (a).** The headline development
+split, complete case: 195 tasks, 180 problems, 3 cells (plan, S2 data notes after Amendment 11),
+with `stats.dev_folds` per seed. DP1a's full-pool exception does not extend to DP1b.
 
 ### D7. S3.3: what is descriptive and what is fitted
 
@@ -249,12 +280,15 @@ Open sub-items of the descriptive part:
 - **D7.1 Perfect verifier cost in the recomputed $41.0 / $6.0 figures.** (a) No verifier charge,
   as in the 2026-11-10 figures (recommended as the main row, for comparability); (b) one verifier
   run charged per rung reached at `VERIFIER_RUN_USD` (A1), swept ×1, ×10, ×100. Both are computed
-  and reported; the ruling only says which row is the headline. **Ruling:** _open_.
+  and reported; the ruling only says which row is the headline. **Ruling (2026-11-23):** (a) is
+  the headline row; (b) is reported beside it.
 - **D7.2 Rung order of the cheapest-first ladder.** The 2026-11-10 figure ordered rungs by mean
   released cost on the population. That order differs from the published price order
-  (`prices.price_order`): on `filtered`, gpt-5.4 is the third cheapest by observed cost and the
-  sixth by price. Recommendation: keep the observed mean cost order on each population (the old
-  definition) and report the price-order ladder as a sensitivity. **Ruling:** _open_.
+  (`prices.price_order`): on the `filtered` complete case (after A4 as before it), gpt-5.4 is the
+  third cheapest by observed cost and the sixth by price. Recommendation: keep the observed mean
+  cost order on each population (the old definition) and report the price-order ladder as a
+  sensitivity. **Ruling (2026-11-23):** observed mean-cost order; the price order is a
+  sensitivity.
 
 ### D8. S3.3 fitted part: the post-failure classifier (checkpoint 2)
 
@@ -280,7 +314,12 @@ Open sub-items of the descriptive part:
   (−0.013 to +0.078); its definition differs and the comparison is qualitative.
 - Option: add a pre-attempt variant (before rung 1) to match C.5 more closely.
 
-**Ruling:** _open_.
+**Ruling (2026-11-23): as specified, plus the pre-attempt variant as a secondary result.** The
+pre-attempt variant (stop before rung 1 when the predicted P(any rung succeeds) < t, features as
+above without a verdict history) is required and reported beside the post-failure classifier; the
+post-failure classifier stays the primary result. Nothing else in D8 changes because of the
+observability figure from checkpoint 1 (§5.3): changing the spec in response to a descriptive
+result is what the pre-registration exists to prevent.
 
 ### D9. S3.4: k-matched DimensionBest curves (checkpoint 2)
 
@@ -299,16 +338,18 @@ Open sub-items of the descriptive part:
 - **Unreachable k.** `KMatchedDimensionBest.fit` caps k at the number of training tasks where the
   new model is available, without saying so. A wrapper refuses that: a (model, k) is reported as
   "unreachable" with the smallest training-set availability, and nothing is run for it. On the
-  headline development split (about 200 training tasks per fold) k = 250 is unreachable.
+  headline development split (195 complete-case tasks, so about 156 training tasks per fold) k = 250
+  is unreachable.
 - Probe draws use stream 3 (`probe_draw`) under the seed, as S2 defined it.
 
-**Ruling:** _open_.
+**Ruling (2026-11-23): as specified.**
 
 ### D10. S3.7: the power check
 
 The plan asks for `e0_power.py` "with the real verifier and nested cross-fitting on the final
-headline population". The gate's population is the evaluation part of the headline (1,039 tasks),
-so read literally the check scores baselines on evaluation tasks. Flagged for the reviewer.
+headline population". The gate's population is the evaluation part of the headline (866 tasks;
+complete case 851 tasks on 774 problems), so read literally the check scores baselines on
+evaluation tasks. Flagged for the reviewer.
 
 - **(a) Literal.** Baselines only (best single, CellBest-pred, Rule A escalated, the bound
   stand-ins) on the headline evaluation population with its outer folds, through an extension of
@@ -324,7 +365,21 @@ so read literally the check scores baselines on evaluation tasks. Flagged for th
   sampling power, which P0.4 could not measure (P0.4 §6 item 3).
 
 Nesting: the stand-ins select nothing, so nested cross-fitting reduces to the five outer folds;
-stated in the output. **Ruling:** _open_.
+stated in the output.
+
+**Ruling (2026-11-23): (c), with (b) as a cross-check.** Fixed details:
+- **Sizes (complete case).** Development: 195 tasks on 180 problems. Evaluation target: 851 tasks
+  on 774 problems. Resamples draw 774 problems with replacement from the 180 development problems
+  (stream 13); (b) scales half-widths by √(180 / 774).
+- **True-gap assumption, stated in the output.** Power depends on each stand-in's true gap against
+  the best single model and against CellBest-pred, which is unknown. The resampling treats the
+  development split as the population, so each stand-in's true gap is taken to be its observed
+  development gap. This is an assumption, not an estimate of the evaluation gap.
+- **Two reported points per stand-in.** (1) Power at the stand-in's development gap, as resampled.
+  (2) Power with the gap shifted to 0: in each resample the stand-in's paired per-task differences
+  are shifted by minus the development mean gap before the CI is formed, so the true gap is 0 and
+  the CI width is unchanged. (b) gives the same two points from the E0 formula with the projected
+  half-width.
 
 ### D11. Price and verifier sweeps for fitted policies
 
@@ -334,14 +389,16 @@ cost (Rule A, CellBest's tie-break, the ladder order), so their choices can chan
   policy and comparator on training costs scaled the same way, then scores; seed 0 only.
 - **(b) Rescore only.** Cheaper; answers "what if prices moved after deployment".
 
-Descriptive cost figures (S3.3) are not fitted, so they are rescored. **Ruling:** _open_.
+Descriptive cost figures (S3.3) are not fitted, so they are rescored.
+
+**Ruling (2026-11-23): (a).** Refit at each sweep point; descriptive figures stay rescored.
 
 ## 4. Per-item specification
 
 | Item | Population | View(s) | Metric | Estimator | Seeds | CI | Sensitivities | Output |
 |---|---|---|---|---|---|---|---|---|
 | S3.1 / DP1a | Whole view (dev + eval) via D3, complete case | all; verdict on `filtered` | Headroom of cross-fitted DimensionBest and of the oracle over the cross-fitted best single model, points | D1 groups, D2 | 0 to 4 | `gate_interval` | CRUXEval 0.8; mean score (O10); empty `response_matrix` cells; all tasks | `s3_1_dp1a.csv`, `s3_1_dp1a_seeds.csv` |
-| S3.2 / DP1b | D6 (default: headline dev, complete case, 247 tasks) | headline decides; others' X13 dev tasks | D4 statistic; D5 gap | `run_dev` over `dev_folds` | 0 to 4 | `gate_interval` (information) | CRUXEval 0.8; empty `response_matrix` cells; all tasks; verifier ×1/10/100; prices ×0.5/×2 (D11) | `s3_2_dp1b.csv`, `s3_2_ladders.csv`, `s3_2_sweeps.csv` |
+| S3.2 / DP1b | D6: headline dev, complete case, 195 tasks | headline decides; others' X13 dev tasks | D4 statistic; D5 gap | `run_dev` over `dev_folds` | 0 to 4 | `gate_interval` (information) | CRUXEval 0.8; empty `response_matrix` cells; all tasks; verifier ×1/10/100; prices ×0.5/×2 (D11) | `s3_2_dp1b.csv`, `s3_2_ladders.csv`, `s3_2_sweeps.csv` |
 | S3.3 descriptive | Whole view, complete case | all | §5.2 to §5.4 | counts | none | `bootstrap` (`N_BOOT`) | CRUXEval 0.8; empty `response_matrix` cells; all tasks; prices (rescored) | `s3_3_unsolved.csv`, `s3_3_rescue_pairs.csv`, `s3_3_historical.csv` |
 | S3.3 fitted | Headline dev; all-eligible dev X13 | headline; all_eligible | D8 capture, AUC | D8 | 0 to 4 | `bootstrap` | CRUXEval 0.8 | `s3_3_classifier.csv` |
 | S3.4 | Headline dev; all-eligible dev | headline; all_eligible | Acceptance and cost per (model, k, labels) | D9 | 0 to 4 | `bootstrap`, paired | CRUXEval 0.8 | `s3_4_kmatched.csv` |
@@ -368,6 +425,13 @@ The four counts (PASS/FAIL × success/not) are written next to every rate, so an
 recomputed. A denominator of 0 is written as "no signal" (no cells) or "none" (cells, but no
 failures or no successes), never as 0.
 
+**Populations of the verifier tables.** The primary rows count the available cells of every task
+in the view ("all tasks (available cells)"). The same tables repeat every count on the view's
+complete case ("complete case"), in a `population` column. On the headline, main variant: 3 / 63
+false pass and 36 / 893 false reject on all 1,062 tasks; 3 / 57 and 26 / 871 on the 1,046
+complete-case tasks (956 and 928 signal cells). A4 does not change these counts, because `mbpp`
+had no visible tests.
+
 **Bridge to the plan's figures** (plan §1 C3, log 2026-11-19): 15.0% false-pass and 27.0%
 false-reject on 8,420 cells, and 66.5% heuristic false-pass on 12,472 no-signal cells. Those used
 every X13 cell with a binary released score (`truth` ∈ {0, 1}), any family, empty cells included,
@@ -389,8 +453,8 @@ and the same two conditionals. The script reproduces them and stops if they do n
 ### 5.2 S3.3 unsolved share
 
 Per view and per view × family: the share of complete-case tasks where no available model
-succeeds, with a cluster-bootstrap CI. Checks against `artefacts.yaml`: on `filtered`, 198 of
-1,264 (161 under CRUXEval ≥ 0.8). Sensitivities: CRUXEval ≥ 0.8; all tasks (a task with an
+succeeds, with a cluster-bootstrap CI. Checks against `artefacts.yaml` (after A4): on the
+`filtered` complete case, 42 of 1,046 (5 under CRUXEval ≥ 0.8). Sensitivities: CRUXEval ≥ 0.8; all tasks (a task with an
 unavailable cell counts as unsolved when no available model succeeds); empty `response_matrix.json`
 cells unavailable.
 
@@ -409,7 +473,8 @@ For every ordered pair of distinct models (l, h), 56 pairs, on a view's complete
 Every rate carries its counts. Two flag columns say whether l is cheaper than h by published price
 (`prices.price_order`) and by observed mean cost on the view. The true and observable rescue rates
 get cluster-bootstrap CIs per view; per view × family only counts and rates are written. On
-`filtered`, where 90.8% of complete-case tasks have no signal for any model, the observable rates
+`filtered`, where 88.9% of complete-case tasks (930 of 1,046) have no signal for any model, the
+observable rates
 rest on few tasks; the counts show how few.
 
 ### 5.4 S3.3 historical cost figures
@@ -439,8 +504,9 @@ rescored (range reported).
 - This spec, committed before any DP1a or DP1b number.
 - `router/sim/profile.py`: the §5 definitions as functions, with toy tests whose values are
   checked by hand (`tests/router/test_s3_profile.py`), plus data tests pinning the bridges (15.0% /
-  27.0% on 8,420 cells; $41.05 / $34.02 / $5.99; 198 and 161 unsolved; 1,148 of 1,264 with no
-  signal).
+  27.0% on 8,420 cells; $41.05 / $34.02 / $5.99; after A4, on the headline complete case, 42 and 5
+  unsolved of 1,046 and 930 of 1,046 with no signal; before A4 these were 198, 161 and 1,148 of
+  1,264).
 - `router/experiments/s3_descriptive.py` and its outputs `router/experiments/out/s3_3_*` and
   `s3_6_*`, reproducible byte for byte.
 - No DP number, no fitted quantity, no evaluation-population path code.
@@ -451,3 +517,6 @@ rescored (range reported).
 |---|---|---|
 | 2026-11-22 | Drafted for checkpoint 1 | |
 | 2026-11-22 | D3: which views the path may read, options (α) and (β). D4: the cell predictor is refit per training fold on the development split; the frozen S2.5 predictor is kept for the evaluation run. D8: t is set on out-of-fold predictions inside the training folds. §5.1: `rm_empty_unavailable` complete-case counts checked against `artefacts.yaml` | Pre-review tightening before any DP number exists (commit order unchanged: no DP number has been computed) |
+| 2026-11-23 | Rulings D1 to D11 written in (reviewer, user approval 2026-11-23): D1 (i), stream 12 unused; D2 as specified; D3 (a) with (α); D4 (a) plus the import-restriction test for the oracle wrapper and mode; D5 (a); D6 headline development split (user); D7.1 (a) headline, (b) beside; D7.2 cost order, price order as sensitivity; D8 as specified plus the pre-attempt variant as a secondary result, no change for the observability figure; D9 as specified; D10 (c) with (b) as a cross-check, the true-gap assumption and power at the development gap and at gap 0; D11 (a) | Checkpoint 1 review; no DP number has been computed |
+| 2026-11-23 | Population counts restated after CLAIMS A4 (`mbpp` leaves `filtered`, `headline` and `sensitivity`). Headline = filtered: 1,287 → 1,062 tasks, 1,188 → 964 problems, complete case 1,264 → 1,046; development split 248 → 196 tasks (complete case 195, 180 problems, 3 cells; was 247, 232, 4); evaluation part 1,039 → 866 tasks (complete case 851, 774 problems); outer folds under seed 0: 164 to 186 evaluation tasks (was 200 to 215); dimensions 3 → 2. Sensitivity: 2,160 → 1,935 tasks, X13 tasks 2,080 → 1,855, development split 426 → 374. `all_eligible` unchanged (5,626; X13 2,911; development 1,104). Unsolved (complete case) 198 / 161 of 1,264 → 42 / 5 of 1,046; no signal for any model 1,148 of 1,264 (90.8%) → 930 of 1,046 (88.9%) | CLAIMS A4, S1.7 Amendment 11 (`main` at `06c21f7`, merged into this branch). No definition changes |
+| 2026-11-23 | §1 and §5.1: every table names its population; the verifier tables carry both "all tasks (available cells)" and "complete case" rows | Checkpoint 1 review: the interim report put all-task verifier counts under a complete-case heading. The definition of the primary rows is unchanged |
