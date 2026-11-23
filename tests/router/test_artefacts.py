@@ -34,7 +34,9 @@ def test_lcb_is_split_by_the_subset_rule():
 
 
 def test_views_nest_and_follow_the_labels():
-    fam = pd.Series({"a": "mbpp", "b": "bcb", "c": "humaneval", "d": "he_completion",
+    # "a" was an mbpp task until criteria Amendment 11 made mbpp a confirmed defect; hex_python
+    # is the cleared family now
+    fam = pd.Series({"a": "hex_python", "b": "bcb", "c": "humaneval", "d": "he_completion",
                      "e": "lcb", "f": "lcb", "g": "he_testgen", "h": "cruxeval"})
     v = audit.view_task_ids(fam, leetcode={"e"}, x13={"a", "d", "e", "f"})
     assert v["all_eligible"] == ["a", "b", "c", "d", "e", "f", "h"]     # no ineligible task
@@ -84,10 +86,12 @@ def test_views_nest_and_hold_no_ineligible_task(built):
 
 @needs_data
 def test_counts_reviewed_at_checkpoint_2(built):
-    """The view sizes given in the plan log after the checkpoint 2 review (main a3a6627)."""
+    """The view sizes given in the plan log after the checkpoint 2 review (main a3a6627), less
+    mbpp's 225 tasks, which criteria Amendment 11 made a confirmed defect (was 1287 and 2160)."""
     art = built[0]
     assert [art["views"][v]["tasks"] for v in ("all_eligible", "filtered", "sensitivity")] == \
-        [5626, 1287, 2160]
+        [5626, 1062, 1935]
+    assert art["units"]["mbpp"]["label"] == audit.CONFIRMED                 # Amendment 11
     assert art["subset_rules"]["lcb"]["excluded_tasks"] == 422
     assert art["unavailable"]["x13_empty_cells"] == 1551
     assert art["unavailable"]["x13_empty_cells_released_score_1"] == 877

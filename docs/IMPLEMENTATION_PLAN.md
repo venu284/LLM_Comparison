@@ -773,6 +773,26 @@ edit them.
         - the two single-cell reassignments were read and confirmed;
         - the views were recounted.
       - 428 tests pass.
+
+      **Amendment 11 (2026-11-23; merged `43a5dd1`; CLAIMS A4).** The `mbpp` prompts do not state
+      the entry-point name that the MBPP+ harness calls (219 of 225). The release and our re-run
+      both fail on `NameError` and agree, so §1.1's `extraction` mechanism could not be assigned.
+      Amendment 11 (`24e7c69`, committed before the relabel) assigns `extraction` /
+      `entry_point_unstated` to such cells even when they agree, for every audited family with a
+      named entry point.
+      - Only `mbpp` (d = 78 of 97, Wilson lower bound of r 0.714: cleared → confirmed defect) and
+        `mbpp_completion` (d = 4, still undecided) are affected. The reviewer recounted d
+        independently.
+      - Labels: confirmed defect 3,691 eligible tasks; cleared 964 (`hex_python`, `cruxeval`);
+        undecided 873.
+      - Views: headline = filtered 1,062 tasks / 964 problems (complete case 1,046; CRUXEval 800,
+        HumanEval-X Python 164, HumanEval completion 98); sensitivity 1,935; all eligible
+        unchanged.
+      - The mapping test (Amendment 1) is recomputed and no model fails; the report's 2c §4 now
+        states that `release_correct` cells are also excluded.
+      - The gain shares above are on the old view and are superseded by S3.1 (not rerun: they
+        would compare models on evaluation tasks).
+      - 603 tests pass; 304 files verify.
 - [x] S1.8 `data/llmrouterbench.py` [M1.7]: code subsets; drop zero-cost models from economic
       metrics. Validate the loader early, so it is ready if DP1b makes it the primary corpus.
       Started early for breadth (user, 2026-11-21). S1.7 does **not** point to a DP1b failure:
@@ -858,6 +878,9 @@ edit them.
   - `artefacts.yaml` is tracked;
   - `audit.build_views` builds all eligible 5,626, filtered 1,287, sensitivity 2,160 and
     headline 1,287 from `OutcomeMatrix`.
+  **Re-checked 2026-11-23 after Amendment 11:** `artefacts.yaml` regenerated (`b1f7e8d`); the
+  views nest; no ineligible task; the data verify. The headline set is 3 families (none under 30
+  tasks): filtered = headline 1,062, sensitivity 1,935, all eligible 5,626.
 
 ### S2 — Evaluation infrastructure and baselines
 Validated before any analysis that feeds a decision point, so that DP1 does not rest on the
@@ -910,7 +933,10 @@ quick-check code.
         Labels "given more information" and "our definition" are in every output table.
       - Cell predictor: trained on the headline development split (user decision). Held-out
         accuracy 93.5% on `content_text`, 99.6% on the wrapped prompt; 87.5% and 95.2% when
-        trained on all eligible development tasks (sensitivity).
+        trained on all eligible development tasks (sensitivity). **After Amendment 11** the frozen
+        predictor (O3) is refit on the new headline development split: 196 tasks, 3 cells,
+        training-record sha256 `747f91fa…`; held-out accuracy 91.8% on `content_text` (100% on
+        the wrapped prompt), 85.7% / 94.4% when trained on all eligible development tasks.
       - Zero-loss route: no release file holds it. It is rebuilt from the data with P0.5's port,
         which reproduced Table 10, using acceptance in place of the released score.
       - Rules A and B equal P0.6's `rule_tables` on 20 random tables and a hand-checked toy cell.
@@ -936,6 +962,15 @@ quick-check code.
         −0.045 [−0.33, 0.23] on the paper view (cluster bootstrap).
       - Shuffled labels: all 20 learned baselines fall to Random's level (38.8–42.6 against
         42.3), and each beats Random with a CI above 0 when unshuffled.
+      - **Revised 2026-11-23 (after Amendment 11):** on the new headline a single shuffle could
+        beat Random by chance, because a baseline fitted on shuffled labels still commits to one
+        model, and the models' acceptance ranges widely. "Falls to Random" is now tested in
+        expectation: 20 shuffles (stream 11), and Random's expected acceptance must lie in the 95%
+        t-interval of the mean shuffled acceptance. 18 of 20 learned baselines contain it. Two
+        fall **below** it (cost-aware DimensionBest 46.1 [43.3, 48.9] and the fixed cascade with
+        no-signal accepted 47.2 [44.1, 50.3], against 50.4): with uninformative labels they
+        lean to cheap models, which is not leakage. Every baseline still beats Random with a CI
+        above 0 when unshuffled.
 - **Gate:** S2.6 passes; the no-ground-truth test passes; every comparison table carries a paired
   CI; baselines that would need the paper's unavailable code are labelled "our definition", with
   the definition difference documented. Reference: DimensionBest vs ACRouter is +1.54 on the
@@ -960,23 +995,24 @@ not used for any S3 number that feeds a decision.
 - Every headline number also gets the sensitivity check with empty `response_matrix.json`
   cells treated as unavailable (S1.7).
 
-**Data notes from S2 (2026-11-21; development split, headline complete case, 247 tasks on 232
-problems, seed 0; development figures, not results):**
-- Best single model is Opus in every fold (72.1% acceptance). Only Always-Opus and the fixed
-  cascade with escalation reach that acceptance on point estimates.
-- Rule A escalated with predicted cells (C2's bar, O19) saves 11.3% [6.4, 16.4] against the best
-  single model at a gap of −0.8 points, and 2.6% [0.3, 4.8] against CellBest-pred. C2's margin
-  over CellBest will be small.
-- kNN saves 22.0% [16.4, 28.6] against the best single model at a gap of −1.6 points
-  [−5.4, 2.4], below the best single model's acceptance. It is the strongest cost saver; report
-  it next to C2 even though it is not C2's bar.
+**Data notes from S2 (restated 2026-11-23 after Amendment 11; development split, headline
+complete case, 195 tasks on 180 problems, 3 cells, 77% CRUXEval; seed 0; development figures, not
+results):**
+- Best single model is Opus in every fold (85.1% acceptance). On point estimates Always-Opus, both
+  fixed cascades (85.1%) and LinUCB (85.6%) reach that acceptance.
+- Rule A escalated with predicted cells (C2's bar, O19) saves 13.4% [8.1, 19.0] against the best
+  single model at a gap of −1.0 [−2.6, 0.0] points, and 0.6% [−2.5, 3.4] against CellBest-pred.
+- CellBest-pred (the S0.3(c) comparator) saves 12.8% [7.4, 18.6] at a gap of −0.5 [−1.6, 0.0].
+- kNN saves 23.5% [17.1, 31.1] against the best single model at a gap of −2.1 [−6.4, 2.6], below
+  the best single model's acceptance. It is the strongest cost saver; report it next to C2 even
+  though it is not C2's bar.
 - Rules A and B coincide on this population; zero-loss with predicted cells equals CellBest-pred;
-  DimensionBest equals cost-aware DimensionBest. With 4 cells and Opus dominant, the lookups have
-  few distinct choices.
-- Released ACRouter chooses Opus on all 387 headline ID-test tasks, so on the headline it equals
-  the best single model.
-- Verifier runs are rare (20–32 per 247 tasks for the ladders): most headline development cells
-  have no visible tests (S0.11).
+  DimensionBest equals cost-aware DimensionBest.
+- Released ACRouter chooses Opus on all 318 headline ID-test tasks it covers, so on the headline it
+  equals the best single model.
+- Verifier runs are rare (22 for Rule A escalated and 32 for the fixed cascades, per 195 tasks):
+  most headline development cells have no visible tests (S0.11).
+- The 2026-11-21 figures (247 tasks, with `mbpp`) are superseded.
 - S3 owes the price and verifier-cost sweeps (S0.2) on its headline numbers.
 
 - [ ] S3.1 Q1 accuracy headroom: oracle and DimensionBest against the best single model, in all
@@ -985,6 +1021,9 @@ problems, seed 0; development figures, not results):**
       best single model, verifier cost included (S0.2), with the real verifier (S0.11), on the
       headline set. DP1b is decided on the **oracle-on-no-signal bound** (§1); fixed cascades
       with the no-signal cells bracketed (all accepted / all escalated) are reported next to it.
+      **Population (user, 2026-11-22):** the headline **development split** (complete case after
+      Amendment 11: 195 tasks, 180 problems, 3 cells), as the S3 header requires. DP1a's full-pool exception does
+      not extend to DP1b.
       Provisional check on 2026-11-19 (P0.5; complete-case headline set, 1,907 tasks, success =
       all tests pass, point estimates, verifier cost at S0.2's rate, Opus best at 67.3% and chosen
       in every training fold of a 5-fold cross-fit, five seeds):
@@ -2061,3 +2100,61 @@ Two further reviews were checked against the data; all fixes approved by the use
     to E1.
 - S2 data notes for S3 are recorded under S3.
 - **Next:** S3 on `main`.
+
+### 2026-11-22 (`main` rebased onto `origin/main`; branches deleted; S3 started)
+
+- `main` was rebased onto `origin/main` and pushed (now equal at `f5e1750`; 580 tests pass, 304
+  files verify). The rebase dropped the merge commits and rewrote hashes, so some hashes cited
+  above no longer exist on `main`. Mapping (old → new):
+  - merge `b5d5bc0` (S1.7) → `bccc014` (last S1.7 commit); merge `39670bb` (S1.8) → `708f282`;
+    merge `07e9625` (S2) → `5061835`;
+  - `471ddb5` → `af69d3c`, `a865dfb` → `16f902f`, `5e9acb4` → `665ba24`, `bdf833f` → `25e00b6`,
+    `c72db93` → `bccc014`, `ee783d3` → `71a360a`, `f9877bf` → `2232568`;
+  - plan commits `17d4c43` → `bb3e994`, `6d1f73e` → `f5e1750`.
+  Hashes not listed were already on `origin/main` and are unchanged.
+- All 15 local branches and their worktrees were deleted (each had no commit missing from
+  `main`). The 5 branches on `origin` are untouched.
+- The S2 data note predicting C2's margin over CellBest was removed; the measured numbers stay.
+- **User decision:** DP1b runs on the headline development split (S3.2).
+- S3 started on branch `s3-analysis` (brief `.claude/handover/2026-11-21-s3-analysis.md`);
+  checkpoint 1 (frozen analysis spec, descriptive S3.3 and S3.6) is under review.
+
+### 2026-11-23 (S3 checkpoint 1 reviewed; MBPP entry-point finding; S1.7 Amendment 11 approved)
+
+- **S3 checkpoint 1** reviewed on `s3-analysis`: 599 tests pass; outputs reproduce byte for byte;
+  the analysis spec was committed before any DP number. The reviewer's rulings on the spec's open
+  definitions (D1–D11) are recorded in the S3 brief and approved by the user.
+- **Finding at review:** CodeRouterBench's `mbpp` prompts are the MBPP+ description only and do
+  not state the entry-point name that the MBPP+ harness calls (219 of 225 eligible prompts; Route
+  Anything's task notes record the same). In S1.7's sample, 192 of 208 released failures define a
+  plausible function under another name; all 8 released passes use the reference name; 172 of 191
+  failed re-runs end in `NameError` on the reference name. S1.7's criteria already name this
+  mechanism (`extraction`, "a different entry-point name than the harness calls"), but assigned
+  mechanisms only to cells where the re-run disagrees with the release; here both share the
+  defect, so `mbpp` was cleared.
+- **User decision:** a dated S1.7 Amendment 11, applied as a general rule to every family with a
+  named entry point, committed before the relabel; branch `s1-7-amend-mbpp` (brief
+  `.claude/handover/2026-11-23-s1-7-amend-mbpp.md`). The headline set, `artefacts.yaml`, CLAIMS'
+  frozen S1.7 rows, the S2.5 frozen predictor and the S2 development outputs are restated from
+  its result.
+- **S3 is on hold** until the amendment is merged; no DP number has been computed.
+
+### 2026-11-23 (S1.7 Amendment 11 merged; CLAIMS A4; S3 resumes)
+
+- `s1-7-amend-mbpp` merged (`43a5dd1`); on `main` 603 tests pass and 304 files verify.
+  Reviewer checks:
+  - commit order: the amendment text (`24e7c69`) alone, before the rule code and the relabel;
+  - the rule is general, and every audited family appears in the funnel;
+  - `mbpp` d = 78 of 97 recounted independently (the 3 cells a naive count adds have the
+    reference name in the prompt as an ordinary word, which rule (ii) excludes);
+  - the `artefacts.yaml` diff touches only fields the amendment explains;
+  - the S2 reproduction outputs are unchanged.
+- **CLAIMS A4** added; the frozen S1.7 rows are restated (headline 1,062, complete case 1,046,
+  Opus 80.0%, 42 solved by no model, 88.9% no signal). The with-`mbpp` figures are kept as
+  superseded, for transparency only.
+- The shuffled-label test now tests "falls to Random" over 20 shuffles (S2.6 note); 2 baselines
+  fall below Random, not above.
+- Plan notes updated: S1.7, S1 gate, S2.5 predictor, S2.6, the S2 data notes for S3, and DP1b's
+  population (195 tasks).
+- **Next:** S3 merges `main` and reruns checkpoint 1, then stops at checkpoint 1b, before any DP
+  number.

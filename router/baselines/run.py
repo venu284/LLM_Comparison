@@ -123,5 +123,17 @@ def run_dev(baseline, m: OutcomeMatrix, ctx: Context, folds: pd.Series, *, seed:
     return out
 
 
-__all__ = ["default_baselines", "run_dev", "shuffle_models", "PermutedVerifier",
-           "ReleasedACRouter"]
+def shuffled_mean_interval(accs, level: float = 0.95) -> tuple[float, float, float]:
+    """Mean acceptance over the shuffles and its t interval (n - 1 degrees of freedom). The
+    shuffled-label check passes when Random's expected acceptance lies inside it."""
+    from scipy import stats as st
+    a = np.asarray(accs, dtype=float)
+    m = float(a.mean())
+    if len(a) < 2:
+        return m, m, m
+    h = float(st.t.ppf(0.5 + level / 2, len(a) - 1) * a.std(ddof=1) / np.sqrt(len(a)))
+    return m, m - h, m + h
+
+
+__all__ = ["default_baselines", "run_dev", "shuffle_models", "shuffled_mean_interval",
+           "PermutedVerifier", "ReleasedACRouter"]

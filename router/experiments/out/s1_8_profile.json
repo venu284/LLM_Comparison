@@ -204,13 +204,13 @@
     "mbpp_completion": 124,
     "mbpp_testgen": 111
    },
-   "crb_filtered_tasks_sharing_a_key": 225,
+   "crb_filtered_tasks_sharing_a_key": 0,
    "crb_problem_ids_sharing_a_key": 297,
    "crb_tasks_sharing_a_key": 460,
    "lrb_tasks": 974,
    "shared_keys_any_crb_task": 298,
    "shared_keys_eligible_crb": 271,
-   "shared_keys_filtered_view": 225,
+   "shared_keys_filtered_view": 0,
    "text_equal_exact_crb_tasks": 88,
    "text_equal_whitespace_crb_tasks": 88
   },
