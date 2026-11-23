@@ -3,6 +3,10 @@ best single model, in every data view, under the strict success rule and the CRU
 sensitivity. Run only after the labels and artefacts.yaml were committed (blind labelling).
 Definitions: docs/research/S1.7_audit.md, "Checkpoint 3: gain shares per family".
 
+SUPERSEDED by S3.1 (user, 2026-11-23). out/s1_7_gain_shares.csv holds the views as they were
+before criteria Amendment 11, with `mbpp` in the filtered view. It is not rerun: it compares against
+Opus on evaluation tasks.
+
     PYTHONPATH=.:pipeline pipeline/venv/bin/python -m router.experiments.s1_7_gain_shares
 """
 

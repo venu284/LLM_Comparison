@@ -366,16 +366,30 @@ def test_baselines_draw_from_their_streams():
                                   "fixed_cascade_escalate"])
 def test_real_dev_shuffled_labels_fall_to_random(name):
     """On the development-split headline tasks: unshuffled, the baseline beats Random (paired
-    cluster-bootstrap CI above 0); with shuffled labels, the paired CI against Random holds 0."""
+    cluster-bootstrap CI above 0); with shuffled labels, Random's expected acceptance lies inside
+    the t interval of the mean acceptance over N_SHUFFLES shuffles (s2_baselines)."""
+    from router.experiments.s2_baselines import N_SHUFFLES
+    from router.baselines.run import shuffled_mean_interval
     from router.sim import stats
     m, ctx, folds = real_dev()
     b = next(x for x in default_baselines(m.models) if x.name == name)
     rnd = run_dev(next(x for x in default_baselines(m.models) if x.name == "random"), m, ctx,
                   folds, seed=0)
-    pid = ctx.problem_of
-    for shuffle, expect_gain in ((None, True), (0, False), (1, False)):
-        o = run_dev(b, m, ctx, folds, seed=0, shuffle_seed=shuffle)
-        f = metrics.paired_frame(o, rnd, ("b", "r"))
-        iv = stats.bootstrap(f, stats.mean_diff("accepted_b", "accepted_r"),
-                             clusters=pid.reindex(f.index), n_boot=300)
-        assert (iv.lo > 0) if expect_gain else (iv.lo <= 0 <= iv.hi), (name, shuffle, iv)
+    o = run_dev(b, m, ctx, folds, seed=0)
+    f = metrics.paired_frame(o, rnd, ("b", "r"))
+    iv = stats.bootstrap(f, stats.mean_diff("accepted_b", "accepted_r"),
+                         clusters=ctx.problem_of.reindex(f.index), n_boot=300)
+    assert iv.lo > 0, (name, "unshuffled", iv)
+    ok = success(m)
+    random_expected = 100 * float((ok.sum(axis=1) / m.available.sum(axis=1)).mean())
+    accs = [metrics.acceptance(run_dev(b, m, ctx, folds, seed=0, shuffle_seed=k))
+            for k in range(N_SHUFFLES)]
+    mean, lo, hi = shuffled_mean_interval(accs)
+    assert lo <= random_expected <= hi, (name, random_expected, (mean, lo, hi))
+
+
+def test_shuffled_mean_interval_by_hand():
+    from router.baselines.run import shuffled_mean_interval
+    m, lo, hi = shuffled_mean_interval([48.0, 50.0, 52.0])     # sd 2, se 2/sqrt(3), t(0.975, 2) = 4.3027
+    assert m == 50.0 and abs(hi - 50.0 - 4.302653 * 2 / 3 ** 0.5) < 1e-4 and abs((m - lo) - (hi - m)) < 1e-12
+    assert shuffled_mean_interval([5.0]) == (5.0, 5.0, 5.0)

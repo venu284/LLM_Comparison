@@ -22,16 +22,13 @@ all_eligible,swebench,11,11,10
 filtered,cruxeval,151,151,150
 filtered,he_completion,15,15,15
 filtered,hex_python,30,30,30
-filtered,mbpp,52,52,52
 sensitivity,cruxeval,151,151,150
 sensitivity,he_completion,15,15,15
 sensitivity,hex_python,30,30,30
 sensitivity,humaneval,21,21,20
 sensitivity,lcb,120,120,44
-sensitivity,mbpp,52,52,52
 sensitivity,mbpp_completion,26,26,25
 sensitivity,swebench,11,11,10
 headline,cruxeval,151,151,150
 headline,he_completion,15,15,15
 headline,hex_python,30,30,30
-headline,mbpp,52,52,52

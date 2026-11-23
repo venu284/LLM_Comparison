@@ -26,6 +26,10 @@ Rules (each with the evidence it rests on; see docs/research/S1.7_audit.md, chec
               the response).
   R-FLAKY     the three runs of the cell differ: `flaky`.
   otherwise   `unexplained`.
+Then criteria Amendment 11 (s1_7_entry_point): `extraction` with `mechanism_detail`
+`entry_point_unstated` on cells meeting its conditions (i)-(v), including cells where our re-run
+agrees with the release. `main` also writes the Amendment 11 funnel and before/after table and
+recomputes Amendment 1's mapping test.
 Mechanisms on our side or neutral (`our_harness`, `flaky`, `release_correct`, `mapping`) leave
 the cell out of `d`; `our_harness` cells also leave `n_exec` (§3.1).
 
@@ -62,7 +66,7 @@ def _runs(part):
     return {json.loads(l)["run_id"]: json.loads(l) for l in open(OUT / f"s1_7_runs_{part}.jsonl")}
 
 
-def assign(apply_d: bool = True) -> pd.DataFrame:
+def assign(apply_d: bool = True, amend11: bool = True) -> pd.DataFrame:
     parts = [("bcb", "s1_7_cells_bcb.csv"), ("py", "s1_7_cells_py.csv"), ("mx", "s1_7_cells_mx.csv"),
              ("lcbk", "s1_7_cells_lcbk.csv"), ("swe", "s1_7_cells_swe.csv")]
     c = pd.concat([pd.read_csv(OUT / f).assign(part=p) for p, f in parts if (OUT / f).exists()],
@@ -112,6 +116,24 @@ def assign(apply_d: bool = True) -> pd.DataFrame:
         d = d[d["to"] != "unexplained"].set_index(["sample", "task_id", "key"])["to"].to_dict()
         c["mechanism"] = [d.get((r.sample, r.task_id, r.key), r.mechanism) if r.mechanism == "unexplained"
                           else r.mechanism for r in c.itertuples()]
+    c["mechanism_detail"] = None
+    if amend11:
+        c = apply_amendment_11(c)
+    return c
+
+
+def apply_amendment_11(c: pd.DataFrame) -> pd.DataFrame:
+    """Criteria Amendment 11: `extraction` / `entry_point_unstated` on cells meeting (i)-(v),
+    including cells where our re-run agrees with the release. Such a cell is always a released
+    fail whose re-run also failed, so no earlier rule assigned it a mechanism; that is checked."""
+    from router.experiments import s1_7_entry_point as ep
+    c = ep.apply(c)
+    hit = c.a11 == ep.SUBTYPE
+    clash = c[hit & c.mechanism.notna()]
+    if len(clash):
+        raise ValueError(f"Amendment 11 would replace an earlier mechanism on {len(clash)} cells")
+    c.loc[hit, "mechanism"] = ep.MECHANISM
+    c.loc[hit, "mechanism_detail"] = ep.SUBTYPE
     return c
 
 
@@ -182,6 +204,61 @@ def main():
     print(t.to_string(index=False))
     other = c[~c["sample"].isin(MAIN) & c.mechanism.notna()]
     print(other.groupby(["sample", "mechanism"]).size().to_string())
+
+    # Amendment 11 reporting: funnel per sample, before/after per family, mapping test
+    from router.experiments import s1_7_entry_point as ep
+    fun = ep.funnel(c, list(MAIN) + ["allzero_mbpp"])
+    fun.to_csv(OUT / "s1_7_amend11_funnel.csv", index=False, lineterminator="\n")
+    ba = before_after(c)
+    ba.to_csv(OUT / "s1_7_amend11_labels.csv", index=False, lineterminator="\n")
+    mt = {"after": mapping_test(c), "before": mapping_test(without_amendment_11(c))}
+    (OUT / "s1_7_mapping_test.json").write_text(json.dumps(mt["after"], indent=2) + "\n")
+    print(fun.to_string(index=False))
+    print(ba.to_string(index=False))
+    print(json.dumps(mt, indent=1))
+
+
+def without_amendment_11(c: pd.DataFrame) -> pd.DataFrame:
+    """The cell rows as they were before Amendment 11 (its cells had no mechanism)."""
+    c = c.copy()
+    hit = c.mechanism_detail == "entry_point_unstated"
+    c.loc[hit, "mechanism"] = None
+    c.loc[hit, "mechanism_detail"] = None
+    return c
+
+
+def before_after(c: pd.DataFrame) -> pd.DataFrame:
+    """Per main sample: the §3 quantities and label without and with Amendment 11."""
+    keys = ["n_exec", "a", "d", "r", "r_wilson_lo", "u", "interim_label"]
+    old = interim(without_amendment_11(c)).set_index("family")[keys]
+    new = interim(c).set_index("family")[keys]
+    out = old.add_suffix("_before").join(new.add_suffix("_after"))
+    out["changed"] = [bool((old.loc[f] != new.loc[f]).any()) for f in out.index]
+    return out.reset_index()
+
+
+MAPPING_SAMPLES = tuple(s for s in MAIN if s != "lcb_kept")     # streams 100-116, 130, 131
+MAPPING_GAP, MAPPING_MIN_CELLS = 0.10, 30                       # Amendment 1
+
+
+def mapping_test(c: pd.DataFrame) -> dict:
+    """Amendment 1's mapping test over the main samples, excluding cells with a release-side
+    mechanism, `our_harness` or `release_correct` (the recipe that reproduces the committed
+    s1_7_mapping_test.json, criteria Amendment 11)."""
+    from router.data import audit
+    g = c[c["sample"].isin(MAPPING_SAMPLES) & (c.key_role == "graded") & c.rerun.isin(["pass", "fail"])
+          & (c.test_version.fillna("plus") == "plus")]
+    g = g[~g.mechanism.isin(RELEASE_SIDE | {"our_harness", "release_correct"})]
+    unc = g.model.isin(audit.UNCONFIRMED)
+    conf = g[~unc]
+    a_c = float(conf.agree.astype(bool).mean())
+    out = {"a_C": round(a_c, 4), "n_C": int(len(conf))}
+    for m in sorted(audit.UNCONFIRMED, key=str.lower):
+        s = g[g.model == m]
+        a_u = float(s.agree.astype(bool).mean())
+        out[m] = {"a_U": round(a_u, 4), "n": int(len(s)), "gap": round(a_c - a_u, 4),
+                  "fails": bool(a_c - a_u >= MAPPING_GAP and len(s) >= MAPPING_MIN_CELLS)}
+    return out
 
 
 if __name__ == "__main__":

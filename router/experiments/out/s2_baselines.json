@@ -1,11 +1,11 @@
 {
  "population": {
-  "headline_dev_tasks": 248,
-  "complete_case": 247,
+  "headline_dev_tasks": 196,
+  "complete_case": 195,
   "dropped_unavailable_by_family": {
    "cruxeval": 1
   },
-  "problems": 232
+  "problems": 180
  },
  "seeds": {
   "0": {
@@ -334,7 +334,6 @@
      "fold": 0,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -344,8 +343,7 @@
      "fold": 1,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:Qwen3-Max"
+      "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -354,7 +352,6 @@
      "fold": 2,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -364,7 +361,6 @@
      "fold": 3,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -374,8 +370,7 @@
      "fold": 4,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:qwen3.5-plus"
+      "multi_language": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -386,7 +381,6 @@
      "fold": 0,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -396,8 +390,7 @@
      "fold": 1,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:Qwen3-Max"
+      "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -406,7 +399,6 @@
      "fold": 2,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -416,7 +408,6 @@
      "fold": 3,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -426,8 +417,7 @@
      "fold": 4,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:qwen3.5-plus"
+      "multi_language": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -439,8 +429,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -450,8 +439,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:Qwen3-Max",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -461,8 +449,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:Qwen3-Max",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -472,8 +459,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -483,8 +469,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -496,7 +481,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -507,8 +491,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -518,7 +501,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -529,7 +511,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -540,8 +521,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -553,7 +533,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -564,8 +543,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -575,7 +553,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -586,7 +563,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -597,8 +573,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -610,8 +585,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -621,8 +595,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -632,8 +605,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -643,8 +615,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -654,8 +625,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -667,8 +637,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -678,8 +647,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -689,8 +657,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -700,8 +667,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -711,8 +677,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -724,8 +689,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -735,8 +699,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -746,7 +709,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -757,8 +719,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -768,8 +729,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -781,8 +741,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -792,8 +751,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -803,7 +761,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -814,8 +771,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -825,8 +781,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -838,8 +793,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -849,8 +803,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -860,8 +813,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -871,8 +823,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -882,8 +833,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -895,8 +845,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -906,8 +855,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -917,8 +865,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -928,8 +875,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -939,8 +885,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -952,8 +897,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -963,8 +907,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -974,7 +917,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -985,8 +927,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -996,8 +937,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1009,8 +949,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1020,8 +959,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1031,7 +969,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1042,8 +979,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1053,8 +989,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1064,10 +999,9 @@
     {
      "fold": 0,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1077,8 +1011,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1086,10 +1019,9 @@
     {
      "fold": 2,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1099,7 +1031,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1108,10 +1039,9 @@
     {
      "fold": 4,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1121,10 +1051,9 @@
     {
      "fold": 0,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1134,8 +1063,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1143,10 +1071,9 @@
     {
      "fold": 2,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1156,7 +1083,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1165,10 +1091,9 @@
     {
      "fold": 4,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1210,7 +1135,7 @@
     {
      "fold": 4,
      "table": {
-      "all": "gpt-5.4>qwen3.5-plus@accept"
+      "all": "claude-opus-4-6>glm-5@accept"
      },
      "fallback": null,
      "chosen": null
@@ -1649,8 +1574,7 @@
      "fold": 0,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:qwen3.5-plus"
+      "multi_language": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1659,8 +1583,7 @@
      "fold": 1,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:Qwen3-Max"
+      "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1669,7 +1592,6 @@
      "fold": 2,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1679,7 +1601,6 @@
      "fold": 3,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1689,7 +1610,6 @@
      "fold": 4,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1701,8 +1621,7 @@
      "fold": 0,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:qwen3.5-plus"
+      "multi_language": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1711,8 +1630,7 @@
      "fold": 1,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:Qwen3-Max"
+      "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1721,7 +1639,6 @@
      "fold": 2,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1731,7 +1648,6 @@
      "fold": 3,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1741,7 +1657,6 @@
      "fold": 4,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1754,8 +1669,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1764,9 +1678,8 @@
      "fold": 1,
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
-      "he_completion": "direct:Qwen3-Max",
-      "hex_python": "direct:Qwen3-Max",
-      "mbpp": "direct:claude-opus-4-6"
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1776,8 +1689,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1787,8 +1699,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1797,9 +1708,8 @@
      "fold": 4,
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
-      "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "he_completion": "direct:Qwen3-Max",
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1811,8 +1721,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1821,9 +1730,8 @@
      "fold": 1,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1833,7 +1741,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1844,7 +1751,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1854,8 +1760,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1868,8 +1773,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1878,9 +1782,8 @@
      "fold": 1,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1890,7 +1793,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1901,7 +1803,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1911,8 +1812,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -1925,8 +1825,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1935,9 +1834,8 @@
      "fold": 1,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1947,8 +1845,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1958,8 +1855,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1968,9 +1864,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1982,8 +1877,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -1992,9 +1886,8 @@
      "fold": 1,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2004,8 +1897,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2015,8 +1907,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2025,9 +1916,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2039,8 +1929,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2049,9 +1938,8 @@
      "fold": 1,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2061,8 +1949,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2072,7 +1959,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -2082,9 +1968,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2096,8 +1981,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2106,9 +1990,8 @@
      "fold": 1,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2118,8 +2001,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2129,7 +2011,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -2139,9 +2020,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2153,8 +2033,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2163,9 +2042,8 @@
      "fold": 1,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2175,8 +2053,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2186,8 +2063,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2196,9 +2072,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2210,8 +2085,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2220,9 +2094,8 @@
      "fold": 1,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2232,8 +2105,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2243,8 +2115,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2253,9 +2124,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2267,8 +2137,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2277,9 +2146,8 @@
      "fold": 1,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2289,8 +2157,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2300,7 +2167,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -2310,9 +2176,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2324,8 +2189,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2334,9 +2198,8 @@
      "fold": 1,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2346,8 +2209,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2357,7 +2219,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -2367,9 +2228,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2381,8 +2241,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2391,9 +2250,8 @@
      "fold": 1,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:Qwen3-Max 0.000",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2403,8 +2261,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2414,7 +2271,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -2424,8 +2280,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -2438,8 +2293,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2448,9 +2302,8 @@
      "fold": 1,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:Qwen3-Max 0.000",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2460,8 +2313,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2471,7 +2323,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -2481,8 +2332,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -2964,7 +2814,6 @@
      "fold": 0,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -2974,7 +2823,6 @@
      "fold": 1,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -2984,8 +2832,7 @@
      "fold": 2,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:qwen3.5-plus"
+      "multi_language": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -2994,8 +2841,7 @@
      "fold": 3,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:kimi-k2.5"
+      "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3004,8 +2850,7 @@
      "fold": 4,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:Qwen3-Max"
+      "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3016,7 +2861,6 @@
      "fold": 0,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3026,7 +2870,6 @@
      "fold": 1,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3036,8 +2879,7 @@
      "fold": 2,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:qwen3.5-plus"
+      "multi_language": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3046,8 +2888,7 @@
      "fold": 3,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:kimi-k2.5"
+      "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3056,8 +2897,7 @@
      "fold": 4,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:Qwen3-Max"
+      "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3069,8 +2909,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:Qwen3-Max",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3080,8 +2919,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3091,8 +2929,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3102,8 +2939,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:kimi-k2.5",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3113,8 +2949,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:Qwen3-Max",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3126,7 +2961,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3137,7 +2971,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3148,8 +2981,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3159,8 +2991,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:kimi-k2.5"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3170,8 +3001,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3183,7 +3013,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3194,7 +3023,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3205,8 +3033,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3216,8 +3043,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:kimi-k2.5"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3227,8 +3053,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3240,7 +3065,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3251,7 +3075,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3262,8 +3085,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3273,8 +3095,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:kimi-k2.5"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3284,8 +3105,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3297,7 +3117,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3308,7 +3127,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3319,8 +3137,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3330,8 +3147,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:kimi-k2.5"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3341,8 +3157,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3354,7 +3169,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3365,7 +3179,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3376,8 +3189,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3387,8 +3199,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3398,8 +3209,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3411,7 +3221,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3422,7 +3231,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3433,8 +3241,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3444,8 +3251,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3455,8 +3261,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3468,7 +3273,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3479,7 +3283,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3490,8 +3293,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3501,8 +3303,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:kimi-k2.5"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3512,8 +3313,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3525,7 +3325,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3536,7 +3335,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3547,8 +3345,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3558,8 +3355,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:kimi-k2.5"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3569,8 +3365,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3582,7 +3377,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3593,7 +3387,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3604,8 +3397,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3615,8 +3407,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3626,8 +3417,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3639,7 +3429,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3650,7 +3439,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -3661,8 +3449,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3672,8 +3459,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3683,8 +3469,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3694,10 +3479,9 @@
     {
      "fold": 0,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3707,8 +3491,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:Qwen3-Max 0.000",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3716,10 +3499,9 @@
     {
      "fold": 2,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3727,10 +3509,9 @@
     {
      "fold": 3,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:kimi-k2.5"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3740,8 +3521,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3751,10 +3531,9 @@
     {
      "fold": 0,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3764,8 +3543,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:Qwen3-Max 0.000",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3773,10 +3551,9 @@
     {
      "fold": 2,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3784,10 +3561,9 @@
     {
      "fold": 3,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:kimi-k2.5"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3797,8 +3573,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -3816,7 +3591,7 @@
     {
      "fold": 1,
      "table": {
-      "all": "gpt-5.4>qwen3.5-plus@accept"
+      "all": "claude-opus-4-6>glm-5@accept"
      },
      "fallback": null,
      "chosen": null
@@ -4279,7 +4054,6 @@
      "fold": 0,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4289,7 +4063,6 @@
      "fold": 1,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4299,7 +4072,6 @@
      "fold": 2,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4309,7 +4081,6 @@
      "fold": 3,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4319,7 +4090,6 @@
      "fold": 4,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4331,7 +4101,6 @@
      "fold": 0,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4341,7 +4110,6 @@
      "fold": 1,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4351,7 +4119,6 @@
      "fold": 2,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4361,7 +4128,6 @@
      "fold": 3,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4371,7 +4137,6 @@
      "fold": 4,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4384,8 +4149,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4395,8 +4159,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4405,9 +4168,8 @@
      "fold": 2,
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
-      "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "he_completion": "direct:Qwen3-Max",
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4417,8 +4179,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4427,9 +4188,8 @@
      "fold": 4,
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
-      "he_completion": "direct:Qwen3-Max",
-      "hex_python": "direct:Qwen3-Max",
-      "mbpp": "direct:claude-opus-4-6"
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4441,7 +4201,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4452,7 +4211,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4462,8 +4220,7 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4474,7 +4231,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4484,8 +4240,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
       "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4498,7 +4253,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4509,7 +4263,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4519,8 +4272,7 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4531,7 +4283,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4541,8 +4292,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
       "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4555,8 +4305,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4566,8 +4315,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4576,9 +4324,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4588,8 +4335,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4598,8 +4344,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
       "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4612,8 +4357,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4623,8 +4367,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4633,9 +4376,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4645,8 +4387,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4655,8 +4396,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
       "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4669,7 +4409,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4680,8 +4419,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4690,8 +4428,7 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4702,8 +4439,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4712,8 +4448,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
       "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4726,7 +4461,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4737,8 +4471,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4747,8 +4480,7 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4759,8 +4491,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4769,8 +4500,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
       "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4783,8 +4513,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4794,8 +4523,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4804,9 +4532,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4816,8 +4543,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4826,8 +4552,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
       "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4840,8 +4565,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4851,8 +4575,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4861,9 +4584,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "gpt-5.4>claude-sonnet-4-6@accept"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4873,8 +4595,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4883,8 +4604,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
       "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4897,7 +4617,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4908,8 +4627,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4918,8 +4636,7 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4930,8 +4647,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4940,8 +4656,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
       "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4954,7 +4669,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4965,8 +4679,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4975,8 +4688,7 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -4987,8 +4699,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -4997,8 +4708,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
       "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5009,10 +4719,9 @@
     {
      "fold": 0,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5022,8 +4731,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5032,8 +4740,7 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5044,8 +4751,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5054,8 +4760,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
       "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5066,10 +4771,9 @@
     {
      "fold": 0,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5079,8 +4783,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5089,8 +4792,7 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5101,8 +4803,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5111,8 +4812,7 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
       "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5594,7 +5294,6 @@
      "fold": 0,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5604,8 +5303,7 @@
      "fold": 1,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:Qwen3-Max"
+      "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5614,7 +5312,6 @@
      "fold": 2,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5624,7 +5321,6 @@
      "fold": 3,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5634,8 +5330,7 @@
      "fold": 4,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:qwen3.5-plus"
+      "multi_language": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5646,7 +5341,6 @@
      "fold": 0,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5656,8 +5350,7 @@
      "fold": 1,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:Qwen3-Max"
+      "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5666,7 +5359,6 @@
      "fold": 2,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5676,7 +5368,6 @@
      "fold": 3,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
       "multi_language": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5686,8 +5377,7 @@
      "fold": 4,
      "table": {
       "code_completion": "direct:claude-opus-4-6",
-      "code_generation": "direct:claude-opus-4-6",
-      "multi_language": "direct:qwen3.5-plus"
+      "multi_language": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5699,8 +5389,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5710,8 +5399,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:Qwen3-Max",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5720,9 +5408,8 @@
      "fold": 2,
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
-      "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "he_completion": "direct:Qwen3-Max",
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5732,8 +5419,7 @@
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
       "he_completion": "direct:qwen3.5-plus",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5742,9 +5428,8 @@
      "fold": 4,
      "table": {
       "cruxeval": "direct:claude-opus-4-6",
-      "he_completion": "direct:Qwen3-Max",
-      "hex_python": "direct:qwen3.5-plus",
-      "mbpp": "direct:claude-opus-4-6"
+      "he_completion": "direct:qwen3.5-plus",
+      "hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5756,7 +5441,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5767,8 +5451,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5777,8 +5460,7 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5789,7 +5471,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5799,9 +5480,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5813,7 +5493,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5824,8 +5503,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5834,8 +5512,7 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
+      "code_completion|he_completion": "direct:Qwen3-Max",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5846,7 +5523,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5856,9 +5532,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5870,7 +5545,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5881,8 +5555,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5891,9 +5564,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5903,8 +5575,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5913,9 +5584,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5927,7 +5597,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -5938,8 +5607,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5948,9 +5616,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5960,8 +5627,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5970,9 +5636,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5984,8 +5649,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -5995,8 +5659,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6005,9 +5668,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6017,8 +5679,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6027,9 +5688,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6041,8 +5701,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6052,8 +5711,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6062,9 +5720,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6074,8 +5731,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6084,9 +5740,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6098,7 +5753,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -6109,8 +5763,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6119,9 +5772,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6131,8 +5783,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6141,9 +5792,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6155,7 +5805,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -6166,8 +5815,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6176,9 +5824,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6188,8 +5835,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "kimi-k2.5>qwen3.5-plus@accept"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6198,9 +5844,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6212,8 +5857,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6223,8 +5867,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6233,9 +5876,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6245,8 +5887,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6255,9 +5896,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6269,8 +5909,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6280,8 +5919,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6290,9 +5928,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6302,8 +5939,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>kimi-k2.5@escalate"
+      "multi_language|hex_python": "Qwen3-Max>gpt-5.4@escalate"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6312,9 +5948,8 @@
      "fold": 4,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "Qwen3-Max>claude-sonnet-4-6@escalate"
+      "code_completion|he_completion": "Qwen3-Max>qwen3.5-plus@escalate",
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6326,7 +5961,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -6337,8 +5971,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:Qwen3-Max 0.000",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6347,9 +5980,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6357,10 +5989,9 @@
     {
      "fold": 3,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6368,10 +5999,9 @@
     {
      "fold": 4,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6383,7 +6013,6 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
       "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
@@ -6394,8 +6023,7 @@
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:Qwen3-Max 0.000",
-      "multi_language|hex_python": "direct:Qwen3-Max"
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6404,9 +6032,8 @@
      "fold": 2,
      "table": {
       "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6 1.000 / direct:kimi-k2.5 0.000",
-      "multi_language|hex_python": "direct:qwen3.5-plus"
+      "code_completion|he_completion": "direct:Qwen3-Max",
+      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6414,10 +6041,9 @@
     {
      "fold": 3,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
       "code_completion|he_completion": "direct:qwen3.5-plus",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+      "multi_language|hex_python": "direct:qwen3.5-plus"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6425,10 +6051,9 @@
     {
      "fold": 4,
      "table": {
-      "code_completion|cruxeval": "direct:claude-opus-4-6",
-      "code_completion|he_completion": "direct:Qwen3-Max",
-      "code_generation|mbpp": "direct:claude-opus-4-6",
-      "multi_language|hex_python": "direct:qwen3.5-plus 1.000 / direct:Qwen3-Max 0.000"
+      "code_completion|cruxeval": "direct:claude-opus-4-6 1.000 / direct:gpt-5.4 0.000",
+      "code_completion|he_completion": "direct:qwen3.5-plus",
+      "multi_language|hex_python": "direct:Qwen3-Max"
      },
      "fallback": "direct:claude-opus-4-6",
      "chosen": null
@@ -6591,20 +6216,20 @@
  },
  "oracle": {
   "definition": "our definition",
-  "acceptance": 82.99595141700405,
-  "cost_musd_per_task": 1.150405951417004
+  "acceptance": 96.92307692307692,
+  "cost_musd_per_task": 1.3230844102564099
  },
  "floor": {
-  "acceptance": 72.06477732793523,
+  "acceptance": 85.12820512820512,
   "source": "best single model, gate seed"
  },
  "acrouter_released_dev": {
-  "n_covered": 82,
-  "n_population": 247,
+  "n_covered": 67,
+  "n_population": 195,
   "note": "ID-test tasks only: the release has no decisions for probing tasks",
-  "acceptance": 76.82926829268293,
-  "cost_musd_per_task": 5.6952439024390245,
-  "best_single_on_covered": 76.82926829268293,
+  "acceptance": 89.55223880597015,
+  "cost_musd_per_task": 5.864701492537314,
+  "best_single_on_covered": 89.55223880597015,
   "vs_best_single": {
    "gap_points": [
     0.0,
@@ -6624,19 +6249,18 @@
     0.0
    ],
    "saving_pct": [
-    -10.379669095928556,
-    -19.996652501984403,
-    -2.8890401788071998
+    -17.346776350993842,
+    -34.01721049685887,
+    -6.692740612539233
    ]
   }
  },
  "predictor": {
   "training_population": "headline development split (user decision 2026-11-21)",
-  "n_headline_dev": 248,
+  "n_headline_dev": 196,
   "headline_cells": [
    "code_completion|cruxeval",
    "code_completion|he_completion",
-   "code_generation|mbpp",
    "multi_language|hex_python"
   ],
   "n_all_eligible_dev": 1104,
@@ -6646,8 +6270,8 @@
   "held_out_accuracy": {
    "content_text": {
     "headline_dev": {
-     "n": 248,
-     "accuracy": 0.9354838709677419,
+     "n": 196,
+     "accuracy": 0.9183673469387755,
      "n_wrong": 16,
      "per_cell": {
       "code_completion|cruxeval": {
@@ -6658,10 +6282,6 @@
        "tasks": 15,
        "accuracy": 0.0
       },
-      "code_generation|mbpp": {
-       "tasks": 52,
-       "accuracy": 1.0
-      },
       "multi_language|hex_python": {
        "tasks": 30,
        "accuracy": 0.9666666666666667
@@ -6670,28 +6290,20 @@
      "confusion": {
       "code_completion|cruxeval": {
        "code_completion|cruxeval": 151,
-       "code_completion|he_completion": 1,
-       "code_generation|mbpp": 0,
-       "multi_language|hex_python": 1
-      },
-      "code_generation|mbpp": {
-       "code_completion|cruxeval": 0,
        "code_completion|he_completion": 0,
-       "code_generation|mbpp": 52,
-       "multi_language|hex_python": 0
+       "multi_language|hex_python": 1
       },
       "multi_language|hex_python": {
        "code_completion|cruxeval": 0,
-       "code_completion|he_completion": 14,
-       "code_generation|mbpp": 0,
+       "code_completion|he_completion": 15,
        "multi_language|hex_python": 29
       }
      }
     },
     "all_eligible_dev_sensitivity": {
-     "n": 248,
-     "accuracy": 0.875,
-     "n_wrong": 31,
+     "n": 196,
+     "accuracy": 0.8571428571428571,
+     "n_wrong": 28,
      "per_cell": {
       "code_completion|cruxeval": {
        "tasks": 151,
@@ -6701,60 +6313,45 @@
        "tasks": 15,
        "accuracy": 0.0
       },
-      "code_generation|mbpp": {
-       "tasks": 52,
-       "accuracy": 1.0
-      },
       "multi_language|hex_python": {
        "tasks": 30,
-       "accuracy": 0.4666666666666667
+       "accuracy": 0.5666666666666667
       }
      },
      "confusion": {
       "algorithm|lcb": {
        "code_completion|cruxeval": 0,
        "code_completion|he_completion": 4,
-       "code_generation|mbpp": 0,
        "multi_language|hex_python": 8
       },
       "code_completion|cruxeval": {
        "code_completion|cruxeval": 151,
-       "code_completion|he_completion": 4,
-       "code_generation|mbpp": 0,
-       "multi_language|hex_python": 5
-      },
-      "code_generation|mbpp": {
-       "code_completion|cruxeval": 0,
-       "code_completion|he_completion": 0,
-       "code_generation|mbpp": 52,
-       "multi_language|hex_python": 0
+       "code_completion|he_completion": 2,
+       "multi_language|hex_python": 3
       },
       "data_science|ds1000": {
        "code_completion|cruxeval": 0,
        "code_completion|he_completion": 1,
-       "code_generation|mbpp": 0,
-       "multi_language|hex_python": 2
+       "multi_language|hex_python": 1
       },
       "multi_language|hex_js": {
        "code_completion|cruxeval": 0,
        "code_completion|he_completion": 0,
-       "code_generation|mbpp": 0,
        "multi_language|hex_python": 1
       },
       "multi_language|hex_python": {
        "code_completion|cruxeval": 0,
-       "code_completion|he_completion": 6,
-       "code_generation|mbpp": 0,
-       "multi_language|hex_python": 14
+       "code_completion|he_completion": 8,
+       "multi_language|hex_python": 17
       }
      }
     }
    },
    "wrapped_prompt": {
     "headline_dev": {
-     "n": 248,
-     "accuracy": 0.9959677419354839,
-     "n_wrong": 1,
+     "n": 196,
+     "accuracy": 1.0,
+     "n_wrong": 0,
      "per_cell": {
       "code_completion|cruxeval": {
        "tasks": 151,
@@ -6762,10 +6359,6 @@
       },
       "code_completion|he_completion": {
        "tasks": 15,
-       "accuracy": 0.9333333333333333
-      },
-      "code_generation|mbpp": {
-       "tasks": 52,
        "accuracy": 1.0
       },
       "multi_language|hex_python": {
@@ -6777,33 +6370,24 @@
       "code_completion|cruxeval": {
        "code_completion|cruxeval": 151,
        "code_completion|he_completion": 0,
-       "code_generation|mbpp": 0,
        "multi_language|hex_python": 0
       },
       "code_completion|he_completion": {
        "code_completion|cruxeval": 0,
-       "code_completion|he_completion": 14,
-       "code_generation|mbpp": 0,
-       "multi_language|hex_python": 0
-      },
-      "code_generation|mbpp": {
-       "code_completion|cruxeval": 0,
-       "code_completion|he_completion": 0,
-       "code_generation|mbpp": 52,
+       "code_completion|he_completion": 15,
        "multi_language|hex_python": 0
       },
       "multi_language|hex_python": {
        "code_completion|cruxeval": 0,
-       "code_completion|he_completion": 1,
-       "code_generation|mbpp": 0,
+       "code_completion|he_completion": 0,
        "multi_language|hex_python": 30
       }
      }
     },
     "all_eligible_dev_sensitivity": {
-     "n": 248,
-     "accuracy": 0.9516129032258065,
-     "n_wrong": 12,
+     "n": 196,
+     "accuracy": 0.9438775510204082,
+     "n_wrong": 11,
      "per_cell": {
       "code_completion|cruxeval": {
        "tasks": 151,
@@ -6811,11 +6395,7 @@
       },
       "code_completion|he_completion": {
        "tasks": 15,
-       "accuracy": 0.4
-      },
-      "code_generation|mbpp": {
-       "tasks": 52,
-       "accuracy": 1.0
+       "accuracy": 0.4666666666666667
       },
       "multi_language|hex_python": {
        "tasks": 30,
@@ -6826,37 +6406,26 @@
       "algorithm|lcb": {
        "code_completion|cruxeval": 0,
        "code_completion|he_completion": 1,
-       "code_generation|mbpp": 0,
        "multi_language|hex_python": 3
       },
       "code_completion|cruxeval": {
        "code_completion|cruxeval": 151,
        "code_completion|he_completion": 0,
-       "code_generation|mbpp": 0,
        "multi_language|hex_python": 0
       },
       "code_completion|he_completion": {
        "code_completion|cruxeval": 0,
-       "code_completion|he_completion": 6,
-       "code_generation|mbpp": 0,
+       "code_completion|he_completion": 7,
        "multi_language|hex_python": 0
       },
       "code_generation|bcb": {
        "code_completion|cruxeval": 0,
-       "code_completion|he_completion": 4,
-       "code_generation|mbpp": 0,
-       "multi_language|hex_python": 0
-      },
-      "code_generation|mbpp": {
-       "code_completion|cruxeval": 0,
-       "code_completion|he_completion": 0,
-       "code_generation|mbpp": 52,
+       "code_completion|he_completion": 1,
        "multi_language|hex_python": 0
       },
       "multi_language|hex_python": {
        "code_completion|cruxeval": 0,
-       "code_completion|he_completion": 4,
-       "code_generation|mbpp": 0,
+       "code_completion|he_completion": 6,
        "multi_language|hex_python": 27
       }
      }
@@ -6864,17 +6433,16 @@
    }
   },
   "frozen": {
-   "n_train": 248,
+   "n_train": 196,
    "cells": [
     "code_completion|cruxeval",
     "code_completion|he_completion",
-    "code_generation|mbpp",
     "multi_language|hex_python"
    ],
    "field": "content_text",
-   "training_record_sha256": "721de9559f6dac48b37e6d76eaff9c66c46e355138d079e3704709a62ee9b64b",
+   "training_record_sha256": "747f91fa2b6df0d56d1fc65bf6389d7c99b4777a6db56cb282a69535a1deafec",
    "settings": "P0.6 make_classifier: TF-IDF word 1-2 + char_wb 2-5, LogisticRegression C=10, random_state 0",
-   "training_accuracy": 0.9395161290322581
+   "training_accuracy": 0.923469387755102
   }
  }
 }
