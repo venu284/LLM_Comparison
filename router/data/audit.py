@@ -476,7 +476,7 @@ def label_unit(task_id: str, family: str, leetcode: set[str]) -> str | None:
 # views (plus the sensitivity view) from an OutcomeMatrix. Membership depends only on the labels,
 # eligibility (S1.4) and X13 coverage (S0.11), never on a score.
 ARTEFACTS_YAML = Path(__file__).with_name("artefacts.yaml")
-LABELS_COMMIT = "a865dfb"        # the commit that wrote LABELS (checkpoint 3, step 10)
+LABELS_COMMIT = "f1ef929"        # the commit that wrote LABELS (Amendment 11 relabel; first: a865dfb)
 VIEW_NAMES = ("all_eligible", "filtered", "sensitivity", "headline")
 STORAGE_CAP_CHARS = 2000         # Amendment 6: a stored response of exactly this length is capped
 EXCLUDED_LABELS = (CONFIRMED, UNDECIDED)      # leave the filtered view
