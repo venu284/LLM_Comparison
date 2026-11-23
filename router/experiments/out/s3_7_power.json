@@ -1,0 +1,247 @@
+{
+ "bound_stand_in": "left out: the D4 ruling restricts the oracle to the S3.2 module (spec \u00a77)",
+ "gap_threshold": -2.0,
+ "n_development_problems": 180,
+ "n_evaluation_problems": 774,
+ "n_resamples_per_seed": 100,
+ "nesting": "the stand-ins select nothing, so nested cross-fitting reduces to five folds",
+ "population": {
+  "complete_case": 195,
+  "dropped_unavailable_by_family": {
+   "cruxeval": 1
+  },
+  "headline_dev_tasks": 196,
+  "problems": 180
+ },
+ "projection_b": {
+  "best_single_vs_cellbest_pred": {
+   "development_ci": [
+    0.0,
+    1.5789473684210527
+   ],
+   "development_gap": 0.5128205128205128,
+   "power_at_development_gap": 1.0,
+   "power_at_gap_0": 1.0,
+   "projected_half_width": 0.3807180175029569
+  },
+  "cellbest_pred_vs_best_single": {
+   "development_ci": [
+    -1.5789473684210527,
+    0.0
+   ],
+   "development_gap": -0.5128205128205128,
+   "power_at_development_gap": 0.9999999938726288,
+   "power_at_gap_0": 1.0,
+   "projected_half_width": 0.3807180175029569
+  },
+  "ruleA_escalate_pred_vs_best_single": {
+   "development_ci": [
+    -2.604166666666667,
+    0.0
+   ],
+   "development_gap": -1.0256410256410255,
+   "power_at_development_gap": 0.8602312495787017,
+   "power_at_gap_0": 0.9999907701806433,
+   "projected_half_width": 0.6279203413677241
+  },
+  "ruleA_escalate_pred_vs_cellbest_pred": {
+   "development_ci": [
+    -1.5625,
+    0.0
+   ],
+   "development_gap": -0.5128205128205128,
+   "power_at_development_gap": 0.999999996191785,
+   "power_at_gap_0": 1.0,
+   "projected_half_width": 0.37675220482063443
+  }
+ },
+ "resampling_c": {
+  "best_single_vs_cellbest_pred": {
+   "by_seed": {
+    "0": {
+     "mc_se_development_gap": 0.0,
+     "mc_se_gap_0": 0.0,
+     "median_half_width": 0.5432867911448602,
+     "n": 100,
+     "power_at_development_gap": 1.0,
+     "power_at_gap_0": 1.0
+    },
+    "1": {
+     "mc_se_development_gap": 0.0,
+     "mc_se_gap_0": 0.0,
+     "median_half_width": 0.535003923626282,
+     "n": 100,
+     "power_at_development_gap": 1.0,
+     "power_at_gap_0": 1.0
+    },
+    "2": {
+     "mc_se_development_gap": 0.0,
+     "mc_se_gap_0": 0.0,
+     "median_half_width": 0.5287048302222895,
+     "n": 100,
+     "power_at_development_gap": 1.0,
+     "power_at_gap_0": 1.0
+    },
+    "3": {
+     "mc_se_development_gap": 0.0,
+     "mc_se_gap_0": 0.0,
+     "median_half_width": 0.5367801764971506,
+     "n": 100,
+     "power_at_development_gap": 1.0,
+     "power_at_gap_0": 1.0
+    },
+    "4": {
+     "mc_se_development_gap": 0.0,
+     "mc_se_gap_0": 0.0,
+     "median_half_width": 0.5350691749584853,
+     "n": 100,
+     "power_at_development_gap": 1.0,
+     "power_at_gap_0": 1.0
+    }
+   },
+   "development_gap": 0.5128205128205128
+  },
+  "cellbest_pred_vs_best_single": {
+   "by_seed": {
+    "0": {
+     "mc_se_development_gap": 0.03923009049186606,
+     "mc_se_gap_0": 0.027129319932501065,
+     "median_half_width": 0.5432867911448602,
+     "n": 100,
+     "power_at_development_gap": 0.81,
+     "power_at_gap_0": 0.92
+    },
+    "1": {
+     "mc_se_development_gap": 0.031288975694324025,
+     "mc_se_gap_0": 0.02551470164434614,
+     "median_half_width": 0.535003923626282,
+     "n": 100,
+     "power_at_development_gap": 0.89,
+     "power_at_gap_0": 0.93
+    },
+    "2": {
+     "mc_se_development_gap": 0.03469870314579494,
+     "mc_se_gap_0": 0.023748684174075843,
+     "median_half_width": 0.5287048302222896,
+     "n": 100,
+     "power_at_development_gap": 0.86,
+     "power_at_gap_0": 0.94
+    },
+    "3": {
+     "mc_se_development_gap": 0.03363034344160047,
+     "mc_se_gap_0": 0.019595917942265433,
+     "median_half_width": 0.5367801764971506,
+     "n": 100,
+     "power_at_development_gap": 0.87,
+     "power_at_gap_0": 0.96
+    },
+    "4": {
+     "mc_se_development_gap": 0.03363034344160047,
+     "mc_se_gap_0": 0.02551470164434614,
+     "median_half_width": 0.5350691749584855,
+     "n": 100,
+     "power_at_development_gap": 0.87,
+     "power_at_gap_0": 0.93
+    }
+   },
+   "development_gap": -0.5128205128205128
+  },
+  "ruleA_escalate_pred_vs_best_single": {
+   "by_seed": {
+    "0": {
+     "mc_se_development_gap": 0.03666060555964672,
+     "mc_se_gap_0": 0.048774993593028795,
+     "median_half_width": 1.1780719802151993,
+     "n": 100,
+     "power_at_development_gap": 0.16,
+     "power_at_gap_0": 0.39
+    },
+    "1": {
+     "mc_se_development_gap": 0.0375632799419859,
+     "mc_se_gap_0": 0.04998999899979995,
+     "median_half_width": 1.1267610925614948,
+     "n": 100,
+     "power_at_development_gap": 0.17,
+     "power_at_gap_0": 0.49
+    },
+    "2": {
+     "mc_se_development_gap": 0.0375632799419859,
+     "mc_se_gap_0": 0.04990991885387112,
+     "median_half_width": 1.1152575364061927,
+     "n": 100,
+     "power_at_development_gap": 0.17,
+     "power_at_gap_0": 0.47
+    },
+    "3": {
+     "mc_se_development_gap": 0.042083250825001625,
+     "mc_se_gap_0": 0.04998999899979995,
+     "median_half_width": 1.064522455040846,
+     "n": 100,
+     "power_at_development_gap": 0.23,
+     "power_at_gap_0": 0.51
+    },
+    "4": {
+     "mc_se_development_gap": 0.0407308237088326,
+     "mc_se_gap_0": 0.04998999899979995,
+     "median_half_width": 1.065728925033155,
+     "n": 100,
+     "power_at_development_gap": 0.21,
+     "power_at_gap_0": 0.49
+    }
+   },
+   "development_gap": -1.0256410256410255
+  },
+  "ruleA_escalate_pred_vs_cellbest_pred": {
+   "by_seed": {
+    "0": {
+     "mc_se_development_gap": 0.048280430818293245,
+     "mc_se_gap_0": 0.04990991885387112,
+     "median_half_width": 1.0280633044024678,
+     "n": 100,
+     "power_at_development_gap": 0.37,
+     "power_at_gap_0": 0.53
+    },
+    "1": {
+     "mc_se_development_gap": 0.04935585071701227,
+     "mc_se_gap_0": 0.04918333050943175,
+     "median_half_width": 1.0092731895858402,
+     "n": 100,
+     "power_at_development_gap": 0.42,
+     "power_at_gap_0": 0.59
+    },
+    "2": {
+     "mc_se_development_gap": 0.04990991885387112,
+     "mc_se_gap_0": 0.048538644398046386,
+     "median_half_width": 0.8976429966413642,
+     "n": 100,
+     "power_at_development_gap": 0.47,
+     "power_at_gap_0": 0.62
+    },
+    "3": {
+     "mc_se_development_gap": 0.04990991885387112,
+     "mc_se_gap_0": 0.048280430818293245,
+     "median_half_width": 0.8974456062486506,
+     "n": 100,
+     "power_at_development_gap": 0.53,
+     "power_at_gap_0": 0.63
+    },
+    "4": {
+     "mc_se_development_gap": 0.04998999899979995,
+     "mc_se_gap_0": 0.04898979485566356,
+     "median_half_width": 0.9064541363046764,
+     "n": 100,
+     "power_at_development_gap": 0.51,
+     "power_at_gap_0": 0.6
+    }
+   },
+   "development_gap": -0.5128205128205128
+  }
+ },
+ "spec": "docs/research/S3_analysis_spec.md D10",
+ "stand_ins": [
+  "best_single",
+  "cellbest_pred",
+  "ruleA_escalate_pred"
+ ],
+ "true_gap_assumption": "each stand-in's true gap is taken to be its development gap (seed 0); not an estimate of the evaluation gap"
+}
