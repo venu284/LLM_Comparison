@@ -162,7 +162,11 @@ def rows_for(outs: dict, view: str, var: str, seed: int, problems) -> list[dict]
             if name == tag:
                 continue
             c = compare(o, outs[tag], problems)
-            r.update({f"{k}_vs_{tag}": v for k, v in c.items() if k != "n_problems"})
+            for k, v in c.items():
+                if k == "n_problems":
+                    continue
+                stat, _, end = k.partition("_")          # gap, gap_lo -> gap_vs_<tag>, gap_vs_<tag>_lo
+                r[f"{stat}_vs_{tag}" + (f"_{end}" if end else "")] = v
             r["n_problems"] = c["n_problems"]
         rows.append(r)
     return rows

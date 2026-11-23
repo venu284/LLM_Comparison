@@ -1,0 +1,421 @@
+population,classifier,seed,t,acceptance_loss_points,saving_pct
+filtered = headline,post_failure,0,0.0,0.0,0.0
+filtered = headline,post_failure,0,0.05,0.0,0.0
+filtered = headline,post_failure,0,0.1,0.0,0.0
+filtered = headline,post_failure,0,0.15,0.0,0.0
+filtered = headline,post_failure,0,0.2,0.0,0.0
+filtered = headline,post_failure,0,0.25,0.0,0.0
+filtered = headline,post_failure,0,0.3,0.0,0.0
+filtered = headline,post_failure,0,0.35,0.0,0.0
+filtered = headline,post_failure,0,0.4,0.0,0.4867154170764554
+filtered = headline,post_failure,0,0.45,0.512820512820511,1.1350482980050813
+filtered = headline,post_failure,0,0.5,1.025641025641022,1.591955306762971
+filtered = headline,post_failure,0,0.55,2.564102564102566,4.1000534129416515
+filtered = headline,post_failure,0,0.6,3.076923076923077,4.434000737385491
+filtered = headline,post_failure,0,0.65,4.61538461538461,6.800974660430981
+filtered = headline,post_failure,0,0.7,7.179487179487176,9.344470251487946
+filtered = headline,post_failure,0,0.75,9.230769230769232,13.074713098727486
+filtered = headline,post_failure,0,0.8,15.384615384615385,19.887331668657914
+filtered = headline,post_failure,0,0.85,20.512820512820507,26.012028065361637
+filtered = headline,post_failure,0,0.9,30.25641025641025,39.21249538668305
+filtered = headline,post_failure,0,0.95,44.61538461538461,65.12438583034954
+filtered = headline,post_failure,0,1.0,70.76923076923076,96.20233425919491
+filtered = headline,post_failure,1,0.0,0.0,0.0
+filtered = headline,post_failure,1,0.05,0.0,0.0
+filtered = headline,post_failure,1,0.1,0.0,0.0
+filtered = headline,post_failure,1,0.15,0.0,0.0
+filtered = headline,post_failure,1,0.2,0.0,0.0
+filtered = headline,post_failure,1,0.25,0.0,0.0
+filtered = headline,post_failure,1,0.3,0.512820512820511,1.3437071562349856
+filtered = headline,post_failure,1,0.35,1.025641025641022,2.679496454010366
+filtered = headline,post_failure,1,0.4,1.025641025641022,2.679496454010366
+filtered = headline,post_failure,1,0.45,1.025641025641022,2.679496454010366
+filtered = headline,post_failure,1,0.5,1.025641025641022,2.679496454010366
+filtered = headline,post_failure,1,0.55,2.564102564102566,4.550439832379871
+filtered = headline,post_failure,1,0.6,2.564102564102566,4.550439832379871
+filtered = headline,post_failure,1,0.65,5.128205128205121,7.180566110112629
+filtered = headline,post_failure,1,0.7,6.666666666666665,8.493067588889136
+filtered = headline,post_failure,1,0.75,10.769230769230765,15.191575845725092
+filtered = headline,post_failure,1,0.8,14.871794871794874,19.85752326033937
+filtered = headline,post_failure,1,0.85,20.512820512820507,28.743223477549517
+filtered = headline,post_failure,1,0.9,33.33333333333333,44.845353046130555
+filtered = headline,post_failure,1,0.95,47.179487179487175,66.35910599366981
+filtered = headline,post_failure,1,1.0,70.76923076923076,96.20233425919491
+filtered = headline,post_failure,2,0.0,0.0,0.0
+filtered = headline,post_failure,2,0.05,0.0,0.0
+filtered = headline,post_failure,2,0.1,0.0,0.0
+filtered = headline,post_failure,2,0.15,0.0,0.0
+filtered = headline,post_failure,2,0.2,0.0,0.0
+filtered = headline,post_failure,2,0.25,0.0,0.0
+filtered = headline,post_failure,2,0.3,0.0,0.0
+filtered = headline,post_failure,2,0.35,0.0,0.0
+filtered = headline,post_failure,2,0.4,0.0,0.0
+filtered = headline,post_failure,2,0.45,0.0,0.0
+filtered = headline,post_failure,2,0.5,0.512820512820511,0.5207156328148055
+filtered = headline,post_failure,2,0.55,0.512820512820511,0.5207156328148055
+filtered = headline,post_failure,2,0.6,1.538461538461533,2.332042194547179
+filtered = headline,post_failure,2,0.65,4.102564102564099,5.1046899245530515
+filtered = headline,post_failure,2,0.7,6.666666666666665,8.819097054873371
+filtered = headline,post_failure,2,0.75,10.256410256410254,14.263789136809969
+filtered = headline,post_failure,2,0.8,13.33333333333333,18.14819734582207
+filtered = headline,post_failure,2,0.85,20.512820512820507,26.85644438226078
+filtered = headline,post_failure,2,0.9,31.28205128205128,40.24461152471312
+filtered = headline,post_failure,2,0.95,47.179487179487175,63.66191079722029
+filtered = headline,post_failure,2,1.0,70.76923076923076,96.20233425919491
+filtered = headline,post_failure,3,0.0,0.0,0.0
+filtered = headline,post_failure,3,0.05,0.0,0.0
+filtered = headline,post_failure,3,0.1,0.0,0.0
+filtered = headline,post_failure,3,0.15,0.0,0.0
+filtered = headline,post_failure,3,0.2,0.0,0.0
+filtered = headline,post_failure,3,0.25,0.0,0.4867154170764554
+filtered = headline,post_failure,3,0.3,0.0,0.4867154170764554
+filtered = headline,post_failure,3,0.35,0.0,0.4867154170764554
+filtered = headline,post_failure,3,0.4,0.512820512820511,0.9534033098138828
+filtered = headline,post_failure,3,0.45,0.512820512820511,0.9534033098138828
+filtered = headline,post_failure,3,0.5,0.512820512820511,0.9534033098138828
+filtered = headline,post_failure,3,0.55,2.051282051282044,3.061882441971875
+filtered = headline,post_failure,3,0.6,2.564102564102566,3.5187894507297646
+filtered = headline,post_failure,3,0.65,4.61538461538461,6.780481379711977
+filtered = headline,post_failure,3,0.7,7.692307692307687,10.987658760048447
+filtered = headline,post_failure,3,0.75,12.82051282051282,19.024750852939654
+filtered = headline,post_failure,3,0.8,15.384615384615385,21.835590606103672
+filtered = headline,post_failure,3,0.85,22.564102564102562,29.830764624796902
+filtered = headline,post_failure,3,0.9,32.30769230769231,42.486762737924664
+filtered = headline,post_failure,3,0.95,47.692307692307686,64.370792007546
+filtered = headline,post_failure,3,1.0,70.76923076923076,96.20233425919491
+filtered = headline,post_failure,4,0.0,0.0,0.0
+filtered = headline,post_failure,4,0.05,0.0,0.0
+filtered = headline,post_failure,4,0.1,0.0,0.0
+filtered = headline,post_failure,4,0.15,0.0,0.0
+filtered = headline,post_failure,4,0.2,0.0,0.0
+filtered = headline,post_failure,4,0.25,0.0,0.0
+filtered = headline,post_failure,4,0.3,0.0,0.4867154170764554
+filtered = headline,post_failure,4,0.35,0.0,0.4867154170764554
+filtered = headline,post_failure,4,0.4,0.0,0.4867154170764554
+filtered = headline,post_failure,4,0.45,1.025641025641022,1.9841221787040064
+filtered = headline,post_failure,4,0.5,1.538461538461533,2.6836882614301505
+filtered = headline,post_failure,4,0.55,1.538461538461533,2.6836882614301505
+filtered = headline,post_failure,4,0.6,2.564102564102566,3.9011754386912734
+filtered = headline,post_failure,4,0.65,5.128205128205121,8.15958602082526
+filtered = headline,post_failure,4,0.7,7.692307692307687,11.671854882235365
+filtered = headline,post_failure,4,0.75,9.230769230769232,12.722601275464529
+filtered = headline,post_failure,4,0.8,14.358974358974352,18.54362451242293
+filtered = headline,post_failure,4,0.85,18.974358974358974,26.913266660618042
+filtered = headline,post_failure,4,0.9,28.717948717948715,39.950719248947344
+filtered = headline,post_failure,4,0.95,43.589743589743584,61.40718416174936
+filtered = headline,post_failure,4,1.0,70.76923076923076,96.20233425919491
+filtered = headline,pre_attempt,0,0.0,0.0,0.0
+filtered = headline,pre_attempt,0,0.05,0.0,0.0
+filtered = headline,pre_attempt,0,0.1,0.0,0.0
+filtered = headline,pre_attempt,0,0.15,0.0,0.0
+filtered = headline,pre_attempt,0,0.2,0.0,0.0
+filtered = headline,pre_attempt,0,0.25,0.0,0.0
+filtered = headline,pre_attempt,0,0.3,0.0,0.0
+filtered = headline,pre_attempt,0,0.35,0.0,0.5060946085345575
+filtered = headline,pre_attempt,0,0.4,0.0,0.5060946085345575
+filtered = headline,pre_attempt,0,0.45,0.512820512820511,0.9064625188142217
+filtered = headline,pre_attempt,0,0.5,0.512820512820511,0.9064625188142217
+filtered = headline,pre_attempt,0,0.55,0.512820512820511,1.1885283085796172
+filtered = headline,pre_attempt,0,0.6,2.564102564102566,3.9311030806430947
+filtered = headline,pre_attempt,0,0.65,3.589743589743588,5.808201895330378
+filtered = headline,pre_attempt,0,0.7,4.61538461538461,7.0583926225679665
+filtered = headline,pre_attempt,0,0.75,7.179487179487176,11.087487119507312
+filtered = headline,pre_attempt,0,0.8,12.307692307692308,16.745532883983994
+filtered = headline,pre_attempt,0,0.85,17.948717948717952,25.03204310742968
+filtered = headline,pre_attempt,0,0.9,25.64102564102564,35.32458468969354
+filtered = headline,pre_attempt,0,0.95,39.48717948717949,57.97398210340424
+filtered = headline,pre_attempt,0,1.0,85.12820512820512,100.0
+filtered = headline,pre_attempt,1,0.0,0.0,0.0
+filtered = headline,pre_attempt,1,0.05,0.0,0.0
+filtered = headline,pre_attempt,1,0.1,0.0,0.0
+filtered = headline,pre_attempt,1,0.15,0.0,0.0
+filtered = headline,pre_attempt,1,0.2,0.0,0.0
+filtered = headline,pre_attempt,1,0.25,0.0,0.0
+filtered = headline,pre_attempt,1,0.3,0.0,0.0
+filtered = headline,pre_attempt,1,0.35,1.025641025641022,2.7376340283846723
+filtered = headline,pre_attempt,1,0.4,1.025641025641022,2.7376340283846723
+filtered = headline,pre_attempt,1,0.45,1.025641025641022,2.7376340283846723
+filtered = headline,pre_attempt,1,0.5,1.025641025641022,2.7376340283846723
+filtered = headline,pre_attempt,1,0.55,1.538461538461533,3.302879697176375
+filtered = headline,pre_attempt,1,0.6,3.076923076923077,5.147658745144246
+filtered = headline,pre_attempt,1,0.65,4.102564102564099,6.3810822427026626
+filtered = headline,pre_attempt,1,0.7,6.153846153846154,8.810303574419398
+filtered = headline,pre_attempt,1,0.75,8.205128205128197,11.88542840178679
+filtered = headline,pre_attempt,1,0.8,10.256410256410254,15.117047372826619
+filtered = headline,pre_attempt,1,0.85,16.41025641025641,26.024085566526487
+filtered = headline,pre_attempt,1,0.9,27.17948717948717,37.811075425892284
+filtered = headline,pre_attempt,1,0.95,42.051282051282044,61.00672310019368
+filtered = headline,pre_attempt,1,1.0,85.12820512820512,100.0
+filtered = headline,pre_attempt,2,0.0,0.0,0.0
+filtered = headline,pre_attempt,2,0.05,0.0,0.0
+filtered = headline,pre_attempt,2,0.1,0.0,0.0
+filtered = headline,pre_attempt,2,0.15,0.0,0.0
+filtered = headline,pre_attempt,2,0.2,0.0,0.0
+filtered = headline,pre_attempt,2,0.25,0.0,0.0
+filtered = headline,pre_attempt,2,0.3,0.0,0.0
+filtered = headline,pre_attempt,2,0.35,0.0,0.0
+filtered = headline,pre_attempt,2,0.4,0.0,0.0
+filtered = headline,pre_attempt,2,0.45,0.0,0.0
+filtered = headline,pre_attempt,2,0.5,0.0,0.0
+filtered = headline,pre_attempt,2,0.55,0.512820512820511,0.40036791027966423
+filtered = headline,pre_attempt,2,0.6,1.538461538461533,2.0909815964749834
+filtered = headline,pre_attempt,2,0.65,3.076923076923077,4.0135419598991025
+filtered = headline,pre_attempt,2,0.7,5.128205128205121,8.064061250317401
+filtered = headline,pre_attempt,2,0.75,6.666666666666665,11.134994270265008
+filtered = headline,pre_attempt,2,0.8,10.769230769230765,19.565970944626578
+filtered = headline,pre_attempt,2,0.85,18.461538461538463,26.762711842303087
+filtered = headline,pre_attempt,2,0.9,25.64102564102564,35.28527857727446
+filtered = headline,pre_attempt,2,0.95,39.48717948717949,54.68853659904318
+filtered = headline,pre_attempt,2,1.0,85.12820512820512,100.0
+filtered = headline,pre_attempt,3,0.0,0.0,0.0
+filtered = headline,pre_attempt,3,0.05,0.0,0.0
+filtered = headline,pre_attempt,3,0.1,0.0,0.0
+filtered = headline,pre_attempt,3,0.15,0.0,0.0
+filtered = headline,pre_attempt,3,0.2,0.0,0.0
+filtered = headline,pre_attempt,3,0.25,0.0,0.5060946085345575
+filtered = headline,pre_attempt,3,0.3,0.0,0.5060946085345575
+filtered = headline,pre_attempt,3,0.35,0.0,0.5060946085345575
+filtered = headline,pre_attempt,3,0.4,0.512820512820511,0.9921616927300758
+filtered = headline,pre_attempt,3,0.45,0.512820512820511,0.9921616927300758
+filtered = headline,pre_attempt,3,0.5,0.512820512820511,0.9921616927300758
+filtered = headline,pre_attempt,3,0.55,1.025641025641022,1.7874910132306354
+filtered = headline,pre_attempt,3,0.6,2.051282051282044,3.2863956473762057
+filtered = headline,pre_attempt,3,0.65,3.076923076923077,4.768533051842583
+filtered = headline,pre_attempt,3,0.7,6.153846153846154,9.663751839039058
+filtered = headline,pre_attempt,3,0.75,9.230769230769232,14.898324450738142
+filtered = headline,pre_attempt,3,0.8,11.794871794871797,17.326331089815906
+filtered = headline,pre_attempt,3,0.85,19.487179487179485,26.933927613633834
+filtered = headline,pre_attempt,3,0.9,27.692307692307693,37.177281596121034
+filtered = headline,pre_attempt,3,0.95,43.589743589743584,62.4560749815607
+filtered = headline,pre_attempt,3,1.0,85.12820512820512,100.0
+filtered = headline,pre_attempt,4,0.0,0.0,0.0
+filtered = headline,pre_attempt,4,0.05,0.0,0.0
+filtered = headline,pre_attempt,4,0.1,0.0,0.0
+filtered = headline,pre_attempt,4,0.15,0.0,0.0
+filtered = headline,pre_attempt,4,0.2,0.0,0.0
+filtered = headline,pre_attempt,4,0.25,0.0,0.0
+filtered = headline,pre_attempt,4,0.3,0.0,0.5060946085345575
+filtered = headline,pre_attempt,4,0.35,0.0,0.5060946085345575
+filtered = headline,pre_attempt,4,0.4,0.0,0.5060946085345575
+filtered = headline,pre_attempt,4,0.45,0.0,0.5060946085345575
+filtered = headline,pre_attempt,4,0.5,0.512820512820511,1.3745476806915846
+filtered = headline,pre_attempt,4,0.55,1.025641025641022,2.0934929548758308
+filtered = headline,pre_attempt,4,0.6,2.564102564102566,5.031867983030825
+filtered = headline,pre_attempt,4,0.65,3.076923076923077,5.4322358933104775
+filtered = headline,pre_attempt,4,0.7,4.61538461538461,7.816826585672243
+filtered = headline,pre_attempt,4,0.75,7.179487179487176,11.655709903079813
+filtered = headline,pre_attempt,4,0.8,11.794871794871797,17.517291205606654
+filtered = headline,pre_attempt,4,0.85,15.897435897435896,22.998248942313836
+filtered = headline,pre_attempt,4,0.9,24.615384615384617,37.3028346119588
+filtered = headline,pre_attempt,4,0.95,39.48717948717949,58.71109187640763
+filtered = headline,pre_attempt,4,1.0,85.12820512820512,100.0
+all_eligible,post_failure,0,0.0,0.0,0.0
+all_eligible,post_failure,0,0.05,1.3071895424836666,2.8467666447867357
+all_eligible,post_failure,0,0.1,1.7429193899782147,4.822099883630404
+all_eligible,post_failure,0,0.15,2.178649237472774,7.212084349225012
+all_eligible,post_failure,0,0.2,4.139433551198257,10.866571379233125
+all_eligible,post_failure,0,0.25,5.228758169934644,12.963016756565782
+all_eligible,post_failure,0,0.3,6.318082788671031,15.602457787977041
+all_eligible,post_failure,0,0.35,9.150326797385622,19.74437812606501
+all_eligible,post_failure,0,0.4,9.80392156862745,22.499306182424085
+all_eligible,post_failure,0,0.45,10.457516339869278,24.18328149948096
+all_eligible,post_failure,0,0.5,11.111111111111116,25.862779685352
+all_eligible,post_failure,0,0.55,11.546840958605664,26.381438113497257
+all_eligible,post_failure,0,0.6,12.636165577342052,27.68692364799662
+all_eligible,post_failure,0,0.65,13.725490196078438,28.92287359526794
+all_eligible,post_failure,0,0.7,13.725490196078438,28.98658661598964
+all_eligible,post_failure,0,0.75,14.814814814814813,31.111501955734877
+all_eligible,post_failure,0,0.8,16.99346405228759,35.295782842735115
+all_eligible,post_failure,0,0.85,20.697167755991288,41.16642225816193
+all_eligible,post_failure,0,0.9,29.19389978213508,55.46670529275244
+all_eligible,post_failure,0,0.95,38.3442265795207,69.7935388632574
+all_eligible,post_failure,0,1.0,53.37690631808278,93.10060216633822
+all_eligible,post_failure,1,0.0,0.0,0.0
+all_eligible,post_failure,1,0.05,0.43572984749455923,1.9103274783499047
+all_eligible,post_failure,1,0.1,1.089324618736387,5.64649702798371
+all_eligible,post_failure,1,0.15,3.05010893246187,8.319308087891553
+all_eligible,post_failure,1,0.2,4.793028322440085,12.691956633050605
+all_eligible,post_failure,1,0.25,6.5359477124183,15.022596228767338
+all_eligible,post_failure,1,0.3,8.714596949891074,17.09677419354839
+all_eligible,post_failure,1,0.35,9.368191721132902,18.714797747055812
+all_eligible,post_failure,1,0.4,9.80392156862745,20.605089160488877
+all_eligible,post_failure,1,0.45,9.80392156862745,20.988891115118324
+all_eligible,post_failure,1,0.5,11.111111111111116,23.188517108573226
+all_eligible,post_failure,1,0.55,12.200435729847491,24.65031723769452
+all_eligible,post_failure,1,0.6,12.636165577342052,26.161815712727353
+all_eligible,post_failure,1,0.65,13.943355119825707,27.790164518355276
+all_eligible,post_failure,1,0.7,15.032679738562093,29.294761682138958
+all_eligible,post_failure,1,0.75,16.775599128540307,32.06597208308288
+all_eligible,post_failure,1,0.8,20.04357298474946,37.03491618246177
+all_eligible,post_failure,1,0.85,22.875816993464053,41.015499009327904
+all_eligible,post_failure,1,0.9,28.104575163398692,51.01478661590863
+all_eligible,post_failure,1,0.95,37.472766884531595,67.30373338676284
+all_eligible,post_failure,1,1.0,54.68409586056645,92.54861417217658
+all_eligible,post_failure,2,0.0,0.0,0.0
+all_eligible,post_failure,2,0.05,0.6535947712418277,2.251171729961321
+all_eligible,post_failure,2,0.1,1.3071895424836555,6.216729533752996
+all_eligible,post_failure,2,0.15,3.26797385620915,8.607248193848704
+all_eligible,post_failure,2,0.2,3.9215686274509776,10.765371039512338
+all_eligible,post_failure,2,0.25,5.446623093681913,13.042917939840281
+all_eligible,post_failure,2,0.3,6.5359477124183,14.525587388175044
+all_eligible,post_failure,2,0.35,8.714596949891062,17.200346618187424
+all_eligible,post_failure,2,0.4,9.368191721132902,20.073542215807894
+all_eligible,post_failure,2,0.45,10.675381263616558,22.89647783212888
+all_eligible,post_failure,2,0.5,11.111111111111105,23.854360628877146
+all_eligible,post_failure,2,0.55,11.982570806100213,25.696207826453488
+all_eligible,post_failure,2,0.6,12.200435729847491,26.435052191187115
+all_eligible,post_failure,2,0.65,12.636165577342052,27.747698009089827
+all_eligible,post_failure,2,0.7,15.032679738562093,31.34926940596967
+all_eligible,post_failure,2,0.75,16.55773420479303,33.38366666703795
+all_eligible,post_failure,2,0.8,18.518518518518512,37.75911499399501
+all_eligible,post_failure,2,0.85,21.350762527233115,40.946322276581185
+all_eligible,post_failure,2,0.9,27.015250544662305,49.119998893012585
+all_eligible,post_failure,2,0.95,38.344226579520694,68.88600435838256
+all_eligible,post_failure,2,1.0,53.37690631808278,93.21169946954528
+all_eligible,post_failure,3,0.0,0.0,0.0
+all_eligible,post_failure,3,0.05,0.43572984749455923,2.552754607946617
+all_eligible,post_failure,3,0.1,1.3071895424836666,3.93068243999416
+all_eligible,post_failure,3,0.15,2.178649237472774,5.816814248093316
+all_eligible,post_failure,3,0.2,3.4858387799564294,11.171009423848377
+all_eligible,post_failure,3,0.25,5.228758169934644,14.199020503182503
+all_eligible,post_failure,3,0.3,6.318082788671031,16.486164063254893
+all_eligible,post_failure,3,0.35,7.4074074074074066,17.995881913958822
+all_eligible,post_failure,3,0.4,8.061002178649234,19.276998242575583
+all_eligible,post_failure,3,0.45,9.80392156862745,21.961317201338392
+all_eligible,post_failure,3,0.5,10.893246187363836,23.05919124374117
+all_eligible,post_failure,3,0.55,12.418300653594772,25.611128934106386
+all_eligible,post_failure,3,0.6,12.636165577342052,25.87899666038226
+all_eligible,post_failure,3,0.65,13.28976034858388,26.394647675159312
+all_eligible,post_failure,3,0.7,14.814814814814813,28.2299500589397
+all_eligible,post_failure,3,0.75,16.12200435729848,30.011597657042465
+all_eligible,post_failure,3,0.8,19.6078431372549,35.07195073811865
+all_eligible,post_failure,3,0.85,22.004357298474947,39.08500193977304
+all_eligible,post_failure,3,0.9,29.19389978213508,50.678664661466485
+all_eligible,post_failure,3,0.95,38.56209150326798,66.06855241062696
+all_eligible,post_failure,3,1.0,55.33769063180828,91.9693892045804
+all_eligible,post_failure,4,0.0,0.0,0.0
+all_eligible,post_failure,4,0.05,0.43572984749455923,1.1701338450553989
+all_eligible,post_failure,4,0.1,1.3071895424836666,4.582087149240421
+all_eligible,post_failure,4,0.15,2.3965141612200425,9.391608453591937
+all_eligible,post_failure,4,0.2,4.357298474945537,10.673309610800741
+all_eligible,post_failure,4,0.25,5.882352941176472,13.554215738461162
+all_eligible,post_failure,4,0.3,6.5359477124183,14.957295957607586
+all_eligible,post_failure,4,0.35,8.061002178649234,17.865269285346976
+all_eligible,post_failure,4,0.4,8.278867102396514,19.27827149865723
+all_eligible,post_failure,4,0.45,9.58605664488018,20.76260182556755
+all_eligible,post_failure,4,0.5,10.239651416122008,21.929869316753393
+all_eligible,post_failure,4,0.55,12.200435729847491,24.944391632486862
+all_eligible,post_failure,4,0.6,13.725490196078438,27.072990113769112
+all_eligible,post_failure,4,0.65,14.596949891067535,28.387654340477763
+all_eligible,post_failure,4,0.7,15.250544662309373,29.136875144227215
+all_eligible,post_failure,4,0.75,16.775599128540307,31.320569356657447
+all_eligible,post_failure,4,0.8,20.261437908496738,36.60056075583194
+all_eligible,post_failure,4,0.85,22.004357298474947,39.204700573398654
+all_eligible,post_failure,4,0.9,28.9760348583878,52.07312571435602
+all_eligible,post_failure,4,0.95,38.3442265795207,65.65176719756096
+all_eligible,post_failure,4,1.0,55.119825708061,92.82430357633208
+all_eligible,pre_attempt,0,0.0,0.0,0.0
+all_eligible,pre_attempt,0,0.05,0.0,0.5483126491556356
+all_eligible,pre_attempt,0,0.1,0.8714596949891074,3.435765625387577
+all_eligible,pre_attempt,0,0.15,1.525054466230935,5.971268334345847
+all_eligible,pre_attempt,0,0.2,1.9607843137254943,7.895631615805088
+all_eligible,pre_attempt,0,0.25,2.614379084967322,9.768113441889781
+all_eligible,pre_attempt,0,0.3,3.05010893246187,10.78826153326673
+all_eligible,pre_attempt,0,0.35,3.26797385620915,12.725380276272702
+all_eligible,pre_attempt,0,0.4,4.139433551198257,14.444313492821637
+all_eligible,pre_attempt,0,0.45,5.446623093681923,16.370732121889898
+all_eligible,pre_attempt,0,0.5,5.664488017429193,17.00168159210569
+all_eligible,pre_attempt,0,0.55,5.664488017429193,17.47900898191498
+all_eligible,pre_attempt,0,0.6,6.318082788671031,18.762709025660453
+all_eligible,pre_attempt,0,0.65,8.278867102396514,20.983977279647526
+all_eligible,pre_attempt,0,0.7,9.150326797385622,22.435972914265523
+all_eligible,pre_attempt,0,0.75,9.58605664488018,24.4884992418403
+all_eligible,pre_attempt,0,0.8,10.893246187363836,26.315813013364497
+all_eligible,pre_attempt,0,0.85,15.250544662309373,32.459100534150686
+all_eligible,pre_attempt,0,0.9,22.875816993464053,43.1818356937672
+all_eligible,pre_attempt,0,0.95,32.46187363834423,62.81536693956472
+all_eligible,pre_attempt,0,1.0,70.37037037037037,100.0
+all_eligible,pre_attempt,1,0.0,0.0,0.0
+all_eligible,pre_attempt,1,0.05,0.43572984749455923,0.6277722122042029
+all_eligible,pre_attempt,1,0.1,0.6535947712418277,3.255735434893914
+all_eligible,pre_attempt,1,0.15,1.089324618736387,5.110978427836798
+all_eligible,pre_attempt,1,0.2,1.9607843137254943,7.963706672009607
+all_eligible,pre_attempt,1,0.25,2.8322440087146017,10.352180591731807
+all_eligible,pre_attempt,1,0.3,3.703703703703709,11.522849573677064
+all_eligible,pre_attempt,1,0.35,3.9215686274509776,12.394786170662753
+all_eligible,pre_attempt,1,0.4,4.575163398692816,13.196905095839174
+all_eligible,pre_attempt,1,0.45,5.010893246187365,14.012710879583256
+all_eligible,pre_attempt,1,0.5,5.882352941176472,15.130847525545988
+all_eligible,pre_attempt,1,0.55,6.100217864923751,15.549167612814186
+all_eligible,pre_attempt,1,0.6,6.5359477124183,16.168961018722595
+all_eligible,pre_attempt,1,0.65,6.753812636165579,17.24224938222133
+all_eligible,pre_attempt,1,0.7,7.4074074074074066,19.260899396691823
+all_eligible,pre_attempt,1,0.75,9.368191721132902,22.47840201251141
+all_eligible,pre_attempt,1,0.8,11.328976034858385,26.171690821256032
+all_eligible,pre_attempt,1,0.85,15.250544662309373,31.325916872592895
+all_eligible,pre_attempt,1,0.9,21.786492374727672,41.834113849373324
+all_eligible,pre_attempt,1,0.95,30.93681917211329,58.46215632583094
+all_eligible,pre_attempt,1,1.0,70.37037037037037,100.0
+all_eligible,pre_attempt,2,0.0,0.0,0.0
+all_eligible,pre_attempt,2,0.05,0.0,0.7401289374087905
+all_eligible,pre_attempt,2,0.1,0.8714596949891074,3.594864632528394
+all_eligible,pre_attempt,2,0.15,1.3071895424836555,5.32629653749388
+all_eligible,pre_attempt,2,0.2,1.9607843137254943,7.105088287000116
+all_eligible,pre_attempt,2,0.25,2.3965141612200425,9.310637537720224
+all_eligible,pre_attempt,2,0.3,3.26797385620915,10.560370084436855
+all_eligible,pre_attempt,2,0.35,3.4858387799564294,11.2758132207604
+all_eligible,pre_attempt,2,0.4,4.357298474945537,12.810468243085914
+all_eligible,pre_attempt,2,0.45,4.575163398692805,13.636598347594886
+all_eligible,pre_attempt,2,0.5,4.793028322440085,15.132044698202696
+all_eligible,pre_attempt,2,0.55,5.228758169934644,15.787673023268356
+all_eligible,pre_attempt,2,0.6,6.3180827886710205,17.995011257647175
+all_eligible,pre_attempt,2,0.65,7.625272331154687,19.246305033332455
+all_eligible,pre_attempt,2,0.7,8.496732026143794,20.404235233846148
+all_eligible,pre_attempt,2,0.75,10.457516339869278,26.088371065584138
+all_eligible,pre_attempt,2,0.8,13.0718954248366,30.51247060164647
+all_eligible,pre_attempt,2,0.85,17.647058823529417,36.268499487896065
+all_eligible,pre_attempt,2,0.9,23.747276688453155,45.259164325751435
+all_eligible,pre_attempt,2,0.95,33.769063180827885,64.43181720522682
+all_eligible,pre_attempt,2,1.0,70.1525054466231,100.0
+all_eligible,pre_attempt,3,0.0,0.0,0.0
+all_eligible,pre_attempt,3,0.05,0.0,0.36919213517427885
+all_eligible,pre_attempt,3,0.1,0.8714596949891074,3.793197467723386
+all_eligible,pre_attempt,3,0.15,1.525054466230935,5.485415608782862
+all_eligible,pre_attempt,3,0.2,2.3965141612200425,8.992098416597539
+all_eligible,pre_attempt,3,0.25,3.26797385620915,10.144058270252653
+all_eligible,pre_attempt,3,0.3,3.26797385620915,11.126915281887184
+all_eligible,pre_attempt,3,0.35,3.4858387799564294,11.976136763268475
+all_eligible,pre_attempt,3,0.4,3.9215686274509776,12.864008375634805
+all_eligible,pre_attempt,3,0.45,4.575163398692816,13.880568879197963
+all_eligible,pre_attempt,3,0.5,4.575163398692816,13.880568879197963
+all_eligible,pre_attempt,3,0.55,5.664488017429193,15.2796828594159
+all_eligible,pre_attempt,3,0.6,5.664488017429193,15.537817080409777
+all_eligible,pre_attempt,3,0.65,6.318082788671031,16.9109431521543
+all_eligible,pre_attempt,3,0.7,7.4074074074074066,18.116123155226905
+all_eligible,pre_attempt,3,0.75,8.932461873638342,20.20831407352346
+all_eligible,pre_attempt,3,0.8,10.239651416122008,22.034874085175858
+all_eligible,pre_attempt,3,0.85,13.507625272331158,27.085007121106653
+all_eligible,pre_attempt,3,0.9,21.13289760348584,39.743796773580854
+all_eligible,pre_attempt,3,0.95,34.64052287581699,64.20033998304395
+all_eligible,pre_attempt,3,1.0,70.37037037037037,100.0
+all_eligible,pre_attempt,4,0.0,0.0,0.0
+all_eligible,pre_attempt,4,0.05,0.0,0.39570191560193146
+all_eligible,pre_attempt,4,0.1,0.21786492374727962,1.398444222495565
+all_eligible,pre_attempt,4,0.15,1.3071895424836666,3.3090507592905216
+all_eligible,pre_attempt,4,0.2,1.525054466230935,6.177009787010935
+all_eligible,pre_attempt,4,0.25,2.3965141612200425,8.470183283045007
+all_eligible,pre_attempt,4,0.3,2.8322440087146017,11.018935883324044
+all_eligible,pre_attempt,4,0.35,2.8322440087146017,11.87511490220462
+all_eligible,pre_attempt,4,0.4,3.26797385620915,12.037097851103306
+all_eligible,pre_attempt,4,0.45,3.4858387799564294,12.53449888395204
+all_eligible,pre_attempt,4,0.5,4.357298474945537,13.714057300530536
+all_eligible,pre_attempt,4,0.55,4.575163398692816,14.31260931557069
+all_eligible,pre_attempt,4,0.6,4.793028322440085,15.016537318406009
+all_eligible,pre_attempt,4,0.65,6.100217864923751,17.387428692281603
+all_eligible,pre_attempt,4,0.7,6.753812636165579,18.634292625537363
+all_eligible,pre_attempt,4,0.75,7.843137254901967,19.862680482727512
+all_eligible,pre_attempt,4,0.8,11.764705882352944,24.201848551298454
+all_eligible,pre_attempt,4,0.85,14.814814814814813,30.312077143901494
+all_eligible,pre_attempt,4,0.9,21.786492374727672,41.87593071061366
+all_eligible,pre_attempt,4,0.95,33.551198257080614,62.854466879567674
+all_eligible,pre_attempt,4,1.0,70.37037037037037,100.0

@@ -30,7 +30,8 @@ outer folds, `router/data/splits.py`), 100 and up to the S1.7 audit samples. S2 
 | 9 | `dev_folds` | problem-grouped folds inside the development split (`dev_folds`) |
 | 10 | `route_mixture` | per-task draw of a mixed lookup route (`baselines/lookup.py`) |
 | 11 | `label_shuffle` | shuffled-label check: model permutation per training task (`baselines/run.py`) |
-| 12-99 | unassigned | add a row here before using one |
+| 13 | `s3_power_resample` | S3.7 power check: resampling development problems and their folds (`experiments/s3_power.py`; S3 spec D10 (c)) |
+| 12, 14-99 | unassigned | add a row here before using one; 12 and 14-19 are reserved for S3 |
 
 A seed is the fold assignment plus the stream order plus the probe draw (S0.8); `GATE_SEED` (0) is
 the one gates use, and the other four are reported next to it, never averaged into a gate (R12).
@@ -61,6 +62,7 @@ STREAM_IDS = {
     "dev_folds": 9,
     "route_mixture": 10,
     "label_shuffle": 11,
+    "s3_power_resample": 13,
 }
 STREAM_ID_MIN, STREAM_ID_MAX = 2, 99
 SEEDS = tuple(range(N_SEEDS))
