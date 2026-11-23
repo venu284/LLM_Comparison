@@ -39,7 +39,7 @@ from router.baselines.acrouter import ReleasedACRouter, covered
 from router.baselines.cells import CellPredictor, out_of_fold_accuracy
 from router.baselines.common import Context, success, true_cells
 from router.baselines.lookup import CellBest, CellRule
-from router.baselines.run import default_baselines, run_dev
+from router.baselines.run import default_baselines, run_dev, shuffled_mean_interval
 from router.data import splits as S
 from router.data.audit import build_views, load_release
 from router.data.prompts import join, task_texts
@@ -50,7 +50,7 @@ from router.sim.verifier import ReplayVerifier
 
 OUT = REPO_ROOT / "router" / "experiments" / "out"
 SEEDS = stats.SEEDS
-N_SHUFFLES = 5
+N_SHUFFLES = 20                 # shuffled-label check: Random must lie in the t interval of the mean
 REF_BEST, REF_C = "best_single", "cellbest_pred"
 
 
@@ -219,20 +219,16 @@ def run() -> dict:
     for b in baselines:
         if not b.learned:
             continue
-        accs, first = [], None
-        for k in range(N_SHUFFLES):
-            o = run_dev(b, pop, ctx, folds0, seed=stats.GATE_SEED, shuffle_seed=k)
-            accs.append(metrics.acceptance(o))
-            first = o if first is None else first
-        c = compare(first, rnd, problems)
+        accs = [metrics.acceptance(run_dev(b, pop, ctx, folds0, seed=stats.GATE_SEED, shuffle_seed=k))
+                for k in range(N_SHUFFLES)]
+        mean, lo, hi = shuffled_mean_interval(accs)
         u = compare(outcomes0[b.name], rnd, problems)["gap_points"]
         shuf.append({"baseline": b.name, "unshuffled": metrics.acceptance(outcomes0[b.name]),
-                     "shuffled_mean": float(np.mean(accs)), "shuffled_min": float(np.min(accs)),
+                     "n_shuffles": N_SHUFFLES, "shuffled_mean": mean, "shuffled_mean_lo": lo,
+                     "shuffled_mean_hi": hi, "shuffled_min": float(np.min(accs)),
                      "shuffled_max": float(np.max(accs)), "random_expected": rand_exp,
+                     "random_expected_inside": bool(lo <= rand_exp <= hi),
                      "random_run": metrics.acceptance(rnd),
-                     "shuffle0_gap_vs_random": c["gap_points"][0],
-                     "shuffle0_gap_vs_random_lo": c["gap_points"][1],
-                     "shuffle0_gap_vs_random_hi": c["gap_points"][2],
                      "unshuffled_gap_vs_random": u[0], "unshuffled_gap_vs_random_lo": u[1],
                      "unshuffled_gap_vs_random_hi": u[2]})
     res["predictor"] = predictor_report(hd, ed, problems, content_all)
