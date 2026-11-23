@@ -2081,3 +2081,23 @@ Two further reviews were checked against the data; all fixes approved by the use
 - **User decision:** DP1b runs on the headline development split (S3.2).
 - S3 started on branch `s3-analysis` (brief `.claude/handover/2026-11-21-s3-analysis.md`);
   checkpoint 1 (frozen analysis spec, descriptive S3.3 and S3.6) is under review.
+
+### 2026-11-23 (S3 checkpoint 1 reviewed; MBPP entry-point finding; S1.7 Amendment 11 approved)
+
+- **S3 checkpoint 1** reviewed on `s3-analysis`: 599 tests pass; outputs reproduce byte for byte;
+  the analysis spec was committed before any DP number. The reviewer's rulings on the spec's open
+  definitions (D1–D11) are recorded in the S3 brief and approved by the user.
+- **Finding at review:** CodeRouterBench's `mbpp` prompts are the MBPP+ description only and do
+  not state the entry-point name that the MBPP+ harness calls (219 of 225 eligible prompts; Route
+  Anything's task notes record the same). In S1.7's sample, 192 of 208 released failures define a
+  plausible function under another name; all 8 released passes use the reference name; 172 of 191
+  failed re-runs end in `NameError` on the reference name. S1.7's criteria already name this
+  mechanism (`extraction`, "a different entry-point name than the harness calls"), but assigned
+  mechanisms only to cells where the re-run disagrees with the release; here both share the
+  defect, so `mbpp` was cleared.
+- **User decision:** a dated S1.7 Amendment 11, applied as a general rule to every family with a
+  named entry point, committed before the relabel; branch `s1-7-amend-mbpp` (brief
+  `.claude/handover/2026-11-23-s1-7-amend-mbpp.md`). The headline set, `artefacts.yaml`, CLAIMS'
+  frozen S1.7 rows, the S2.5 frozen predictor and the S2 development outputs are restated from
+  its result.
+- **S3 is on hold** until the amendment is merged; no DP number has been computed.
