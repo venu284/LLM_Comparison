@@ -41,13 +41,53 @@ def test_committed_checks_against_artefacts():
     res = json.loads((OUT / "s3_descriptive.json").read_text())
     checks = res["checks_against_artefacts"]
     assert checks and all(c["equal"] for c in checks.values())
-    assert checks["filtered_unsolved_strict"]["here"] == 198
-    assert checks["filtered_unsolved_lenient"]["here"] == 161
-    assert checks["filtered_complete_case_no_signal_tasks"]["here"] == 1148
+    # CLAIMS A4 (S1.7 Amendment 11, 2026-11-23): mbpp left the filtered, headline and sensitivity
+    # views (headline 1,287 -> 1,062 tasks, complete case 1,264 -> 1,046). The values pinned here
+    # before A4 were 198 / 161 unsolved, 1,148 no-signal tasks, and 1,264 / 1,707 complete case
+    # with empty responses unavailable; all_eligible is unchanged.
+    assert checks["filtered_complete_case_tasks"]["here"] == 1046
+    assert checks["filtered_unsolved_strict"]["here"] == 42
+    assert checks["filtered_unsolved_lenient"]["here"] == 5
+    assert checks["filtered_complete_case_no_signal_tasks"]["here"] == 930
+    assert checks["filtered_signal_cells"]["here"] == 956          # mbpp had no visible tests
     # the response_matrix-empty sensitivity uses the same cells as S1.7 (response_key mapping)
     assert checks["all_eligible_complete_case_if_empty_responses_unavailable"]["here"] == 4737
-    assert checks["sensitivity_complete_case_if_empty_responses_unavailable"]["here"] == 1707
-    assert checks["filtered = headline_complete_case_if_empty_responses_unavailable"]["here"] == 1264
+    assert checks["sensitivity_complete_case_if_empty_responses_unavailable"]["here"] == 1489
+    assert checks["filtered = headline_complete_case_if_empty_responses_unavailable"]["here"] == 1046
+    assert res["views"]["filtered = headline"]["tasks"] == 1062
+    assert res["views"]["sensitivity"]["tasks"] == 1935
+    assert res["views"]["all_eligible"]["tasks"] == 5626
+
+
+S3_TABLES = ("s3_6_verifier_family_model.csv", "s3_6_verifier_pooled.csv", "s3_6_no_signal.csv",
+             "s3_6_population.csv", "s3_6_family_mix.csv", "s3_6_model_acceptance.csv",
+             "s3_3_unsolved.csv", "s3_3_rescue_pairs.csv", "s3_3_historical.csv",
+             "s3_3_historical_price_sweep.csv")
+
+
+@pytest.mark.parametrize("name", S3_TABLES)
+def test_every_table_names_its_population(name):
+    df = pd.read_csv(OUT / name)
+    assert "population" in df.columns and df.population.notna().all()
+    if "variant" in df.columns and name.startswith(("s3_6_pop", "s3_6_model", "s3_3_uns")):
+        assert set(df[df.variant == "all_tasks"].population) == {"all tasks (available cells)"}
+        assert set(df[df.variant != "all_tasks"].population) == {"complete case"}
+
+
+def test_population_follows_variant():
+    from router.experiments.s3_descriptive import ALL_TASKS, COMPLETE_CASE, VARIANTS, population
+    assert [population(v) for v in VARIANTS] == [COMPLETE_CASE] * 3 + [ALL_TASKS]
+
+
+def test_headline_verifier_counts_by_population():
+    """Checkpoint-1 review: 3/63 and 36/893 count the available cells of all 1,062 headline tasks
+    (spec §5.1); the complete case gives 3/57 and 26/871. Both rows are in the committed table."""
+    v = pd.read_csv(OUT / "s3_6_verifier_pooled.csv")
+    v = v[(v.view == "filtered = headline") & (v.variant == "main") & (v.level == "view")]
+    got = {r.population: (r.pass_failure, r.failures, r.fail_success, r.successes, r.signal_cells)
+           for r in v.itertuples()}
+    assert got == {"all tasks (available cells)": (3, 63, 36, 893, 956),
+                   "complete case": (3, 57, 26, 871, 928)}
 
 
 def test_label_empty_rates():
@@ -71,9 +111,18 @@ def _raw_family(prefix: str):
     return d
 
 
+def _check_pooled(s, v):
+    passed = s.w1_p.astype(int) == s.w1_n.astype(int)
+    assert v.signal_cells == len(s)
+    assert v.pass_failure == int((passed & ~s.ok).sum())
+    assert v.fail_success == int((~passed & s.ok).sum())
+    assert v.failures == int((~s.ok).sum())
+
+
 @needs_data
+# mbpp left the headline under CLAIMS A4; cruxeval (no visible tests, every unsolved task) replaces it
 @pytest.mark.parametrize("prefix,family", [("dim4_he_completion_", "he_completion"),
-                                           ("dim1_mbpp_", "mbpp")])
+                                           ("dim4_cruxeval_", "cruxeval")])
 def test_independent_recount_headline_family(prefix, family):
     d = _raw_family(prefix)
     cc = d.groupby("task_id").available.all()
@@ -85,11 +134,8 @@ def test_independent_recount_headline_family(prefix, family):
 
     s = d[d.available & d.w1_n.notna()]
     s = s[s.w1_n.astype(int) > 0]
-    passed = s.w1_p.astype(int) == s.w1_n.astype(int)
     v = pd.read_csv(OUT / "s3_6_verifier_pooled.csv")
     v = v[(v.view == "filtered = headline") & (v.variant == "main") & (v.level == "family")
-          & (v.key == family)].iloc[0]
-    assert v.signal_cells == len(s)
-    assert v.pass_failure == int((passed & ~s.ok).sum())
-    assert v.fail_success == int((~passed & s.ok).sum())
-    assert v.failures == int((~s.ok).sum())
+          & (v.key == family)].set_index("population")
+    _check_pooled(s, v.loc["all tasks (available cells)"])
+    _check_pooled(s[s.task_id.isin(set(cc))], v.loc["complete case"])

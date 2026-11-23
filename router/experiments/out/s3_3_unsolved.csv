@@ -1,141 +1,133 @@
-view,variant,family,tasks,unsolved,unsolved_pct,unsolved_pct_lo,unsolved_pct_hi
-all_eligible,all_tasks,all,5626,3301,58.674013508709564,57.06598499330801,60.14809337908727
-all_eligible,all_tasks,bcb,675,447,66.22222222222223,62.51851851851852,69.48148148148148
-all_eligible,all_tasks,bcb_algo2,111,78,70.27027027027027,61.261261261261254,78.37837837837837
-all_eligible,all_tasks,bcb_completion,89,60,67.41573033707866,57.30337078651685,77.52808988764045
-all_eligible,all_tasks,bcb_ds,111,97,87.38738738738738,81.08108108108108,92.8153153153153
-all_eligible,all_tasks,bcb_v014,111,80,72.07207207207207,63.06306306306306,80.18018018018019
-all_eligible,all_tasks,cruxeval,800,43,5.375,3.871875000000003,7.003124999999998
-all_eligible,all_tasks,ds1000,1000,703,70.3,65.84638581056998,74.59456290248973
-all_eligible,all_tasks,he_completion,98,0,0.0,0.0,0.0
-all_eligible,all_tasks,hex_cpp,164,163,99.39024390243902,98.17073170731707,100.0
-all_eligible,all_tasks,hex_go,164,164,100.0,100.0,100.0
-all_eligible,all_tasks,hex_java,164,153,93.29268292682927,89.02439024390245,96.95121951219512
-all_eligible,all_tasks,hex_js,164,164,100.0,100.0,100.0
-all_eligible,all_tasks,hex_python,164,0,0.0,0.0,0.0
-all_eligible,all_tasks,humaneval,100,0,0.0,0.0,0.0
-all_eligible,all_tasks,lcb,1000,615,61.5,58.2975,64.4
-all_eligible,all_tasks,mbpp,225,161,71.55555555555554,65.77395833333334,78.12743055555555
-all_eligible,all_tasks,mbpp_completion,124,11,8.870967741935484,4.0650406504065035,14.399999999999999
-all_eligible,all_tasks,multiple_rs,156,156,100.0,100.0,100.0
-all_eligible,all_tasks,multiple_ts,135,135,100.0,100.0,100.0
-all_eligible,all_tasks,swebench,71,71,100.0,100.0,100.0
-all_eligible,cruxeval_lenient,all,4974,2854,57.378367511057505,55.71564168670278,59.04131919725033
-all_eligible,cruxeval_lenient,bcb,654,437,66.81957186544342,63.30275229357798,70.18348623853211
-all_eligible,cruxeval_lenient,bcb_algo2,107,76,71.02803738317756,62.616822429906534,79.43925233644859
-all_eligible,cruxeval_lenient,bcb_completion,89,60,67.41573033707866,57.30337078651685,77.52808988764045
-all_eligible,cruxeval_lenient,bcb_ds,111,97,87.38738738738738,81.08108108108108,92.8153153153153
-all_eligible,cruxeval_lenient,bcb_v014,111,80,72.07207207207207,63.06306306306306,80.18018018018019
-all_eligible,cruxeval_lenient,cruxeval,792,5,0.6313131313131313,0.12626262626262627,1.2626262626262625
-all_eligible,cruxeval_lenient,ds1000,986,703,71.29817444219067,66.87291006176454,75.51710491111243
-all_eligible,cruxeval_lenient,he_completion,96,0,0.0,0.0,0.0
-all_eligible,cruxeval_lenient,hex_cpp,164,163,99.39024390243902,98.17073170731707,100.0
-all_eligible,cruxeval_lenient,hex_go,164,164,100.0,100.0,100.0
-all_eligible,cruxeval_lenient,hex_java,164,153,93.29268292682927,89.02439024390245,96.95121951219512
-all_eligible,cruxeval_lenient,hex_js,164,164,100.0,100.0,100.0
-all_eligible,cruxeval_lenient,hex_python,158,0,0.0,0.0,0.0
-all_eligible,cruxeval_lenient,humaneval,98,0,0.0,0.0,0.0
-all_eligible,cruxeval_lenient,lcb,419,225,53.699284009546545,49.15871121718377,58.233890214797135
-all_eligible,cruxeval_lenient,mbpp,218,156,71.55963302752293,65.59633027522935,77.82935754947141
-all_eligible,cruxeval_lenient,mbpp_completion,118,10,8.47457627118644,4.201680672268908,14.40677966101695
-all_eligible,cruxeval_lenient,multiple_rs,156,156,100.0,100.0,100.0
-all_eligible,cruxeval_lenient,multiple_ts,135,135,100.0,100.0,100.0
-all_eligible,cruxeval_lenient,swebench,70,70,100.0,100.0,100.0
-all_eligible,main,all,4974,2891,58.12223562525131,56.461242519145515,59.68581499690229
-all_eligible,main,bcb,654,437,66.81957186544342,63.30275229357798,70.18348623853211
-all_eligible,main,bcb_algo2,107,76,71.02803738317756,62.616822429906534,79.43925233644859
-all_eligible,main,bcb_completion,89,60,67.41573033707866,57.30337078651685,77.52808988764045
-all_eligible,main,bcb_ds,111,97,87.38738738738738,81.08108108108108,92.8153153153153
-all_eligible,main,bcb_v014,111,80,72.07207207207207,63.06306306306306,80.18018018018019
-all_eligible,main,cruxeval,792,42,5.303030303030303,3.787878787878788,6.944444444444445
-all_eligible,main,ds1000,986,703,71.29817444219067,66.87291006176454,75.51710491111243
-all_eligible,main,he_completion,96,0,0.0,0.0,0.0
-all_eligible,main,hex_cpp,164,163,99.39024390243902,98.17073170731707,100.0
-all_eligible,main,hex_go,164,164,100.0,100.0,100.0
-all_eligible,main,hex_java,164,153,93.29268292682927,89.02439024390245,96.95121951219512
-all_eligible,main,hex_js,164,164,100.0,100.0,100.0
-all_eligible,main,hex_python,158,0,0.0,0.0,0.0
-all_eligible,main,humaneval,98,0,0.0,0.0,0.0
-all_eligible,main,lcb,419,225,53.699284009546545,49.15871121718377,58.233890214797135
-all_eligible,main,mbpp,218,156,71.55963302752293,65.59633027522935,77.82935754947141
-all_eligible,main,mbpp_completion,118,10,8.47457627118644,4.201680672268908,14.40677966101695
-all_eligible,main,multiple_rs,156,156,100.0,100.0,100.0
-all_eligible,main,multiple_ts,135,135,100.0,100.0,100.0
-all_eligible,main,swebench,70,70,100.0,100.0,100.0
-all_eligible,rm_empty_unavailable,all,4737,2661,56.17479417352755,54.50846339753523,57.816246478935795
-all_eligible,rm_empty_unavailable,bcb,630,419,66.5079365079365,62.8531746031746,70.0
-all_eligible,rm_empty_unavailable,bcb_algo2,103,72,69.90291262135922,60.19417475728155,79.6116504854369
-all_eligible,rm_empty_unavailable,bcb_completion,88,60,68.18181818181817,57.95454545454546,77.27272727272727
-all_eligible,rm_empty_unavailable,bcb_ds,103,89,86.40776699029125,79.6116504854369,93.20388349514563
-all_eligible,rm_empty_unavailable,bcb_v014,106,75,70.75471698113208,62.264150943396224,79.24528301886792
-all_eligible,rm_empty_unavailable,cruxeval,792,42,5.303030303030303,3.787878787878788,6.944444444444445
-all_eligible,rm_empty_unavailable,ds1000,928,645,69.50431034482759,65.0641234279928,73.99772923028738
-all_eligible,rm_empty_unavailable,he_completion,96,0,0.0,0.0,0.0
-all_eligible,rm_empty_unavailable,hex_cpp,160,159,99.375,98.125,100.0
-all_eligible,rm_empty_unavailable,hex_go,154,154,100.0,100.0,100.0
-all_eligible,rm_empty_unavailable,hex_java,156,145,92.94871794871796,88.46153846153845,96.7948717948718
-all_eligible,rm_empty_unavailable,hex_js,156,156,100.0,100.0,100.0
-all_eligible,rm_empty_unavailable,hex_python,158,0,0.0,0.0,0.0
-all_eligible,rm_empty_unavailable,humaneval,98,0,0.0,0.0,0.0
-all_eligible,rm_empty_unavailable,lcb,364,170,46.7032967032967,41.75824175824176,51.64835164835166
-all_eligible,rm_empty_unavailable,mbpp,218,156,71.55963302752293,65.59633027522935,77.82935754947141
-all_eligible,rm_empty_unavailable,mbpp_completion,118,10,8.47457627118644,4.201680672268908,14.40677966101695
-all_eligible,rm_empty_unavailable,multiple_rs,145,145,100.0,100.0,100.0
-all_eligible,rm_empty_unavailable,multiple_ts,133,133,100.0,100.0,100.0
-all_eligible,rm_empty_unavailable,swebench,31,31,100.0,100.0,100.0
-filtered = headline,all_tasks,all,1287,204,15.85081585081585,13.90625,17.983229085222828
-filtered = headline,all_tasks,cruxeval,800,43,5.375,3.871875000000003,7.003124999999998
-filtered = headline,all_tasks,he_completion,98,0,0.0,0.0,0.0
-filtered = headline,all_tasks,hex_python,164,0,0.0,0.0,0.0
-filtered = headline,all_tasks,mbpp,225,161,71.55555555555554,65.77395833333334,78.12743055555555
-filtered = headline,cruxeval_lenient,all,1264,161,12.7373417721519,10.968117944835102,14.545490677843619
-filtered = headline,cruxeval_lenient,cruxeval,792,5,0.6313131313131313,0.12626262626262627,1.2626262626262625
-filtered = headline,cruxeval_lenient,he_completion,96,0,0.0,0.0,0.0
-filtered = headline,cruxeval_lenient,hex_python,158,0,0.0,0.0,0.0
-filtered = headline,cruxeval_lenient,mbpp,218,156,71.55963302752293,65.59633027522935,77.82935754947141
-filtered = headline,main,all,1264,198,15.664556962025317,13.60759493670886,17.712325086100908
-filtered = headline,main,cruxeval,792,42,5.303030303030303,3.787878787878788,6.944444444444445
-filtered = headline,main,he_completion,96,0,0.0,0.0,0.0
-filtered = headline,main,hex_python,158,0,0.0,0.0,0.0
-filtered = headline,main,mbpp,218,156,71.55963302752293,65.59633027522935,77.82935754947141
-filtered = headline,rm_empty_unavailable,all,1264,198,15.664556962025317,13.60759493670886,17.712325086100908
-filtered = headline,rm_empty_unavailable,cruxeval,792,42,5.303030303030303,3.787878787878788,6.944444444444445
-filtered = headline,rm_empty_unavailable,he_completion,96,0,0.0,0.0,0.0
-filtered = headline,rm_empty_unavailable,hex_python,158,0,0.0,0.0,0.0
-filtered = headline,rm_empty_unavailable,mbpp,218,156,71.55963302752293,65.59633027522935,77.82935754947141
-sensitivity,all_tasks,all,2160,479,22.175925925925927,20.361627517812757,23.935642764857878
-sensitivity,all_tasks,cruxeval,800,43,5.375,3.871875000000003,7.003124999999998
-sensitivity,all_tasks,he_completion,98,0,0.0,0.0,0.0
-sensitivity,all_tasks,hex_python,164,0,0.0,0.0,0.0
-sensitivity,all_tasks,humaneval,100,0,0.0,0.0,0.0
-sensitivity,all_tasks,lcb,578,193,33.391003460207614,29.58477508650519,37.2015570934256
-sensitivity,all_tasks,mbpp,225,161,71.55555555555554,65.77395833333334,78.12743055555555
-sensitivity,all_tasks,mbpp_completion,124,11,8.870967741935484,4.0650406504065035,14.399999999999999
-sensitivity,all_tasks,swebench,71,71,100.0,100.0,100.0
-sensitivity,cruxeval_lenient,all,1754,251,14.310148232611175,12.621232219462632,15.97508630540927
-sensitivity,cruxeval_lenient,cruxeval,792,5,0.6313131313131313,0.12626262626262627,1.2626262626262625
-sensitivity,cruxeval_lenient,he_completion,96,0,0.0,0.0,0.0
-sensitivity,cruxeval_lenient,hex_python,158,0,0.0,0.0,0.0
-sensitivity,cruxeval_lenient,humaneval,98,0,0.0,0.0,0.0
-sensitivity,cruxeval_lenient,lcb,204,10,4.901960784313726,1.9607843137254901,7.8431372549019605
-sensitivity,cruxeval_lenient,mbpp,218,156,71.55963302752293,65.59633027522935,77.82935754947141
-sensitivity,cruxeval_lenient,mbpp_completion,118,10,8.47457627118644,4.201680672268908,14.40677966101695
-sensitivity,cruxeval_lenient,swebench,70,70,100.0,100.0,100.0
-sensitivity,main,all,1754,288,16.419612314709237,14.605937433751727,18.11927989169212
-sensitivity,main,cruxeval,792,42,5.303030303030303,3.787878787878788,6.944444444444445
-sensitivity,main,he_completion,96,0,0.0,0.0,0.0
-sensitivity,main,hex_python,158,0,0.0,0.0,0.0
-sensitivity,main,humaneval,98,0,0.0,0.0,0.0
-sensitivity,main,lcb,204,10,4.901960784313726,1.9607843137254901,7.8431372549019605
-sensitivity,main,mbpp,218,156,71.55963302752293,65.59633027522935,77.82935754947141
-sensitivity,main,mbpp_completion,118,10,8.47457627118644,4.201680672268908,14.40677966101695
-sensitivity,main,swebench,70,70,100.0,100.0,100.0
-sensitivity,rm_empty_unavailable,all,1707,241,14.118336262448741,12.45535557170332,15.974719241839907
-sensitivity,rm_empty_unavailable,cruxeval,792,42,5.303030303030303,3.787878787878788,6.944444444444445
-sensitivity,rm_empty_unavailable,he_completion,96,0,0.0,0.0,0.0
-sensitivity,rm_empty_unavailable,hex_python,158,0,0.0,0.0,0.0
-sensitivity,rm_empty_unavailable,humaneval,98,0,0.0,0.0,0.0
-sensitivity,rm_empty_unavailable,lcb,196,2,1.0204081632653061,0.0,2.5510204081632653
-sensitivity,rm_empty_unavailable,mbpp,218,156,71.55963302752293,65.59633027522935,77.82935754947141
-sensitivity,rm_empty_unavailable,mbpp_completion,118,10,8.47457627118644,4.201680672268908,14.40677966101695
-sensitivity,rm_empty_unavailable,swebench,31,31,100.0,100.0,100.0
+view,variant,population,family,tasks,unsolved,unsolved_pct,unsolved_pct_lo,unsolved_pct_hi
+all_eligible,all_tasks,all tasks (available cells),all,5626,3301,58.674013508709564,57.06598499330801,60.14809337908727
+all_eligible,all_tasks,all tasks (available cells),bcb,675,447,66.22222222222223,62.51851851851852,69.48148148148148
+all_eligible,all_tasks,all tasks (available cells),bcb_algo2,111,78,70.27027027027027,61.261261261261254,78.37837837837837
+all_eligible,all_tasks,all tasks (available cells),bcb_completion,89,60,67.41573033707866,57.30337078651685,77.52808988764045
+all_eligible,all_tasks,all tasks (available cells),bcb_ds,111,97,87.38738738738738,81.08108108108108,92.8153153153153
+all_eligible,all_tasks,all tasks (available cells),bcb_v014,111,80,72.07207207207207,63.06306306306306,80.18018018018019
+all_eligible,all_tasks,all tasks (available cells),cruxeval,800,43,5.375,3.871875000000003,7.003124999999998
+all_eligible,all_tasks,all tasks (available cells),ds1000,1000,703,70.3,65.84638581056998,74.59456290248973
+all_eligible,all_tasks,all tasks (available cells),he_completion,98,0,0.0,0.0,0.0
+all_eligible,all_tasks,all tasks (available cells),hex_cpp,164,163,99.39024390243902,98.17073170731707,100.0
+all_eligible,all_tasks,all tasks (available cells),hex_go,164,164,100.0,100.0,100.0
+all_eligible,all_tasks,all tasks (available cells),hex_java,164,153,93.29268292682927,89.02439024390245,96.95121951219512
+all_eligible,all_tasks,all tasks (available cells),hex_js,164,164,100.0,100.0,100.0
+all_eligible,all_tasks,all tasks (available cells),hex_python,164,0,0.0,0.0,0.0
+all_eligible,all_tasks,all tasks (available cells),humaneval,100,0,0.0,0.0,0.0
+all_eligible,all_tasks,all tasks (available cells),lcb,1000,615,61.5,58.2975,64.4
+all_eligible,all_tasks,all tasks (available cells),mbpp,225,161,71.55555555555554,65.77395833333334,78.12743055555555
+all_eligible,all_tasks,all tasks (available cells),mbpp_completion,124,11,8.870967741935484,4.0650406504065035,14.399999999999999
+all_eligible,all_tasks,all tasks (available cells),multiple_rs,156,156,100.0,100.0,100.0
+all_eligible,all_tasks,all tasks (available cells),multiple_ts,135,135,100.0,100.0,100.0
+all_eligible,all_tasks,all tasks (available cells),swebench,71,71,100.0,100.0,100.0
+all_eligible,cruxeval_lenient,complete case,all,4974,2854,57.378367511057505,55.71564168670278,59.04131919725033
+all_eligible,cruxeval_lenient,complete case,bcb,654,437,66.81957186544342,63.30275229357798,70.18348623853211
+all_eligible,cruxeval_lenient,complete case,bcb_algo2,107,76,71.02803738317756,62.616822429906534,79.43925233644859
+all_eligible,cruxeval_lenient,complete case,bcb_completion,89,60,67.41573033707866,57.30337078651685,77.52808988764045
+all_eligible,cruxeval_lenient,complete case,bcb_ds,111,97,87.38738738738738,81.08108108108108,92.8153153153153
+all_eligible,cruxeval_lenient,complete case,bcb_v014,111,80,72.07207207207207,63.06306306306306,80.18018018018019
+all_eligible,cruxeval_lenient,complete case,cruxeval,792,5,0.6313131313131313,0.12626262626262627,1.2626262626262625
+all_eligible,cruxeval_lenient,complete case,ds1000,986,703,71.29817444219067,66.87291006176454,75.51710491111243
+all_eligible,cruxeval_lenient,complete case,he_completion,96,0,0.0,0.0,0.0
+all_eligible,cruxeval_lenient,complete case,hex_cpp,164,163,99.39024390243902,98.17073170731707,100.0
+all_eligible,cruxeval_lenient,complete case,hex_go,164,164,100.0,100.0,100.0
+all_eligible,cruxeval_lenient,complete case,hex_java,164,153,93.29268292682927,89.02439024390245,96.95121951219512
+all_eligible,cruxeval_lenient,complete case,hex_js,164,164,100.0,100.0,100.0
+all_eligible,cruxeval_lenient,complete case,hex_python,158,0,0.0,0.0,0.0
+all_eligible,cruxeval_lenient,complete case,humaneval,98,0,0.0,0.0,0.0
+all_eligible,cruxeval_lenient,complete case,lcb,419,225,53.699284009546545,49.15871121718377,58.233890214797135
+all_eligible,cruxeval_lenient,complete case,mbpp,218,156,71.55963302752293,65.59633027522935,77.82935754947141
+all_eligible,cruxeval_lenient,complete case,mbpp_completion,118,10,8.47457627118644,4.201680672268908,14.40677966101695
+all_eligible,cruxeval_lenient,complete case,multiple_rs,156,156,100.0,100.0,100.0
+all_eligible,cruxeval_lenient,complete case,multiple_ts,135,135,100.0,100.0,100.0
+all_eligible,cruxeval_lenient,complete case,swebench,70,70,100.0,100.0,100.0
+all_eligible,main,complete case,all,4974,2891,58.12223562525131,56.461242519145515,59.68581499690229
+all_eligible,main,complete case,bcb,654,437,66.81957186544342,63.30275229357798,70.18348623853211
+all_eligible,main,complete case,bcb_algo2,107,76,71.02803738317756,62.616822429906534,79.43925233644859
+all_eligible,main,complete case,bcb_completion,89,60,67.41573033707866,57.30337078651685,77.52808988764045
+all_eligible,main,complete case,bcb_ds,111,97,87.38738738738738,81.08108108108108,92.8153153153153
+all_eligible,main,complete case,bcb_v014,111,80,72.07207207207207,63.06306306306306,80.18018018018019
+all_eligible,main,complete case,cruxeval,792,42,5.303030303030303,3.787878787878788,6.944444444444445
+all_eligible,main,complete case,ds1000,986,703,71.29817444219067,66.87291006176454,75.51710491111243
+all_eligible,main,complete case,he_completion,96,0,0.0,0.0,0.0
+all_eligible,main,complete case,hex_cpp,164,163,99.39024390243902,98.17073170731707,100.0
+all_eligible,main,complete case,hex_go,164,164,100.0,100.0,100.0
+all_eligible,main,complete case,hex_java,164,153,93.29268292682927,89.02439024390245,96.95121951219512
+all_eligible,main,complete case,hex_js,164,164,100.0,100.0,100.0
+all_eligible,main,complete case,hex_python,158,0,0.0,0.0,0.0
+all_eligible,main,complete case,humaneval,98,0,0.0,0.0,0.0
+all_eligible,main,complete case,lcb,419,225,53.699284009546545,49.15871121718377,58.233890214797135
+all_eligible,main,complete case,mbpp,218,156,71.55963302752293,65.59633027522935,77.82935754947141
+all_eligible,main,complete case,mbpp_completion,118,10,8.47457627118644,4.201680672268908,14.40677966101695
+all_eligible,main,complete case,multiple_rs,156,156,100.0,100.0,100.0
+all_eligible,main,complete case,multiple_ts,135,135,100.0,100.0,100.0
+all_eligible,main,complete case,swebench,70,70,100.0,100.0,100.0
+all_eligible,rm_empty_unavailable,complete case,all,4737,2661,56.17479417352755,54.50846339753523,57.816246478935795
+all_eligible,rm_empty_unavailable,complete case,bcb,630,419,66.5079365079365,62.8531746031746,70.0
+all_eligible,rm_empty_unavailable,complete case,bcb_algo2,103,72,69.90291262135922,60.19417475728155,79.6116504854369
+all_eligible,rm_empty_unavailable,complete case,bcb_completion,88,60,68.18181818181817,57.95454545454546,77.27272727272727
+all_eligible,rm_empty_unavailable,complete case,bcb_ds,103,89,86.40776699029125,79.6116504854369,93.20388349514563
+all_eligible,rm_empty_unavailable,complete case,bcb_v014,106,75,70.75471698113208,62.264150943396224,79.24528301886792
+all_eligible,rm_empty_unavailable,complete case,cruxeval,792,42,5.303030303030303,3.787878787878788,6.944444444444445
+all_eligible,rm_empty_unavailable,complete case,ds1000,928,645,69.50431034482759,65.0641234279928,73.99772923028738
+all_eligible,rm_empty_unavailable,complete case,he_completion,96,0,0.0,0.0,0.0
+all_eligible,rm_empty_unavailable,complete case,hex_cpp,160,159,99.375,98.125,100.0
+all_eligible,rm_empty_unavailable,complete case,hex_go,154,154,100.0,100.0,100.0
+all_eligible,rm_empty_unavailable,complete case,hex_java,156,145,92.94871794871796,88.46153846153845,96.7948717948718
+all_eligible,rm_empty_unavailable,complete case,hex_js,156,156,100.0,100.0,100.0
+all_eligible,rm_empty_unavailable,complete case,hex_python,158,0,0.0,0.0,0.0
+all_eligible,rm_empty_unavailable,complete case,humaneval,98,0,0.0,0.0,0.0
+all_eligible,rm_empty_unavailable,complete case,lcb,364,170,46.7032967032967,41.75824175824176,51.64835164835166
+all_eligible,rm_empty_unavailable,complete case,mbpp,218,156,71.55963302752293,65.59633027522935,77.82935754947141
+all_eligible,rm_empty_unavailable,complete case,mbpp_completion,118,10,8.47457627118644,4.201680672268908,14.40677966101695
+all_eligible,rm_empty_unavailable,complete case,multiple_rs,145,145,100.0,100.0,100.0
+all_eligible,rm_empty_unavailable,complete case,multiple_ts,133,133,100.0,100.0,100.0
+all_eligible,rm_empty_unavailable,complete case,swebench,31,31,100.0,100.0,100.0
+filtered = headline,all_tasks,all tasks (available cells),all,1062,43,4.048964218455744,2.8697120285423043,5.324831259674965
+filtered = headline,all_tasks,all tasks (available cells),cruxeval,800,43,5.375,3.871875000000003,7.003124999999998
+filtered = headline,all_tasks,all tasks (available cells),he_completion,98,0,0.0,0.0,0.0
+filtered = headline,all_tasks,all tasks (available cells),hex_python,164,0,0.0,0.0,0.0
+filtered = headline,cruxeval_lenient,complete case,all,1046,5,0.47801147227533464,0.09560229445506692,0.9408226046155471
+filtered = headline,cruxeval_lenient,complete case,cruxeval,792,5,0.6313131313131313,0.12626262626262627,1.2626262626262625
+filtered = headline,cruxeval_lenient,complete case,he_completion,96,0,0.0,0.0,0.0
+filtered = headline,cruxeval_lenient,complete case,hex_python,158,0,0.0,0.0,0.0
+filtered = headline,main,complete case,all,1046,42,4.015296367112811,2.9156918384768282,5.238847837985769
+filtered = headline,main,complete case,cruxeval,792,42,5.303030303030303,3.787878787878788,6.944444444444445
+filtered = headline,main,complete case,he_completion,96,0,0.0,0.0,0.0
+filtered = headline,main,complete case,hex_python,158,0,0.0,0.0,0.0
+filtered = headline,rm_empty_unavailable,complete case,all,1046,42,4.015296367112811,2.9156918384768282,5.238847837985769
+filtered = headline,rm_empty_unavailable,complete case,cruxeval,792,42,5.303030303030303,3.787878787878788,6.944444444444445
+filtered = headline,rm_empty_unavailable,complete case,he_completion,96,0,0.0,0.0,0.0
+filtered = headline,rm_empty_unavailable,complete case,hex_python,158,0,0.0,0.0,0.0
+sensitivity,all_tasks,all tasks (available cells),all,1935,318,16.434108527131784,14.82001090643472,17.97472735381164
+sensitivity,all_tasks,all tasks (available cells),cruxeval,800,43,5.375,3.871875000000003,7.003124999999998
+sensitivity,all_tasks,all tasks (available cells),he_completion,98,0,0.0,0.0,0.0
+sensitivity,all_tasks,all tasks (available cells),hex_python,164,0,0.0,0.0,0.0
+sensitivity,all_tasks,all tasks (available cells),humaneval,100,0,0.0,0.0,0.0
+sensitivity,all_tasks,all tasks (available cells),lcb,578,193,33.391003460207614,29.58477508650519,37.2015570934256
+sensitivity,all_tasks,all tasks (available cells),mbpp_completion,124,11,8.870967741935484,4.0650406504065035,14.399999999999999
+sensitivity,all_tasks,all tasks (available cells),swebench,71,71,100.0,100.0,100.0
+sensitivity,cruxeval_lenient,complete case,all,1536,95,6.184895833333334,5.032669196710942,7.3905084753079615
+sensitivity,cruxeval_lenient,complete case,cruxeval,792,5,0.6313131313131313,0.12626262626262627,1.2626262626262625
+sensitivity,cruxeval_lenient,complete case,he_completion,96,0,0.0,0.0,0.0
+sensitivity,cruxeval_lenient,complete case,hex_python,158,0,0.0,0.0,0.0
+sensitivity,cruxeval_lenient,complete case,humaneval,98,0,0.0,0.0,0.0
+sensitivity,cruxeval_lenient,complete case,lcb,204,10,4.901960784313726,1.9607843137254901,7.8431372549019605
+sensitivity,cruxeval_lenient,complete case,mbpp_completion,118,10,8.47457627118644,4.201680672268908,14.40677966101695
+sensitivity,cruxeval_lenient,complete case,swebench,70,70,100.0,100.0,100.0
+sensitivity,main,complete case,all,1536,132,8.59375,7.248165917765456,9.987435046029162
+sensitivity,main,complete case,cruxeval,792,42,5.303030303030303,3.787878787878788,6.944444444444445
+sensitivity,main,complete case,he_completion,96,0,0.0,0.0,0.0
+sensitivity,main,complete case,hex_python,158,0,0.0,0.0,0.0
+sensitivity,main,complete case,humaneval,98,0,0.0,0.0,0.0
+sensitivity,main,complete case,lcb,204,10,4.901960784313726,1.9607843137254901,7.8431372549019605
+sensitivity,main,complete case,mbpp_completion,118,10,8.47457627118644,4.201680672268908,14.40677966101695
+sensitivity,main,complete case,swebench,70,70,100.0,100.0,100.0
+sensitivity,rm_empty_unavailable,complete case,all,1489,85,5.7085292142377435,4.6494392406394995,6.972252279388765
+sensitivity,rm_empty_unavailable,complete case,cruxeval,792,42,5.303030303030303,3.787878787878788,6.944444444444445
+sensitivity,rm_empty_unavailable,complete case,he_completion,96,0,0.0,0.0,0.0
+sensitivity,rm_empty_unavailable,complete case,hex_python,158,0,0.0,0.0,0.0
+sensitivity,rm_empty_unavailable,complete case,humaneval,98,0,0.0,0.0,0.0
+sensitivity,rm_empty_unavailable,complete case,lcb,196,2,1.0204081632653061,0.0,2.5510204081632653
+sensitivity,rm_empty_unavailable,complete case,mbpp_completion,118,10,8.47457627118644,4.201680672268908,14.40677966101695
+sensitivity,rm_empty_unavailable,complete case,swebench,31,31,100.0,100.0,100.0

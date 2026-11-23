@@ -12,6 +12,10 @@ tasks) and `sensitivity`. Variants:
 - `rm_empty_unavailable`: empty `response_matrix.json` cells also unavailable (S1.7), complete case;
 - `all_tasks`: every task, unavailable cells skipped (O2 sensitivity).
 
+Every table names its population in a `population` column. The verifier tables (S3.6) count the
+available cells of every task in the view (spec §5.1) and repeat the counts on the complete case;
+the other tables follow the variant (complete case, or all tasks for `all_tasks`).
+
 CIs: Clopper-Pearson per family x model; otherwise the cluster bootstrap over problems
 (`stats.bootstrap`, N_BOOT, seed 0). Qwen3-Max's released cost is a per-dimension constant (S1.7
 data note), so its per-task cost carries no information within a dimension.
@@ -43,6 +47,8 @@ OUT = REPO_ROOT / "router" / "experiments" / "out"
 VIEWS = ("all_eligible", "filtered = headline", "sensitivity")
 VARIANTS = ("main", "cruxeval_lenient", "rm_empty_unavailable", "all_tasks")
 OPUS = "claude-opus-4-6"
+ALL_TASKS = "all tasks (available cells)"
+COMPLETE_CASE = "complete case"
 QWEN_NOTE = "Qwen3-Max's released cost is a per-dimension constant (S1.7 data note)"
 
 
@@ -75,6 +81,12 @@ def variant(vm, name: str, rm_empty):
     return vm, ok, tasks
 
 
+def population(var: str) -> str:
+    """The task population a variant scores (spec §5): `all_tasks` keeps every task and skips
+    unavailable cells; every other variant is the complete case."""
+    return ALL_TASKS if var == "all_tasks" else COMPLETE_CASE
+
+
 def verdict_frame(vm, obs: pd.DataFrame) -> pd.DataFrame:
     """X13 observation per cell of `vm`; None where there is no record or the cell is unavailable."""
     v = obs.reindex(index=vm.tasks, columns=vm.models).astype(object)
@@ -94,28 +106,32 @@ def verifier_tables(vs, obs, rm_empty, problems):
     fm_rows, pooled_rows = [], []
     for view, vm0 in vs.items():
         for var in ("main", "cruxeval_lenient", "rm_empty_unavailable"):
-            vm, ok, _ = variant(vm0, var, rm_empty)
-            cells = P.verifier_cells(ok, verdict_frame(vm, obs), vm.available)
-            cells["family"] = vm.family.reindex(cells.task_id).to_numpy()
-            for (fam, mod), g in cells.groupby(["family", "model"], sort=True):
-                c = P.confusion(g)
-                fp = P.clopper_pearson(c["pass_failure"], c["failures"])
-                fr = P.clopper_pearson(c["fail_success"], c["successes"])
-                fm_rows.append({"view": view, "variant": var, "family": fam, "model": mod, **c,
-                                "false_pass_lo": fp[0], "false_pass_hi": fp[1],
-                                "false_reject_lo": fr[0], "false_reject_hi": fr[1]})
-            groups = [("view", "all", cells)]
-            groups += [("family", f, g) for f, g in cells.groupby("family", sort=True)]
-            groups += [("model", x, g) for x, g in cells.groupby("model", sort=True)]
-            for level, key, g in groups:
-                c = P.confusion(g)
-                f = P.confusion_frame(g)
-                cl = problems.reindex(f.task_id).set_axis(f.index)
-                fp = ci(f, P.ratio("fp_num", "fp_den"), cl) if c["failures"] else (np.nan,) * 3
-                fr = ci(f, P.ratio("fr_num", "fr_den"), cl) if c["successes"] else (np.nan,) * 3
-                pooled_rows.append({"view": view, "variant": var, "level": level, "key": key, **c,
-                                    "false_pass_pct_lo": fp[1], "false_pass_pct_hi": fp[2],
-                                    "false_reject_pct_lo": fr[1], "false_reject_pct_hi": fr[2]})
+            vm, ok, cc = variant(vm0, var, rm_empty)
+            every = P.verifier_cells(ok, verdict_frame(vm, obs), vm.available)
+            every["family"] = vm.family.reindex(every.task_id).to_numpy()
+            # spec §5.1: available cells of every task in the view; the complete case beside it
+            for pop, cells in ((ALL_TASKS, every),
+                               (COMPLETE_CASE, every[every.task_id.isin(set(cc))])):
+                key = {"view": view, "variant": var, "population": pop}
+                for (fam, mod), g in cells.groupby(["family", "model"], sort=True):
+                    c = P.confusion(g)
+                    fp = P.clopper_pearson(c["pass_failure"], c["failures"])
+                    fr = P.clopper_pearson(c["fail_success"], c["successes"])
+                    fm_rows.append({**key, "family": fam, "model": mod, **c,
+                                    "false_pass_lo": fp[0], "false_pass_hi": fp[1],
+                                    "false_reject_lo": fr[0], "false_reject_hi": fr[1]})
+                groups = [("view", "all", cells)]
+                groups += [("family", f, g) for f, g in cells.groupby("family", sort=True)]
+                groups += [("model", x, g) for x, g in cells.groupby("model", sort=True)]
+                for level, k, g in groups:
+                    c = P.confusion(g)
+                    f = P.confusion_frame(g)
+                    cl = problems.reindex(f.task_id).set_axis(f.index)
+                    fp = ci(f, P.ratio("fp_num", "fp_den"), cl) if c["failures"] else (np.nan,) * 3
+                    fr = ci(f, P.ratio("fr_num", "fr_den"), cl) if c["successes"] else (np.nan,) * 3
+                    pooled_rows.append({**key, "level": level, "key": k, **c,
+                                        "false_pass_pct_lo": fp[1], "false_pass_pct_hi": fp[2],
+                                        "false_reject_pct_lo": fr[1], "false_reject_pct_hi": fr[2]})
     return label_empty_rates(pd.DataFrame(fm_rows)), label_empty_rates(pd.DataFrame(pooled_rows))
 
 
@@ -143,7 +159,9 @@ def no_signal_table(vs, obs):
             c = cells[cells.task_id.isin(set(tasks))]
             a = P.no_signal_share(c, tasks)
             b = P.no_signal_share(c[c.task_id.isin(cc)], [t for t in tasks if t in cc])
-            rows.append({"view": view, "family": fam, "x13_tasks": a["tasks"],
+            rows.append({"view": view, "family": fam,
+                         "population": f"{ALL_TASKS}; complete_case_* columns: {COMPLETE_CASE}",
+                         "x13_tasks": a["tasks"],
                          "cells": a["cells"], "no_signal_cells": a["no_signal_cells"],
                          "no_signal_cell_share": a["no_signal_cell_share"],
                          "no_signal_tasks": a["no_signal_tasks"],
@@ -162,7 +180,9 @@ def population_tables(vs, obs, rm_empty, problems, split):
         dim = vm0.dimension
         for f in sorted(fam.unique()):
             ids = vm0.tasks[(fam == f).to_numpy()]
-            mix.append({"view": view, "family": f, "dimension": str(dim[ids[0]]),
+            mix.append({"view": view, "family": f,
+                        "population": f"all tasks; complete_case_tasks: {COMPLETE_CASE}",
+                        "dimension": str(dim[ids[0]]),
                         "tasks": len(ids), "share": len(ids) / len(vm0),
                         "complete_case_tasks": int(cc0.loc[ids].sum()),
                         "development_tasks": int((split.reindex(ids) == S.DEV).sum()),
@@ -177,14 +197,16 @@ def population_tables(vs, obs, rm_empty, problems, split):
                 f = pd.DataFrame({"a": o.loc[av.to_numpy(), mod].astype(float)})
                 p, lo, hi = ci(f, stats.rate("a"), cl)
                 rates[mod] = p
-                acc.append({"view": view, "variant": var, "model": mod, "tasks": len(f),
+                acc.append({"view": view, "variant": var, "population": population(var),
+                            "model": mod, "tasks": len(f),
                             "successes": int(f.a.sum()), "acceptance": p,
                             "acceptance_lo": lo, "acceptance_hi": hi})
             best = sorted(vm.models, key=lambda x: (-rates[x], x))[0]
             uns = P.unsolved(o, vm.available.loc[tasks])
             f = pd.DataFrame({"u": uns.astype(float)})
             up, ulo, uhi = ci(f, stats.rate("u"), cl)
-            pop.append({"view": view, "variant": var, "tasks_scored": len(tasks),
+            pop.append({"view": view, "variant": var, "population": population(var),
+                        "tasks_scored": len(tasks),
                         "tasks": len(vm), "problems": int(problems.reindex(vm.tasks).nunique()),
                         "development_tasks": int((split.reindex(vm.tasks) == S.DEV).sum()),
                         "evaluation_tasks": int((split.reindex(vm.tasks) == S.EVAL).sum()),
@@ -208,7 +230,8 @@ def unsolved_table(vs, rm_empty, problems):
                 u = uns if f == "all" else uns[(fam == f).to_numpy()]
                 p, lo, hi = ci(pd.DataFrame({"u": u.astype(float)}), stats.rate("u"),
                                problems.reindex(u.index))
-                rows.append({"view": view, "variant": var, "family": f, "tasks": len(u),
+                rows.append({"view": view, "variant": var, "population": population(var),
+                             "family": f, "tasks": len(u),
                              "unsolved": int(u.sum()), "unsolved_pct": p,
                              "unsolved_pct_lo": lo, "unsolved_pct_hi": hi})
     return pd.DataFrame(rows)
@@ -223,6 +246,7 @@ def rescue_table(vs, obs, rm_empty, problems):
             vf = verdict_frame(vm, obs).loc[tasks]
             corder = P.mean_cost_order(vm.cost.loc[tasks], vm.available.loc[tasks])
             r = P.rescue_pairs(o, vf, price_order(vm.models), corder)
+            r.insert(0, "population", population(var))
             r.insert(0, "variant", var)
             r.insert(0, "view", view)
             if var == "main":
@@ -245,7 +269,9 @@ def _ladder_row(label, view, var, ok, cost, avail, order, verifier_usd=0.0, pric
     acc = (ok & av).mean()
     best = sorted(ok.columns, key=lambda x: (-acc[x], x))[0]
     s = P.ladder_summary(lc, cost[OPUS].where(av[OPUS], 0.0))
-    return {"definition": label, "view": view, "variant": var, "order": ">".join(order),
+    pop = "all tasks (every cell available)" if var == "old" else population(var)
+    return {"definition": label, "view": view, "variant": var, "population": pop,
+            "order": ">".join(order),
             "verifier_usd_per_rung": verifier_usd, "price_scaled": price or "",
             "best_single_model": best,
             "always_best_usd": float(cost[best].where(av[best], 0.0).sum()), **s}
@@ -326,6 +352,7 @@ def checks(pop, ns, pooled, art) -> dict:
                  for v, k in (("all_eligible", "all_eligible"), ("filtered = headline", "headline"),
                               ("sensitivity", "sensitivity"))}
     nsf = ns[(ns.view == "filtered = headline") & (ns.family == "all")].iloc[0]
+    # artefacts.yaml's cells_with_signal counts every task in the view (missing-token cells kept)
     out = {
         "filtered_complete_case_tasks": [int(f.loc["main", "tasks_scored"]), h["complete_case_tasks"]],
         "filtered_unsolved_strict": [round(float(f.loc["main", "unsolved_pct"]) * f.loc["main", "tasks_scored"] / 100),
@@ -377,8 +404,10 @@ def run():
                   "no signal cells, 'none' when there are cells but no failures or no successes"],
         "n_boot": N_BOOT,
     }
-    return res, {"s3_6_verifier_family_model.csv": (fm, ["view", "variant", "family", "model"]),
-                 "s3_6_verifier_pooled.csv": (pooled, ["view", "variant", "level", "key"]),
+    return res, {"s3_6_verifier_family_model.csv": (fm, ["view", "variant", "population",
+                                                          "family", "model"]),
+                 "s3_6_verifier_pooled.csv": (pooled, ["view", "variant", "population", "level",
+                                                       "key"]),
                  "s3_6_no_signal.csv": (ns, ["view", "family"]),
                  "s3_6_population.csv": (pop, ["view", "variant"]),
                  "s3_6_family_mix.csv": (mix, ["view", "family"]),

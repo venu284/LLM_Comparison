@@ -1,36 +1,34 @@
-view,family,x13_tasks,cells,no_signal_cells,no_signal_cell_share,no_signal_tasks,no_signal_task_share,complete_case_tasks,complete_case_no_signal_tasks,complete_case_no_signal_task_share
-all_eligible,all,2911,21737,13160,0.6054193310944472,1650,0.5668155273102027,2260,1610,0.7123893805309734
-all_eligible,bcb,227,1793,71,0.03959843837144451,9,0.039647577092511016,206,8,0.038834951456310676
-all_eligible,bcb_algo2,33,260,16,0.06153846153846154,2,0.06060606060606061,29,2,0.06896551724137931
-all_eligible,bcb_completion,26,208,16,0.07692307692307693,2,0.07692307692307693,26,2,0.07692307692307693
-all_eligible,bcb_ds,12,96,16,0.16666666666666666,2,0.16666666666666666,12,2,0.16666666666666666
-all_eligible,bcb_v014,29,232,16,0.06896551724137931,2,0.06896551724137931,29,2,0.06896551724137931
-all_eligible,cruxeval,800,6392,6392,1.0,800,1.0,792,792,1.0
-all_eligible,ds1000,297,2362,2282,0.9661303979678239,287,0.9663299663299664,283,273,0.9646643109540636
-all_eligible,he_completion,98,782,431,0.551150895140665,54,0.5510204081632653,96,53,0.5520833333333334
-all_eligible,hex_cpp,0,0,0,,0,,0,0,
-all_eligible,hex_go,0,0,0,,0,,0,0,
-all_eligible,hex_java,0,0,0,,0,,0,0,
-all_eligible,hex_js,0,0,0,,0,,0,0,
-all_eligible,hex_python,164,1306,701,0.5367534456355283,88,0.5365853658536586,158,85,0.5379746835443038
-all_eligible,humaneval,100,798,440,0.5513784461152882,55,0.55,98,55,0.5612244897959183
-all_eligible,lcb,776,4729,0,0.0,0,0.0,195,0,0.0
-all_eligible,mbpp,225,1793,1793,1.0,225,1.0,218,218,1.0
-all_eligible,mbpp_completion,124,986,986,1.0,124,1.0,118,118,1.0
-all_eligible,multiple_rs,0,0,0,,0,,0,0,
-all_eligible,multiple_ts,0,0,0,,0,,0,0,
-all_eligible,swebench,0,0,0,,0,,0,0,
-filtered = headline,all,1287,10273,9317,0.9069405237029106,1167,0.9067599067599068,1264,1148,0.9082278481012658
-filtered = headline,cruxeval,800,6392,6392,1.0,800,1.0,792,792,1.0
-filtered = headline,he_completion,98,782,431,0.551150895140665,54,0.5510204081632653,96,53,0.5520833333333334
-filtered = headline,hex_python,164,1306,701,0.5367534456355283,88,0.5365853658536586,158,85,0.5379746835443038
-filtered = headline,mbpp,225,1793,1793,1.0,225,1.0,218,218,1.0
-sensitivity,all,2080,15614,10743,0.6880363776098374,1346,0.6471153846153846,1675,1321,0.7886567164179105
-sensitivity,cruxeval,800,6392,6392,1.0,800,1.0,792,792,1.0
-sensitivity,he_completion,98,782,431,0.551150895140665,54,0.5510204081632653,96,53,0.5520833333333334
-sensitivity,hex_python,164,1306,701,0.5367534456355283,88,0.5365853658536586,158,85,0.5379746835443038
-sensitivity,humaneval,100,798,440,0.5513784461152882,55,0.55,98,55,0.5612244897959183
-sensitivity,lcb,569,3557,0,0.0,0,0.0,195,0,0.0
-sensitivity,mbpp,225,1793,1793,1.0,225,1.0,218,218,1.0
-sensitivity,mbpp_completion,124,986,986,1.0,124,1.0,118,118,1.0
-sensitivity,swebench,0,0,0,,0,,0,0,
+view,family,population,x13_tasks,cells,no_signal_cells,no_signal_cell_share,no_signal_tasks,no_signal_task_share,complete_case_tasks,complete_case_no_signal_tasks,complete_case_no_signal_task_share
+all_eligible,all,all tasks (available cells); complete_case_* columns: complete case,2911,21737,13160,0.6054193310944472,1650,0.5668155273102027,2260,1610,0.7123893805309734
+all_eligible,bcb,all tasks (available cells); complete_case_* columns: complete case,227,1793,71,0.03959843837144451,9,0.039647577092511016,206,8,0.038834951456310676
+all_eligible,bcb_algo2,all tasks (available cells); complete_case_* columns: complete case,33,260,16,0.06153846153846154,2,0.06060606060606061,29,2,0.06896551724137931
+all_eligible,bcb_completion,all tasks (available cells); complete_case_* columns: complete case,26,208,16,0.07692307692307693,2,0.07692307692307693,26,2,0.07692307692307693
+all_eligible,bcb_ds,all tasks (available cells); complete_case_* columns: complete case,12,96,16,0.16666666666666666,2,0.16666666666666666,12,2,0.16666666666666666
+all_eligible,bcb_v014,all tasks (available cells); complete_case_* columns: complete case,29,232,16,0.06896551724137931,2,0.06896551724137931,29,2,0.06896551724137931
+all_eligible,cruxeval,all tasks (available cells); complete_case_* columns: complete case,800,6392,6392,1.0,800,1.0,792,792,1.0
+all_eligible,ds1000,all tasks (available cells); complete_case_* columns: complete case,297,2362,2282,0.9661303979678239,287,0.9663299663299664,283,273,0.9646643109540636
+all_eligible,he_completion,all tasks (available cells); complete_case_* columns: complete case,98,782,431,0.551150895140665,54,0.5510204081632653,96,53,0.5520833333333334
+all_eligible,hex_cpp,all tasks (available cells); complete_case_* columns: complete case,0,0,0,,0,,0,0,
+all_eligible,hex_go,all tasks (available cells); complete_case_* columns: complete case,0,0,0,,0,,0,0,
+all_eligible,hex_java,all tasks (available cells); complete_case_* columns: complete case,0,0,0,,0,,0,0,
+all_eligible,hex_js,all tasks (available cells); complete_case_* columns: complete case,0,0,0,,0,,0,0,
+all_eligible,hex_python,all tasks (available cells); complete_case_* columns: complete case,164,1306,701,0.5367534456355283,88,0.5365853658536586,158,85,0.5379746835443038
+all_eligible,humaneval,all tasks (available cells); complete_case_* columns: complete case,100,798,440,0.5513784461152882,55,0.55,98,55,0.5612244897959183
+all_eligible,lcb,all tasks (available cells); complete_case_* columns: complete case,776,4729,0,0.0,0,0.0,195,0,0.0
+all_eligible,mbpp,all tasks (available cells); complete_case_* columns: complete case,225,1793,1793,1.0,225,1.0,218,218,1.0
+all_eligible,mbpp_completion,all tasks (available cells); complete_case_* columns: complete case,124,986,986,1.0,124,1.0,118,118,1.0
+all_eligible,multiple_rs,all tasks (available cells); complete_case_* columns: complete case,0,0,0,,0,,0,0,
+all_eligible,multiple_ts,all tasks (available cells); complete_case_* columns: complete case,0,0,0,,0,,0,0,
+all_eligible,swebench,all tasks (available cells); complete_case_* columns: complete case,0,0,0,,0,,0,0,
+filtered = headline,all,all tasks (available cells); complete_case_* columns: complete case,1062,8480,7524,0.8872641509433963,942,0.8870056497175142,1046,930,0.8891013384321224
+filtered = headline,cruxeval,all tasks (available cells); complete_case_* columns: complete case,800,6392,6392,1.0,800,1.0,792,792,1.0
+filtered = headline,he_completion,all tasks (available cells); complete_case_* columns: complete case,98,782,431,0.551150895140665,54,0.5510204081632653,96,53,0.5520833333333334
+filtered = headline,hex_python,all tasks (available cells); complete_case_* columns: complete case,164,1306,701,0.5367534456355283,88,0.5365853658536586,158,85,0.5379746835443038
+sensitivity,all,all tasks (available cells); complete_case_* columns: complete case,1855,13821,8950,0.6475652991824036,1121,0.6043126684636119,1457,1103,0.757035003431709
+sensitivity,cruxeval,all tasks (available cells); complete_case_* columns: complete case,800,6392,6392,1.0,800,1.0,792,792,1.0
+sensitivity,he_completion,all tasks (available cells); complete_case_* columns: complete case,98,782,431,0.551150895140665,54,0.5510204081632653,96,53,0.5520833333333334
+sensitivity,hex_python,all tasks (available cells); complete_case_* columns: complete case,164,1306,701,0.5367534456355283,88,0.5365853658536586,158,85,0.5379746835443038
+sensitivity,humaneval,all tasks (available cells); complete_case_* columns: complete case,100,798,440,0.5513784461152882,55,0.55,98,55,0.5612244897959183
+sensitivity,lcb,all tasks (available cells); complete_case_* columns: complete case,569,3557,0,0.0,0,0.0,195,0,0.0
+sensitivity,mbpp_completion,all tasks (available cells); complete_case_* columns: complete case,124,986,986,1.0,124,1.0,118,118,1.0
+sensitivity,swebench,all tasks (available cells); complete_case_* columns: complete case,0,0,0,,0,,0,0,

@@ -6,19 +6,19 @@
    "here": 4737
   },
   "filtered = headline_complete_case_if_empty_responses_unavailable": {
-   "artefacts_yaml": 1264,
+   "artefacts_yaml": 1046,
    "equal": true,
-   "here": 1264
+   "here": 1046
   },
   "filtered_complete_case_no_signal_tasks": {
-   "artefacts_yaml": 1148,
+   "artefacts_yaml": 930,
    "equal": true,
-   "here": 1148
+   "here": 930
   },
   "filtered_complete_case_tasks": {
-   "artefacts_yaml": 1264,
+   "artefacts_yaml": 1046,
    "equal": true,
-   "here": 1264
+   "here": 1046
   },
   "filtered_signal_cells": {
    "artefacts_yaml": 956,
@@ -26,19 +26,19 @@
    "here": 956
   },
   "filtered_unsolved_lenient": {
-   "artefacts_yaml": 161,
+   "artefacts_yaml": 5,
    "equal": true,
-   "here": 161
+   "here": 5
   },
   "filtered_unsolved_strict": {
-   "artefacts_yaml": 198,
+   "artefacts_yaml": 42,
    "equal": true,
-   "here": 198
+   "here": 42
   },
   "sensitivity_complete_case_if_empty_responses_unavailable": {
-   "artefacts_yaml": 1707,
+   "artefacts_yaml": 1489,
    "equal": true,
-   "here": 1707
+   "here": 1489
   }
  },
  "filtered_equals_headline": true,
@@ -59,20 +59,20 @@
    "perfect_stop_usd_min": 7.68931927
   },
   "filtered = headline|main": {
-   "always_usd_max": 14.45867,
-   "always_usd_min": 3.6146675,
-   "ladder_usd_max": 11.125092809999998,
-   "ladder_usd_min": 7.66505181,
-   "perfect_stop_usd_max": 5.56281165,
-   "perfect_stop_usd_min": 3.88349715
+   "always_usd_max": 12.45288,
+   "always_usd_min": 3.11322,
+   "ladder_usd_max": 6.32111096,
+   "ladder_usd_min": 4.49970746,
+   "perfect_stop_usd_max": 5.0229082300000005,
+   "perfect_stop_usd_min": 3.5210887299999998
   },
   "sensitivity|main": {
-   "always_usd_max": 28.04319,
-   "always_usd_min": 7.0107975,
-   "ladder_usd_max": 28.05559685,
-   "ladder_usd_min": 18.01673435,
-   "perfect_stop_usd_max": 6.992775160000001,
-   "perfect_stop_usd_min": 4.8713146599999995
+   "always_usd_max": 26.037399999999998,
+   "always_usd_min": 6.5093499999999995,
+   "ladder_usd_max": 23.56580052,
+   "ladder_usd_min": 14.84748552,
+   "perfect_stop_usd_max": 6.31081526,
+   "perfect_stop_usd_min": 4.7331227600000005
   }
  },
  "n_boot": 1000,
@@ -101,12 +101,12 @@
    "tasks": 5626
   },
   "filtered = headline": {
-   "task_ids_sha256": "7652b5e1b548894e3d9b92cd7d382a90432877f6f5805948a38bd4552f072d9a",
-   "tasks": 1287
+   "task_ids_sha256": "38d1da6be292cee10b815786d5cc71d8b38ec762a65b9eca90606c8a7ae9b533",
+   "tasks": 1062
   },
   "sensitivity": {
-   "task_ids_sha256": "9f79633f23c5d49fa5c4b8e806e9829224f5ec85d522c0f9c988632dd81f802e",
-   "tasks": 2160
+   "task_ids_sha256": "3b12967baa9849c5defc9ab1c8dd521170ce0839aa21b4c4b4cc46318b875db0",
+   "tasks": 1935
   }
  }
 }
