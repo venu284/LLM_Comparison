@@ -164,7 +164,7 @@ training-fold availability is under 250, so nothing was run for it.
 
 On the headline development split, onboarding a new model with ground-truth probes changes
 acceptance by −1.0 to +0.5 points for every model except Opus. That holds at every reachable k from
-25 up. The pool's tables already route both dimensions to models that match Opus.
+25 up.
 
 Only a model that is better than the pool, as Opus is better than the other seven, adds anything
 measurable: +12.8 points at k = 25.
@@ -224,7 +224,8 @@ hold inside the resamples. "Power at gap 0", shifted by the development gap as D
 therefore conservative for these stand-ins.
 
 Read literally, the gate's power at −2 for a ladder policy whose true gap is near 0 is about
-0.4–0.6 under (c) and about 1.0 under (b). The plan expected 60–70%.
+0.4–0.6 under (c) and about 1.0 under (b). The plan's S3.7 line records that the user keeps −2
+"even if about 60–70%".
 
 ## S3 gate check (plan §4 S3: "S3.1–S3.7 reported with CIs in all three data views")
 
