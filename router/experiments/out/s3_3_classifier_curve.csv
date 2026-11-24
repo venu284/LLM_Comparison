@@ -1,421 +1,1261 @@
-population,classifier,seed,t,acceptance_loss_points,saving_pct
-filtered = headline,post_failure,0,0.0,0.0,0.0
-filtered = headline,post_failure,0,0.05,0.0,0.0
-filtered = headline,post_failure,0,0.1,0.0,0.0
-filtered = headline,post_failure,0,0.15,0.0,0.0
-filtered = headline,post_failure,0,0.2,0.0,0.0
-filtered = headline,post_failure,0,0.25,0.0,0.0
-filtered = headline,post_failure,0,0.3,0.0,0.0
-filtered = headline,post_failure,0,0.35,0.0,0.0
-filtered = headline,post_failure,0,0.4,0.0,0.4867154170764554
-filtered = headline,post_failure,0,0.45,0.512820512820511,1.1350482980050813
-filtered = headline,post_failure,0,0.5,1.025641025641022,1.591955306762971
-filtered = headline,post_failure,0,0.55,2.564102564102566,4.1000534129416515
-filtered = headline,post_failure,0,0.6,3.076923076923077,4.434000737385491
-filtered = headline,post_failure,0,0.65,4.61538461538461,6.800974660430981
-filtered = headline,post_failure,0,0.7,7.179487179487176,9.344470251487946
-filtered = headline,post_failure,0,0.75,9.230769230769232,13.074713098727486
-filtered = headline,post_failure,0,0.8,15.384615384615385,19.887331668657914
-filtered = headline,post_failure,0,0.85,20.512820512820507,26.012028065361637
-filtered = headline,post_failure,0,0.9,30.25641025641025,39.21249538668305
-filtered = headline,post_failure,0,0.95,44.61538461538461,65.12438583034954
-filtered = headline,post_failure,0,1.0,70.76923076923076,96.20233425919491
-filtered = headline,post_failure,1,0.0,0.0,0.0
-filtered = headline,post_failure,1,0.05,0.0,0.0
-filtered = headline,post_failure,1,0.1,0.0,0.0
-filtered = headline,post_failure,1,0.15,0.0,0.0
-filtered = headline,post_failure,1,0.2,0.0,0.0
-filtered = headline,post_failure,1,0.25,0.0,0.0
-filtered = headline,post_failure,1,0.3,0.512820512820511,1.3437071562349856
-filtered = headline,post_failure,1,0.35,1.025641025641022,2.679496454010366
-filtered = headline,post_failure,1,0.4,1.025641025641022,2.679496454010366
-filtered = headline,post_failure,1,0.45,1.025641025641022,2.679496454010366
-filtered = headline,post_failure,1,0.5,1.025641025641022,2.679496454010366
-filtered = headline,post_failure,1,0.55,2.564102564102566,4.550439832379871
-filtered = headline,post_failure,1,0.6,2.564102564102566,4.550439832379871
-filtered = headline,post_failure,1,0.65,5.128205128205121,7.180566110112629
-filtered = headline,post_failure,1,0.7,6.666666666666665,8.493067588889136
-filtered = headline,post_failure,1,0.75,10.769230769230765,15.191575845725092
-filtered = headline,post_failure,1,0.8,14.871794871794874,19.85752326033937
-filtered = headline,post_failure,1,0.85,20.512820512820507,28.743223477549517
-filtered = headline,post_failure,1,0.9,33.33333333333333,44.845353046130555
-filtered = headline,post_failure,1,0.95,47.179487179487175,66.35910599366981
-filtered = headline,post_failure,1,1.0,70.76923076923076,96.20233425919491
-filtered = headline,post_failure,2,0.0,0.0,0.0
-filtered = headline,post_failure,2,0.05,0.0,0.0
-filtered = headline,post_failure,2,0.1,0.0,0.0
-filtered = headline,post_failure,2,0.15,0.0,0.0
-filtered = headline,post_failure,2,0.2,0.0,0.0
-filtered = headline,post_failure,2,0.25,0.0,0.0
-filtered = headline,post_failure,2,0.3,0.0,0.0
-filtered = headline,post_failure,2,0.35,0.0,0.0
-filtered = headline,post_failure,2,0.4,0.0,0.0
-filtered = headline,post_failure,2,0.45,0.0,0.0
-filtered = headline,post_failure,2,0.5,0.512820512820511,0.5207156328148055
-filtered = headline,post_failure,2,0.55,0.512820512820511,0.5207156328148055
-filtered = headline,post_failure,2,0.6,1.538461538461533,2.332042194547179
-filtered = headline,post_failure,2,0.65,4.102564102564099,5.1046899245530515
-filtered = headline,post_failure,2,0.7,6.666666666666665,8.819097054873371
-filtered = headline,post_failure,2,0.75,10.256410256410254,14.263789136809969
-filtered = headline,post_failure,2,0.8,13.33333333333333,18.14819734582207
-filtered = headline,post_failure,2,0.85,20.512820512820507,26.85644438226078
-filtered = headline,post_failure,2,0.9,31.28205128205128,40.24461152471312
-filtered = headline,post_failure,2,0.95,47.179487179487175,63.66191079722029
-filtered = headline,post_failure,2,1.0,70.76923076923076,96.20233425919491
-filtered = headline,post_failure,3,0.0,0.0,0.0
-filtered = headline,post_failure,3,0.05,0.0,0.0
-filtered = headline,post_failure,3,0.1,0.0,0.0
-filtered = headline,post_failure,3,0.15,0.0,0.0
-filtered = headline,post_failure,3,0.2,0.0,0.0
-filtered = headline,post_failure,3,0.25,0.0,0.4867154170764554
-filtered = headline,post_failure,3,0.3,0.0,0.4867154170764554
-filtered = headline,post_failure,3,0.35,0.0,0.4867154170764554
-filtered = headline,post_failure,3,0.4,0.512820512820511,0.9534033098138828
-filtered = headline,post_failure,3,0.45,0.512820512820511,0.9534033098138828
-filtered = headline,post_failure,3,0.5,0.512820512820511,0.9534033098138828
-filtered = headline,post_failure,3,0.55,2.051282051282044,3.061882441971875
-filtered = headline,post_failure,3,0.6,2.564102564102566,3.5187894507297646
-filtered = headline,post_failure,3,0.65,4.61538461538461,6.780481379711977
-filtered = headline,post_failure,3,0.7,7.692307692307687,10.987658760048447
-filtered = headline,post_failure,3,0.75,12.82051282051282,19.024750852939654
-filtered = headline,post_failure,3,0.8,15.384615384615385,21.835590606103672
-filtered = headline,post_failure,3,0.85,22.564102564102562,29.830764624796902
-filtered = headline,post_failure,3,0.9,32.30769230769231,42.486762737924664
-filtered = headline,post_failure,3,0.95,47.692307692307686,64.370792007546
-filtered = headline,post_failure,3,1.0,70.76923076923076,96.20233425919491
-filtered = headline,post_failure,4,0.0,0.0,0.0
-filtered = headline,post_failure,4,0.05,0.0,0.0
-filtered = headline,post_failure,4,0.1,0.0,0.0
-filtered = headline,post_failure,4,0.15,0.0,0.0
-filtered = headline,post_failure,4,0.2,0.0,0.0
-filtered = headline,post_failure,4,0.25,0.0,0.0
-filtered = headline,post_failure,4,0.3,0.0,0.4867154170764554
-filtered = headline,post_failure,4,0.35,0.0,0.4867154170764554
-filtered = headline,post_failure,4,0.4,0.0,0.4867154170764554
-filtered = headline,post_failure,4,0.45,1.025641025641022,1.9841221787040064
-filtered = headline,post_failure,4,0.5,1.538461538461533,2.6836882614301505
-filtered = headline,post_failure,4,0.55,1.538461538461533,2.6836882614301505
-filtered = headline,post_failure,4,0.6,2.564102564102566,3.9011754386912734
-filtered = headline,post_failure,4,0.65,5.128205128205121,8.15958602082526
-filtered = headline,post_failure,4,0.7,7.692307692307687,11.671854882235365
-filtered = headline,post_failure,4,0.75,9.230769230769232,12.722601275464529
-filtered = headline,post_failure,4,0.8,14.358974358974352,18.54362451242293
-filtered = headline,post_failure,4,0.85,18.974358974358974,26.913266660618042
-filtered = headline,post_failure,4,0.9,28.717948717948715,39.950719248947344
-filtered = headline,post_failure,4,0.95,43.589743589743584,61.40718416174936
-filtered = headline,post_failure,4,1.0,70.76923076923076,96.20233425919491
-filtered = headline,pre_attempt,0,0.0,0.0,0.0
-filtered = headline,pre_attempt,0,0.05,0.0,0.0
-filtered = headline,pre_attempt,0,0.1,0.0,0.0
-filtered = headline,pre_attempt,0,0.15,0.0,0.0
-filtered = headline,pre_attempt,0,0.2,0.0,0.0
-filtered = headline,pre_attempt,0,0.25,0.0,0.0
-filtered = headline,pre_attempt,0,0.3,0.0,0.0
-filtered = headline,pre_attempt,0,0.35,0.0,0.5060946085345575
-filtered = headline,pre_attempt,0,0.4,0.0,0.5060946085345575
-filtered = headline,pre_attempt,0,0.45,0.512820512820511,0.9064625188142217
-filtered = headline,pre_attempt,0,0.5,0.512820512820511,0.9064625188142217
-filtered = headline,pre_attempt,0,0.55,0.512820512820511,1.1885283085796172
-filtered = headline,pre_attempt,0,0.6,2.564102564102566,3.9311030806430947
-filtered = headline,pre_attempt,0,0.65,3.589743589743588,5.808201895330378
-filtered = headline,pre_attempt,0,0.7,4.61538461538461,7.0583926225679665
-filtered = headline,pre_attempt,0,0.75,7.179487179487176,11.087487119507312
-filtered = headline,pre_attempt,0,0.8,12.307692307692308,16.745532883983994
-filtered = headline,pre_attempt,0,0.85,17.948717948717952,25.03204310742968
-filtered = headline,pre_attempt,0,0.9,25.64102564102564,35.32458468969354
-filtered = headline,pre_attempt,0,0.95,39.48717948717949,57.97398210340424
-filtered = headline,pre_attempt,0,1.0,85.12820512820512,100.0
-filtered = headline,pre_attempt,1,0.0,0.0,0.0
-filtered = headline,pre_attempt,1,0.05,0.0,0.0
-filtered = headline,pre_attempt,1,0.1,0.0,0.0
-filtered = headline,pre_attempt,1,0.15,0.0,0.0
-filtered = headline,pre_attempt,1,0.2,0.0,0.0
-filtered = headline,pre_attempt,1,0.25,0.0,0.0
-filtered = headline,pre_attempt,1,0.3,0.0,0.0
-filtered = headline,pre_attempt,1,0.35,1.025641025641022,2.7376340283846723
-filtered = headline,pre_attempt,1,0.4,1.025641025641022,2.7376340283846723
-filtered = headline,pre_attempt,1,0.45,1.025641025641022,2.7376340283846723
-filtered = headline,pre_attempt,1,0.5,1.025641025641022,2.7376340283846723
-filtered = headline,pre_attempt,1,0.55,1.538461538461533,3.302879697176375
-filtered = headline,pre_attempt,1,0.6,3.076923076923077,5.147658745144246
-filtered = headline,pre_attempt,1,0.65,4.102564102564099,6.3810822427026626
-filtered = headline,pre_attempt,1,0.7,6.153846153846154,8.810303574419398
-filtered = headline,pre_attempt,1,0.75,8.205128205128197,11.88542840178679
-filtered = headline,pre_attempt,1,0.8,10.256410256410254,15.117047372826619
-filtered = headline,pre_attempt,1,0.85,16.41025641025641,26.024085566526487
-filtered = headline,pre_attempt,1,0.9,27.17948717948717,37.811075425892284
-filtered = headline,pre_attempt,1,0.95,42.051282051282044,61.00672310019368
-filtered = headline,pre_attempt,1,1.0,85.12820512820512,100.0
-filtered = headline,pre_attempt,2,0.0,0.0,0.0
-filtered = headline,pre_attempt,2,0.05,0.0,0.0
-filtered = headline,pre_attempt,2,0.1,0.0,0.0
-filtered = headline,pre_attempt,2,0.15,0.0,0.0
-filtered = headline,pre_attempt,2,0.2,0.0,0.0
-filtered = headline,pre_attempt,2,0.25,0.0,0.0
-filtered = headline,pre_attempt,2,0.3,0.0,0.0
-filtered = headline,pre_attempt,2,0.35,0.0,0.0
-filtered = headline,pre_attempt,2,0.4,0.0,0.0
-filtered = headline,pre_attempt,2,0.45,0.0,0.0
-filtered = headline,pre_attempt,2,0.5,0.0,0.0
-filtered = headline,pre_attempt,2,0.55,0.512820512820511,0.40036791027966423
-filtered = headline,pre_attempt,2,0.6,1.538461538461533,2.0909815964749834
-filtered = headline,pre_attempt,2,0.65,3.076923076923077,4.0135419598991025
-filtered = headline,pre_attempt,2,0.7,5.128205128205121,8.064061250317401
-filtered = headline,pre_attempt,2,0.75,6.666666666666665,11.134994270265008
-filtered = headline,pre_attempt,2,0.8,10.769230769230765,19.565970944626578
-filtered = headline,pre_attempt,2,0.85,18.461538461538463,26.762711842303087
-filtered = headline,pre_attempt,2,0.9,25.64102564102564,35.28527857727446
-filtered = headline,pre_attempt,2,0.95,39.48717948717949,54.68853659904318
-filtered = headline,pre_attempt,2,1.0,85.12820512820512,100.0
-filtered = headline,pre_attempt,3,0.0,0.0,0.0
-filtered = headline,pre_attempt,3,0.05,0.0,0.0
-filtered = headline,pre_attempt,3,0.1,0.0,0.0
-filtered = headline,pre_attempt,3,0.15,0.0,0.0
-filtered = headline,pre_attempt,3,0.2,0.0,0.0
-filtered = headline,pre_attempt,3,0.25,0.0,0.5060946085345575
-filtered = headline,pre_attempt,3,0.3,0.0,0.5060946085345575
-filtered = headline,pre_attempt,3,0.35,0.0,0.5060946085345575
-filtered = headline,pre_attempt,3,0.4,0.512820512820511,0.9921616927300758
-filtered = headline,pre_attempt,3,0.45,0.512820512820511,0.9921616927300758
-filtered = headline,pre_attempt,3,0.5,0.512820512820511,0.9921616927300758
-filtered = headline,pre_attempt,3,0.55,1.025641025641022,1.7874910132306354
-filtered = headline,pre_attempt,3,0.6,2.051282051282044,3.2863956473762057
-filtered = headline,pre_attempt,3,0.65,3.076923076923077,4.768533051842583
-filtered = headline,pre_attempt,3,0.7,6.153846153846154,9.663751839039058
-filtered = headline,pre_attempt,3,0.75,9.230769230769232,14.898324450738142
-filtered = headline,pre_attempt,3,0.8,11.794871794871797,17.326331089815906
-filtered = headline,pre_attempt,3,0.85,19.487179487179485,26.933927613633834
-filtered = headline,pre_attempt,3,0.9,27.692307692307693,37.177281596121034
-filtered = headline,pre_attempt,3,0.95,43.589743589743584,62.4560749815607
-filtered = headline,pre_attempt,3,1.0,85.12820512820512,100.0
-filtered = headline,pre_attempt,4,0.0,0.0,0.0
-filtered = headline,pre_attempt,4,0.05,0.0,0.0
-filtered = headline,pre_attempt,4,0.1,0.0,0.0
-filtered = headline,pre_attempt,4,0.15,0.0,0.0
-filtered = headline,pre_attempt,4,0.2,0.0,0.0
-filtered = headline,pre_attempt,4,0.25,0.0,0.0
-filtered = headline,pre_attempt,4,0.3,0.0,0.5060946085345575
-filtered = headline,pre_attempt,4,0.35,0.0,0.5060946085345575
-filtered = headline,pre_attempt,4,0.4,0.0,0.5060946085345575
-filtered = headline,pre_attempt,4,0.45,0.0,0.5060946085345575
-filtered = headline,pre_attempt,4,0.5,0.512820512820511,1.3745476806915846
-filtered = headline,pre_attempt,4,0.55,1.025641025641022,2.0934929548758308
-filtered = headline,pre_attempt,4,0.6,2.564102564102566,5.031867983030825
-filtered = headline,pre_attempt,4,0.65,3.076923076923077,5.4322358933104775
-filtered = headline,pre_attempt,4,0.7,4.61538461538461,7.816826585672243
-filtered = headline,pre_attempt,4,0.75,7.179487179487176,11.655709903079813
-filtered = headline,pre_attempt,4,0.8,11.794871794871797,17.517291205606654
-filtered = headline,pre_attempt,4,0.85,15.897435897435896,22.998248942313836
-filtered = headline,pre_attempt,4,0.9,24.615384615384617,37.3028346119588
-filtered = headline,pre_attempt,4,0.95,39.48717948717949,58.71109187640763
-filtered = headline,pre_attempt,4,1.0,85.12820512820512,100.0
-all_eligible,post_failure,0,0.0,0.0,0.0
-all_eligible,post_failure,0,0.05,1.3071895424836666,2.8467666447867357
-all_eligible,post_failure,0,0.1,1.7429193899782147,4.822099883630404
-all_eligible,post_failure,0,0.15,2.178649237472774,7.212084349225012
-all_eligible,post_failure,0,0.2,4.139433551198257,10.866571379233125
-all_eligible,post_failure,0,0.25,5.228758169934644,12.963016756565782
-all_eligible,post_failure,0,0.3,6.318082788671031,15.602457787977041
-all_eligible,post_failure,0,0.35,9.150326797385622,19.74437812606501
-all_eligible,post_failure,0,0.4,9.80392156862745,22.499306182424085
-all_eligible,post_failure,0,0.45,10.457516339869278,24.18328149948096
-all_eligible,post_failure,0,0.5,11.111111111111116,25.862779685352
-all_eligible,post_failure,0,0.55,11.546840958605664,26.381438113497257
-all_eligible,post_failure,0,0.6,12.636165577342052,27.68692364799662
-all_eligible,post_failure,0,0.65,13.725490196078438,28.92287359526794
-all_eligible,post_failure,0,0.7,13.725490196078438,28.98658661598964
-all_eligible,post_failure,0,0.75,14.814814814814813,31.111501955734877
-all_eligible,post_failure,0,0.8,16.99346405228759,35.295782842735115
-all_eligible,post_failure,0,0.85,20.697167755991288,41.16642225816193
-all_eligible,post_failure,0,0.9,29.19389978213508,55.46670529275244
-all_eligible,post_failure,0,0.95,38.3442265795207,69.7935388632574
-all_eligible,post_failure,0,1.0,53.37690631808278,93.10060216633822
-all_eligible,post_failure,1,0.0,0.0,0.0
-all_eligible,post_failure,1,0.05,0.43572984749455923,1.9103274783499047
-all_eligible,post_failure,1,0.1,1.089324618736387,5.64649702798371
-all_eligible,post_failure,1,0.15,3.05010893246187,8.319308087891553
-all_eligible,post_failure,1,0.2,4.793028322440085,12.691956633050605
-all_eligible,post_failure,1,0.25,6.5359477124183,15.022596228767338
-all_eligible,post_failure,1,0.3,8.714596949891074,17.09677419354839
-all_eligible,post_failure,1,0.35,9.368191721132902,18.714797747055812
-all_eligible,post_failure,1,0.4,9.80392156862745,20.605089160488877
-all_eligible,post_failure,1,0.45,9.80392156862745,20.988891115118324
-all_eligible,post_failure,1,0.5,11.111111111111116,23.188517108573226
-all_eligible,post_failure,1,0.55,12.200435729847491,24.65031723769452
-all_eligible,post_failure,1,0.6,12.636165577342052,26.161815712727353
-all_eligible,post_failure,1,0.65,13.943355119825707,27.790164518355276
-all_eligible,post_failure,1,0.7,15.032679738562093,29.294761682138958
-all_eligible,post_failure,1,0.75,16.775599128540307,32.06597208308288
-all_eligible,post_failure,1,0.8,20.04357298474946,37.03491618246177
-all_eligible,post_failure,1,0.85,22.875816993464053,41.015499009327904
-all_eligible,post_failure,1,0.9,28.104575163398692,51.01478661590863
-all_eligible,post_failure,1,0.95,37.472766884531595,67.30373338676284
-all_eligible,post_failure,1,1.0,54.68409586056645,92.54861417217658
-all_eligible,post_failure,2,0.0,0.0,0.0
-all_eligible,post_failure,2,0.05,0.6535947712418277,2.251171729961321
-all_eligible,post_failure,2,0.1,1.3071895424836555,6.216729533752996
-all_eligible,post_failure,2,0.15,3.26797385620915,8.607248193848704
-all_eligible,post_failure,2,0.2,3.9215686274509776,10.765371039512338
-all_eligible,post_failure,2,0.25,5.446623093681913,13.042917939840281
-all_eligible,post_failure,2,0.3,6.5359477124183,14.525587388175044
-all_eligible,post_failure,2,0.35,8.714596949891062,17.200346618187424
-all_eligible,post_failure,2,0.4,9.368191721132902,20.073542215807894
-all_eligible,post_failure,2,0.45,10.675381263616558,22.89647783212888
-all_eligible,post_failure,2,0.5,11.111111111111105,23.854360628877146
-all_eligible,post_failure,2,0.55,11.982570806100213,25.696207826453488
-all_eligible,post_failure,2,0.6,12.200435729847491,26.435052191187115
-all_eligible,post_failure,2,0.65,12.636165577342052,27.747698009089827
-all_eligible,post_failure,2,0.7,15.032679738562093,31.34926940596967
-all_eligible,post_failure,2,0.75,16.55773420479303,33.38366666703795
-all_eligible,post_failure,2,0.8,18.518518518518512,37.75911499399501
-all_eligible,post_failure,2,0.85,21.350762527233115,40.946322276581185
-all_eligible,post_failure,2,0.9,27.015250544662305,49.119998893012585
-all_eligible,post_failure,2,0.95,38.344226579520694,68.88600435838256
-all_eligible,post_failure,2,1.0,53.37690631808278,93.21169946954528
-all_eligible,post_failure,3,0.0,0.0,0.0
-all_eligible,post_failure,3,0.05,0.43572984749455923,2.552754607946617
-all_eligible,post_failure,3,0.1,1.3071895424836666,3.93068243999416
-all_eligible,post_failure,3,0.15,2.178649237472774,5.816814248093316
-all_eligible,post_failure,3,0.2,3.4858387799564294,11.171009423848377
-all_eligible,post_failure,3,0.25,5.228758169934644,14.199020503182503
-all_eligible,post_failure,3,0.3,6.318082788671031,16.486164063254893
-all_eligible,post_failure,3,0.35,7.4074074074074066,17.995881913958822
-all_eligible,post_failure,3,0.4,8.061002178649234,19.276998242575583
-all_eligible,post_failure,3,0.45,9.80392156862745,21.961317201338392
-all_eligible,post_failure,3,0.5,10.893246187363836,23.05919124374117
-all_eligible,post_failure,3,0.55,12.418300653594772,25.611128934106386
-all_eligible,post_failure,3,0.6,12.636165577342052,25.87899666038226
-all_eligible,post_failure,3,0.65,13.28976034858388,26.394647675159312
-all_eligible,post_failure,3,0.7,14.814814814814813,28.2299500589397
-all_eligible,post_failure,3,0.75,16.12200435729848,30.011597657042465
-all_eligible,post_failure,3,0.8,19.6078431372549,35.07195073811865
-all_eligible,post_failure,3,0.85,22.004357298474947,39.08500193977304
-all_eligible,post_failure,3,0.9,29.19389978213508,50.678664661466485
-all_eligible,post_failure,3,0.95,38.56209150326798,66.06855241062696
-all_eligible,post_failure,3,1.0,55.33769063180828,91.9693892045804
-all_eligible,post_failure,4,0.0,0.0,0.0
-all_eligible,post_failure,4,0.05,0.43572984749455923,1.1701338450553989
-all_eligible,post_failure,4,0.1,1.3071895424836666,4.582087149240421
-all_eligible,post_failure,4,0.15,2.3965141612200425,9.391608453591937
-all_eligible,post_failure,4,0.2,4.357298474945537,10.673309610800741
-all_eligible,post_failure,4,0.25,5.882352941176472,13.554215738461162
-all_eligible,post_failure,4,0.3,6.5359477124183,14.957295957607586
-all_eligible,post_failure,4,0.35,8.061002178649234,17.865269285346976
-all_eligible,post_failure,4,0.4,8.278867102396514,19.27827149865723
-all_eligible,post_failure,4,0.45,9.58605664488018,20.76260182556755
-all_eligible,post_failure,4,0.5,10.239651416122008,21.929869316753393
-all_eligible,post_failure,4,0.55,12.200435729847491,24.944391632486862
-all_eligible,post_failure,4,0.6,13.725490196078438,27.072990113769112
-all_eligible,post_failure,4,0.65,14.596949891067535,28.387654340477763
-all_eligible,post_failure,4,0.7,15.250544662309373,29.136875144227215
-all_eligible,post_failure,4,0.75,16.775599128540307,31.320569356657447
-all_eligible,post_failure,4,0.8,20.261437908496738,36.60056075583194
-all_eligible,post_failure,4,0.85,22.004357298474947,39.204700573398654
-all_eligible,post_failure,4,0.9,28.9760348583878,52.07312571435602
-all_eligible,post_failure,4,0.95,38.3442265795207,65.65176719756096
-all_eligible,post_failure,4,1.0,55.119825708061,92.82430357633208
-all_eligible,pre_attempt,0,0.0,0.0,0.0
-all_eligible,pre_attempt,0,0.05,0.0,0.5483126491556356
-all_eligible,pre_attempt,0,0.1,0.8714596949891074,3.435765625387577
-all_eligible,pre_attempt,0,0.15,1.525054466230935,5.971268334345847
-all_eligible,pre_attempt,0,0.2,1.9607843137254943,7.895631615805088
-all_eligible,pre_attempt,0,0.25,2.614379084967322,9.768113441889781
-all_eligible,pre_attempt,0,0.3,3.05010893246187,10.78826153326673
-all_eligible,pre_attempt,0,0.35,3.26797385620915,12.725380276272702
-all_eligible,pre_attempt,0,0.4,4.139433551198257,14.444313492821637
-all_eligible,pre_attempt,0,0.45,5.446623093681923,16.370732121889898
-all_eligible,pre_attempt,0,0.5,5.664488017429193,17.00168159210569
-all_eligible,pre_attempt,0,0.55,5.664488017429193,17.47900898191498
-all_eligible,pre_attempt,0,0.6,6.318082788671031,18.762709025660453
-all_eligible,pre_attempt,0,0.65,8.278867102396514,20.983977279647526
-all_eligible,pre_attempt,0,0.7,9.150326797385622,22.435972914265523
-all_eligible,pre_attempt,0,0.75,9.58605664488018,24.4884992418403
-all_eligible,pre_attempt,0,0.8,10.893246187363836,26.315813013364497
-all_eligible,pre_attempt,0,0.85,15.250544662309373,32.459100534150686
-all_eligible,pre_attempt,0,0.9,22.875816993464053,43.1818356937672
-all_eligible,pre_attempt,0,0.95,32.46187363834423,62.81536693956472
-all_eligible,pre_attempt,0,1.0,70.37037037037037,100.0
-all_eligible,pre_attempt,1,0.0,0.0,0.0
-all_eligible,pre_attempt,1,0.05,0.43572984749455923,0.6277722122042029
-all_eligible,pre_attempt,1,0.1,0.6535947712418277,3.255735434893914
-all_eligible,pre_attempt,1,0.15,1.089324618736387,5.110978427836798
-all_eligible,pre_attempt,1,0.2,1.9607843137254943,7.963706672009607
-all_eligible,pre_attempt,1,0.25,2.8322440087146017,10.352180591731807
-all_eligible,pre_attempt,1,0.3,3.703703703703709,11.522849573677064
-all_eligible,pre_attempt,1,0.35,3.9215686274509776,12.394786170662753
-all_eligible,pre_attempt,1,0.4,4.575163398692816,13.196905095839174
-all_eligible,pre_attempt,1,0.45,5.010893246187365,14.012710879583256
-all_eligible,pre_attempt,1,0.5,5.882352941176472,15.130847525545988
-all_eligible,pre_attempt,1,0.55,6.100217864923751,15.549167612814186
-all_eligible,pre_attempt,1,0.6,6.5359477124183,16.168961018722595
-all_eligible,pre_attempt,1,0.65,6.753812636165579,17.24224938222133
-all_eligible,pre_attempt,1,0.7,7.4074074074074066,19.260899396691823
-all_eligible,pre_attempt,1,0.75,9.368191721132902,22.47840201251141
-all_eligible,pre_attempt,1,0.8,11.328976034858385,26.171690821256032
-all_eligible,pre_attempt,1,0.85,15.250544662309373,31.325916872592895
-all_eligible,pre_attempt,1,0.9,21.786492374727672,41.834113849373324
-all_eligible,pre_attempt,1,0.95,30.93681917211329,58.46215632583094
-all_eligible,pre_attempt,1,1.0,70.37037037037037,100.0
-all_eligible,pre_attempt,2,0.0,0.0,0.0
-all_eligible,pre_attempt,2,0.05,0.0,0.7401289374087905
-all_eligible,pre_attempt,2,0.1,0.8714596949891074,3.594864632528394
-all_eligible,pre_attempt,2,0.15,1.3071895424836555,5.32629653749388
-all_eligible,pre_attempt,2,0.2,1.9607843137254943,7.105088287000116
-all_eligible,pre_attempt,2,0.25,2.3965141612200425,9.310637537720224
-all_eligible,pre_attempt,2,0.3,3.26797385620915,10.560370084436855
-all_eligible,pre_attempt,2,0.35,3.4858387799564294,11.2758132207604
-all_eligible,pre_attempt,2,0.4,4.357298474945537,12.810468243085914
-all_eligible,pre_attempt,2,0.45,4.575163398692805,13.636598347594886
-all_eligible,pre_attempt,2,0.5,4.793028322440085,15.132044698202696
-all_eligible,pre_attempt,2,0.55,5.228758169934644,15.787673023268356
-all_eligible,pre_attempt,2,0.6,6.3180827886710205,17.995011257647175
-all_eligible,pre_attempt,2,0.65,7.625272331154687,19.246305033332455
-all_eligible,pre_attempt,2,0.7,8.496732026143794,20.404235233846148
-all_eligible,pre_attempt,2,0.75,10.457516339869278,26.088371065584138
-all_eligible,pre_attempt,2,0.8,13.0718954248366,30.51247060164647
-all_eligible,pre_attempt,2,0.85,17.647058823529417,36.268499487896065
-all_eligible,pre_attempt,2,0.9,23.747276688453155,45.259164325751435
-all_eligible,pre_attempt,2,0.95,33.769063180827885,64.43181720522682
-all_eligible,pre_attempt,2,1.0,70.1525054466231,100.0
-all_eligible,pre_attempt,3,0.0,0.0,0.0
-all_eligible,pre_attempt,3,0.05,0.0,0.36919213517427885
-all_eligible,pre_attempt,3,0.1,0.8714596949891074,3.793197467723386
-all_eligible,pre_attempt,3,0.15,1.525054466230935,5.485415608782862
-all_eligible,pre_attempt,3,0.2,2.3965141612200425,8.992098416597539
-all_eligible,pre_attempt,3,0.25,3.26797385620915,10.144058270252653
-all_eligible,pre_attempt,3,0.3,3.26797385620915,11.126915281887184
-all_eligible,pre_attempt,3,0.35,3.4858387799564294,11.976136763268475
-all_eligible,pre_attempt,3,0.4,3.9215686274509776,12.864008375634805
-all_eligible,pre_attempt,3,0.45,4.575163398692816,13.880568879197963
-all_eligible,pre_attempt,3,0.5,4.575163398692816,13.880568879197963
-all_eligible,pre_attempt,3,0.55,5.664488017429193,15.2796828594159
-all_eligible,pre_attempt,3,0.6,5.664488017429193,15.537817080409777
-all_eligible,pre_attempt,3,0.65,6.318082788671031,16.9109431521543
-all_eligible,pre_attempt,3,0.7,7.4074074074074066,18.116123155226905
-all_eligible,pre_attempt,3,0.75,8.932461873638342,20.20831407352346
-all_eligible,pre_attempt,3,0.8,10.239651416122008,22.034874085175858
-all_eligible,pre_attempt,3,0.85,13.507625272331158,27.085007121106653
-all_eligible,pre_attempt,3,0.9,21.13289760348584,39.743796773580854
-all_eligible,pre_attempt,3,0.95,34.64052287581699,64.20033998304395
-all_eligible,pre_attempt,3,1.0,70.37037037037037,100.0
-all_eligible,pre_attempt,4,0.0,0.0,0.0
-all_eligible,pre_attempt,4,0.05,0.0,0.39570191560193146
-all_eligible,pre_attempt,4,0.1,0.21786492374727962,1.398444222495565
-all_eligible,pre_attempt,4,0.15,1.3071895424836666,3.3090507592905216
-all_eligible,pre_attempt,4,0.2,1.525054466230935,6.177009787010935
-all_eligible,pre_attempt,4,0.25,2.3965141612200425,8.470183283045007
-all_eligible,pre_attempt,4,0.3,2.8322440087146017,11.018935883324044
-all_eligible,pre_attempt,4,0.35,2.8322440087146017,11.87511490220462
-all_eligible,pre_attempt,4,0.4,3.26797385620915,12.037097851103306
-all_eligible,pre_attempt,4,0.45,3.4858387799564294,12.53449888395204
-all_eligible,pre_attempt,4,0.5,4.357298474945537,13.714057300530536
-all_eligible,pre_attempt,4,0.55,4.575163398692816,14.31260931557069
-all_eligible,pre_attempt,4,0.6,4.793028322440085,15.016537318406009
-all_eligible,pre_attempt,4,0.65,6.100217864923751,17.387428692281603
-all_eligible,pre_attempt,4,0.7,6.753812636165579,18.634292625537363
-all_eligible,pre_attempt,4,0.75,7.843137254901967,19.862680482727512
-all_eligible,pre_attempt,4,0.8,11.764705882352944,24.201848551298454
-all_eligible,pre_attempt,4,0.85,14.814814814814813,30.312077143901494
-all_eligible,pre_attempt,4,0.9,21.786492374727672,41.87593071061366
-all_eligible,pre_attempt,4,0.95,33.551198257080614,62.854466879567674
-all_eligible,pre_attempt,4,1.0,70.37037037037037,100.0
+population,classifier,features,seed,t,acceptance_loss_points,saving_pct
+filtered = headline,post_failure,D8 as specified,0,0.0,0.0,0.0
+filtered = headline,post_failure,D8 as specified,0,0.05,0.0,0.0
+filtered = headline,post_failure,D8 as specified,0,0.1,0.0,0.0
+filtered = headline,post_failure,D8 as specified,0,0.15,0.0,0.0
+filtered = headline,post_failure,D8 as specified,0,0.2,0.0,0.0
+filtered = headline,post_failure,D8 as specified,0,0.25,0.0,0.0
+filtered = headline,post_failure,D8 as specified,0,0.3,0.0,0.0
+filtered = headline,post_failure,D8 as specified,0,0.35,0.0,0.0
+filtered = headline,post_failure,D8 as specified,0,0.4,0.0,0.4867154170764554
+filtered = headline,post_failure,D8 as specified,0,0.45,0.512820512820511,1.1350482980050813
+filtered = headline,post_failure,D8 as specified,0,0.5,1.025641025641022,1.591955306762971
+filtered = headline,post_failure,D8 as specified,0,0.55,2.564102564102566,4.1000534129416515
+filtered = headline,post_failure,D8 as specified,0,0.6,3.076923076923077,4.434000737385491
+filtered = headline,post_failure,D8 as specified,0,0.65,4.61538461538461,6.800974660430981
+filtered = headline,post_failure,D8 as specified,0,0.7,6.666666666666665,9.09063302440022
+filtered = headline,post_failure,D8 as specified,0,0.75,9.230769230769232,13.074713098727486
+filtered = headline,post_failure,D8 as specified,0,0.8,15.384615384615385,19.887331668657914
+filtered = headline,post_failure,D8 as specified,0,0.85,21.02564102564102,26.37019472156431
+filtered = headline,post_failure,D8 as specified,0,0.9,30.25641025641025,39.21249538668305
+filtered = headline,post_failure,D8 as specified,0,0.95,44.61538461538461,65.12438583034954
+filtered = headline,post_failure,D8 as specified,0,1.0,70.76923076923076,96.20233425919491
+filtered = headline,post_failure,D8 as specified,1,0.0,0.0,0.0
+filtered = headline,post_failure,D8 as specified,1,0.05,0.0,0.0
+filtered = headline,post_failure,D8 as specified,1,0.1,0.0,0.0
+filtered = headline,post_failure,D8 as specified,1,0.15,0.0,0.0
+filtered = headline,post_failure,D8 as specified,1,0.2,0.0,0.0
+filtered = headline,post_failure,D8 as specified,1,0.25,0.0,0.0
+filtered = headline,post_failure,D8 as specified,1,0.3,0.512820512820511,1.3437071562349856
+filtered = headline,post_failure,D8 as specified,1,0.35,1.025641025641022,2.679496454010366
+filtered = headline,post_failure,D8 as specified,1,0.4,1.025641025641022,2.679496454010366
+filtered = headline,post_failure,D8 as specified,1,0.45,1.025641025641022,2.679496454010366
+filtered = headline,post_failure,D8 as specified,1,0.5,1.025641025641022,2.679496454010366
+filtered = headline,post_failure,D8 as specified,1,0.55,2.564102564102566,4.550439832379871
+filtered = headline,post_failure,D8 as specified,1,0.6,2.564102564102566,4.550439832379871
+filtered = headline,post_failure,D8 as specified,1,0.65,5.128205128205121,7.180566110112629
+filtered = headline,post_failure,D8 as specified,1,0.7,6.666666666666665,8.493067588889136
+filtered = headline,post_failure,D8 as specified,1,0.75,10.769230769230765,15.191575845725092
+filtered = headline,post_failure,D8 as specified,1,0.8,15.384615384615385,20.370321034694573
+filtered = headline,post_failure,D8 as specified,1,0.85,21.02564102564102,29.263939110364333
+filtered = headline,post_failure,D8 as specified,1,0.9,33.33333333333333,44.845353046130555
+filtered = headline,post_failure,D8 as specified,1,0.95,47.179487179487175,66.35910599366981
+filtered = headline,post_failure,D8 as specified,1,1.0,70.76923076923076,96.20233425919491
+filtered = headline,post_failure,D8 as specified,2,0.0,0.0,0.0
+filtered = headline,post_failure,D8 as specified,2,0.05,0.0,0.0
+filtered = headline,post_failure,D8 as specified,2,0.1,0.0,0.0
+filtered = headline,post_failure,D8 as specified,2,0.15,0.0,0.0
+filtered = headline,post_failure,D8 as specified,2,0.2,0.0,0.0
+filtered = headline,post_failure,D8 as specified,2,0.25,0.0,0.0
+filtered = headline,post_failure,D8 as specified,2,0.3,0.0,0.0
+filtered = headline,post_failure,D8 as specified,2,0.35,0.0,0.0
+filtered = headline,post_failure,D8 as specified,2,0.4,0.0,0.0
+filtered = headline,post_failure,D8 as specified,2,0.45,0.0,0.0
+filtered = headline,post_failure,D8 as specified,2,0.5,0.512820512820511,0.5207156328148055
+filtered = headline,post_failure,D8 as specified,2,0.55,0.512820512820511,0.5207156328148055
+filtered = headline,post_failure,D8 as specified,2,0.6,1.538461538461533,2.332042194547179
+filtered = headline,post_failure,D8 as specified,2,0.65,4.102564102564099,5.1046899245530515
+filtered = headline,post_failure,D8 as specified,2,0.7,6.666666666666665,8.819097054873371
+filtered = headline,post_failure,D8 as specified,2,0.75,10.256410256410254,14.263789136809969
+filtered = headline,post_failure,D8 as specified,2,0.8,13.33333333333333,18.14819734582207
+filtered = headline,post_failure,D8 as specified,2,0.85,21.02564102564102,27.027842730092487
+filtered = headline,post_failure,D8 as specified,2,0.9,31.28205128205128,40.24461152471312
+filtered = headline,post_failure,D8 as specified,2,0.95,47.179487179487175,63.66191079722029
+filtered = headline,post_failure,D8 as specified,2,1.0,70.76923076923076,96.20233425919491
+filtered = headline,post_failure,D8 as specified,3,0.0,0.0,0.0
+filtered = headline,post_failure,D8 as specified,3,0.05,0.0,0.0
+filtered = headline,post_failure,D8 as specified,3,0.1,0.0,0.0
+filtered = headline,post_failure,D8 as specified,3,0.15,0.0,0.0
+filtered = headline,post_failure,D8 as specified,3,0.2,0.0,0.0
+filtered = headline,post_failure,D8 as specified,3,0.25,0.0,0.4867154170764554
+filtered = headline,post_failure,D8 as specified,3,0.3,0.0,0.4867154170764554
+filtered = headline,post_failure,D8 as specified,3,0.35,0.0,0.4867154170764554
+filtered = headline,post_failure,D8 as specified,3,0.4,0.512820512820511,0.9534033098138828
+filtered = headline,post_failure,D8 as specified,3,0.45,0.512820512820511,0.9534033098138828
+filtered = headline,post_failure,D8 as specified,3,0.5,0.512820512820511,0.9534033098138828
+filtered = headline,post_failure,D8 as specified,3,0.55,2.051282051282044,3.061882441971875
+filtered = headline,post_failure,D8 as specified,3,0.6,2.051282051282044,3.061882441971875
+filtered = headline,post_failure,D8 as specified,3,0.65,4.61538461538461,6.2117928397594895
+filtered = headline,post_failure,D8 as specified,3,0.7,7.692307692307687,10.987658760048447
+filtered = headline,post_failure,D8 as specified,3,0.75,12.82051282051282,19.024750852939654
+filtered = headline,post_failure,D8 as specified,3,0.8,14.871794871794874,21.322792831748483
+filtered = headline,post_failure,D8 as specified,3,0.85,22.564102564102562,29.830764624796902
+filtered = headline,post_failure,D8 as specified,3,0.9,32.30769230769231,42.944601259442514
+filtered = headline,post_failure,D8 as specified,3,0.95,47.692307692307686,64.370792007546
+filtered = headline,post_failure,D8 as specified,3,1.0,70.76923076923076,96.20233425919491
+filtered = headline,post_failure,D8 as specified,4,0.0,0.0,0.0
+filtered = headline,post_failure,D8 as specified,4,0.05,0.0,0.0
+filtered = headline,post_failure,D8 as specified,4,0.1,0.0,0.0
+filtered = headline,post_failure,D8 as specified,4,0.15,0.0,0.0
+filtered = headline,post_failure,D8 as specified,4,0.2,0.0,0.0
+filtered = headline,post_failure,D8 as specified,4,0.25,0.0,0.0
+filtered = headline,post_failure,D8 as specified,4,0.3,0.0,0.4867154170764554
+filtered = headline,post_failure,D8 as specified,4,0.35,0.0,0.4867154170764554
+filtered = headline,post_failure,D8 as specified,4,0.4,0.0,0.4867154170764554
+filtered = headline,post_failure,D8 as specified,4,0.45,1.025641025641022,1.9841221787040064
+filtered = headline,post_failure,D8 as specified,4,0.5,1.538461538461533,2.6836882614301505
+filtered = headline,post_failure,D8 as specified,4,0.55,1.538461538461533,2.6836882614301505
+filtered = headline,post_failure,D8 as specified,4,0.6,2.564102564102566,3.9011754386912734
+filtered = headline,post_failure,D8 as specified,4,0.65,5.641025641025643,8.413423247912966
+filtered = headline,post_failure,D8 as specified,4,0.7,7.692307692307687,11.671854882235365
+filtered = headline,post_failure,D8 as specified,4,0.75,9.230769230769232,12.722601275464529
+filtered = headline,post_failure,D8 as specified,4,0.8,14.358974358974352,18.54362451242293
+filtered = headline,post_failure,D8 as specified,4,0.85,18.974358974358974,26.913266660618042
+filtered = headline,post_failure,D8 as specified,4,0.9,28.205128205128204,39.48682589448978
+filtered = headline,post_failure,D8 as specified,4,0.95,43.589743589743584,61.40718416174936
+filtered = headline,post_failure,D8 as specified,4,1.0,70.76923076923076,96.20233425919491
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.0,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.05,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.1,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.15,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.2,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.25,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.3,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.35,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.4,0.0,0.4867154170764554
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.45,0.512820512820511,1.1350482980050813
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.5,1.025641025641022,1.591955306762971
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.55,2.564102564102566,4.1000534129416515
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.6,3.076923076923077,4.434000737385491
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.65,4.61538461538461,6.800974660430981
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.7,7.179487179487176,9.344470251487946
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.75,9.230769230769232,13.074713098727486
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.8,15.384615384615385,19.887331668657914
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.85,20.512820512820507,26.012028065361637
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.9,30.25641025641025,39.21249538668305
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,0.95,44.61538461538461,65.12438583034954
+filtered = headline,post_failure,plus rung position (post-hoc variant),0,1.0,70.76923076923076,96.20233425919491
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.0,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.05,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.1,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.15,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.2,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.25,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.3,0.512820512820511,1.3437071562349856
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.35,1.025641025641022,2.679496454010366
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.4,1.025641025641022,2.679496454010366
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.45,1.025641025641022,2.679496454010366
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.5,1.025641025641022,2.679496454010366
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.55,2.564102564102566,4.550439832379871
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.6,2.564102564102566,4.550439832379871
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.65,5.128205128205121,7.180566110112629
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.7,6.666666666666665,8.493067588889136
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.75,10.769230769230765,15.191575845725092
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.8,14.871794871794874,19.85752326033937
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.85,20.512820512820507,28.743223477549517
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.9,33.33333333333333,44.845353046130555
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,0.95,47.179487179487175,66.35910599366981
+filtered = headline,post_failure,plus rung position (post-hoc variant),1,1.0,70.76923076923076,96.20233425919491
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.0,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.05,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.1,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.15,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.2,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.25,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.3,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.35,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.4,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.45,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.5,0.512820512820511,0.5207156328148055
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.55,0.512820512820511,0.5207156328148055
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.6,1.538461538461533,2.332042194547179
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.65,4.102564102564099,5.1046899245530515
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.7,6.666666666666665,8.819097054873371
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.75,10.256410256410254,14.263789136809969
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.8,13.33333333333333,18.14819734582207
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.85,20.512820512820507,26.85644438226078
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.9,31.28205128205128,40.24461152471312
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,0.95,47.179487179487175,63.66191079722029
+filtered = headline,post_failure,plus rung position (post-hoc variant),2,1.0,70.76923076923076,96.20233425919491
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.0,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.05,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.1,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.15,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.2,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.25,0.0,0.4867154170764554
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.3,0.0,0.4867154170764554
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.35,0.0,0.4867154170764554
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.4,0.512820512820511,0.9534033098138828
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.45,0.512820512820511,0.9534033098138828
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.5,0.512820512820511,0.9534033098138828
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.55,2.051282051282044,3.061882441971875
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.6,2.564102564102566,3.5187894507297646
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.65,4.61538461538461,6.780481379711977
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.7,7.692307692307687,10.987658760048447
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.75,12.82051282051282,19.024750852939654
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.8,15.384615384615385,21.835590606103672
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.85,22.564102564102562,29.830764624796902
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.9,32.30769230769231,42.486762737924664
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,0.95,47.692307692307686,64.370792007546
+filtered = headline,post_failure,plus rung position (post-hoc variant),3,1.0,70.76923076923076,96.20233425919491
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.0,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.05,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.1,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.15,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.2,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.25,0.0,0.0
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.3,0.0,0.4867154170764554
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.35,0.0,0.4867154170764554
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.4,0.0,0.4867154170764554
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.45,1.025641025641022,1.9841221787040064
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.5,1.538461538461533,2.6836882614301505
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.55,1.538461538461533,2.6836882614301505
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.6,2.564102564102566,3.9011754386912734
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.65,5.128205128205121,8.15958602082526
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.7,7.692307692307687,11.671854882235365
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.75,9.230769230769232,12.722601275464529
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.8,14.358974358974352,18.54362451242293
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.85,18.974358974358974,26.913266660618042
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.9,28.717948717948715,39.950719248947344
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,0.95,43.589743589743584,61.40718416174936
+filtered = headline,post_failure,plus rung position (post-hoc variant),4,1.0,70.76923076923076,96.20233425919491
+filtered = headline,pre_attempt,D8 as specified,0,0.0,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,0,0.05,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,0,0.1,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,0,0.15,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,0,0.2,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,0,0.25,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,0,0.3,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,0,0.35,0.0,0.5060946085345575
+filtered = headline,pre_attempt,D8 as specified,0,0.4,0.0,0.5060946085345575
+filtered = headline,pre_attempt,D8 as specified,0,0.45,0.512820512820511,0.9064625188142217
+filtered = headline,pre_attempt,D8 as specified,0,0.5,0.512820512820511,0.9064625188142217
+filtered = headline,pre_attempt,D8 as specified,0,0.55,0.512820512820511,1.1885283085796172
+filtered = headline,pre_attempt,D8 as specified,0,0.6,2.564102564102566,3.9311030806430947
+filtered = headline,pre_attempt,D8 as specified,0,0.65,3.589743589743588,5.808201895330378
+filtered = headline,pre_attempt,D8 as specified,0,0.7,4.61538461538461,7.0583926225679665
+filtered = headline,pre_attempt,D8 as specified,0,0.75,7.179487179487176,11.087487119507312
+filtered = headline,pre_attempt,D8 as specified,0,0.8,12.307692307692308,16.745532883983994
+filtered = headline,pre_attempt,D8 as specified,0,0.85,17.948717948717952,25.03204310742968
+filtered = headline,pre_attempt,D8 as specified,0,0.9,25.64102564102564,35.32458468969354
+filtered = headline,pre_attempt,D8 as specified,0,0.95,39.48717948717949,57.97398210340424
+filtered = headline,pre_attempt,D8 as specified,0,1.0,85.12820512820512,100.0
+filtered = headline,pre_attempt,D8 as specified,1,0.0,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,1,0.05,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,1,0.1,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,1,0.15,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,1,0.2,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,1,0.25,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,1,0.3,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,1,0.35,1.025641025641022,2.7376340283846723
+filtered = headline,pre_attempt,D8 as specified,1,0.4,1.025641025641022,2.7376340283846723
+filtered = headline,pre_attempt,D8 as specified,1,0.45,1.025641025641022,2.7376340283846723
+filtered = headline,pre_attempt,D8 as specified,1,0.5,1.025641025641022,2.7376340283846723
+filtered = headline,pre_attempt,D8 as specified,1,0.55,1.538461538461533,3.302879697176375
+filtered = headline,pre_attempt,D8 as specified,1,0.6,3.076923076923077,5.147658745144246
+filtered = headline,pre_attempt,D8 as specified,1,0.65,4.102564102564099,6.3810822427026626
+filtered = headline,pre_attempt,D8 as specified,1,0.7,6.153846153846154,8.810303574419398
+filtered = headline,pre_attempt,D8 as specified,1,0.75,8.71794871794872,12.455797390758228
+filtered = headline,pre_attempt,D8 as specified,1,0.8,10.256410256410254,15.117047372826619
+filtered = headline,pre_attempt,D8 as specified,1,0.85,16.92307692307692,27.094211151213756
+filtered = headline,pre_attempt,D8 as specified,1,0.9,27.17948717948717,37.811075425892284
+filtered = headline,pre_attempt,D8 as specified,1,0.95,41.53846153846153,60.17087297463508
+filtered = headline,pre_attempt,D8 as specified,1,1.0,85.12820512820512,100.0
+filtered = headline,pre_attempt,D8 as specified,2,0.0,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,2,0.05,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,2,0.1,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,2,0.15,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,2,0.2,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,2,0.25,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,2,0.3,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,2,0.35,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,2,0.4,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,2,0.45,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,2,0.5,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,2,0.55,0.512820512820511,0.40036791027966423
+filtered = headline,pre_attempt,D8 as specified,2,0.6,1.538461538461533,2.0909815964749834
+filtered = headline,pre_attempt,D8 as specified,2,0.65,3.076923076923077,4.0135419598991025
+filtered = headline,pre_attempt,D8 as specified,2,0.7,5.128205128205121,7.47599351890681
+filtered = headline,pre_attempt,D8 as specified,2,0.75,6.666666666666665,11.134994270265008
+filtered = headline,pre_attempt,D8 as specified,2,0.8,10.769230769230765,19.565970944626578
+filtered = headline,pre_attempt,D8 as specified,2,0.85,17.948717948717952,26.507659922576376
+filtered = headline,pre_attempt,D8 as specified,2,0.9,25.64102564102564,35.28527857727446
+filtered = headline,pre_attempt,D8 as specified,2,0.95,39.48717948717949,54.68853659904318
+filtered = headline,pre_attempt,D8 as specified,2,1.0,85.12820512820512,100.0
+filtered = headline,pre_attempt,D8 as specified,3,0.0,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,3,0.05,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,3,0.1,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,3,0.15,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,3,0.2,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,3,0.25,0.0,0.5060946085345575
+filtered = headline,pre_attempt,D8 as specified,3,0.3,0.0,0.5060946085345575
+filtered = headline,pre_attempt,D8 as specified,3,0.35,0.0,0.5060946085345575
+filtered = headline,pre_attempt,D8 as specified,3,0.4,0.512820512820511,0.9921616927300758
+filtered = headline,pre_attempt,D8 as specified,3,0.45,0.512820512820511,0.9921616927300758
+filtered = headline,pre_attempt,D8 as specified,3,0.5,0.512820512820511,0.9921616927300758
+filtered = headline,pre_attempt,D8 as specified,3,0.55,1.025641025641022,1.7874910132306354
+filtered = headline,pre_attempt,D8 as specified,3,0.6,2.051282051282044,3.2863956473762057
+filtered = headline,pre_attempt,D8 as specified,3,0.65,3.076923076923077,4.768533051842583
+filtered = headline,pre_attempt,D8 as specified,3,0.7,6.153846153846154,9.663751839039058
+filtered = headline,pre_attempt,D8 as specified,3,0.75,9.230769230769232,14.898324450738142
+filtered = headline,pre_attempt,D8 as specified,3,0.8,11.794871794871797,17.326331089815906
+filtered = headline,pre_attempt,D8 as specified,3,0.85,19.487179487179485,26.933927613633834
+filtered = headline,pre_attempt,D8 as specified,3,0.9,27.692307692307693,37.177281596121034
+filtered = headline,pre_attempt,D8 as specified,3,0.95,43.589743589743584,62.76562039774476
+filtered = headline,pre_attempt,D8 as specified,3,1.0,85.12820512820512,100.0
+filtered = headline,pre_attempt,D8 as specified,4,0.0,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,4,0.05,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,4,0.1,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,4,0.15,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,4,0.2,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,4,0.25,0.0,0.0
+filtered = headline,pre_attempt,D8 as specified,4,0.3,0.0,0.5060946085345575
+filtered = headline,pre_attempt,D8 as specified,4,0.35,0.0,0.5060946085345575
+filtered = headline,pre_attempt,D8 as specified,4,0.4,0.0,0.5060946085345575
+filtered = headline,pre_attempt,D8 as specified,4,0.45,0.0,0.5060946085345575
+filtered = headline,pre_attempt,D8 as specified,4,0.5,0.512820512820511,1.3745476806915846
+filtered = headline,pre_attempt,D8 as specified,4,0.55,1.025641025641022,2.0934929548758308
+filtered = headline,pre_attempt,D8 as specified,4,0.6,2.564102564102566,5.031867983030825
+filtered = headline,pre_attempt,D8 as specified,4,0.65,3.076923076923077,5.4322358933104775
+filtered = headline,pre_attempt,D8 as specified,4,0.7,4.61538461538461,7.816826585672243
+filtered = headline,pre_attempt,D8 as specified,4,0.75,7.179487179487176,12.100324669457352
+filtered = headline,pre_attempt,D8 as specified,4,0.8,11.282051282051276,16.910127462616988
+filtered = headline,pre_attempt,D8 as specified,4,0.85,15.897435897435896,22.998248942313836
+filtered = headline,pre_attempt,D8 as specified,4,0.9,24.615384615384617,37.3028346119588
+filtered = headline,pre_attempt,D8 as specified,4,0.95,40.51282051282051,59.36790897555393
+filtered = headline,pre_attempt,D8 as specified,4,1.0,85.12820512820512,100.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.0,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.05,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.1,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.15,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.2,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.25,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.3,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.35,0.0,0.5060946085345575
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.4,0.0,0.5060946085345575
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.45,0.512820512820511,0.9064625188142217
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.5,0.512820512820511,0.9064625188142217
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.55,0.512820512820511,1.1885283085796172
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.6,2.564102564102566,3.9311030806430947
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.65,3.589743589743588,5.808201895330378
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.7,4.61538461538461,7.0583926225679665
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.75,7.179487179487176,11.087487119507312
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.8,12.307692307692308,16.745532883983994
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.85,17.948717948717952,25.03204310742968
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.9,25.64102564102564,35.32458468969354
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,0.95,39.48717948717949,57.97398210340424
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),0,1.0,85.12820512820512,100.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.0,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.05,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.1,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.15,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.2,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.25,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.3,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.35,1.025641025641022,2.7376340283846723
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.4,1.025641025641022,2.7376340283846723
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.45,1.025641025641022,2.7376340283846723
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.5,1.025641025641022,2.7376340283846723
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.55,1.538461538461533,3.302879697176375
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.6,3.076923076923077,5.147658745144246
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.65,4.102564102564099,6.3810822427026626
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.7,6.153846153846154,8.810303574419398
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.75,8.205128205128197,11.88542840178679
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.8,10.256410256410254,15.117047372826619
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.85,16.41025641025641,26.024085566526487
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.9,27.17948717948717,37.811075425892284
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,0.95,42.051282051282044,61.00672310019368
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),1,1.0,85.12820512820512,100.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.0,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.05,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.1,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.15,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.2,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.25,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.3,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.35,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.4,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.45,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.5,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.55,0.512820512820511,0.40036791027966423
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.6,1.538461538461533,2.0909815964749834
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.65,3.076923076923077,4.0135419598991025
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.7,5.128205128205121,8.064061250317401
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.75,6.666666666666665,11.134994270265008
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.8,10.769230769230765,19.565970944626578
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.85,18.461538461538463,26.762711842303087
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.9,25.64102564102564,35.28527857727446
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,0.95,39.48717948717949,54.68853659904318
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),2,1.0,85.12820512820512,100.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.0,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.05,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.1,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.15,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.2,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.25,0.0,0.5060946085345575
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.3,0.0,0.5060946085345575
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.35,0.0,0.5060946085345575
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.4,0.512820512820511,0.9921616927300758
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.45,0.512820512820511,0.9921616927300758
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.5,0.512820512820511,0.9921616927300758
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.55,1.025641025641022,1.7874910132306354
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.6,2.051282051282044,3.2863956473762057
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.65,3.076923076923077,4.768533051842583
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.7,6.153846153846154,9.663751839039058
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.75,9.230769230769232,14.898324450738142
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.8,11.794871794871797,17.326331089815906
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.85,19.487179487179485,26.933927613633834
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.9,27.692307692307693,37.177281596121034
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,0.95,43.589743589743584,62.4560749815607
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),3,1.0,85.12820512820512,100.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.0,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.05,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.1,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.15,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.2,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.25,0.0,0.0
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.3,0.0,0.5060946085345575
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.35,0.0,0.5060946085345575
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.4,0.0,0.5060946085345575
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.45,0.0,0.5060946085345575
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.5,0.512820512820511,1.3745476806915846
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.55,1.025641025641022,2.0934929548758308
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.6,2.564102564102566,5.031867983030825
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.65,3.076923076923077,5.4322358933104775
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.7,4.61538461538461,7.816826585672243
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.75,7.179487179487176,11.655709903079813
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.8,11.794871794871797,17.517291205606654
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.85,15.897435897435896,22.998248942313836
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.9,24.615384615384617,37.3028346119588
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,0.95,39.48717948717949,58.71109187640763
+filtered = headline,pre_attempt,plus rung position (post-hoc variant),4,1.0,85.12820512820512,100.0
+all_eligible,post_failure,D8 as specified,0,0.0,0.0,0.0
+all_eligible,post_failure,D8 as specified,0,0.05,1.3071895424836666,2.8467666447867357
+all_eligible,post_failure,D8 as specified,0,0.1,1.7429193899782147,4.822099883630404
+all_eligible,post_failure,D8 as specified,0,0.15,2.178649237472774,7.212084349225012
+all_eligible,post_failure,D8 as specified,0,0.2,4.139433551198257,10.866571379233125
+all_eligible,post_failure,D8 as specified,0,0.25,5.228758169934644,12.963016756565782
+all_eligible,post_failure,D8 as specified,0,0.3,6.318082788671031,15.602457787977041
+all_eligible,post_failure,D8 as specified,0,0.35,9.150326797385622,19.74437812606501
+all_eligible,post_failure,D8 as specified,0,0.4,9.80392156862745,22.499306182424085
+all_eligible,post_failure,D8 as specified,0,0.45,10.457516339869278,24.18328149948096
+all_eligible,post_failure,D8 as specified,0,0.5,11.111111111111116,25.862779685352
+all_eligible,post_failure,D8 as specified,0,0.55,11.546840958605664,26.381438113497257
+all_eligible,post_failure,D8 as specified,0,0.6,12.636165577342052,27.68692364799662
+all_eligible,post_failure,D8 as specified,0,0.65,13.725490196078438,28.92287359526794
+all_eligible,post_failure,D8 as specified,0,0.7,13.725490196078438,28.98658661598964
+all_eligible,post_failure,D8 as specified,0,0.75,14.814814814814813,31.22331543714556
+all_eligible,post_failure,D8 as specified,0,0.8,16.99346405228759,35.295782842735115
+all_eligible,post_failure,D8 as specified,0,0.85,20.697167755991288,41.16642225816193
+all_eligible,post_failure,D8 as specified,0,0.9,29.19389978213508,55.46670529275244
+all_eligible,post_failure,D8 as specified,0,0.95,38.12636165577342,69.58635559969399
+all_eligible,post_failure,D8 as specified,0,1.0,53.37690631808278,93.10060216633822
+all_eligible,post_failure,D8 as specified,1,0.0,0.0,0.0
+all_eligible,post_failure,D8 as specified,1,0.05,0.43572984749455923,1.9103274783499047
+all_eligible,post_failure,D8 as specified,1,0.1,1.089324618736387,5.64649702798371
+all_eligible,post_failure,D8 as specified,1,0.15,3.05010893246187,8.36672677486141
+all_eligible,post_failure,D8 as specified,1,0.2,4.793028322440085,12.691956633050605
+all_eligible,post_failure,D8 as specified,1,0.25,6.5359477124183,15.022596228767338
+all_eligible,post_failure,D8 as specified,1,0.3,8.496732026143794,16.90687682272536
+all_eligible,post_failure,D8 as specified,1,0.35,9.368191721132902,18.40401611790111
+all_eligible,post_failure,D8 as specified,1,0.4,9.80392156862745,20.388031790556347
+all_eligible,post_failure,D8 as specified,1,0.45,9.80392156862745,20.988891115118324
+all_eligible,post_failure,D8 as specified,1,0.5,11.111111111111116,23.188517108573226
+all_eligible,post_failure,D8 as specified,1,0.55,11.764705882352944,24.14880117544914
+all_eligible,post_failure,D8 as specified,1,0.6,12.636165577342052,26.09514014114295
+all_eligible,post_failure,D8 as specified,1,0.65,13.943355119825707,27.790164518355276
+all_eligible,post_failure,D8 as specified,1,0.7,15.032679738562093,29.294761682138958
+all_eligible,post_failure,D8 as specified,1,0.75,16.775599128540307,32.06597208308288
+all_eligible,post_failure,D8 as specified,1,0.8,20.04357298474946,37.03491618246177
+all_eligible,post_failure,D8 as specified,1,0.85,22.657952069716774,41.207538012867616
+all_eligible,post_failure,D8 as specified,1,0.9,28.32244008714597,51.129660054765246
+all_eligible,post_failure,D8 as specified,1,0.95,37.690631808278866,67.50409403593135
+all_eligible,post_failure,D8 as specified,1,1.0,54.68409586056645,92.54861417217658
+all_eligible,post_failure,D8 as specified,2,0.0,0.0,0.0
+all_eligible,post_failure,D8 as specified,2,0.05,0.6535947712418277,2.0621308093078494
+all_eligible,post_failure,D8 as specified,2,0.1,1.3071895424836555,6.180506123807428
+all_eligible,post_failure,D8 as specified,2,0.15,3.26797385620915,8.607248193848704
+all_eligible,post_failure,D8 as specified,2,0.2,3.9215686274509776,10.765371039512338
+all_eligible,post_failure,D8 as specified,2,0.25,5.446623093681913,12.951001037103394
+all_eligible,post_failure,D8 as specified,2,0.3,6.5359477124183,14.525587388175044
+all_eligible,post_failure,D8 as specified,2,0.35,8.714596949891062,17.123371872053074
+all_eligible,post_failure,D8 as specified,2,0.4,9.368191721132902,20.073542215807894
+all_eligible,post_failure,D8 as specified,2,0.45,10.675381263616558,22.89647783212888
+all_eligible,post_failure,D8 as specified,2,0.5,10.893246187363836,23.67912988326545
+all_eligible,post_failure,D8 as specified,2,0.55,11.764705882352944,25.35140624303406
+all_eligible,post_failure,D8 as specified,2,0.6,12.200435729847491,26.529685849669914
+all_eligible,post_failure,D8 as specified,2,0.65,12.636165577342052,27.747698009089827
+all_eligible,post_failure,D8 as specified,2,0.7,15.032679738562093,31.34926940596967
+all_eligible,post_failure,D8 as specified,2,0.75,16.775599128540307,34.14288669986596
+all_eligible,post_failure,D8 as specified,2,0.8,18.518518518518512,37.75911499399501
+all_eligible,post_failure,D8 as specified,2,0.85,21.350762527233115,40.999299013626576
+all_eligible,post_failure,D8 as specified,2,0.9,27.015250544662305,49.119998893012585
+all_eligible,post_failure,D8 as specified,2,0.95,38.12636165577342,68.68170885421578
+all_eligible,post_failure,D8 as specified,2,1.0,53.37690631808278,93.21169946954528
+all_eligible,post_failure,D8 as specified,3,0.0,0.0,0.0
+all_eligible,post_failure,D8 as specified,3,0.05,0.43572984749455923,2.552754607946617
+all_eligible,post_failure,D8 as specified,3,0.1,1.3071895424836666,3.93068243999416
+all_eligible,post_failure,D8 as specified,3,0.15,2.178649237472774,5.816814248093316
+all_eligible,post_failure,D8 as specified,3,0.2,3.4858387799564294,11.41698736962825
+all_eligible,post_failure,D8 as specified,3,0.25,5.228758169934644,14.199020503182503
+all_eligible,post_failure,D8 as specified,3,0.3,6.318082788671031,16.486164063254893
+all_eligible,post_failure,D8 as specified,3,0.35,7.4074074074074066,17.995881913958822
+all_eligible,post_failure,D8 as specified,3,0.4,8.061002178649234,19.276998242575583
+all_eligible,post_failure,D8 as specified,3,0.45,9.80392156862745,21.961317201338392
+all_eligible,post_failure,D8 as specified,3,0.5,10.893246187363836,23.05919124374117
+all_eligible,post_failure,D8 as specified,3,0.55,12.418300653594772,25.611128934106386
+all_eligible,post_failure,D8 as specified,3,0.6,12.636165577342052,25.87899666038226
+all_eligible,post_failure,D8 as specified,3,0.65,13.28976034858388,26.394647675159312
+all_eligible,post_failure,D8 as specified,3,0.7,15.032679738562093,28.5704828297487
+all_eligible,post_failure,D8 as specified,3,0.75,16.12200435729848,30.011597657042465
+all_eligible,post_failure,D8 as specified,3,0.8,19.6078431372549,35.07195073811865
+all_eligible,post_failure,D8 as specified,3,0.85,22.004357298474947,39.08500193977304
+all_eligible,post_failure,D8 as specified,3,0.9,29.19389978213508,50.678664661466485
+all_eligible,post_failure,D8 as specified,3,0.95,38.56209150326798,66.06855241062696
+all_eligible,post_failure,D8 as specified,3,1.0,55.33769063180828,91.9693892045804
+all_eligible,post_failure,D8 as specified,4,0.0,0.0,0.0
+all_eligible,post_failure,D8 as specified,4,0.05,0.43572984749455923,1.1083969924803982
+all_eligible,post_failure,D8 as specified,4,0.1,1.3071895424836666,4.582087149240421
+all_eligible,post_failure,D8 as specified,4,0.15,2.3965141612200425,9.391608453591937
+all_eligible,post_failure,D8 as specified,4,0.2,4.357298474945537,10.673309610800741
+all_eligible,post_failure,D8 as specified,4,0.25,5.882352941176472,13.554215738461162
+all_eligible,post_failure,D8 as specified,4,0.3,6.5359477124183,14.957295957607586
+all_eligible,post_failure,D8 as specified,4,0.35,8.061002178649234,17.865269285346976
+all_eligible,post_failure,D8 as specified,4,0.4,8.278867102396514,19.27827149865723
+all_eligible,post_failure,D8 as specified,4,0.45,9.368191721132902,20.541672088852724
+all_eligible,post_failure,D8 as specified,4,0.5,10.239651416122008,21.929869316753393
+all_eligible,post_failure,D8 as specified,4,0.55,12.200435729847491,24.944391632486862
+all_eligible,post_failure,D8 as specified,4,0.6,13.725490196078438,27.072990113769112
+all_eligible,post_failure,D8 as specified,4,0.65,14.596949891067535,28.508261691758207
+all_eligible,post_failure,D8 as specified,4,0.7,15.250544662309373,29.136875144227215
+all_eligible,post_failure,D8 as specified,4,0.75,16.775599128540307,31.320569356657447
+all_eligible,post_failure,D8 as specified,4,0.8,20.261437908496738,36.60056075583194
+all_eligible,post_failure,D8 as specified,4,0.85,22.004357298474947,39.204700573398654
+all_eligible,post_failure,D8 as specified,4,0.9,28.758169934640527,52.650281500203754
+all_eligible,post_failure,D8 as specified,4,0.95,38.56209150326798,65.81523315385401
+all_eligible,post_failure,D8 as specified,4,1.0,55.119825708061,92.82430357633208
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.0,0.0,0.0
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.05,1.3071895424836666,2.8467666447867357
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.1,1.7429193899782147,4.822099883630404
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.15,2.178649237472774,7.212084349225012
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.2,4.139433551198257,10.866571379233125
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.25,5.228758169934644,12.963016756565782
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.3,6.318082788671031,15.602457787977041
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.35,9.150326797385622,19.74437812606501
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.4,9.80392156862745,22.499306182424085
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.45,10.457516339869278,24.18328149948096
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.5,11.111111111111116,25.862779685352
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.55,11.546840958605664,26.381438113497257
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.6,12.636165577342052,27.68692364799662
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.65,13.725490196078438,28.92287359526794
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.7,13.725490196078438,28.98658661598964
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.75,14.814814814814813,31.111501955734877
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.8,16.99346405228759,35.295782842735115
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.85,20.697167755991288,41.16642225816193
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.9,29.19389978213508,55.46670529275244
+all_eligible,post_failure,plus rung position (post-hoc variant),0,0.95,38.3442265795207,69.7935388632574
+all_eligible,post_failure,plus rung position (post-hoc variant),0,1.0,53.37690631808278,93.10060216633822
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.0,0.0,0.0
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.05,0.43572984749455923,1.9103274783499047
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.1,1.089324618736387,5.64649702798371
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.15,3.05010893246187,8.319308087891553
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.2,4.793028322440085,12.691956633050605
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.25,6.5359477124183,15.022596228767338
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.3,8.714596949891074,17.09677419354839
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.35,9.368191721132902,18.714797747055812
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.4,9.80392156862745,20.605089160488877
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.45,9.80392156862745,20.988891115118324
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.5,11.111111111111116,23.188517108573226
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.55,12.200435729847491,24.65031723769452
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.6,12.636165577342052,26.161815712727353
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.65,13.943355119825707,27.790164518355276
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.7,15.032679738562093,29.294761682138958
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.75,16.775599128540307,32.06597208308288
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.8,20.04357298474946,37.03491618246177
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.85,22.875816993464053,41.015499009327904
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.9,28.104575163398692,51.01478661590863
+all_eligible,post_failure,plus rung position (post-hoc variant),1,0.95,37.472766884531595,67.30373338676284
+all_eligible,post_failure,plus rung position (post-hoc variant),1,1.0,54.68409586056645,92.54861417217658
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.0,0.0,0.0
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.05,0.6535947712418277,2.251171729961321
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.1,1.3071895424836555,6.216729533752996
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.15,3.26797385620915,8.607248193848704
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.2,3.9215686274509776,10.765371039512338
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.25,5.446623093681913,13.042917939840281
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.3,6.5359477124183,14.525587388175044
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.35,8.714596949891062,17.200346618187424
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.4,9.368191721132902,20.073542215807894
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.45,10.675381263616558,22.89647783212888
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.5,11.111111111111105,23.854360628877146
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.55,11.982570806100213,25.696207826453488
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.6,12.200435729847491,26.435052191187115
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.65,12.636165577342052,27.747698009089827
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.7,15.032679738562093,31.34926940596967
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.75,16.55773420479303,33.38366666703795
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.8,18.518518518518512,37.75911499399501
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.85,21.350762527233115,40.946322276581185
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.9,27.015250544662305,49.119998893012585
+all_eligible,post_failure,plus rung position (post-hoc variant),2,0.95,38.344226579520694,68.88600435838256
+all_eligible,post_failure,plus rung position (post-hoc variant),2,1.0,53.37690631808278,93.21169946954528
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.0,0.0,0.0
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.05,0.43572984749455923,2.552754607946617
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.1,1.3071895424836666,3.93068243999416
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.15,2.178649237472774,5.816814248093316
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.2,3.4858387799564294,11.171009423848377
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.25,5.228758169934644,14.199020503182503
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.3,6.318082788671031,16.486164063254893
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.35,7.4074074074074066,17.995881913958822
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.4,8.061002178649234,19.276998242575583
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.45,9.80392156862745,21.961317201338392
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.5,10.893246187363836,23.05919124374117
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.55,12.418300653594772,25.611128934106386
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.6,12.636165577342052,25.87899666038226
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.65,13.28976034858388,26.394647675159312
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.7,14.814814814814813,28.2299500589397
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.75,16.12200435729848,30.011597657042465
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.8,19.6078431372549,35.07195073811865
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.85,22.004357298474947,39.08500193977304
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.9,29.19389978213508,50.678664661466485
+all_eligible,post_failure,plus rung position (post-hoc variant),3,0.95,38.56209150326798,66.06855241062696
+all_eligible,post_failure,plus rung position (post-hoc variant),3,1.0,55.33769063180828,91.9693892045804
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.0,0.0,0.0
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.05,0.43572984749455923,1.1701338450553989
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.1,1.3071895424836666,4.582087149240421
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.15,2.3965141612200425,9.391608453591937
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.2,4.357298474945537,10.673309610800741
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.25,5.882352941176472,13.554215738461162
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.3,6.5359477124183,14.957295957607586
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.35,8.061002178649234,17.865269285346976
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.4,8.278867102396514,19.27827149865723
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.45,9.58605664488018,20.76260182556755
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.5,10.239651416122008,21.929869316753393
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.55,12.200435729847491,24.944391632486862
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.6,13.725490196078438,27.072990113769112
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.65,14.596949891067535,28.387654340477763
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.7,15.250544662309373,29.136875144227215
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.75,16.775599128540307,31.320569356657447
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.8,20.261437908496738,36.60056075583194
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.85,22.004357298474947,39.204700573398654
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.9,28.9760348583878,52.07312571435602
+all_eligible,post_failure,plus rung position (post-hoc variant),4,0.95,38.3442265795207,65.65176719756096
+all_eligible,post_failure,plus rung position (post-hoc variant),4,1.0,55.119825708061,92.82430357633208
+all_eligible,pre_attempt,D8 as specified,0,0.0,0.0,0.0
+all_eligible,pre_attempt,D8 as specified,0,0.05,0.0,0.5483126491556356
+all_eligible,pre_attempt,D8 as specified,0,0.1,0.8714596949891074,3.435765625387577
+all_eligible,pre_attempt,D8 as specified,0,0.15,1.525054466230935,5.413769071189789
+all_eligible,pre_attempt,D8 as specified,0,0.2,1.9607843137254943,7.618353927203103
+all_eligible,pre_attempt,D8 as specified,0,0.25,2.614379084967322,9.768113441889781
+all_eligible,pre_attempt,D8 as specified,0,0.3,3.05010893246187,10.724830916204443
+all_eligible,pre_attempt,D8 as specified,0,0.35,3.4858387799564294,12.82499483798254
+all_eligible,pre_attempt,D8 as specified,0,0.4,4.139433551198257,14.444313492821637
+all_eligible,pre_attempt,D8 as specified,0,0.45,5.228758169934644,16.310939690508174
+all_eligible,pre_attempt,D8 as specified,0,0.5,5.664488017429193,16.854887710748777
+all_eligible,pre_attempt,D8 as specified,0,0.55,5.664488017429193,17.47900898191498
+all_eligible,pre_attempt,D8 as specified,0,0.6,6.100217864923751,18.61247119723751
+all_eligible,pre_attempt,D8 as specified,0,0.65,8.278867102396514,20.983977279647526
+all_eligible,pre_attempt,D8 as specified,0,0.7,9.150326797385622,22.435972914265523
+all_eligible,pre_attempt,D8 as specified,0,0.75,9.58605664488018,24.4884992418403
+all_eligible,pre_attempt,D8 as specified,0,0.8,10.893246187363836,26.315813013364497
+all_eligible,pre_attempt,D8 as specified,0,0.85,15.46840958605664,32.641120024484906
+all_eligible,pre_attempt,D8 as specified,0,0.9,23.093681917211327,43.73270512922465
+all_eligible,pre_attempt,D8 as specified,0,0.95,32.24400871459695,62.48272573550793
+all_eligible,pre_attempt,D8 as specified,0,1.0,70.37037037037037,100.0
+all_eligible,pre_attempt,D8 as specified,1,0.0,0.0,0.0
+all_eligible,pre_attempt,D8 as specified,1,0.05,0.43572984749455923,0.6277722122042029
+all_eligible,pre_attempt,D8 as specified,1,0.1,0.6535947712418277,3.255735434893914
+all_eligible,pre_attempt,D8 as specified,1,0.15,1.089324618736387,5.110978427836798
+all_eligible,pre_attempt,D8 as specified,1,0.2,1.7429193899782147,7.729385783298836
+all_eligible,pre_attempt,D8 as specified,1,0.25,2.8322440087146017,10.352180591731807
+all_eligible,pre_attempt,D8 as specified,1,0.3,3.703703703703709,11.461345533070633
+all_eligible,pre_attempt,D8 as specified,1,0.35,3.9215686274509776,12.394786170662753
+all_eligible,pre_attempt,D8 as specified,1,0.4,4.575163398692816,13.196905095839174
+all_eligible,pre_attempt,D8 as specified,1,0.45,5.010893246187365,14.012710879583256
+all_eligible,pre_attempt,D8 as specified,1,0.5,5.882352941176472,15.301007146196499
+all_eligible,pre_attempt,D8 as specified,1,0.55,6.100217864923751,15.549167612814186
+all_eligible,pre_attempt,D8 as specified,1,0.6,6.5359477124183,16.168961018722595
+all_eligible,pre_attempt,D8 as specified,1,0.65,6.753812636165579,17.49726708074535
+all_eligible,pre_attempt,D8 as specified,1,0.7,7.189542483660127,19.026286871925024
+all_eligible,pre_attempt,D8 as specified,1,0.75,9.58605664488018,22.483324205792655
+all_eligible,pre_attempt,D8 as specified,1,0.8,11.328976034858385,26.171690821256032
+all_eligible,pre_attempt,D8 as specified,1,0.85,15.250544662309373,31.325916872592895
+all_eligible,pre_attempt,D8 as specified,1,0.9,22.004357298474947,42.37455508804738
+all_eligible,pre_attempt,D8 as specified,1,0.95,30.93681917211329,58.46215632583094
+all_eligible,pre_attempt,D8 as specified,1,1.0,70.37037037037037,100.0
+all_eligible,pre_attempt,D8 as specified,2,0.0,0.0,0.0
+all_eligible,pre_attempt,D8 as specified,2,0.05,0.0,0.7401289374087905
+all_eligible,pre_attempt,D8 as specified,2,0.1,0.8714596949891074,3.6977862072067547
+all_eligible,pre_attempt,D8 as specified,2,0.15,1.3071895424836555,5.32629653749388
+all_eligible,pre_attempt,D8 as specified,2,0.2,1.9607843137254943,7.105088287000116
+all_eligible,pre_attempt,D8 as specified,2,0.25,2.614379084967322,9.548930070498818
+all_eligible,pre_attempt,D8 as specified,2,0.3,3.26797385620915,10.560370084436855
+all_eligible,pre_attempt,D8 as specified,2,0.35,3.4858387799564294,11.2758132207604
+all_eligible,pre_attempt,D8 as specified,2,0.4,4.357298474945537,12.939710653015968
+all_eligible,pre_attempt,D8 as specified,2,0.45,4.575163398692805,13.39817858008887
+all_eligible,pre_attempt,D8 as specified,2,0.5,5.010893246187365,15.28081152609344
+all_eligible,pre_attempt,D8 as specified,2,0.55,5.010893246187365,15.676514245168383
+all_eligible,pre_attempt,D8 as specified,2,0.6,6.3180827886710205,17.995011257647175
+all_eligible,pre_attempt,D8 as specified,2,0.65,7.625272331154687,19.246305033332455
+all_eligible,pre_attempt,D8 as specified,2,0.7,8.496732026143794,20.22269527580718
+all_eligible,pre_attempt,D8 as specified,2,0.75,10.457516339869278,26.023696431089437
+all_eligible,pre_attempt,D8 as specified,2,0.8,13.0718954248366,30.51247060164647
+all_eligible,pre_attempt,D8 as specified,2,0.85,16.993464052287578,35.91326963754593
+all_eligible,pre_attempt,D8 as specified,2,0.9,23.52941176470588,44.983662653484124
+all_eligible,pre_attempt,D8 as specified,2,0.95,33.769063180827885,64.43181720522682
+all_eligible,pre_attempt,D8 as specified,2,1.0,70.1525054466231,100.0
+all_eligible,pre_attempt,D8 as specified,3,0.0,0.0,0.0
+all_eligible,pre_attempt,D8 as specified,3,0.05,0.0,0.36919213517427885
+all_eligible,pre_attempt,D8 as specified,3,0.1,0.8714596949891074,3.793197467723386
+all_eligible,pre_attempt,D8 as specified,3,0.15,1.525054466230935,5.485415608782862
+all_eligible,pre_attempt,D8 as specified,3,0.2,2.3965141612200425,8.992098416597539
+all_eligible,pre_attempt,D8 as specified,3,0.25,3.26797385620915,10.144058270252653
+all_eligible,pre_attempt,D8 as specified,3,0.3,3.26797385620915,11.126915281887184
+all_eligible,pre_attempt,D8 as specified,3,0.35,3.4858387799564294,11.976136763268475
+all_eligible,pre_attempt,D8 as specified,3,0.4,3.9215686274509776,12.864008375634805
+all_eligible,pre_attempt,D8 as specified,3,0.45,4.357298474945537,13.77109515325552
+all_eligible,pre_attempt,D8 as specified,3,0.5,4.793028322440085,13.955068603271636
+all_eligible,pre_attempt,D8 as specified,3,0.55,5.446623093681923,15.199716106246374
+all_eligible,pre_attempt,D8 as specified,3,0.6,5.664488017429193,15.537817080409777
+all_eligible,pre_attempt,D8 as specified,3,0.65,6.318082788671031,16.9109431521543
+all_eligible,pre_attempt,D8 as specified,3,0.7,7.4074074074074066,18.116123155226905
+all_eligible,pre_attempt,D8 as specified,3,0.75,8.932461873638342,20.20831407352346
+all_eligible,pre_attempt,D8 as specified,3,0.8,10.239651416122008,22.28972664443806
+all_eligible,pre_attempt,D8 as specified,3,0.85,13.507625272331158,27.085007121106653
+all_eligible,pre_attempt,D8 as specified,3,0.9,21.35076252723312,39.964582064356044
+all_eligible,pre_attempt,D8 as specified,3,0.95,34.64052287581699,64.20033998304395
+all_eligible,pre_attempt,D8 as specified,3,1.0,70.37037037037037,100.0
+all_eligible,pre_attempt,D8 as specified,4,0.0,0.0,0.0
+all_eligible,pre_attempt,D8 as specified,4,0.05,0.0,0.39570191560193146
+all_eligible,pre_attempt,D8 as specified,4,0.1,0.21786492374727962,1.398444222495565
+all_eligible,pre_attempt,D8 as specified,4,0.15,1.3071895424836666,4.0167905717948145
+all_eligible,pre_attempt,D8 as specified,4,0.2,1.525054466230935,6.177009787010935
+all_eligible,pre_attempt,D8 as specified,4,0.25,2.3965141612200425,8.470183283045007
+all_eligible,pre_attempt,D8 as specified,4,0.3,2.8322440087146017,11.018935883324044
+all_eligible,pre_attempt,D8 as specified,4,0.35,2.8322440087146017,11.87511490220462
+all_eligible,pre_attempt,D8 as specified,4,0.4,3.26797385620915,12.037097851103306
+all_eligible,pre_attempt,D8 as specified,4,0.45,3.4858387799564294,12.53449888395204
+all_eligible,pre_attempt,D8 as specified,4,0.5,4.357298474945537,13.714057300530536
+all_eligible,pre_attempt,D8 as specified,4,0.55,4.575163398692816,14.31260931557069
+all_eligible,pre_attempt,D8 as specified,4,0.6,4.793028322440085,15.016537318406009
+all_eligible,pre_attempt,D8 as specified,4,0.65,6.100217864923751,17.276829766758606
+all_eligible,pre_attempt,D8 as specified,4,0.7,6.753812636165579,18.634292625537363
+all_eligible,pre_attempt,D8 as specified,4,0.75,7.843137254901967,19.862680482727512
+all_eligible,pre_attempt,D8 as specified,4,0.8,12.200435729847491,24.98986567516106
+all_eligible,pre_attempt,D8 as specified,4,0.85,14.814814814814813,30.312077143901494
+all_eligible,pre_attempt,D8 as specified,4,0.9,21.568627450980394,41.73666824639513
+all_eligible,pre_attempt,D8 as specified,4,0.95,33.551198257080614,62.24343916955466
+all_eligible,pre_attempt,D8 as specified,4,1.0,70.37037037037037,100.0
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.0,0.0,0.0
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.05,0.0,0.5483126491556356
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.1,0.8714596949891074,3.435765625387577
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.15,1.525054466230935,5.971268334345847
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.2,1.9607843137254943,7.895631615805088
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.25,2.614379084967322,9.768113441889781
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.3,3.05010893246187,10.78826153326673
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.35,3.26797385620915,12.725380276272702
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.4,4.139433551198257,14.444313492821637
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.45,5.446623093681923,16.370732121889898
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.5,5.664488017429193,17.00168159210569
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.55,5.664488017429193,17.47900898191498
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.6,6.318082788671031,18.762709025660453
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.65,8.278867102396514,20.983977279647526
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.7,9.150326797385622,22.435972914265523
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.75,9.58605664488018,24.4884992418403
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.8,10.893246187363836,26.315813013364497
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.85,15.250544662309373,32.459100534150686
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.9,22.875816993464053,43.1818356937672
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,0.95,32.46187363834423,62.81536693956472
+all_eligible,pre_attempt,plus rung position (post-hoc variant),0,1.0,70.37037037037037,100.0
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.0,0.0,0.0
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.05,0.43572984749455923,0.6277722122042029
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.1,0.6535947712418277,3.255735434893914
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.15,1.089324618736387,5.110978427836798
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.2,1.9607843137254943,7.963706672009607
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.25,2.8322440087146017,10.352180591731807
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.3,3.703703703703709,11.522849573677064
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.35,3.9215686274509776,12.394786170662753
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.4,4.575163398692816,13.196905095839174
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.45,5.010893246187365,14.012710879583256
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.5,5.882352941176472,15.130847525545988
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.55,6.100217864923751,15.549167612814186
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.6,6.5359477124183,16.168961018722595
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.65,6.753812636165579,17.24224938222133
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.7,7.4074074074074066,19.260899396691823
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.75,9.368191721132902,22.47840201251141
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.8,11.328976034858385,26.171690821256032
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.85,15.250544662309373,31.325916872592895
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.9,21.786492374727672,41.834113849373324
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,0.95,30.93681917211329,58.46215632583094
+all_eligible,pre_attempt,plus rung position (post-hoc variant),1,1.0,70.37037037037037,100.0
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.0,0.0,0.0
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.05,0.0,0.7401289374087905
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.1,0.8714596949891074,3.594864632528394
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.15,1.3071895424836555,5.32629653749388
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.2,1.9607843137254943,7.105088287000116
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.25,2.3965141612200425,9.310637537720224
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.3,3.26797385620915,10.560370084436855
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.35,3.4858387799564294,11.2758132207604
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.4,4.357298474945537,12.810468243085914
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.45,4.575163398692805,13.636598347594886
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.5,4.793028322440085,15.132044698202696
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.55,5.228758169934644,15.787673023268356
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.6,6.3180827886710205,17.995011257647175
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.65,7.625272331154687,19.246305033332455
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.7,8.496732026143794,20.404235233846148
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.75,10.457516339869278,26.088371065584138
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.8,13.0718954248366,30.51247060164647
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.85,17.647058823529417,36.268499487896065
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.9,23.747276688453155,45.259164325751435
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,0.95,33.769063180827885,64.43181720522682
+all_eligible,pre_attempt,plus rung position (post-hoc variant),2,1.0,70.1525054466231,100.0
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.0,0.0,0.0
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.05,0.0,0.36919213517427885
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.1,0.8714596949891074,3.793197467723386
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.15,1.525054466230935,5.485415608782862
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.2,2.3965141612200425,8.992098416597539
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.25,3.26797385620915,10.144058270252653
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.3,3.26797385620915,11.126915281887184
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.35,3.4858387799564294,11.976136763268475
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.4,3.9215686274509776,12.864008375634805
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.45,4.575163398692816,13.880568879197963
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.5,4.575163398692816,13.880568879197963
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.55,5.664488017429193,15.2796828594159
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.6,5.664488017429193,15.537817080409777
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.65,6.318082788671031,16.9109431521543
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.7,7.4074074074074066,18.116123155226905
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.75,8.932461873638342,20.20831407352346
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.8,10.239651416122008,22.034874085175858
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.85,13.507625272331158,27.085007121106653
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.9,21.13289760348584,39.743796773580854
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,0.95,34.64052287581699,64.20033998304395
+all_eligible,pre_attempt,plus rung position (post-hoc variant),3,1.0,70.37037037037037,100.0
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.0,0.0,0.0
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.05,0.0,0.39570191560193146
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.1,0.21786492374727962,1.398444222495565
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.15,1.3071895424836666,3.3090507592905216
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.2,1.525054466230935,6.177009787010935
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.25,2.3965141612200425,8.470183283045007
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.3,2.8322440087146017,11.018935883324044
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.35,2.8322440087146017,11.87511490220462
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.4,3.26797385620915,12.037097851103306
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.45,3.4858387799564294,12.53449888395204
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.5,4.357298474945537,13.714057300530536
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.55,4.575163398692816,14.31260931557069
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.6,4.793028322440085,15.016537318406009
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.65,6.100217864923751,17.387428692281603
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.7,6.753812636165579,18.634292625537363
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.75,7.843137254901967,19.862680482727512
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.8,11.764705882352944,24.201848551298454
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.85,14.814814814814813,30.312077143901494
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.9,21.786492374727672,41.87593071061366
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,0.95,33.551198257080614,62.854466879567674
+all_eligible,pre_attempt,plus rung position (post-hoc variant),4,1.0,70.37037037037037,100.0
+sensitivity,post_failure,D8 as specified,0,0.0,0.0,0.0
+sensitivity,post_failure,D8 as specified,0,0.05,0.0,0.0
+sensitivity,post_failure,D8 as specified,0,0.1,0.0,0.0
+sensitivity,post_failure,D8 as specified,0,0.15,0.0,0.0
+sensitivity,post_failure,D8 as specified,0,0.2,0.0,0.0
+sensitivity,post_failure,D8 as specified,0,0.25,0.0,0.1316736384156525
+sensitivity,post_failure,D8 as specified,0,0.3,0.35842293906810374,1.0510094632574796
+sensitivity,post_failure,D8 as specified,0,0.35,0.7168458781361964,2.1111408954413435
+sensitivity,post_failure,D8 as specified,0,0.4,1.0752688172043001,2.9146673756525354
+sensitivity,post_failure,D8 as specified,0,0.45,1.4336917562724039,3.1058321157620083
+sensitivity,post_failure,D8 as specified,0,0.5,2.1505376344086002,4.065225282411
+sensitivity,post_failure,D8 as specified,0,0.55,2.8673835125447966,5.095214556403338
+sensitivity,post_failure,D8 as specified,0,0.6,3.9426523297490967,6.635637482928636
+sensitivity,post_failure,D8 as specified,0,0.65,5.734767025089605,8.560769533740642
+sensitivity,post_failure,D8 as specified,0,0.7,6.451612903225801,9.845777330327143
+sensitivity,post_failure,D8 as specified,0,0.75,8.24372759856631,12.059639528026466
+sensitivity,post_failure,D8 as specified,0,0.8,12.54480286738351,19.59478246856564
+sensitivity,post_failure,D8 as specified,0,0.85,17.92114695340502,24.93430714925826
+sensitivity,post_failure,D8 as specified,0,0.9,25.806451612903224,38.172663705511624
+sensitivity,post_failure,D8 as specified,0,0.95,37.27598566308244,60.03524697064567
+sensitivity,post_failure,D8 as specified,0,1.0,59.13978494623655,94.42136551052083
+sensitivity,post_failure,D8 as specified,1,0.0,0.0,0.0
+sensitivity,post_failure,D8 as specified,1,0.05,0.0,0.0
+sensitivity,post_failure,D8 as specified,1,0.1,0.0,0.0
+sensitivity,post_failure,D8 as specified,1,0.15,0.0,0.3236315932143796
+sensitivity,post_failure,D8 as specified,1,0.2,0.0,0.3236315932143796
+sensitivity,post_failure,D8 as specified,1,0.25,0.0,0.4553052316300432
+sensitivity,post_failure,D8 as specified,1,0.3,0.0,0.8558786497017579
+sensitivity,post_failure,D8 as specified,1,0.35,0.0,1.643937443472543
+sensitivity,post_failure,D8 as specified,1,0.4,0.0,1.643937443472543
+sensitivity,post_failure,D8 as specified,1,0.45,0.7168458781361964,2.029836389793127
+sensitivity,post_failure,D8 as specified,1,0.5,1.0752688172043001,2.297942954759935
+sensitivity,post_failure,D8 as specified,1,0.55,1.7921146953404965,3.197448412370496
+sensitivity,post_failure,D8 as specified,1,0.6,3.584229390681004,4.568123395396073
+sensitivity,post_failure,D8 as specified,1,0.65,4.3010752688172005,6.230701384066006
+sensitivity,post_failure,D8 as specified,1,0.7,5.017921146953408,8.6571451184846
+sensitivity,post_failure,D8 as specified,1,0.75,8.602150537634412,13.863409731383069
+sensitivity,post_failure,D8 as specified,1,0.8,12.186379928315406,20.054053773641932
+sensitivity,post_failure,D8 as specified,1,0.85,17.562724014336915,28.499013962751928
+sensitivity,post_failure,D8 as specified,1,0.9,26.523297491039422,41.20076078172704
+sensitivity,post_failure,D8 as specified,1,0.95,38.351254480286734,64.69181380389324
+sensitivity,post_failure,D8 as specified,1,1.0,59.13978494623655,94.42136551052083
+sensitivity,post_failure,D8 as specified,2,0.0,0.0,0.0
+sensitivity,post_failure,D8 as specified,2,0.05,0.0,0.0
+sensitivity,post_failure,D8 as specified,2,0.1,0.0,0.0
+sensitivity,post_failure,D8 as specified,2,0.15,0.0,0.0
+sensitivity,post_failure,D8 as specified,2,0.2,0.0,0.1316736384156525
+sensitivity,post_failure,D8 as specified,2,0.25,0.0,0.4553052316300432
+sensitivity,post_failure,D8 as specified,2,0.3,0.35842293906810374,0.9701015649538847
+sensitivity,post_failure,D8 as specified,2,0.35,0.7168458781361964,1.691530324827606
+sensitivity,post_failure,D8 as specified,2,0.4,1.4336917562724039,2.478399296564515
+sensitivity,post_failure,D8 as specified,2,0.45,1.4336917562724039,2.878972714636241
+sensitivity,post_failure,D8 as specified,2,0.5,1.7921146953404965,3.203000915195253
+sensitivity,post_failure,D8 as specified,2,0.55,3.2258064516129004,5.9859946524321135
+sensitivity,post_failure,D8 as specified,2,0.6,3.9426523297490967,6.489685980106463
+sensitivity,post_failure,D8 as specified,2,0.65,4.659498207885305,8.015037827535988
+sensitivity,post_failure,D8 as specified,2,0.7,6.451612903225801,10.3125841749513
+sensitivity,post_failure,D8 as specified,2,0.75,9.677419354838712,15.01912353362167
+sensitivity,post_failure,D8 as specified,2,0.8,12.903225806451612,21.596856344234993
+sensitivity,post_failure,D8 as specified,2,0.85,18.279569892473113,30.14414122825836
+sensitivity,post_failure,D8 as specified,2,0.9,26.881720430107524,45.51664190594133
+sensitivity,post_failure,D8 as specified,2,0.95,38.70967741935484,65.90781192251491
+sensitivity,post_failure,D8 as specified,2,1.0,59.13978494623655,94.42136551052083
+sensitivity,post_failure,D8 as specified,3,0.0,0.0,0.0
+sensitivity,post_failure,D8 as specified,3,0.05,0.0,0.0
+sensitivity,post_failure,D8 as specified,3,0.1,0.0,0.0
+sensitivity,post_failure,D8 as specified,3,0.15,0.0,0.3236315932143796
+sensitivity,post_failure,D8 as specified,3,0.2,0.0,0.4553052316300432
+sensitivity,post_failure,D8 as specified,3,0.25,0.0,0.4553052316300432
+sensitivity,post_failure,D8 as specified,3,0.3,0.35842293906810374,1.0510094632574796
+sensitivity,post_failure,D8 as specified,3,0.35,0.35842293906810374,1.8390682570282757
+sensitivity,post_failure,D8 as specified,3,0.4,0.35842293906810374,2.2396416750999903
+sensitivity,post_failure,D8 as specified,3,0.45,0.35842293906810374,2.2396416750999903
+sensitivity,post_failure,D8 as specified,3,0.5,1.0752688172043001,2.932911313505282
+sensitivity,post_failure,D8 as specified,3,0.55,1.4336917562724039,3.2398853982454012
+sensitivity,post_failure,D8 as specified,3,0.6,1.7921146953404965,3.619835234396618
+sensitivity,post_failure,D8 as specified,3,0.65,3.2258064516129004,6.41552040666149
+sensitivity,post_failure,D8 as specified,3,0.7,6.093189964157708,9.134660361413694
+sensitivity,post_failure,D8 as specified,3,0.75,8.960573476702505,12.858406720102156
+sensitivity,post_failure,D8 as specified,3,0.8,12.54480286738351,18.568759268019576
+sensitivity,post_failure,D8 as specified,3,0.85,18.99641577060932,28.090905005132328
+sensitivity,post_failure,D8 as specified,3,0.9,28.31541218637993,43.34561330146154
+sensitivity,post_failure,D8 as specified,3,0.95,40.86021505376344,67.82739147050216
+sensitivity,post_failure,D8 as specified,3,1.0,59.13978494623655,94.42136551052083
+sensitivity,post_failure,D8 as specified,4,0.0,0.0,0.0
+sensitivity,post_failure,D8 as specified,4,0.05,0.0,0.0
+sensitivity,post_failure,D8 as specified,4,0.1,0.0,0.0
+sensitivity,post_failure,D8 as specified,4,0.15,0.0,0.0
+sensitivity,post_failure,D8 as specified,4,0.2,0.0,0.0
+sensitivity,post_failure,D8 as specified,4,0.25,0.0,0.3236315932143796
+sensitivity,post_failure,D8 as specified,4,0.3,0.35842293906810374,0.9153697513955561
+sensitivity,post_failure,D8 as specified,4,0.35,0.35842293906810374,1.0470433898112308
+sensitivity,post_failure,D8 as specified,4,0.4,1.0752688172043001,1.685581214658216
+sensitivity,post_failure,D8 as specified,4,0.45,1.7921146953404965,3.004300635537882
+sensitivity,post_failure,D8 as specified,4,0.5,2.508960573476704,3.555981451911905
+sensitivity,post_failure,D8 as specified,4,0.55,2.8673835125447966,4.1080588756305385
+sensitivity,post_failure,D8 as specified,4,0.6,4.659498207885305,5.848371903847072
+sensitivity,post_failure,D8 as specified,4,0.65,5.734767025089605,8.281161355779664
+sensitivity,post_failure,D8 as specified,4,0.7,8.960573476702505,12.823108666430482
+sensitivity,post_failure,D8 as specified,4,0.75,12.54480286738351,18.391475784972002
+sensitivity,post_failure,D8 as specified,4,0.8,16.48745519713262,26.289117838498843
+sensitivity,post_failure,D8 as specified,4,0.85,21.14695340501792,34.33231478750326
+sensitivity,post_failure,D8 as specified,4,0.9,25.448028673835122,40.398424123549724
+sensitivity,post_failure,D8 as specified,4,0.95,37.634408602150536,58.92395319100513
+sensitivity,post_failure,D8 as specified,4,1.0,59.13978494623655,94.42136551052083
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.0,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.05,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.1,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.15,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.2,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.25,0.0,0.1316736384156525
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.3,0.35842293906810374,1.0510094632574796
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.35,0.7168458781361964,2.1111408954413435
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.4,1.0752688172043001,2.9146673756525354
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.45,1.4336917562724039,3.506405533833723
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.5,2.1505376344086002,4.065225282411
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.55,2.8673835125447966,5.095214556403338
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.6,3.9426523297490967,6.635637482928636
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.65,5.734767025089605,8.560769533740642
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.7,6.451612903225801,9.845777330327143
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.75,8.24372759856631,12.059639528026466
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.8,12.54480286738351,19.59478246856564
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.85,17.92114695340502,24.93430714925826
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.9,25.806451612903224,38.172663705511624
+sensitivity,post_failure,plus rung position (post-hoc variant),0,0.95,36.91756272401434,58.96321731812305
+sensitivity,post_failure,plus rung position (post-hoc variant),0,1.0,59.13978494623655,94.42136551052083
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.0,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.05,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.1,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.15,0.0,0.3236315932143796
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.2,0.0,0.3236315932143796
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.25,0.0,0.4553052316300432
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.3,0.0,0.4553052316300432
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.35,0.0,1.643937443472543
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.4,0.0,1.643937443472543
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.45,0.7168458781361964,2.029836389793127
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.5,1.0752688172043001,2.297942954759935
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.55,2.1505376344086002,3.32118990389364
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.6,3.584229390681004,4.568123395396073
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.65,4.3010752688172005,6.230701384066006
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.7,4.659498207885305,7.512932929240135
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.75,8.960573476702505,14.505913629676325
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.8,12.186379928315406,20.054053773641932
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.85,17.92114695340502,29.346960465561178
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.9,26.523297491039422,41.20076078172704
+sensitivity,post_failure,plus rung position (post-hoc variant),1,0.95,38.351254480286734,64.69181380389324
+sensitivity,post_failure,plus rung position (post-hoc variant),1,1.0,59.13978494623655,94.42136551052083
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.0,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.05,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.1,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.15,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.2,0.0,0.1316736384156525
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.25,0.0,0.4553052316300432
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.3,0.35842293906810374,0.9701015649538847
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.35,0.7168458781361964,1.691530324827606
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.4,1.4336917562724039,2.478399296564515
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.45,1.4336917562724039,2.878972714636241
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.5,1.7921146953404965,3.203000915195253
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.55,3.2258064516129004,5.9859946524321135
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.6,3.9426523297490967,6.489685980106463
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.65,4.659498207885305,8.015037827535988
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.7,6.451612903225801,10.3125841749513
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.75,9.677419354838712,15.01912353362167
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.8,12.903225806451612,21.072541434640137
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.85,18.63799283154122,30.587548239549633
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.9,26.881720430107524,45.51664190594133
+sensitivity,post_failure,plus rung position (post-hoc variant),2,0.95,38.70967741935484,66.28220925584135
+sensitivity,post_failure,plus rung position (post-hoc variant),2,1.0,59.13978494623655,94.42136551052083
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.0,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.05,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.1,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.15,0.0,0.3236315932143796
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.2,0.0,0.4553052316300432
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.25,0.0,0.4553052316300432
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.3,0.35842293906810374,1.0510094632574796
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.35,0.35842293906810374,1.8390682570282757
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.4,0.35842293906810374,2.2396416750999903
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.45,0.35842293906810374,2.2396416750999903
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.5,1.0752688172043001,2.932911313505282
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.55,1.4336917562724039,3.2398853982454012
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.6,1.7921146953404965,3.619835234396618
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.65,3.2258064516129004,6.41552040666149
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.7,6.093189964157708,9.134660361413694
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.75,8.960573476702505,12.858406720102156
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.8,12.54480286738351,18.293117163504867
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.85,18.99641577060932,28.090905005132328
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.9,28.31541218637993,43.34561330146154
+sensitivity,post_failure,plus rung position (post-hoc variant),3,0.95,40.86021505376344,67.82739147050216
+sensitivity,post_failure,plus rung position (post-hoc variant),3,1.0,59.13978494623655,94.42136551052083
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.0,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.05,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.1,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.15,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.2,0.0,0.0
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.25,0.0,0.3236315932143796
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.3,0.0,0.7242050112861054
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.35,0.35842293906810374,1.0470433898112308
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.4,1.0752688172043001,1.685581214658216
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.45,1.7921146953404965,3.004300635537882
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.5,2.508960573476704,3.555981451911905
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.55,2.8673835125447966,4.1080588756305385
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.6,4.659498207885305,5.848371903847072
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.65,5.734767025089605,8.281161355779664
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.7,8.960573476702505,12.823108666430482
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.75,12.54480286738351,18.391475784972002
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.8,16.48745519713262,26.289117838498843
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.85,21.14695340501792,34.33231478750326
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.9,25.448028673835122,40.398424123549724
+sensitivity,post_failure,plus rung position (post-hoc variant),4,0.95,37.634408602150536,58.92395319100513
+sensitivity,post_failure,plus rung position (post-hoc variant),4,1.0,59.13978494623655,94.42136551052083
+sensitivity,pre_attempt,D8 as specified,0,0.0,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,0,0.05,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,0,0.1,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,0,0.15,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,0,0.2,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,0,0.25,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,0,0.3,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,0,0.35,0.0,0.43095671352878506
+sensitivity,pre_attempt,D8 as specified,0,0.4,0.0,0.5791323903396095
+sensitivity,pre_attempt,D8 as specified,0,0.45,1.0752688172043001,2.2019798416543557
+sensitivity,pre_attempt,D8 as specified,0,0.5,1.0752688172043001,2.2019798416543557
+sensitivity,pre_attempt,D8 as specified,0,0.55,1.0752688172043001,2.2019798416543557
+sensitivity,pre_attempt,D8 as specified,0,0.6,1.7921146953404965,3.068255949502796
+sensitivity,pre_attempt,D8 as specified,0,0.65,2.508960573476704,4.542927724006729
+sensitivity,pre_attempt,D8 as specified,0,0.7,3.9426523297490967,6.742683391672422
+sensitivity,pre_attempt,D8 as specified,0,0.75,5.734767025089605,8.724546157059642
+sensitivity,pre_attempt,D8 as specified,0,0.8,8.602150537634412,13.684324064561515
+sensitivity,pre_attempt,D8 as specified,0,0.85,13.62007168458781,21.789128412050662
+sensitivity,pre_attempt,D8 as specified,0,0.9,23.29749103942652,36.343212383375835
+sensitivity,pre_attempt,D8 as specified,0,0.95,33.69175627240143,56.78051576627624
+sensitivity,pre_attempt,D8 as specified,0,1.0,85.66308243727599,100.0
+sensitivity,pre_attempt,D8 as specified,1,0.0,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,1,0.05,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,1,0.1,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,1,0.15,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,1,0.2,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,1,0.25,0.0,0.43095671352878506
+sensitivity,pre_attempt,D8 as specified,1,0.3,0.0,0.43095671352878506
+sensitivity,pre_attempt,D8 as specified,1,0.35,0.0,0.43095671352878506
+sensitivity,pre_attempt,D8 as specified,1,0.4,0.0,0.5791323903396095
+sensitivity,pre_attempt,D8 as specified,1,0.45,0.0,0.5791323903396095
+sensitivity,pre_attempt,D8 as specified,1,0.5,0.0,0.5791323903396095
+sensitivity,pre_attempt,D8 as specified,1,0.55,0.0,1.3863140038388844
+sensitivity,pre_attempt,D8 as specified,1,0.6,0.7168458781361964,2.4774664760899623
+sensitivity,pre_attempt,D8 as specified,1,0.65,1.0752688172043001,2.7977697404682367
+sensitivity,pre_attempt,D8 as specified,1,0.7,2.8673835125447966,6.041326136295511
+sensitivity,pre_attempt,D8 as specified,1,0.75,4.659498207885305,10.071751503859694
+sensitivity,pre_attempt,D8 as specified,1,0.8,8.602150537634412,16.54760381978563
+sensitivity,pre_attempt,D8 as specified,1,0.85,12.54480286738351,22.56077083461272
+sensitivity,pre_attempt,D8 as specified,1,0.9,21.863799283154115,35.90361597545173
+sensitivity,pre_attempt,D8 as specified,1,0.95,34.40860215053764,59.936320407461054
+sensitivity,pre_attempt,D8 as specified,1,1.0,85.66308243727599,100.0
+sensitivity,pre_attempt,D8 as specified,2,0.0,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,2,0.05,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,2,0.1,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,2,0.15,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,2,0.2,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,2,0.25,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,2,0.3,0.0,0.43095671352878506
+sensitivity,pre_attempt,D8 as specified,2,0.35,0.0,0.5791323903396095
+sensitivity,pre_attempt,D8 as specified,2,0.4,0.0,0.5791323903396095
+sensitivity,pre_attempt,D8 as specified,2,0.45,0.0,0.5791323903396095
+sensitivity,pre_attempt,D8 as specified,2,0.5,0.0,0.5791323903396095
+sensitivity,pre_attempt,D8 as specified,2,0.55,0.0,0.5791323903396095
+sensitivity,pre_attempt,D8 as specified,2,0.6,1.4336917562724039,3.0089203178880752
+sensitivity,pre_attempt,D8 as specified,2,0.65,2.8673835125447966,6.068917316046408
+sensitivity,pre_attempt,D8 as specified,2,0.7,4.3010752688172005,7.999773204056037
+sensitivity,pre_attempt,D8 as specified,2,0.75,4.659498207885305,9.700355694917373
+sensitivity,pre_attempt,D8 as specified,2,0.8,7.168458781362008,12.626074137620547
+sensitivity,pre_attempt,D8 as specified,2,0.85,12.186379928315406,20.908247635343713
+sensitivity,pre_attempt,D8 as specified,2,0.9,20.78853046594982,37.42077867442942
+sensitivity,pre_attempt,D8 as specified,2,0.95,35.483870967741936,61.03024913112451
+sensitivity,pre_attempt,D8 as specified,2,1.0,85.66308243727599,100.0
+sensitivity,pre_attempt,D8 as specified,3,0.0,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,3,0.05,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,3,0.1,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,3,0.15,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,3,0.2,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,3,0.25,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,3,0.3,0.0,0.43095671352878506
+sensitivity,pre_attempt,D8 as specified,3,0.35,0.0,0.5791323903396095
+sensitivity,pre_attempt,D8 as specified,3,0.4,0.0,0.5791323903396095
+sensitivity,pre_attempt,D8 as specified,3,0.45,0.35842293906810374,1.19133866036224
+sensitivity,pre_attempt,D8 as specified,3,0.5,0.35842293906810374,1.6084141168291377
+sensitivity,pre_attempt,D8 as specified,3,0.55,0.35842293906810374,1.6084141168291377
+sensitivity,pre_attempt,D8 as specified,3,0.6,1.0752688172043001,2.6995665890802267
+sensitivity,pre_attempt,D8 as specified,3,0.65,1.4336917562724039,3.58686288619382
+sensitivity,pre_attempt,D8 as specified,3,0.7,2.8673835125447966,6.080590263413422
+sensitivity,pre_attempt,D8 as specified,3,0.75,5.017921146953408,9.3412007750596
+sensitivity,pre_attempt,D8 as specified,3,0.8,7.885304659498205,13.488952113740261
+sensitivity,pre_attempt,D8 as specified,3,0.85,13.978494623655912,23.556582074074605
+sensitivity,pre_attempt,D8 as specified,3,0.9,22.580645161290324,34.159251206602484
+sensitivity,pre_attempt,D8 as specified,3,0.95,35.12544802867383,61.370382762734074
+sensitivity,pre_attempt,D8 as specified,3,1.0,85.66308243727599,100.0
+sensitivity,pre_attempt,D8 as specified,4,0.0,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,4,0.05,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,4,0.1,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,4,0.15,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,4,0.2,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,4,0.25,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,4,0.3,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,4,0.35,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,4,0.4,0.0,0.0
+sensitivity,pre_attempt,D8 as specified,4,0.45,0.35842293906810374,0.7395172276473905
+sensitivity,pre_attempt,D8 as specified,4,0.5,0.7168458781361964,1.4998991744808454
+sensitivity,pre_attempt,D8 as specified,4,0.55,1.0752688172043001,1.8408260207796512
+sensitivity,pre_attempt,D8 as specified,4,0.6,1.4336917562724039,2.14169552527127
+sensitivity,pre_attempt,D8 as specified,4,0.65,2.1505376344086002,3.5000058777208576
+sensitivity,pre_attempt,D8 as specified,4,0.7,3.584229390681004,5.831279713723115
+sensitivity,pre_attempt,D8 as specified,4,0.75,6.093189964157708,11.416973813936625
+sensitivity,pre_attempt,D8 as specified,4,0.8,11.111111111111105,18.383359612271576
+sensitivity,pre_attempt,D8 as specified,4,0.85,16.84587813620071,29.80205946137201
+sensitivity,pre_attempt,D8 as specified,4,0.9,22.22222222222222,38.77853694945526
+sensitivity,pre_attempt,D8 as specified,4,0.95,35.12544802867383,58.03664102959773
+sensitivity,pre_attempt,D8 as specified,4,1.0,85.66308243727599,100.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.0,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.05,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.1,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.15,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.2,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.25,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.3,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.35,0.0,0.43095671352878506
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.4,0.0,0.5791323903396095
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.45,1.0752688172043001,2.2019798416543557
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.5,1.0752688172043001,2.2019798416543557
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.55,1.0752688172043001,2.2019798416543557
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.6,1.7921146953404965,3.068255949502796
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.65,2.508960573476704,4.542927724006729
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.7,3.9426523297490967,6.742683391672422
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.75,5.734767025089605,8.724546157059642
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.8,8.602150537634412,13.684324064561515
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.85,13.62007168458781,21.789128412050662
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.9,23.29749103942652,36.343212383375835
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,0.95,33.69175627240143,56.78051576627624
+sensitivity,pre_attempt,plus rung position (post-hoc variant),0,1.0,85.66308243727599,100.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.0,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.05,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.1,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.15,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.2,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.25,0.0,0.43095671352878506
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.3,0.0,0.43095671352878506
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.35,0.0,0.43095671352878506
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.4,0.0,0.5791323903396095
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.45,0.0,0.5791323903396095
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.5,0.0,0.5791323903396095
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.55,0.35842293906810374,1.8002166015487653
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.6,0.7168458781361964,2.4774664760899623
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.65,1.0752688172043001,3.176374284506467
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.7,2.508960573476704,5.650030157229269
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.75,3.9426523297490967,8.537588627661963
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.8,8.602150537634412,16.54760381978563
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.85,12.54480286738351,21.92000883577706
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.9,21.14695340501792,35.06192952297005
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,0.95,34.76702508960573,60.67464781307458
+sensitivity,pre_attempt,plus rung position (post-hoc variant),1,1.0,85.66308243727599,100.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.0,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.05,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.1,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.15,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.2,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.25,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.3,0.0,0.43095671352878506
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.35,0.0,0.5791323903396095
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.4,0.0,0.5791323903396095
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.45,0.0,0.5791323903396095
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.5,0.0,0.5791323903396095
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.55,0.0,0.5791323903396095
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.6,1.4336917562724039,3.0089203178880752
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.65,3.2258064516129004,6.518514574772583
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.7,4.3010752688172005,7.999773204056037
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.75,4.659498207885305,9.700355694917373
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.8,6.810035842293905,12.290303186801877
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.85,12.186379928315406,20.908247635343713
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.9,20.430107526881713,36.83276545242895
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,0.95,35.483870967741936,61.03024913112451
+sensitivity,pre_attempt,plus rung position (post-hoc variant),2,1.0,85.66308243727599,100.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.0,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.05,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.1,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.15,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.2,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.25,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.3,0.0,0.43095671352878506
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.35,0.0,0.5791323903396095
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.4,0.0,0.5791323903396095
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.45,0.35842293906810374,1.19133866036224
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.5,0.35842293906810374,1.6084141168291377
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.55,0.35842293906810374,1.6084141168291377
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.6,1.0752688172043001,2.6995665890802267
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.65,1.4336917562724039,3.58686288619382
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.7,2.8673835125447966,6.080590263413422
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.75,5.017921146953408,9.3412007750596
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.8,7.885304659498205,13.488952113740261
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.85,13.978494623655912,23.556582074074605
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.9,22.580645161290324,34.159251206602484
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,0.95,35.12544802867383,61.370382762734074
+sensitivity,pre_attempt,plus rung position (post-hoc variant),3,1.0,85.66308243727599,100.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.0,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.05,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.1,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.15,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.2,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.25,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.3,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.35,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.4,0.0,0.0
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.45,0.35842293906810374,0.7395172276473905
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.5,0.7168458781361964,1.4998991744808454
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.55,1.4336917562724039,2.14169552527127
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.6,1.4336917562724039,2.14169552527127
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.65,2.1505376344086002,3.5000058777208576
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.7,3.584229390681004,5.831279713723115
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.75,6.093189964157708,11.65716239470055
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.8,11.111111111111105,18.576903996448813
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.85,16.84587813620071,29.80205946137201
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.9,22.22222222222222,38.77853694945526
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,0.95,35.12544802867383,58.03664102959773
+sensitivity,pre_attempt,plus rung position (post-hoc variant),4,1.0,85.66308243727599,100.0

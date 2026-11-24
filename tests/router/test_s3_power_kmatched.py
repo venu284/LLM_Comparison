@@ -71,3 +71,35 @@ def test_unreachable_k_is_refused():
     K.require_reachable(m, folds, "mid", n)
     with pytest.raises(K.Unreachable):
         K.require_reachable(m, folds, "mid", n + 1)
+
+
+def test_e0_power_by_hand():
+    from scipy.stats import norm
+    z = norm.ppf(0.975)
+    # the CI lower bound sits exactly at -2 when gap - h = -2: power 1/2
+    assert P.e0_power(-1.0, 1.0) == pytest.approx(0.5)
+    assert P.e0_power(0.0, 1.0) == pytest.approx(norm.cdf(z))
+    assert P.e0_power(0.0, 0.5) > P.e0_power(0.0, 1.0) > P.e0_power(-1.0, 1.0)
+
+
+def test_posthoc_shift_power_rows_and_width_check_by_hand():
+    # four draws; resample-world mean gap -1.5; development gap -1.0
+    d = pd.DataFrame({"seed": [0, 0, 1, 1], "gap": [-1.0, -2.0, -1.0, -2.0],
+                      "lo": [-2.5, -3.6, -1.9, -3.2], "hi": [0.5, -0.5, 0.1, -0.8]})
+    d["pass_at_development_gap"] = d.lo >= P.GAP_MIN
+    d["pass_at_gap_0"] = (d.lo - (-1.0)) >= P.GAP_MIN
+    d["pass_at_gap_0_resample_mean_posthoc"] = (d.lo - d.gap.mean()) >= P.GAP_MIN
+    r = P.power_row(d)
+    assert r["n"] == 4
+    assert r["power_at_development_gap"] == pytest.approx(0.25)                 # -1.9 only
+    assert r["power_at_gap_0"] == pytest.approx(0.5)                            # -1.5, -0.9
+    assert r["power_at_gap_0_resample_mean_posthoc"] == pytest.approx(0.75)     # -1.0, -0.4, -1.7
+    assert r["median_half_width"] == pytest.approx(1.35)                        # of 1.5, 1.55, 1.0, 1.2
+    proj = {"development_gap": -1.0, "projected_half_width": 0.5,
+            "power_at_development_gap": P.e0_power(-1.0, 0.5), "power_at_gap_0": P.e0_power(0.0, 0.5)}
+    s = P.side_by_side(proj, d, float(d.gap.mean()))
+    assert s["resampling_c_seed_0"]["n"] == 2 and s["resample_mean_gap"] == pytest.approx(-1.5)
+    w = s["width_check_e0_at_resampled_half_width"]
+    assert w["half_width"] == pytest.approx(1.35)
+    assert w["power_at_development_gap"] == pytest.approx(P.e0_power(-1.0, 1.35))
+    assert w["power_at_gap_0"] == pytest.approx(P.e0_power(0.0, 1.35))

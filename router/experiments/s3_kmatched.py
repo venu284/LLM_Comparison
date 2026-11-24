@@ -2,7 +2,8 @@
 R11). Development split only.
 
 Populations: the headline development split and the `all_eligible` development split, complete
-case, `stats.dev_folds`, seeds 0 to 4. Leave-one-model-out: each of the 8 models in turn is the new
+case, `stats.dev_folds`, seeds 0 to 4; the `sensitivity` development split, complete case, added for
+the plan's three-view gate (reviewer check of checkpoint 2, item 4; spec §7, 2026-11-24). Leave-one-model-out: each of the 8 models in turn is the new
 model; the other 7 keep their full training tables (`lookup.KMatchedDimensionBest`). Results are per
 model, never pooled (R8).
 
@@ -42,7 +43,8 @@ from router.sim.verifier import FAIL, PASS, ReplayVerifier
 OUT = REPO_ROOT / "router" / "experiments" / "out"
 K_GRID = tuple(DP2_K_GRID) + (250,)
 LABELS = ("ground_truth", "verifier")
-POPS = {"filtered = headline": "headline", "all_eligible": "all_eligible"}
+POPS = {"filtered = headline": "headline", "all_eligible": "all_eligible",
+        "sensitivity": "sensitivity"}
 
 
 class Unreachable(ValueError):

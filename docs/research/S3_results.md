@@ -2,7 +2,14 @@
 
 _Written 2026-11-23 on branch `s3-analysis`, under the spec frozen at `b29db49` plus the dated
 implementation entry in its §7 (committed in `ca22ef8`, before any DP number). For review; the
-verdicts are confirmed by the reviewer, and the user decides what follows._
+verdicts are confirmed by the reviewer, and the user decides what follows. Updated 2026-11-24 with
+the follow-ups from the reviewer's check of checkpoint 2. They change no DP number: the S3.1 and
+S3.2 outputs are byte-identical on rerun. The follow-ups are:
+- S3.3 fitted is now D8's features exactly, with the rung-position run as a labelled variant;
+- `sensitivity` is added to S3.3 fitted and S3.4;
+- S3.7 shows (c) and (b) side by side, with a post-hoc shift and a width check;
+- the Qwen3-Max caveat sits next to the DP1b saving;
+- the new spec §7 entries are dated 2026-11-24._
 
 Every number names its view and population. "Development split" numbers come from
 `stats.dev_folds` cross-fitting and are development figures. Seed 0 decides; seeds 1 to 4 are in the
@@ -64,6 +71,19 @@ The other views are reported on their development splits only (D3 (α)), complet
 **Verdict.** All four point estimates meet their thresholds, so the bound meets DP1b's decision
 rule. The two gaps are labelled "at the threshold" because their CIs reach below −2.
 
+**Qwen3-Max cost caveat (information only; reviewer check of checkpoint 2, item 5).** The saving
+rests on Qwen3-Max, whose released cost carries no per-task information.
+- Qwen3-Max's released token counts are constants (S1.7 data note).
+- On this population, its released cost is $0.000208 on every one of the 195 tasks, in all three
+  cells. The other seven models' costs vary from task to task.
+- The bound's first rung is Qwen3-Max in every cell, so most of its saving comes from stopping at
+  a rung whose cost is a constant.
+- With Qwen3-Max's price doubled (refit, D11 (a)), the bound still saves 62.2% against the best
+  single model and 56.8% against CellBest-pred. Its gaps fall to −2.56 and −2.05, which is one of the
+  four sweep misses below.
+
+The verdict is unchanged.
+
 Gaps for seeds 1 to 4:
 - against the best single model: −1.03, 0.00, +0.51, +1.03;
 - against CellBest-pred: −0.51, +0.51, +1.03, +1.54.
@@ -115,10 +135,12 @@ kNN is not run in S3: its embedding pin has not moved into `fetch_data.py`.
 
 ## S3.3 fitted: give-up classifiers against their perfect-information bound
 
-Population: development split, complete case. Seed 0 is shown, with cluster-bootstrap CIs
-(1,000 resamples). The ladder is the training folds' `FixedCascade("escalate")`. Each threshold t
-is set on out-of-fold training predictions so that the training acceptance loss is at most 2
-points.
+Population: development split, complete case, X13 tasks, in all three views. Seed 0 is shown,
+with cluster-bootstrap CIs (1,000 resamples). The ladder is the training folds'
+`FixedCascade("escalate")`. Each threshold t is set on out-of-fold training predictions so that the
+training acceptance loss is at most 2 points.
+
+**Primary: D8's features exactly** (the predicted cell, the verdict history and the task text):
 
 | Population | Classifier | Acceptance loss (held out) | Saving / perfect saving | Capture | AUC |
 |---|---|---|---|---|---|
@@ -126,10 +148,26 @@ points.
 | Headline (195) | pre-attempt | 4.1 [1.6, 7.3] | 5.7% / 15.9% | 35.8% [13.6, 83.8] | 0.63 [0.54, 0.73] |
 | `all_eligible` X13 (459) | post-failure | 1.7 [0.7, 3.0] | 5.2% / 29.4% | 17.8% [9.9, 26.7] | 0.77 [0.72, 0.83] |
 | `all_eligible` X13 (459) | pre-attempt | 2.4 [1.1, 3.9] | 9.4% / 22.1% | 42.7% [27.8, 60.3] | 0.79 [0.74, 0.84] |
+| `sensitivity` X13 (279) | post-failure | 1.4 [0.3, 2.9] | 3.2% / 17.6% | 18.0% [6.5, 36.0] | 0.59 [0.48, 0.69] |
+| `sensitivity` X13 (279) | pre-attempt | 1.4 [0.3, 2.9] | 2.9% / 15.5% | 18.5% [4.6, 40.1] | 0.68 [0.61, 0.75] |
 
 **Headline.** The post-failure AUC is near chance (0.53). The held-out acceptance loss (4.1 points)
-exceeds the 2-point budget the threshold was set to on the training folds. Capture across seeds 0
-to 4: 29.9, 26.6, 4.6, 5.6 and 16.0%.
+exceeds the 2-point budget the threshold was set to on the training folds. This is reported as
+measured, and t is not retuned. Capture across seeds 0 to 4: 29.9, 26.6, 4.6, 5.6 and 16.0%.
+
+**Labelled post-hoc variant: D8's features plus the rung position.** This was the checkpoint 2
+run (spec §7, 2026-11-24).
+- On seed 0, every row of the table above is the same to the precision shown.
+- Over the 30 rows (3 populations × 2 classifiers × 5 seeds), the policy outcome is identical in 29.
+  - The exception is `sensitivity`, pre-attempt, seed 3: capture is 14.6% for the primary and
+    12.3% for the variant, and the acceptance loss is 1.08 against 0.72.
+  - The AUC differs by at most 0.003 anywhere.
+- The position adds no information.
+  - Post-failure: the history has one token per rung tried, so `pos=j` is a linear function of the
+    history tokens.
+  - Pre-attempt: `pos=-1` is a constant.
+  - So only the regularisation differs.
+- Both are in `s3_3_classifier.csv`, in the `features` column; `primary` is true for D8's features.
 
 **Route Anything C.5.** It measures pre-attempt signals within a cell (−0.013 to +0.078). That
 definition differs from this one, so the comparison is qualitative only.
@@ -160,6 +198,24 @@ training-fold availability is under 250, so nothing was run for it.
 - Verifier labels: within −6.6 to +0.6 points of full DimensionBest; there are 1 to 32 labels per
   fold.
 
+**`sensitivity` (294 tasks, 259 problems, 7 cells).** This population was added for the
+three-view gate (spec §7, 2026-11-24). k = 250 is unreachable: the smallest training-fold
+availability is 232.
+- Full DimensionBest reaches 79.9%.
+- Without Opus, the 7-model table (k = 0) reaches 72.1%.
+- Ground-truth labels, onboarding Opus: +7.8 points over k = 0 at k = 10, and +8.5 at k ≥ 25.
+- Ground-truth labels, every other model, against k = 0:
+  - −5.8 to +0.7 points at every k;
+  - −1.4 to +0.7 points at k ≥ 50.
+  - The larger losses are MiniMax at k = 10 and 25 (−4.1, −5.8) and gpt-5.4 at k = 25 (−4.4).
+- Verifier labels: the smallest training fold carries 1, 5, 15 and 21 PASS/FAIL labels at k = 10,
+  25, 50 and 100. Against k = 0, at k ≥ 25:
+  - MiniMax, Qwen3-Max, Sonnet, glm-5 and qwen3.5-plus lose 20.1 to 31.3 points;
+  - gpt-5.4 loses 7.8 to 8.5 points;
+  - kimi is within −1.4 points;
+  - Opus gains 8.2 to 8.5 points.
+  - At k = 10 (one label), every model is within 0.4 points of k = 0.
+
 ## S3.5: expected value of onboarding in this pool (from S3.4 only)
 
 On the headline development split, onboarding a new model with ground-truth probes changes
@@ -177,6 +233,12 @@ So in this pool, the expected value of onboarding a model that is not better tha
 zero with ground-truth probes. It is negative with verifier-only probes on the headline. On
 `all_eligible`, the measured effects against k = 0 are within −6.6 to +2.6 points.
 
+`sensitivity` (added 2026-11-24) shows the same pattern:
+- With ground-truth probes, only Opus adds anything measurable (+8.5 points at k ≥ 25). Every other
+  model is within −1.4 to +0.7 points of k = 0 at k ≥ 50.
+- With verifier-only probes (5 to 21 labels per fold at k ≥ 25), five of eight models lose 20 to 31
+  points.
+
 ## S3.7: power of the gate at −2
 
 **Setup.**
@@ -185,47 +247,73 @@ zero with ground-truth probes. It is negative with verifier-only probes on the h
 - Stand-ins: the best single model, CellBest-pred and Rule A escalated. The bound is left out by
   the D4 import fence (spec §7).
 - A draw passes when the gate interval's lower bound of the gap is ≥ −2.
+- (c) Resampling: 100 resamples of 774 problems per seed, seeds 0 to 4, from stream 13.
+- (b) Projection: the development half-width is scaled by √(180/774), then the E0 formula is
+  applied.
 
-**(c) Resampling.** Each seed draws 100 resamples of 774 problems from stream 13. Power is
-reported at the development gap and at gap 0, as seed 0's value followed by seeds 1–4 in brackets.
-The Monte Carlo standard error is at most 0.05.
+**(c) and (b) side by side** (`summary` in `s3_7_power.json`).
+- Resampling cells show seed 0 / all 500 draws. The Monte Carlo standard error is at most 0.05 on
+  seed 0 and at most 0.022 on all draws.
+- "Gap 0 (D10)" shifts each draw by minus the development gap, as D10 defines it.
+- "Gap 0, post hoc" shifts each draw by minus the resample-world mean gap: the mean resampled gap
+  over all 500 draws of that comparison. It is a labelled post-hoc variant, chosen after the
+  resampled gaps were seen to differ from the development gaps (spec §7, 2026-11-24), and it uses
+  no new draw.
 
-| Comparison | Development gap | Power at development gap | Power at gap 0 | Median half-width |
-|---|---|---|---|---|
-| CellBest-pred vs best single | −0.51 | 0.81 (0.86–0.89) | 0.92 (0.93–0.96) | 0.54 |
-| Rule A escalated vs best single | −1.03 | 0.16 (0.17–0.23) | 0.39 (0.47–0.51) | 1.18 |
-| Best single vs CellBest-pred | +0.51 | 1.00 | 1.00 | 0.54 |
-| Rule A escalated vs CellBest-pred | −0.51 | 0.37 (0.42–0.53) | 0.53 (0.59–0.63) | 1.03 |
+| Comparison | Method | Development gap | Mean resampled gap | Half-width | Power at development gap | Power at gap 0 (D10) | Power at gap 0, post hoc |
+|---|---|---|---|---|---|---|---|
+| Rule A escalated vs best single | (c) resampling | −1.03 | −2.00 | 1.18 / 1.11 | 0.16 / 0.19 | 0.39 / 0.47 | 0.68 / 0.76 |
+| | (b) projection | −1.03 | | 0.63 | 0.86 | 1.00 | |
+| Rule A escalated vs CellBest-pred | (c) resampling | −0.51 | −1.16 | 1.03 / 0.95 | 0.37 / 0.46 | 0.53 / 0.59 | 0.78 / 0.79 |
+| | (b) projection | −0.51 | | 0.38 | 1.00 | 1.00 | |
+| CellBest-pred vs best single | (c) resampling | −0.51 | −0.84 | 0.54 / 0.54 | 0.81 / 0.86 | 0.92 / 0.94 | 0.95 / 0.95 |
+| | (b) projection | −0.51 | | 0.38 | 1.00 | 1.00 | |
+| Best single vs CellBest-pred | (c) resampling | +0.51 | +0.84 | 0.54 / 0.54 | 1.00 / 1.00 | 1.00 / 1.00 | 1.00 / 1.00 |
+| | (b) projection | +0.51 | | 0.38 | 1.00 | 1.00 | |
 
-**(b) Projection (cross-check).** The development half-width is scaled by √(180/774), then the E0
-formula is applied:
+Half-widths: for (c), the median over draws; for (b), the projected one.
 
-| Comparison | Projected half-width | Power at development gap | Power at gap 0 |
-|---|---|---|---|
-| CellBest-pred vs best single | 0.38 | 1.00 | 1.00 |
-| Rule A escalated vs best single | 0.63 | 0.86 | 1.00 |
-| Rule A escalated vs CellBest-pred | 0.38 | 1.00 | 1.00 |
+**Why (b) and (c) disagree.** For Rule A escalated against the best single model, the resampled
+half-width is about 1.1, nearly double the projection's 0.63.
 
-**Why (b) and (c) disagree for the ladder stand-in.**
+As a check, the E0 formula is run with the resampled median half-width in place of the projected
+one (`width_check_e0_at_resampled_half_width`). Results, all 500 draws:
 
-The resampled CIs are wider than projected: about 1.1 against 0.63 for Rule A escalated.
+| Comparison | Point | (b) projection | E0 at resampled half-width | (c) post hoc | (c) as D10 defines it |
+|---|---|---|---|---|---|
+| Rule A escalated vs best single | development gap | 0.86 | 0.40 | | 0.19 |
+| Rule A escalated vs best single | gap 0 | 1.00 | 0.94 | 0.76 | 0.47 |
+| Rule A escalated vs CellBest-pred | development gap | 1.00 | 0.87 | | 0.46 |
+| Rule A escalated vs CellBest-pred | gap 0 | 1.00 | 0.99 | 0.79 | 0.59 |
 
-The resampled cross-fitted gaps are also lower than the development gaps:
+The wider interval explains most of the difference in one place only.
+- **Rule A escalated vs best single, at the development gap.** The width alone takes power from
+  0.86 to 0.40: 0.46 of the 0.67 drop, about two thirds. Here the half-width drives most of the
+  difference, as the reviewer's check says.
+- **At gap 0 (D10), for the same comparison.** The width alone moves power by only 0.06
+  (1.00 → 0.94); the drop to 0.47 comes mostly from the mean gap. D10 shifts by the development
+  gap (−1.03), but the resamples' mean gap is −2.00, so after the shift the resample world sits at
+  about −0.97, not at 0. With the post-hoc shift to the resample mean, power is 0.76. The remaining
+  0.18 below the width check is the spread of the resampled lower bounds, which the normal formula
+  with one fixed half-width does not capture.
+- **Rule A escalated vs CellBest-pred.** The width alone explains 0.13 of the 0.54 drop at the
+  development gap; the lower resampled mean gap explains the rest.
 
-| Comparison | Development gap | Mean resampled gap |
-|---|---|---|
-| Rule A escalated vs best single | −1.03 | −2.00 |
-| Rule A escalated vs CellBest-pred | −0.51 | −1.16 |
-| CellBest-pred vs best single | −0.51 | −0.84 |
+So the half-width drives most of the difference only for Rule A escalated against the best single
+model at the development gap. Elsewhere the larger effect is the resampled mean gap.
 
-A fit on a resample, with its duplicated problems, picks a different ladder from the one the
-development folds pick. So the stated true-gap assumption (true gap = development gap) does not
-hold inside the resamples. "Power at gap 0", shifted by the development gap as D10 defines it, is
-therefore conservative for these stand-ins.
+**The true-gap assumption.** The resampled cross-fitted gaps are lower than the development gaps:
+−2.00 against −1.03 for Rule A escalated vs best single, and −1.16 against −0.51 for Rule A
+escalated vs CellBest-pred. A fit on a resample, with its duplicated problems, picks a different
+ladder from the one the development folds pick. So the stated true-gap assumption (true gap =
+development gap) does not hold inside the resamples, and "power at gap 0" as D10 defines it is
+conservative for these stand-ins. The post-hoc column removes that offset.
 
-Read literally, the gate's power at −2 for a ladder policy whose true gap is near 0 is about
-0.4–0.6 under (c) and about 1.0 under (b). The plan's S3.7 line records that the user keeps −2
-"even if about 60–70%".
+Read literally, the gate's power at −2 for a ladder policy whose true gap is 0 is:
+- 0.47–0.59 under (c) as D10 defines it, or 0.76–0.79 with the post-hoc shift (all draws);
+- about 1.0 under (b).
+
+The plan's S3.7 line records that the user keeps −2 "even if about 60–70%".
 
 ## S3 gate check (plan §4 S3: "S3.1–S3.7 reported with CIs in all three data views")
 
@@ -234,11 +322,12 @@ Read literally, the gate's power at −2 for a ladder policy whose true gap is n
 | S3.1 | `s3_1_dp1a*.csv`, `.json` | filtered = headline (whole view); `all_eligible`, `sensitivity` (development splits, D3 (α)) | none |
 | S3.2 | `s3_2_*` | headline (decides, all variants); `all_eligible` and `sensitivity` development X13 tasks | none |
 | S3.3 descriptive | `s3_3_unsolved.csv`, `s3_3_rescue_pairs.csv`, `s3_3_historical*.csv` | all three | none |
-| S3.3 fitted | `s3_3_classifier*.csv`, `.json` | headline, `all_eligible` | `sensitivity` not run (spec D8 names two populations) |
-| S3.4 | `s3_4_kmatched*.csv` | headline, `all_eligible` | `sensitivity` not run (spec D9 names two populations) |
-| S3.5 | this document | from S3.4 | as S3.4 |
+| S3.3 fitted | `s3_3_classifier*.csv`, `.json` | headline, `all_eligible` and `sensitivity` development splits (X13, complete case) | none (`sensitivity` added 2026-11-24, spec §7) |
+| S3.4 | `s3_4_kmatched*.csv` | headline, `all_eligible` and `sensitivity` development splits (complete case) | none (`sensitivity` added 2026-11-24, spec §7) |
+| S3.5 | this document | from S3.4, all three | none |
 | S3.6 | `s3_6_*.csv` | all three | none |
-| S3.7 | `s3_7_power*.{json,csv}` | headline development split (D10) | power is a headline quantity; no other view |
+| S3.7 | `s3_7_power*.{json,csv}` | headline development split (D10) | headline-only by definition (see below) |
 
-The three gaps follow the frozen spec's populations. The reviewer decides whether the gate wording
-needs the `sensitivity` view for S3.3 fitted and S3.4.
+S3.7 is headline-only by definition. It measures the power of the headline gate, which C2 must pass
+on the headline evaluation population (774 problems in the complete case), so no other view has a
+gate whose power it could measure. The reviewer's check of checkpoint 2 (item 4) agrees.

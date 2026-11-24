@@ -2,7 +2,9 @@
 (S3 spec D8; compare Route Anything C.5). Development split only.
 
 Populations: the headline development split, complete case; the `all_eligible` development
-split's X13 tasks, complete case, as a second population. `stats.dev_folds`, seeds 0 to 4.
+split's X13 tasks, complete case, as a second population; the `sensitivity` development split's X13
+tasks, complete case, as a third (added for the plan's three-view gate, reviewer check of checkpoint
+2, item 4; spec §7, 2026-11-24). `stats.dev_folds`, seeds 0 to 4.
 
 Ladder: in each training fold, S2's `FixedCascade("escalate")` (the cheapest P0.5 ladder whose
 training acceptance is at least the training best single model's).
@@ -10,17 +12,20 @@ training acceptance is at least the training best single model's).
 Post-failure classifier (primary). A decision point is a rung j of the ladder, not the last
 available one, whose verdict is FAIL or UNKNOWN (so an escalate ladder would go on). Target
 y = 1 when any later available rung of the ladder succeeds (S0.1). Features, all observable when
-the decision is made (S0.13): the predicted cell (S2.5 predictor, fitted on the training fold), the
-rung position, the verdict history of the rungs tried, and the task's `content_text` (TF-IDF as in
-`cells.make_classifier`); logistic regression (C = 10, as there). No released score, family or
-dimension. Policy: give up (accept nothing, pay nothing more) when the predicted P(y = 1) < t. t is
+the decision is made (S0.13), exactly D8's: the predicted cell (S2.5 predictor, fitted on the
+training fold), the verdict history of the rungs tried (one token per rung, `r{i}:{verdict}`), and
+the task's `content_text` (TF-IDF as in `cells.make_classifier`); logistic regression (C = 10, as
+there). No released score, family or dimension. A labelled post-hoc variant adds the rung position
+(`pos={j}`, `pos=-1` before rung 1), which D8 does not list; it was the checkpoint 2 run (spec §7,
+2026-11-24). Policy: give up (accept nothing, pay nothing more) when the predicted P(y = 1) < t. t is
 the largest value whose acceptance loss against the full ladder is at most 2 points on out-of-fold
 predictions inside the training folds (each training fold predicted by a classifier fitted on the
 other training folds). Perfect-information bound: give up exactly when y = 0; same acceptance as
 the full ladder, largest saving.
 
 Pre-attempt classifier (secondary, D8 ruling). One decision before rung 1: y = 1 when any available
-rung of the ladder succeeds; features: the predicted cell and `content_text`. Same t rule and bound.
+rung of the ladder succeeds; features: the predicted cell and `content_text` (the variant adds the
+constant `pos=-1`). Same t rule and bound.
 
 Capture = held-out saving of the classifier policy / held-out saving of the perfect-information
 policy, on totals over the held-out tasks (pooled over folds); the acceptance loss is beside it.
@@ -56,7 +61,10 @@ OUT = REPO_ROOT / "router" / "experiments" / "out"
 MAX_LOSS = 2.0                 # points of acceptance, on out-of-fold training predictions
 KINDS = ("post_failure", "pre_attempt")
 CURVE_T = tuple(np.round(np.linspace(0.0, 1.0, 21), 2))
-POPS = ("filtered = headline", "all_eligible")
+POPS = ("filtered = headline", "all_eligible", "sensitivity")
+D8_FEATURES = "D8 as specified"
+RUNG_POSITION = "plus rung position (post-hoc variant)"
+FEATURES = {D8_FEATURES: False, RUNG_POSITION: True}     # label -> rung_position flag
 
 
 # ------------------------------------------------------------------------------------- traces
@@ -132,15 +140,18 @@ def simulate(trs: dict, stop: dict) -> tuple[dict, dict]:
 
 # --------------------------------------------------------------------------------- classifier
 class GiveUpClassifier:
-    """P(y = 1) from the predicted cell, the position, the verdict history and the task text."""
+    """P(y = 1) from the predicted cell, the verdict history and the task text (D8); with
+    `rung_position`, also the decision's rung position (the labelled post-hoc variant)."""
 
-    def __init__(self, rows: pd.DataFrame, texts: pd.Series, cells: pd.Series):
+    def __init__(self, rows: pd.DataFrame, texts: pd.Series, cells: pd.Series,
+                 rung_position: bool = False):
         from scipy.sparse import hstack
         from sklearn.feature_extraction import DictVectorizer
         from sklearn.feature_extraction.text import TfidfVectorizer
         from sklearn.linear_model import LogisticRegression
         from sklearn.pipeline import make_union
         self._hstack = hstack
+        self.rung_position = rung_position
         self.const = None
         y = rows.y.to_numpy()
         if len(rows) == 0 or len(set(y)) < 2:
@@ -152,14 +163,16 @@ class GiveUpClassifier:
                             max_features=200_000))
         self.meta = DictVectorizer()
         X = self._hstack([self.text.fit_transform(texts.reindex(rows.task_id).tolist()),
-                          self.meta.fit_transform(self._meta(rows, cells))]).tocsr()
+                          self.meta.fit_transform(self._meta(rows, cells, rung_position))]).tocsr()
         self.clf = LogisticRegression(C=10.0, max_iter=5000, random_state=CLF_SEED).fit(X, y)
 
     @staticmethod
-    def _meta(rows, cells):
+    def _meta(rows, cells, rung_position: bool = False):
         out = []
         for r in rows.itertuples():
-            d = {f"cell={cells[r.task_id]}": 1.0, f"pos={r.j}": 1.0}
+            d = {f"cell={cells[r.task_id]}": 1.0}
+            if rung_position:
+                d[f"pos={r.j}"] = 1.0
             for tok in r.history.split():
                 d[tok] = 1.0
             out.append(d)
@@ -171,7 +184,7 @@ class GiveUpClassifier:
         if self.const is not None:
             return np.full(len(rows), self.const)
         X = self._hstack([self.text.transform(texts.reindex(rows.task_id).tolist()),
-                          self.meta.transform(self._meta(rows, cells))]).tocsr()
+                          self.meta.transform(self._meta(rows, cells, self.rung_position))]).tocsr()
         return self.clf.predict_proba(X)[:, 1]
 
 
@@ -189,7 +202,8 @@ def choose_t(trs: dict, rows: pd.DataFrame, p: np.ndarray, max_loss: float = MAX
 
 
 # ---------------------------------------------------------------------------------- one run
-def run_population(m: OutcomeMatrix, ctx: Context, seed: int, kind: str) -> dict:
+def run_population(m: OutcomeMatrix, ctx: Context, seed: int, kind: str,
+                   rung_position: bool = False) -> dict:
     folds = stats.dev_folds(m.tasks, seed)
     held_rows, chosen = [], []
     all_trs = {}
@@ -210,10 +224,10 @@ def run_population(m: OutcomeMatrix, ctx: Context, seed: int, kind: str) -> dict
             fit_ids = set(inner.index[inner != g])
             fit_rows = rows_tr[rows_tr.task_id.isin(fit_ids)]
             pr = rows_tr[~rows_tr.task_id.isin(fit_ids)]
-            clf = GiveUpClassifier(fit_rows, ctx.content, cells)
+            clf = GiveUpClassifier(fit_rows, ctx.content, cells, rung_position)
             p_oof.loc[pr.index] = clf.predict(pr, ctx.content, cells)
         t = choose_t(tr_tr, rows_tr, p_oof.to_numpy())
-        clf = GiveUpClassifier(rows_tr, ctx.content, cells)
+        clf = GiveUpClassifier(rows_tr, ctx.content, cells, rung_position)
         p = clf.predict(rows_te, ctx.content, cells)
         held_rows.append(rows_te.assign(p=p, fold=int(f), t=t))
         chosen.append({"fold": int(f), "ladder": pol.name, "t": t, "n_train_rows": len(rows_tr),
@@ -290,7 +304,8 @@ def populations():
     dev = set(ts.index[ts.split == S.DEV])
     v = ReplayVerifier.from_x13()
     out = {}
-    for name, key in (("filtered = headline", "headline"), ("all_eligible", "all_eligible")):
+    for name, key in (("filtered = headline", "headline"), ("all_eligible", "all_eligible"),
+                      ("sensitivity", "sensitivity")):
         x = views[key]
         x = x.subset([t for t in x.tasks if t in dev and v.has_record(t)])
         out[name] = x.subset(list(x.tasks[x.available.astype(bool).all(axis=1).to_numpy()]))
@@ -306,16 +321,24 @@ def run():
     for pname, m in pops.items():
         ctx = Context(v, content=content, problem_of=problems)
         for kind in KINDS:
-            for seed in stats.SEEDS:
-                r = run_population(m, ctx, seed, kind)
-                s, curve = summarise(r, problems, with_ci=seed == stats.GATE_SEED)
-                rows.append({"population": pname, "population_kind": "development split, complete case",
-                             "classifier": kind, "seed": seed, "gate_seed": seed == stats.GATE_SEED,
-                             **{k: v_ for k, v_ in s.items() if not isinstance(v_, list)},
-                             **{f"{k}_lo": v_[0] for k, v_ in s.items() if isinstance(v_, list)},
-                             **{f"{k}_hi": v_[1] for k, v_ in s.items() if isinstance(v_, list)}})
-                curves.append(curve.assign(population=pname, classifier=kind, seed=seed))
-                res["fits"][f"{pname}|{kind}|{seed}"] = r["fits"]
+            for feat, pos in FEATURES.items():
+                for seed in stats.SEEDS:
+                    r = run_population(m, ctx, seed, kind, pos)
+                    s, curve = summarise(r, problems, with_ci=seed == stats.GATE_SEED)
+                    rows.append({"population": pname,
+                                 "population_kind": "development split, complete case",
+                                 "classifier": kind, "features": feat, "primary": not pos,
+                                 "seed": seed, "gate_seed": seed == stats.GATE_SEED,
+                                 **{k: v_ for k, v_ in s.items() if not isinstance(v_, list)},
+                                 **{f"{k}_lo": v_[0] for k, v_ in s.items() if isinstance(v_, list)},
+                                 **{f"{k}_hi": v_[1] for k, v_ in s.items() if isinstance(v_, list)}})
+                    curves.append(curve.assign(population=pname, classifier=kind, features=feat,
+                                               seed=seed))
+                    res["fits"][f"{pname}|{kind}|{feat}|{seed}"] = r["fits"]
+    res["features"] = {D8_FEATURES: "primary: the predicted cell, the verdict history and "
+                                     "content_text (spec D8)",
+                       RUNG_POSITION: "post-hoc variant: D8's features plus the rung position, "
+                                      "which D8 does not list (spec §7, 2026-11-24)"}
     res["route_anything_c5"] = ("pre-attempt signals within a cell, -0.013 to +0.078; definition "
                                 "differs, qualitative comparison only")
     return res, pd.DataFrame(rows), pd.concat(curves, ignore_index=True)
@@ -337,9 +360,9 @@ if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     res, table, curve = run()
     table.to_csv(OUT / "s3_3_classifier.csv", index=False, lineterminator="\n")
-    curve[["population", "classifier", "seed", "t", "acceptance_loss_points", "saving_pct"]].to_csv(
+    curve[["population", "classifier", "features", "seed", "t", "acceptance_loss_points", "saving_pct"]].to_csv(
         OUT / "s3_3_classifier_curve.csv", index=False, lineterminator="\n")
     (OUT / "s3_3_classifier.json").write_text(json.dumps(_clean(res), indent=1, sort_keys=True) + "\n")
-    cols = ["population", "classifier", "seed", "n_decision_points", "n_y1", "acceptance_loss_points",
+    cols = ["population", "classifier", "features", "seed", "n_decision_points", "n_y1", "acceptance_loss_points",
             "classifier_saving_pct", "perfect_saving_pct", "capture_pct", "auc"]
     print(table[cols].round(3).to_string(index=False))

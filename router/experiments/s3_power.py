@@ -28,6 +28,16 @@ information); the Monte Carlo standard error is reported.
 h = h_dev * sqrt(180 / 774); power at true gap g = Phi(z (g + 2) / h - z), z = z_0.975 (the E0
 formula), at g = the development gap and g = 0.
 
+Added after checkpoint 2 (reviewer check of checkpoint 2, item 3; spec §7, 2026-11-24):
+- `summary`: (c) and (b) side by side for each comparison, with the half-widths; (c) pooled over
+  all draws of seeds 0 to 4 and on seed 0 alone.
+- A labelled post-hoc variant of "power at gap 0": shift each draw by minus the resample-world mean
+  gap (the mean of the resampled gaps over all draws of seeds 0 to 4, per comparison) instead of the
+  development gap. Post hoc and data-dependent: chosen after the resampled gaps were seen to differ
+  from the development gaps. It uses no new draw.
+- A width check: the E0 formula evaluated with the median resampled half-width in place of the
+  projected one, to separate the effect of the wider interval from that of the shifted mean gap.
+
 Nesting: the stand-ins select nothing, so nested cross-fitting reduces to the five folds.
 
 Run from the repo root:  pipeline/venv/bin/python -m router.experiments.s3_power
@@ -122,15 +132,14 @@ def gap_ci(o, ref, clusters) -> tuple[float, float, float]:
 
 
 def projection(dev: dict, problems: pd.Series, n_dev: int) -> dict:
-    z = norm.ppf(0.5 + CI_LEVEL / 2)
     out = {}
     for a, b in COMPARISONS:
         p, lo, hi = gap_ci(dev[a], dev[b], problems)
         h = (hi - lo) / 2 * np.sqrt(n_dev / N_EVAL_PROBLEMS)
         out[f"{a}_vs_{b}"] = {"development_gap": p, "development_ci": [lo, hi],
                               "projected_half_width": h,
-                              "power_at_development_gap": float(norm.cdf(z * (p - GAP_MIN) / h - z)),
-                              "power_at_gap_0": float(norm.cdf(z * (0 - GAP_MIN) / h - z))}
+                              "power_at_development_gap": e0_power(p, h),
+                              "power_at_gap_0": e0_power(0.0, h)}
     return out
 
 
@@ -162,6 +171,8 @@ def run(n_resamples: int = N_RESAMPLES, seeds=stats.SEEDS):
                               "pass_at_gap_0": bool(lo - dev_gap[key] >= GAP_MIN)})
             print(f"seed {seed} resample {r}", file=sys.stderr, flush=True)
     d = pd.DataFrame(draws)
+    mean_gap = d.groupby("comparison").gap.mean()
+    d["pass_at_gap_0_resample_mean_posthoc"] = (d.lo - d.comparison.map(mean_gap)) >= GAP_MIN
     res = {"spec": "docs/research/S3_analysis_spec.md D10", "population": comp,
            "n_development_problems": n_dev, "n_evaluation_problems": N_EVAL_PROBLEMS,
            "n_resamples_per_seed": n_resamples, "gap_threshold": GAP_MIN,
@@ -170,18 +181,52 @@ def run(n_resamples: int = N_RESAMPLES, seeds=stats.SEEDS):
            "true_gap_assumption": "each stand-in's true gap is taken to be its development gap "
                                   "(seed 0); not an estimate of the evaluation gap",
            "nesting": "the stand-ins select nothing, so nested cross-fitting reduces to five folds",
-           "projection_b": proj, "resampling_c": {}}
+           "projection_b": proj, "resampling_c": {},
+           "posthoc_gap_0_shift": "post hoc, data-dependent: each draw shifted by minus the "
+                                  "resample-world mean gap (all draws of seeds 0 to 4, per "
+                                  "comparison); spec §7, 2026-11-24",
+           "summary": {}}
     for key, g in d.groupby("comparison"):
         rows = {}
         for s, gs in g.groupby("seed"):
-            p1, p0 = gs.pass_at_development_gap.mean(), gs.pass_at_gap_0.mean()
-            n = len(gs)
-            rows[int(s)] = {"power_at_development_gap": float(p1),
-                            "mc_se_development_gap": float(np.sqrt(p1 * (1 - p1) / n)),
-                            "power_at_gap_0": float(p0), "mc_se_gap_0": float(np.sqrt(p0 * (1 - p0) / n)),
-                            "median_half_width": float(((gs.hi - gs.lo) / 2).median()), "n": n}
-        res["resampling_c"][key] = {"development_gap": dev_gap[key], "by_seed": rows}
+            rows[int(s)] = power_row(gs)
+        res["resampling_c"][key] = {"development_gap": dev_gap[key],
+                                    "resample_mean_gap": float(mean_gap[key]), "by_seed": rows}
+        res["summary"][key] = side_by_side(proj[key], g, float(mean_gap[key]))
     return res, d
+
+
+def power_row(gs: pd.DataFrame) -> dict:
+    """Power, its Monte Carlo standard error and the median half-width over a set of draws."""
+    n = len(gs)
+    out = {"n": n, "median_half_width": float(((gs.hi - gs.lo) / 2).median())}
+    for tag, col in (("development_gap", "pass_at_development_gap"), ("gap_0", "pass_at_gap_0"),
+                     ("gap_0_resample_mean_posthoc", "pass_at_gap_0_resample_mean_posthoc")):
+        p = float(gs[col].mean())
+        out[f"power_at_{tag}"] = p
+        out[f"mc_se_{tag}"] = float(np.sqrt(p * (1 - p) / n))
+    return out
+
+
+def e0_power(gap: float, h: float) -> float:
+    """The E0 formula: P(CI lower bound >= -2) at true gap `gap` with half-width `h`."""
+    z = norm.ppf(0.5 + CI_LEVEL / 2)
+    return float(norm.cdf(z * (gap - GAP_MIN) / h - z))
+
+
+def side_by_side(proj: dict, g: pd.DataFrame, mean_gap: float) -> dict:
+    """(c) and (b) for one comparison, at the development gap and at gap 0, with half-widths."""
+    h_res = float(((g.hi - g.lo) / 2).median())
+    return {"development_gap": proj["development_gap"], "resample_mean_gap": mean_gap,
+            "resampling_c_all_seeds": power_row(g),
+            "resampling_c_seed_0": power_row(g[g.seed == stats.GATE_SEED]),
+            "projection_b": {"half_width": proj["projected_half_width"],
+                             "power_at_development_gap": proj["power_at_development_gap"],
+                             "power_at_gap_0": proj["power_at_gap_0"]},
+            "width_check_e0_at_resampled_half_width": {
+                "half_width": h_res,
+                "power_at_development_gap": e0_power(proj["development_gap"], h_res),
+                "power_at_gap_0": e0_power(0.0, h_res)}}
 
 
 def _clean(x):

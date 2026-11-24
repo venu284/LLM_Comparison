@@ -7,6 +7,7 @@ import pandas as pd
 import pytest
 
 from router.baselines.common import ESCALATE, Policy, policy_outcomes
+from router.data.verdicts import X13_VERDICTS
 from router.experiments import s3_classifier as C
 from router.sim import toy
 from router.sim.verifier import FAIL, PASS, UNKNOWN, ReplayVerifier
@@ -76,3 +77,35 @@ def test_choose_t_largest_within_budget():
     p = np.array([0.9 if t == "a" else 0.1 for t in rows.task_id])
     assert C.choose_t(trs, rows, p) == pytest.approx(0.9)          # t = 0.9 stops b only
     assert C.choose_t(trs, rows, p, max_loss=30.0) > 0.9           # budget allows stopping a too
+
+
+def test_d8_features_have_no_rung_position():
+    """The primary classifier uses exactly D8's features (cell, verdict history, text); the rung
+    position appears only in the labelled post-hoc variant (spec §7, 2026-11-24)."""
+    rows = pd.DataFrame({"task_id": ["x", "x"], "j": [0, 1],
+                         "history": ["r0:FAIL", "r0:FAIL r1:UNKNOWN"], "y": [1, 0]})
+    cells = pd.Series({"x": "dim|fam"})
+    d8 = C.GiveUpClassifier._meta(rows, cells)
+    assert d8 == [{"cell=dim|fam": 1.0, "r0:FAIL": 1.0},
+                  {"cell=dim|fam": 1.0, "r0:FAIL": 1.0, "r1:UNKNOWN": 1.0}]
+    var = C.GiveUpClassifier._meta(rows, cells, rung_position=True)
+    assert [sorted(k for k in d if k.startswith("pos=")) for d in var] == [["pos=0"], ["pos=1"]]
+    assert C.FEATURES == {C.D8_FEATURES: False, C.RUNG_POSITION: True}
+    texts = pd.Series({"x": "def f(): return 1"})
+    assert C.GiveUpClassifier(rows, texts, cells).rung_position is False
+
+
+@pytest.mark.skipif(not X13_VERDICTS.exists(), reason="external data not fetched")
+def test_three_view_populations():
+    """S3.3 fitted (X13, complete case) and S3.4 (complete case) on all three views' development
+    splits. S3.3's sensitivity population equals DP1b's sensitivity column (279 tasks, 244
+    problems); reviewer check of checkpoint 2, item 4."""
+    from router.experiments import s3_kmatched as K
+    pops, _, problems = C.populations()
+    got = {k: (len(m), int(problems.reindex(m.tasks).nunique())) for k, m in pops.items()}
+    assert got == {"filtered = headline": (195, 180), "all_eligible": (459, 355),
+                   "sensitivity": (279, 244)}
+    pk, problems = K.populations()
+    got = {k: (len(m), int(problems.reindex(m.tasks).nunique())) for k, m in pk.items()}
+    assert got == {"filtered = headline": (195, 180), "all_eligible": (966, 567),
+                   "sensitivity": (294, 259)}
