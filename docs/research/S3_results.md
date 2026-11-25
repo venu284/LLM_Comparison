@@ -4,12 +4,14 @@ _Written 2026-11-23 on branch `s3-analysis`, under the spec frozen at `b29db49` 
 implementation entry in its §7 (committed in `ca22ef8`, before any DP number). For review; the
 verdicts are confirmed by the reviewer, and the user decides what follows. Updated 2026-11-24 with
 the follow-ups from the reviewer's check of checkpoint 2. They change no DP number: the S3.1 and
-S3.2 outputs are byte-identical on rerun. The follow-ups are:
+S3.2 outputs are byte-identical on rerun._
+
+The follow-ups are:
 - S3.3 fitted is now D8's features exactly, with the rung-position run as a labelled variant;
 - `sensitivity` is added to S3.3 fitted and S3.4;
 - S3.7 shows (c) and (b) side by side, with a post-hoc shift and a width check;
 - the Qwen3-Max caveat sits next to the DP1b saving;
-- the new spec §7 entries are dated 2026-11-24._
+- the new spec §7 entries are dated 2026-11-24.
 
 Every number names its view and population. "Development split" numbers come from
 `stats.dev_folds` cross-fitting and are development figures. Seed 0 decides; seeds 1 to 4 are in the
@@ -76,8 +78,8 @@ rests on Qwen3-Max, whose released cost carries no per-task information.
 - Qwen3-Max's released token counts are constants (S1.7 data note).
 - On this population, its released cost is $0.000208 on every one of the 195 tasks, in all three
   cells. The other seven models' costs vary from task to task.
-- The bound's first rung is Qwen3-Max in every cell, so most of its saving comes from stopping at
-  a rung whose cost is a constant.
+- The bound's first rung is Qwen3-Max in every cell, so every task's cost under the bound starts
+  with a constant-cost rung.
 - With Qwen3-Max's price doubled (refit, D11 (a)), the bound still saves 62.2% against the best
   single model and 56.8% against CellBest-pred. Its gaps fall to −2.56 and −2.05, which is one of the
   four sweep misses below.
@@ -293,9 +295,16 @@ The wider interval explains most of the difference in one place only.
 - **At gap 0 (D10), for the same comparison.** The width alone moves power by only 0.06
   (1.00 → 0.94); the drop to 0.47 comes mostly from the mean gap. D10 shifts by the development
   gap (−1.03), but the resamples' mean gap is −2.00, so after the shift the resample world sits at
-  about −0.97, not at 0. With the post-hoc shift to the resample mean, power is 0.76. The remaining
-  0.18 below the width check is the spread of the resampled lower bounds, which the normal formula
-  with one fixed half-width does not capture.
+  about −0.97, not at 0. With the post-hoc shift to the resample mean, power is 0.76.
+- **The remaining 0.18 below the width check is spread between draws.**
+  - Across the 500 draws, the resampled gap has a standard deviation of 0.93 points. The median
+    half-width implies a standard error of only 0.57 (1.11 / 1.96); the half-width itself varies
+    with an SD of 0.30.
+  - For Rule A escalated vs CellBest-pred, the figures are 1.06 against 0.48.
+  - So the draw-to-draw variation of the refitted gap is larger than each draw's own interval
+    allows for. The interval bootstraps tasks with the fitted policy held fixed, so it does not
+    include the variation from refitting.
+  - This is a measured property of the resample world, not a change to the gate.
 - **Rule A escalated vs CellBest-pred.** The width alone explains 0.13 of the 0.54 drop at the
   development gap; the lower resampled mean gap explains the rest.
 
