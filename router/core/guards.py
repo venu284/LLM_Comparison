@@ -28,6 +28,8 @@ NOT_ITEM_FITS: dict[str, str] = {
     "policy.RouterV1.fit_parts": "the parts of that lookup table (router v1 and v2); no item parameter",
     "policy.RouterV2.fit": "router v2: v1 plus a Beta posterior per (new model, group) from probes; "
                            "no item parameter",
+    "difficulty.FamilyClassifier.fit": "predicts a task's family label from its prompt embedding; "
+                                       "no item parameter",
 }
 
 # Modules not yet under the rule, with the reason. Empty since S4.3 rebuilt `irt` on the guarded
