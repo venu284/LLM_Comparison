@@ -345,10 +345,15 @@ def test_embedding_pin_refuses_a_changed_file(tmp_path):
         (tmp_path / rel).write_bytes(b"x")
     with pytest.raises(embeddings.EmbeddingPinError, match="sha256"):
         embeddings.verify(tmp_path)
+    for rel in embeddings.MINILM_SHA256:      # an extra pickle checkpoint is refused before hashing
+        (tmp_path / rel).write_bytes(b"x")
+    (tmp_path / "pytorch_model.bin").write_bytes(b"x")
+    with pytest.raises(embeddings.EmbeddingPinError, match="unpinned"):
+        embeddings.verify(tmp_path)
     try:
         embeddings.verify()
     except embeddings.EmbeddingPinError:
-        pytest.skip("pinned MiniLM revision not in the local cache")
+        pytest.skip("pinned MiniLM files not in external/models (run scripts/fetch_data.py)")
 
 
 def test_baselines_draw_from_their_streams():

@@ -25,6 +25,7 @@
 # extract: openai_humaneval <- openai/openai_humaneval@7dce6050a7d6d172f3cc5c32aa97f52fa1a2e544 files=openai_humaneval/test-00000-of-00001.parquet fields=task_id,prompt
 # extract: swebench_verified_ids <- princeton-nlp/SWE-bench_Verified@c104f840cc67f8b6eec6f759ebc8b2693d585d4a files=data/test-00000-of-00001.parquet fields=instance_id,repo
 # archive: llmrouterbench <- NPULH/LLMRouterBench@b95870f9e60c589e82f7972c91ffa8de9ca89f85 file=bench-release.tar.gz sha256=b79f8cde1a6f029c2efa663a3a3b6f7748defb22341fe59f328cebef6648c8f1 members=bench-release/humaneval/test/,bench-release/mbpp/test/,bench-release/livecodebench/test/,bench-release/swe-bench/verified/
+# model: all-MiniLM-L6-v2 <- sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41 files=1_Pooling/config.json,config.json,config_sentence_transformers.json,model.safetensors,modules.json,sentence_bert_config.json,special_tokens_map.json,tokenizer.json,tokenizer_config.json,vocab.txt
 386cce2e6cd6dbab37968750de131a1de600b1f81a65e4c071cf06a15c07e3ce  CodeRouterBench/README.md
 e9c7e884a7f40c9f0bd21d5eb584a40a9c452cd9f7bc7d6430f10c3dc1aa83a3  CodeRouterBench/configs/eval_pipeline.example.json
 c6189a518748d4310bf8aec17d4ae221850a3f4c31f5ec33d833a742530e8102  CodeRouterBench/evidence/figures/README.md
@@ -198,6 +199,16 @@ fc95595c00b875627501273437f5433b9c116b5658e42dad345d240998edef2a  llmrouterbench
 735f9c0263cdf76c3da8240de17ed9c0e74a46169e53414d31f61fd3d6eb5a21  llmrouterbench/bench-release/swe-bench/verified/openrouter/SWE-Bench-verified_openrouter-20251125_134549.json
 ed6a0cc806a94aae46d5cd1d6c908d190a90dc9b7c568fd7e7b220096b641f16  llmrouterbench/bench-release/swe-bench/verified/qwen3-235b-a22b-2507/SWE-Bench-verified_qwen3-235b-a22b-2507-20251024_133429.json
 fdddecc77e043fe7e235ad793032c1b39c1e82a0c659586c112e351e0fdb59e5  llmrouterbench/bench-release/swe-bench/verified/qwen3-235b-a22b-thinking/SWE-Bench-verified_qwen3-235b-a22b-thinking-2507-20251026_124335.json
+4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23  models/all-MiniLM-L6-v2/1_Pooling/config.json
+953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41  models/all-MiniLM-L6-v2/config.json
+061ca9d39661d6c6d6de5ba27f79a1cd5770ea247f8d46412a68a498dc5ac9f3  models/all-MiniLM-L6-v2/config_sentence_transformers.json
+53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db  models/all-MiniLM-L6-v2/model.safetensors
+84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf  models/all-MiniLM-L6-v2/modules.json
+fc1993fde0a95c24ec6c022539d41cf6e2f7c9721e5415d6fb6897472a9cd4b7  models/all-MiniLM-L6-v2/sentence_bert_config.json
+303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3  models/all-MiniLM-L6-v2/special_tokens_map.json
+be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037  models/all-MiniLM-L6-v2/tokenizer.json
+acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b  models/all-MiniLM-L6-v2/tokenizer_config.json
+07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3  models/all-MiniLM-L6-v2/vocab.txt
 56e5793cd930b58ba55bcf94624fbe0a7d98307d0693e3e4d4fe2f721038c100  route-anything-data/README.md
 7ddf95e4b00aea852ad3a5c2039091725407a64a59d5af5f498dccdc37ea8771  route-anything-data/data/agent-as-a-router/data/coderouterbench/id_probing_results_long.csv
 9bb46d1da2520766a4e7dbaf2e027f17febbf7977370b50bbdacdadb7219f515  route-anything-data/data/agent-as-a-router/data/coderouterbench/id_probing_tasks.jsonl
