@@ -376,10 +376,134 @@ this section is `router_v2`.
      `router/core/irt.py` (quick-check reference code, 2026-11-10) is exempt by name until S4.3
      rebuilds it; the exemption list is in the test and in this section.
 
-## 6. v3 and v4 components (checkpoint 3)
+## 6. v3 and v4 components (checkpoint 3: components and unit tests only)
 
-Not built at checkpoint 1. Their rules are in the handover (S4.3–S4.5) and plan §2; this spec gets
-a section for each before its code, as for v1.
+Written 2026-11-25, before any checkpoint 3 code. Plan §4's S4 gate asks that "v3 and v4 components
+have unit tests". No router v3 or v4 is assembled here and nothing is run on data; DP2 and the v3
+and v4 runs belong to S5. Every draw in the new unit tests goes through `stats.rng` with stream 23
+(`s4_sim`).
+
+### 6.1 S4.3 `router/core/ability.py`: the hierarchical ability model
+
+- **Model** (plan §2 item 1): P(model m passes task q) = σ(μ_g + δ_m + γ_{m,g} − b_q), where g is the
+  task's group. On training tasks g is the true S1.1 family (as v1, P3 (a)). Data: the known models
+  × the training tasks, Y = 1 for S0.1 success, 0 otherwise, NaN where the model is unavailable
+  (ignored).
+- **Estimation:** MAP with empirical-Bayes variances.
+  - μ_g ~ N(0, 10²) and δ_m ~ N(0, 10²) are weak priors on fixed effects. After the fit, δ is
+    centred on the known models (δ ← δ − mean δ, μ ← μ + mean δ, which leaves every logit
+    unchanged), so δ = 0 is the average known model.
+  - γ_{m,g} ~ N(0, σ_γ²) shrinks each model's group offset toward 0; b_q ~ N(0, σ_b²) (μ_g holds the
+    group's mean difficulty).
+  - σ_γ² and σ_b² are estimated from the known models by an approximate EM: alternate a joint MAP
+    fit (L-BFGS on the exact gradient) with σ² ← mean over the parameters of (estimate² + its
+    diagonal Laplace variance), the diagonal variance being 1 / (the parameter's Fisher information
+    + 1/σ²). Start σ_γ = 0.5, σ_b = 1; stop when both change by less than 10⁻⁴ (relative) or after
+    50 rounds; σ² is floored at 10⁻⁶.
+  - σ_δ², the new model's prior variance on δ, is the sample variance (ddof 1) of the known models'
+    centred δ.
+- **The 1PL as the special case** (`kind="1pl"`): μ_g and γ removed, P = σ(θ_m − b_q), with fixed
+  priors θ ~ N(0, 1²) and b ~ N(0, 2²) and no EM. These are the priors of the 2026-11-10 quick-check
+  `irt.fit`, which the 1PL fit reproduces on simulated data (tested). That validates the rebuild;
+  no earlier number is cited.
+- **S4.6 guard:** `ability.fit` takes `scored_ids` and `problem_of` as required keyword arguments
+  and calls `check_non_transductive(items, scored_ids, problem_of)` before fitting.
+- **A new model** (plan §2 item 2; R11; S0.13).
+  - It starts at δ = 0, γ = 0: the pool prior, P = σ(μ_g − b_q), the average known model. It never
+    starts at θ = 0, which would drop μ_g.
+  - Prior: δ ~ N(0, σ_δ²) and γ_g ~ N(0, σ_γ²), independent.
+  - Evidence: PASS (1) or FAIL (0) on a task with a known b (a training task's fitted b, or a scored
+    task's b predicted by S4.4) and group. UNKNOWN never updates (S0.13).
+  - Posterior: Laplace approximation at the MAP over (δ, γ_1, …, γ_G), found by a damped Newton
+    iteration written out in the module (no general-purpose optimiser).
+  - Reported per group: the offset mean δ̂ + γ̂_g and the offset SD √Var(δ + γ_g) from the Laplace
+    covariance. S0.13's `STOP_POSTERIOR_SD` is stated for this SD (v3); v2's per-group Beta stands in
+    for it until then (§4.2). With no evidence the SD is √(σ_δ² + σ_γ²).
+  - A task whose predicted group has no training row uses the training-task-weighted mean of μ_g
+    and γ = 0.
+- **The quick-check code.** `router/core/irt.py` and `router/core/anchors.py` (2026-11-10) move
+  unchanged to `router/experiments/m3_quickcheck_irt.py` and `m3_quickcheck_anchors.py`: frozen,
+  never cited, outside the S4.6 scan, as `m2_quickcheck_sim.py` was frozen at S2. The m3
+  experiments and their tests import from there. `router/core/irt.py` is rebuilt as the 1PL entry
+  point (`irt.fit` = `ability.fit(..., kind="1pl")`, guarded), as plan S4.3 says ("`core/irt.py` kept
+  as the 1PL case"). `guards.EXEMPT_MODULES` becomes empty, and the S4.6 test asserts that it is.
+- **Unit tests:** parameter recovery on simulated data (b, δ, γ and σ_γ); the 1PL reduction against
+  the frozen quick-check fit; the prior at k = 0 (P = σ(μ_g − b_q), which differs from σ(−b_q) when
+  μ_g ≠ 0; offset SD √(σ_δ² + σ_γ²)); posterior updates (PASS raises and FAIL lowers the offset of
+  the evidence's group and, through δ, the other groups less; UNKNOWN changes nothing; the SD
+  shrinks); the guard.
+
+### 6.2 S4.4 `router/core/difficulty.py`: difficulty from the prompt
+
+- **Target:** b_q of the training tasks, from `ability.fit` on the training folds.
+- **Features:** the pinned MiniLM embedding (`baselines.embeddings.embed`: 384 dimensions, unit
+  norm) of `content_text` only (S1.5; never the wrapped prompt, whose instruction wording identifies
+  the family). No source, family, dimension or other label is a feature. The embedding function is
+  injectable so unit tests can run without the model.
+- **Model:** ridge regression with an intercept. α is chosen from {0.01, 0.1, 1, 10, 100, 1000} by
+  cross-validation grouped by problem inside the training data (`GroupKFold` over problem ids,
+  5 folds or the number of problems if fewer; lowest mean squared error, ties to the larger α), then
+  refitted on all training tasks.
+- **S4.6 guard:** `difficulty.fit` takes the training task ids, their b, their texts, `scored_ids`
+  and `problem_of`, and calls the guard before fitting.
+- **Grouped CV report** (`grouped_cv`): out-of-fold predictions with R² and Spearman ρ, for S5. Not
+  run at checkpoint 3.
+- **Optional family classifier from the prompt** (`FamilyClassifier`): multinomial logistic
+  regression on the same embedding, an alternative to v1's TF-IDF `CellPredictor`. It predicts a
+  label and fits no item parameter (listed in `guards.NOT_ITEM_FITS`). No router uses it at
+  checkpoint 3.
+- **Unit tests:** with an injected embedding, ridge recovers a linear b; the grouped CV folds never
+  split a problem; predictions depend on the text only (the feature matrix equals the embedding of
+  the texts; the same text gives the same b whatever its family); the guard refuses a scored task
+  and a shared problem; one test on the pinned MiniLM, skipped when it is not downloaded.
+
+### 6.3 S4.5 `router/core/rescue.py` and the policy rules in `policy.py`
+
+- **Rescue classifier:** P(a later rung of the ladder passes | the rungs tried so far did not end
+  the task) (plan §2 item 5). A decision point is a rung j whose verdict is FAIL, or UNKNOWN under
+  escalate, with a later rung available (as D8). Target y = 1 when any later available rung
+  succeeds (S0.1, training folds only).
+- **Features** (observable when the decision is made, S0.13): the predicted group, one token per
+  rung tried (`model:verdict`), and the task's `content_text` as TF-IDF (as `cells.make_classifier`
+  and D8). Logistic regression with C = 10 (as D8). No released score, family or dimension.
+- **Calibration:** Platt scaling (a logistic regression of y on the logit of the raw prediction),
+  fitted on out-of-fold predictions inside the training folds (each inner fold predicted by a
+  classifier fitted on the other training folds, as D8). The final classifier is fitted on all
+  training rows, and its predictions go through the Platt map.
+- **t:** the largest t whose acceptance loss against the full ladder, on those calibrated
+  out-of-fold predictions, is at most L points; give up when the calibrated P < t. L = 2.0 as in D8
+  (open point P11).
+- **Differences from S3's D8:** (1) Platt calibration; (2) history tokens name the model
+  (`model:verdict`) rather than the rung position, so one classifier serves any ladder; (3) the
+  ladder is built by the policy below rather than S2's fixed cascade; (4) the inner folds are
+  deterministic, so stream 22 (`s4_rescue_split`) stays reserved and unused.
+- **Break-even ratio** (plan §2 item 5). For a cheap rung with cost c and the next rung with cost e
+  (each including its verifier run when verified), cheap-first costs c + (1 − q)·e in expectation
+  against e for going straight to the next rung, so cheap-first is cheaper iff q > c / e, the
+  break-even ratio. q is P(the ladder stops at the cheap rung): P(verdict PASS), plus P(UNKNOWN) only
+  in accept mode. It is not P(success): under escalate on a no-signal cell q = 0, so the cheap rung
+  is never worth trying first there. Equality (q = c / e) counts as not cheaper. The rule is about
+  cost; acceptance is the rescue classifier's and the menu's business.
+- **Ladder construction (cheap-first):** start from the target rung (the group's chosen model);
+  walk the cheaper candidates in descending cost; put candidate i in front of the ladder iff
+  q_i > c_i / c_first, where c_first is the cost of the ladder's current first rung.
+- **Ladder truncation:** after a rung that does not end the task, give up when the rescue
+  classifier's calibrated P < t.
+- **Budget cap:** a per-task cap B on spend, a parameter with no default (CLAIMS fixes none; open
+  point P12). A rung is not called when the amount spent plus its cost would exceed B; the task then
+  ends as the mode says (accept the last output in accept mode, give up in escalate mode).
+- **Unit tests:** calibration on simulated data (Platt maps an over-confident score to one whose
+  reliability error is below the raw score's, with mean close to the base rate); the threshold rule
+  on a hand example (the largest t with loss ≤ L); the break-even arithmetic (over a grid, the rule's
+  decision equals the direct expected-cost comparison; the tie; q = 0 under escalate on no signal);
+  the ladder construction and the budget cap on hand examples.
+
+### 6.4 S4.6 for these modules
+
+Every function in `router/core/` that the scan flags (named `fit` or `fit_*`, or calling a fitting
+routine) calls the guard or is listed in `guards.NOT_ITEM_FITS` with the reason it fits no item
+parameter: the family classifier, the rescue classifier and its Platt map predict labels, not item
+parameters. The new-model posterior's Newton iteration is written out, not a fitting routine.
 
 ## 7. Stream ids
 
@@ -388,8 +512,8 @@ a section for each before its code, as for v1.
 | — | none | v1 (deterministic: no draw anywhere) | — |
 | 20 | `s4_explore` | v2, only if P7 (b) is ruled | reserved |
 | 21 | `s4_probe_draw` | v2 calibration probes | registered with v2 |
-| 22 | `s4_rescue_split` | S4.5 held-out split for t inside the training folds | reserved |
-| 23 | `s4_sim` | S4.3–S4.5 simulated data in unit tests | reserved |
+| 22 | `s4_rescue_split` | S4.5 held-out split for t inside the training folds | reserved; unused (§6.3: deterministic inner folds) |
+| 23 | `s4_sim` | S4.3–S4.5 simulated data in unit tests | registered at checkpoint 3 |
 | 24–29 | — | spare | reserved |
 
 Each id is registered in `stats.STREAM_IDS` in the commit that first uses it.
@@ -409,6 +533,8 @@ Each id is registered in `stats.STREAM_IDS` in the commit that first uses it.
 | P9 | M in the menu while its group explores | ruled (b): at its posterior mean (§4.2) |
 | P10 | Prior-driven stops | ruled (a), with the arithmetic in §4.2 |
 | — | S0.5 label sources in the ground-truth pairing | matched on the comparator side; pairing renamed `gt_probes` (§4.2) |
+| P11 | Acceptance loss L that sets the rescue threshold t (§6.3) | 2.0 points, as D8 (S3); S0.3's −2-point tolerance is the same size |
+| P12 | Per-task budget cap B (§6.3) | a parameter with no default; S5 sets it per experiment |
 
 ## 9. Change log
 
@@ -491,3 +617,7 @@ Each id is registered in `stats.STREAM_IDS` in the commit that first uses it.
   - **Cost framing:** the versions log leads the cost discussion with the S0.2 break-even length
     and the per-task saving excluding onboarding, with the percentage saving after.
   - §4.2 added before any code for these rulings. It also replaces §4.1's before/after split.
+- 2026-11-25: §6 written before any checkpoint 3 code (S4.3 ability model, S4.4 difficulty, S4.5
+  rescue classifier and policy rules, S4.6 for them). The quick-check `irt.py` and `anchors.py` move
+  to `router/experiments/` frozen, and `core/irt.py` becomes the guarded 1PL entry point. Stream 22
+  stays unused; stream 23 is registered for the unit tests. New open points P11 and P12.
