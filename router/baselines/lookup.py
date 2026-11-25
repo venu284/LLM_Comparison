@@ -325,13 +325,18 @@ class KMatchedDimensionBest:
     entries use all training tasks; the new model's per-dimension acceptance uses only k probe
     tasks drawn from the training tasks (stream `probe_draw`), labelled by the ground truth or by
     the verifier (PASS 1, FAIL 0, UNKNOWN dropped). A dimension with no probe label for the new
-    model leaves it out there. The router's `n_probes` and `probe_usd` carry the probe cost."""
+    model leaves it out there. The router's `n_probes` and `probe_usd` carry the probe cost.
+
+    `labels="gt_probes"` (S4 spec §4.2, the comparator for router v2's `gt_probes` pairing): the same
+    draw; the first `n_ground_truth` probe tasks in draw order are labelled by the ground truth and
+    the rest by the verifier (UNKNOWN dropped). `labels_used` counts the labels of each source."""
     new_model: str
     k: int
-    labels: str = "ground_truth"      # or "verifier"
+    labels: str = "ground_truth"      # or "verifier", or "gt_probes" with `n_ground_truth`
     learned: bool = True
     more_information: tuple = ("dimension",)
     definition: str | None = None
+    n_ground_truth: int | None = None
 
     @property
     def name(self) -> str:
@@ -340,23 +345,33 @@ class KMatchedDimensionBest:
     def fit(self, train: OutcomeMatrix, ctx: Context):
         if self.new_model not in train.models:
             raise ValueError(self.new_model)
-        if self.labels not in ("ground_truth", "verifier"):
+        if self.labels not in ("ground_truth", "verifier", "gt_probes"):
             raise ValueError(self.labels)
+        if (self.labels == "gt_probes") != (self.n_ground_truth is not None):
+            raise ValueError("n_ground_truth goes with labels='gt_probes' only")
         ok = success(train).astype(float)
         dims = train.dimension.astype(str)
         g = rng(ctx.seed, "probe_draw")
         avail = train.tasks[train.available[self.new_model].astype(bool).to_numpy()]
         k = min(self.k, len(avail))
-        probes = pd.Index(sorted(avail))[np.sort(g.choice(len(avail), size=k, replace=False))]
+        pool = pd.Index(sorted(avail))
+        draw = g.choice(len(avail), size=k, replace=False)
+        probes = pool[np.sort(draw)]
         if self.labels == "ground_truth":
             lab = ok.loc[probes, self.new_model]
+            n_gt = len(lab)
         else:
+            gt = set(pool[draw[:self.n_ground_truth]]) if self.labels == "gt_probes" else set()
             vals = {}
             for t in probes:
+                if t in gt:
+                    vals[t] = float(ok.at[t, self.new_model])
+                    continue
                 verdict = ctx.verifier.check(t, self.new_model).verdict
                 if verdict in (PASS, FAIL):
                     vals[t] = float(verdict == PASS)
             lab = pd.Series(vals, dtype=float)
+            n_gt = len(gt)
         others = [m for m in train.models if m != self.new_model]
         table = {}
         for d in sorted(dims.unique()):
@@ -378,4 +393,5 @@ class KMatchedDimensionBest:
         router.table = {d: p.name for d, p in table.items()}
         router.n_probes = int(k)
         router.probe_usd = float(train.cost.loc[probes, self.new_model].sum())
+        router.labels_used = {"ground_truth": int(n_gt), "verifier": int(len(lab) - n_gt)}
         return router

@@ -1,24 +1,29 @@
 """S4.2: router v2 (v1 plus bounded onboarding) on leave-one-model-out streams of the development
-split (docs/research/S4_spec.md §4, §4.1; CLAIMS S0.5, S0.13, R8, R11).
+split (docs/research/S4_spec.md §4, §4.1, §4.2; CLAIMS S0.5, S0.13, R8, R11).
 
 Populations: as `s4_v1` (spec §2, P1 (b)), complete case, seeds 0-4, `stats.dev_folds`. For each
-population, seed and model M (the new model, never pooled over models, R8) and each probe label
-source (ground truth; verifier-only): v1 is fitted on the training folds without M, M's calibration
-probes are drawn from the training folds (stream 21), and the scored fold is replayed with M
-available from position 0, explored on every tenth request of each predicted group until the group
-stops (logit SD <= 0.5), the call cap (100) is reached, or the stream ends. M arrives at position
-0, so `replay(arrivals=...)` is not needed (ruled spec §4).
+population, seed and model M (the new model, never pooled over models, R8) and each pairing
+(`gt_probes`: probes by the ground truth, live calls by the verifier; `verifier`: everything by the
+verifier): v1 is fitted on the training folds without M, M's calibration probes are drawn from the
+training folds (stream 21), and the scored fold is replayed with M available from position 0, in
+each group's menu at its posterior mean (P9 (b)), explored on every tenth request of each predicted
+group until the group stops (logit SD <= 0.5), the call cap (100, probes + exploration) is reached,
+or the stream ends. M arrives at position 0, so `replay(arrivals=...)` is not needed (ruled spec
+§4).
 
 Comparators, paired on the same tasks and folds:
 - v1 without M (k = 0, the pool prior; equal to v2 with no call, tested);
-- k-matched DimensionBest at v2's k (per fold: k = v2's total calls to M in that fold; same label
-  source; probes from the training folds; given more information: it reads the dimension);
+- k-matched DimensionBest at v2's k (per fold: k = v2's calls to M there, plan calls included;
+  in the `gt_probes` pairing the first n_gt draws, n_gt = v2's probes there, by the ground truth and
+  the rest by the verifier, §4.2; probes from the training folds; given more information: it reads
+  the dimension);
 - v1 with all eight models (k = inf), as a reference.
 
 Per row: acceptance and cost (S0.2: probe cost spread over the scored tasks, exploration calls
-charged in the stream), k per fold, each group's end state and k, probe and exploration cost,
-acceptance before and after M entered the group's menu, and paired cluster-bootstrap CIs on the
-gate seed. Gate seed only: every S2 metric for v2 (CPAT at the best single model's acceptance,
+charged in the stream), k per fold (probes, exploration, plan calls verified and unverified), each
+group's end state and k, probe and exploration cost, acceptance on tasks routed while the group
+explored against after, and with M in the plan against without (k = 0 on the same tasks), and
+paired cluster-bootstrap CIs on the gate seed. Gate seed only: every S2 metric for v2 (CPAT at the best single model's acceptance,
 regret including probe cost) with paired CIs against the comparators.
 
 Development figures, not results.
@@ -49,15 +54,18 @@ from router.sim import metrics, stats
 from router.sim.stream import task_key
 
 OUT = REPO_ROOT / "router" / "experiments" / "out"
-LABELS = ("ground_truth", "verifier")
+LABELS = ("gt_probes", "verifier")
+SPLITS = ("exploring", "settled", "m_in_plan", "m_not_in_plan", "pool")
 
 
 @dataclass
 class KMatchedAtV2K:
-    """k-matched DimensionBest with k set per fold to v2's total calls to the new model there."""
+    """k-matched DimensionBest with k set per fold to v2's calls to the new model there and, in
+    the `gt_probes` pairing, v2's probe count there labelled by the ground truth (spec §4.2)."""
     new_model: str
     labels: str
     k_by_fold: dict          # frozenset(scored problems) -> k
+    n_gt_by_fold: dict       # frozenset(scored problems) -> v2's probes
     learned: bool = True
     more_information: tuple = ("dimension",)
     definition: str = "k-matched DimensionBest (S0.5) at router v2's k in each fold"
@@ -67,8 +75,16 @@ class KMatchedAtV2K:
         return f"dimension_best_kmatched_v2_{self.labels}"
 
     def fit(self, train, ctx):
-        k = self.k_by_fold[frozenset(ctx.exclude_problems)]
-        return KMatchedDimensionBest(self.new_model, k, self.labels).fit(train, ctx)
+        key = frozenset(ctx.exclude_problems)
+        k = self.k_by_fold[key]
+        if self.labels == "gt_probes":
+            b = KMatchedDimensionBest(self.new_model, k, "gt_probes",
+                                      n_ground_truth=self.n_gt_by_fold[key])
+        else:
+            b = KMatchedDimensionBest(self.new_model, k, self.labels)
+        r = b.fit(train, ctx)
+        r.chosen = {"k": k, "labels_used": r.labels_used}
+        return r
 
 
 def fold_problems(folds: pd.Series, problems: pd.Series) -> dict:
@@ -76,33 +92,44 @@ def fold_problems(folds: pd.Series, problems: pd.Series) -> dict:
 
 
 def v2_record(o: pd.DataFrame, m, ctx, M: str) -> tuple[dict, list]:
-    """Per-fold onboarding record of one v2 run, and per-group rows."""
+    """Per-fold onboarding record of one v2 run, and per-group rows. `split` holds the scored task
+    ids of each split of spec §4.2 (state at request time; M a rung of the plan)."""
     folds, groups = [], []
     key_of = {task_key(t): t for t in o.index}
-    expl_usd, n_expl, before, after = 0.0, 0, [], []
+    expl_usd, n_expl = 0.0, 0
+    split = {s: [] for s in SPLITS}
     for f in o.attrs["fits"]:
         ch = f["chosen"]
-        k_expl = sum(g["k_explore"] for g in ch["groups"].values())
-        folds.append({"fold": f["fold"], "k_total": ch["n_probes"] + k_expl, "n_probes": ch["n_probes"],
-                      "k_explore": k_expl})
+        gs = ch["groups"].values()
+        k_expl = sum(g["k_explore"] for g in gs)
+        k_pv = sum(g["k_plan_verified"] for g in gs)
+        k_pu = sum(g["k_plan_unverified"] for g in gs)
+        folds.append({"fold": f["fold"], "k_total": ch["n_probes"] + k_expl + k_pv + k_pu,
+                      "cap_counter": ch["n_probes"] + k_expl, "n_probes": ch["n_probes"],
+                      "k_explore": k_expl, "k_plan_verified": k_pv, "k_plan_unverified": k_pu})
         for g, d in sorted(ch["groups"].items()):
             groups.append({"fold": f["fold"], "group": g, **{k: d[k] for k in (
-                "state", "k_probe", "k_explore", "k_at_end", "requests", "prior_mean", "prior_strength",
-                "alpha", "beta",
-                "logit_sd", "plan")}})
-        for key, (g, explored, onboarded) in ch["tasks"].items():
+                "state", "k_probe", "k_explore", "k_plan_verified", "k_plan_unverified", "k",
+                "k_at_end", "requests", "prior_mean", "prior_strength", "alpha", "beta",
+                "logit_sd", "m_entered", "plan")}})
+        for key, (g, explored, state, m_plan) in ch["tasks"].items():
             t = key_of[key]
             if explored:
                 n_expl += 1
                 expl_usd += float(m.cost.at[t, M]) + ctx.verifier_usd * ctx.verifier.check(t, M).ran
-            (after if onboarded else before).append(t)
-    acc = lambda ts: 100 * float(o.loc[ts, "accepted"].mean()) if ts else float("nan")  # noqa: E731
+            if state == "pool":
+                split["pool"].append(t)
+                continue
+            split["exploring" if state == "exploring" else "settled"].append(t)
+            split["m_in_plan" if m_plan else "m_not_in_plan"].append(t)
     rec = {"k_total_by_fold": [x["k_total"] for x in folds],
+           "n_probes_by_fold": [x["n_probes"] for x in folds],
            "k_total_mean": float(np.mean([x["k_total"] for x in folds])),
+           "cap_counter_max": int(max(x["cap_counter"] for x in folds)),
            "n_probes": int(sum(x["n_probes"] for x in folds)), "n_exploration_calls": n_expl,
-           "probe_usd": float(o.probe_usd.sum()), "exploration_usd": expl_usd,
-           "n_tasks_before_onboarding": len(before), "acceptance_before_onboarding": acc(before),
-           "n_tasks_after_onboarding": len(after), "acceptance_after_onboarding": acc(after)}
+           "n_plan_calls_verified": int(sum(x["k_plan_verified"] for x in folds)),
+           "n_plan_calls_unverified": int(sum(x["k_plan_unverified"] for x in folds)),
+           "probe_usd": float(o.probe_usd.sum()), "exploration_usd": expl_usd}
     states = pd.Series([g["state"] for g in groups])
     for s in ("stopped", "out_of_budget", "exploring"):
         rec[f"groups_{s}"] = int((states == s).sum())
@@ -113,7 +140,7 @@ def v2_record(o: pd.DataFrame, m, ctx, M: str) -> tuple[dict, list]:
     rec["k_at_stop_median"] = float(np.median([g["k_at_end"] for g in stopped])) if stopped else float("nan")
     rec["n_stopped_groups_prior_alone_meets_tolerance"] = int(
         sum(g["prior_logit_sd"] <= STOP_POSTERIOR_SD for g in stopped))
-    rec["after_tasks"] = after
+    rec["split"] = split
     return rec, groups
 
 
@@ -133,7 +160,7 @@ def break_even(v2: pd.DataFrame, k0: pd.DataFrame, rec: dict) -> dict:
 def run():
     d = inputs()
     problems = d["problems"]
-    res = {"spec": "docs/research/S4_spec.md §4, §4.1", "call_cap": CALL_CAP, "n_boot": N_BOOT,
+    res = {"spec": "docs/research/S4_spec.md §4, §4.1, §4.2", "call_cap": CALL_CAP, "n_boot": N_BOOT,
            "seeds": list(stats.SEEDS), "gate_seed": stats.GATE_SEED, "labels": list(LABELS),
            "populations": {p: d["counts"][p] for p in POPULATIONS}}
     rows, seed0, grows = [], [], []
@@ -151,8 +178,11 @@ def run():
                 for lab in LABELS:
                     v2 = run_dev(RouterV2(M, lab), m, ctx, folds, seed=seed)
                     rec, groups = v2_record(v2, m, ctx, M)
-                    kmap = {fp[x["fold"]]: k for x, k in zip(v2.attrs["fits"], rec["k_total_by_fold"])}
-                    km = run_dev(KMatchedAtV2K(M, lab, kmap), m, ctx, folds, seed=seed)
+                    fits = v2.attrs["fits"]
+                    kmap = {fp[x["fold"]]: k for x, k in zip(fits, rec["k_total_by_fold"])}
+                    gmap = {fp[x["fold"]]: k for x, k in zip(fits, rec["n_probes_by_fold"])}
+                    km = run_dev(KMatchedAtV2K(M, lab, kmap, gmap), m, ctx, folds, seed=seed)
+                    used = [f["chosen"]["labels_used"] for f in km.attrs["fits"]]
                     r = {"population": pop, "seed": seed, "gate_seed": gate, "new_model": M,
                          "labels": lab, "acceptance": metrics.acceptance(v2),
                          "cost_musd_per_task": 1e3 * float(v2.cost_usd.mean()),
@@ -163,7 +193,10 @@ def run():
                          **break_even(v2, k0, rec),
                          "kinf_acceptance": metrics.acceptance(kinf),
                          "kinf_cost_musd_per_task": 1e3 * float(kinf.cost_usd.mean()),
-                         **{k: v for k, v in rec.items() if k not in ("k_total_by_fold", "after_tasks")},
+                         "kmatched_labels_ground_truth": sum(u["ground_truth"] for u in used),
+                         "kmatched_labels_verifier": sum(u["verifier"] for u in used),
+                         **{k: v for k, v in rec.items()
+                            if k not in ("k_total_by_fold", "n_probes_by_fold", "split")},
                          "k_total_by_fold": " ".join(map(str, rec["k_total_by_fold"]))}
                     for tag, ref in (("k0", k0), ("kmatched", km), ("kinf", kinf)):
                         f = metrics.paired_frame(v2, ref, ("x", "r"))
@@ -174,15 +207,18 @@ def run():
                             c = compare(v2, ref, problems)
                             r[f"gap_vs_{tag}_lo"], r[f"gap_vs_{tag}_hi"] = c["gap_points"][1:]
                             r[f"saving_vs_{tag}_lo"], r[f"saving_vs_{tag}_hi"] = c["saving_pct"][1:]
-                    after = rec["after_tasks"]
-                    if after:       # paired on the tasks routed after M entered the group's menu
-                        f = metrics.paired_frame(v2.loc[after], k0.loc[after], ("x", "r"))
+                    for s, ts in rec["split"].items():   # spec §4.2, paired with k = 0
+                        r[f"n_{s}"] = len(ts)
+                        if not ts:
+                            continue
+                        f = metrics.paired_frame(v2.loc[ts], k0.loc[ts], ("x", "r"))
                         one = np.ones(len(f))
-                        r["after_gap_vs_k0"] = stats.mean_diff("accepted_x", "accepted_r")(f, one)
-                        r["after_cost_diff_musd_vs_k0"] = 1e3 * float((f.cost_x - f.cost_r).mean())
-                        if gate:
-                            c = compare(v2.loc[after], k0.loc[after], problems)
-                            r["after_gap_vs_k0_lo"], r["after_gap_vs_k0_hi"] = c["gap_points"][1:]
+                        r[f"{s}_acceptance"] = metrics.acceptance(v2.loc[ts])
+                        r[f"{s}_k0_acceptance"] = metrics.acceptance(k0.loc[ts])
+                        r[f"{s}_cost_diff_musd_vs_k0"] = 1e3 * float((f.cost_x - f.cost_r).mean())
+                        if gate and s != "pool":
+                            c = compare(v2.loc[ts], k0.loc[ts], problems)
+                            r[f"{s}_gap_vs_k0_lo"], r[f"{s}_gap_vs_k0_hi"] = c["gap_points"][1:]
                     rows.append(r)
                     grows += [{"population": pop, "seed": seed, "new_model": M, "labels": lab, **g}
                               for g in groups]

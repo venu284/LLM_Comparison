@@ -1,7 +1,8 @@
 """Router v1 (plan S4.1; `docs/research/S4_spec.md` §3): a shrunk per-group lookup table plus a
-fixed two-rung cascade. Router v2 (S4.2; spec §4, §4.1) at the end of this module: v1 plus bounded
-onboarding of one new model (calibration probes, every-tenth-request exploration per predicted
-group, a Beta posterior per group with the logit-SD stopping rule, the call cap and the pool prior).
+fixed two-rung cascade. Router v2 (S4.2; spec §4, §4.1, §4.2) at the end of this module: v1 plus
+bounded onboarding of one new model (calibration probes, every-tenth-request exploration per
+predicted group, a Beta posterior per group with the logit-SD stopping rule, the call cap and the
+pool prior), with the new model in each group's menu at its posterior mean from the probes on.
 
 Fitting (`RouterV1.fit(train, ctx)`) reads the training folds only (O1, S0.6):
 1. The fixed cascade (§3.4): among P0.5's two-rung ladders (`common.ladders`, non-decreasing
@@ -166,23 +167,23 @@ EXPLORING, STOPPED, OUT_OF_BUDGET = "exploring", "stopped", "out_of_budget"
 
 @dataclass
 class RouterV2:
-    """Router v1 plus bounded onboarding of one new model (S4.2; spec §4, §4.1).
+    """Router v1 plus bounded onboarding of one new model (S4.2; spec §4, §4.1, §4.2).
 
     `fit(train, ctx)` fits v1 on the training folds without `new_model` (its outcomes are used only
     through the calibration probes, S0.5), draws the probes and returns a router for a stream in
-    which the new model is available from position 0. `labels` is the probes' label source:
-    "ground_truth" (S0.1 success) or "verifier" (PASS/FAIL, UNKNOWN never a label). Exploration
-    traffic is always verifier-labelled. `cap` = 0 makes no call to the new model: v1 without it
-    (the k = 0 comparator, tested).
+    which the new model is available from position 0. `labels` is the pairing: "gt_probes" (probes
+    labelled by the S0.1 ground truth, live calls by the verifier) or "verifier" (everything by the
+    verifier; UNKNOWN never a label). Live calls are always verifier-labelled (S0.13). `cap` = 0
+    makes no call to the new model: v1 without it (the k = 0 comparator, tested).
     """
     new_model: str
-    labels: str = "ground_truth"
+    labels: str = "gt_probes"
     cap: int = CALL_CAP
     learned: bool = True
     more_information: tuple = ()
 
     def __post_init__(self):
-        if self.labels not in ("ground_truth", "verifier"):
+        if self.labels not in ("gt_probes", "verifier"):
             raise ValueError(self.labels)
 
     @property
@@ -191,7 +192,7 @@ class RouterV2:
 
     @property
     def definition(self) -> str:
-        return (f"{OUR_DEFINITION}: S4 spec §4.1; new model {self.new_model}, probe labels "
+        return (f"{OUR_DEFINITION}: S4 spec §4.2; new model {self.new_model}, pairing "
                 f"{self.labels}, call cap {self.cap}")
 
     def fit(self, train: OutcomeMatrix, ctx: Context):
@@ -202,7 +203,7 @@ class RouterV2:
         v = RouterV1().fit_parts(known, ctx)
         groups = true_cells(train)
         probes = draw_probes(groups, train.available[M], ctx.seed, cap=self.cap) if self.cap else {}
-        ok = success(train)[M] if self.labels == "ground_truth" else None
+        ok = success(train)[M] if self.labels == "gt_probes" else None
         post, probe_cost, k_probe = {}, {}, {}
         probe_usd, n_probes = 0.0, 0
         for i, g in enumerate(v.names):
@@ -210,7 +211,7 @@ class RouterV2:
         for g, ts in probes.items():
             costs = []
             for t in ts:
-                if self.labels == "ground_truth":
+                if self.labels == "gt_probes":
                     verdict = PASS if bool(ok.at[t]) else FAIL
                     ran = False
                 else:
@@ -232,25 +233,37 @@ class RouterV2:
 
 
 class _V2Router:
+    """The fitted v2 router (spec §4.2).
+
+    Counters per group: `probe`, `explore` (exploration calls), `plan_verified` and
+    `plan_unverified` (plan calls to M). k = all four; the cap counter `total_calls` = probes +
+    exploration calls. `tasks` maps each task key to [predicted group, explored, the group's state
+    at request time ("pool" for a pool-routed task), M a rung of the plan the task was routed by
+    (the exploration call excluded)].
+    """
+
     def __init__(self, v: V1Parts, M: str, post: dict, probe_cost: dict, mean_probe_cost,
                  k_probe: dict, n_probes: int, cap: int):
         self.v, self.M, self.post, self.cap = v, M, post, cap
         self.probe_cost, self.mean_probe_cost = probe_cost, mean_probe_cost
         self.more_information = ()
         self.total_calls = n_probes
-        self.k = {g: {"probe": k_probe.get(g, 0), "explore": 0} for g in v.names}
+        self.k = {g: {"probe": k_probe.get(g, 0), "explore": 0, "plan_verified": 0,
+                      "plan_unverified": 0} for g in v.names}
         self.state = {g: EXPLORING for g in v.names}
         self.k_at_end = {}
         self.requests = {g: 0 for g in v.names}
         self.base = {g: v.pols[L.choose(v.a_hat[i], v.cost[i], v.n_direct, v.margin)]
                      for i, g in enumerate(v.names)}
         self.plan = dict(self.base)
-        self.onboarded = {g: False for g in v.names}
+        self.entered = {g: False for g in v.names}
         self.pool = v.pool_policy()
-        self.tasks: dict[str, list] = {}       # task key -> [group, explored, M in the menu]
+        self.tasks: dict[str, list] = {}
         self._cur = None
+        self._pol = None                       # the policy the last decision followed
         for g in v.names:
             self._check(g)
+            self._refresh(g)
         self._check_cap()
         self.table = {g: p.name for g, p in self.base.items()}
         self.fallback = self.pool.name
@@ -260,6 +273,9 @@ class _V2Router:
     # ------------------------------------------------------------------ onboarding state
     def _m_cost(self, g):
         return self.probe_cost.get(g, self.mean_probe_cost)
+
+    def _k(self, g) -> int:
+        return sum(self.k[g].values())
 
     def _enter(self, g, acc):
         """Recompute group g's choice with M as a direct candidate at acceptance `acc`."""
@@ -272,30 +288,39 @@ class _V2Router:
         c = np.concatenate([self.v.cost[i, :nd], [cost], self.v.cost[i, nd:]])
         pols = self.v.pols[:nd] + [direct(self.M)] + self.v.pols[nd:]
         self.plan[g] = pols[L.choose(a, c, nd + 1, self.v.margin)]
-        self.onboarded[g] = True
+        self.entered[g] = True
+
+    def _refresh(self, g):
+        """P9 (b): M at the posterior mean, exploring or stopped. Out of budget: fixed at the pool
+        prior, entered once by `_check_cap`."""
+        if self.state[g] != OUT_OF_BUDGET:
+            self._enter(g, self.post[g].mean)
 
     def _check(self, g):
         if self.state[g] == EXPLORING and self.post[g].stop():
             self.state[g] = STOPPED
-            self.k_at_end[g] = self.k[g]["probe"] + self.k[g]["explore"]
-            self._enter(g, self.post[g].mean)
+            self.k_at_end[g] = self._k(g)
 
     def _check_cap(self):
         if self.total_calls >= self.cap:
             for g in self.v.names:
                 if self.state[g] == EXPLORING:
                     self.state[g] = OUT_OF_BUDGET
-                    self.k_at_end[g] = self.k[g]["probe"] + self.k[g]["explore"]
+                    self.k_at_end[g] = self._k(g)
                     self._enter(g, self.post[g].prior_mean)
 
     def _report_groups(self):
         return {g: {"state": self.state[g], "k_probe": self.k[g]["probe"],
-                    "k_explore": self.k[g]["explore"], "k_at_end": self.k_at_end.get(g),
+                    "k_explore": self.k[g]["explore"],
+                    "k_plan_verified": self.k[g]["plan_verified"],
+                    "k_plan_unverified": self.k[g]["plan_unverified"], "k": self._k(g),
+                    "k_at_end": self.k_at_end.get(g),
                     "alpha": round(self.post[g].alpha, 6), "beta": round(self.post[g].beta, 6),
                     "prior_mean": round(self.post[g].prior_mean, 6),
                     "prior_strength": round(self.post[g].prior_strength, 6),
-                    "logit_sd": round(self.post[g].sd, 6), "plan": self.plan[g].name,
-                    "requests": self.requests[g]} for g in self.v.names}
+                    "logit_sd": round(self.post[g].sd, 6), "m_entered": self.entered[g],
+                    "plan": self.plan[g].name, "requests": self.requests[g]}
+                for g in self.v.names}
 
     # ------------------------------------------------------------------------ the router
     def _start(self, task, available):
@@ -307,7 +332,10 @@ class _V2Router:
             explore = (self.state[g] == EXPLORING and self.total_calls < self.cap
                        and is_exploration(self.requests[g]) and self.M in available)
         pol = self.plan[g] if known else self.pool
-        self.tasks[task.key] = [g, explore, bool(known and self.onboarded[g])]
+        if explore and self.M in pol.rungs:   # §4.2: after M's exploration call, v1 without M
+            pol = self.base[g]
+        self.tasks[task.key] = [g, explore, self.state[g] if known else "pool",
+                                bool(self.M in pol.rungs)]
         self._cur = (task.key, g, explore, pol)
         self.chosen["groups"] = self._report_groups()
 
@@ -315,6 +343,7 @@ class _V2Router:
         if self._cur is None or self._cur[0] != task.key:
             self._start(task, available)
         _, g, explore, pol = self._cur
+        self._pol = pol
         off = 0
         if explore:
             if not history:
@@ -322,10 +351,10 @@ class _V2Router:
             if history[0].verdict == PASS:
                 return Accept(model=self.M)
             off = 1
-        rungs = [x for x in pol.rungs if x in available and not (explore and x == self.M)]
+        rungs = [x for x in pol.rungs if x in available]
         h = history[off:]
-        if not rungs:
-            return Accept() if history else GIVE_UP
+        if not rungs:                 # never accept a failed exploration call (§4.2)
+            return Accept() if h else GIVE_UP
         if not pol.verify:
             return Accept() if h else Call(rungs[0], verify=False)
         if h:
@@ -336,16 +365,26 @@ class _V2Router:
         return rungs[len(h)]
 
     def feedback(self, obs) -> None:
-        if self._cur is None or obs.task != self._cur[0]:
+        if self._cur is None or obs.task != self._cur[0] or obs.model != self.M:
             return
         _, g, explore, _ = self._cur
-        if explore and obs.call_index == 0 and obs.model == self.M:
+        if g not in self.state:
+            return
+        if explore and obs.call_index == 0:
             self.total_calls += 1
             self.k[g]["explore"] += 1
-            self.post[g].update(obs.verdict)          # UNKNOWN does not update (S0.13)
+            updated = self.post[g].update(obs.verdict)      # UNKNOWN does not update (S0.13)
+        elif self._pol.verify:
+            self.k[g]["plan_verified"] += 1
+            updated = self.post[g].update(obs.verdict)
+        else:                                               # unverified: no verdict
+            self.k[g]["plan_unverified"] += 1
+            updated = False
+        if updated:
             self._check(g)
-            self._check_cap()
-            self.chosen["groups"] = self._report_groups()
+            self._refresh(g)
+        self._check_cap()
+        self.chosen["groups"] = self._report_groups()
 
 
 __all__ = ["RouterV1", "RouterV2", "two_rung_cascade", "DEFAULT_MARGIN"]

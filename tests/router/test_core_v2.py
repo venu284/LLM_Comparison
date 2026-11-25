@@ -1,7 +1,10 @@
-"""Router v2 (S4.2; docs/research/S4_spec.md §4, §4.1): the posterior and stopping rule, the
-exploration schedule and probe draw, the k = 0 equivalence, exactly 10% exploration per predicted
-group, the probe limits, UNKNOWN never a label, probe cost charged, the held-out model's outcomes
-read only through probes, and the S2 garbage, true-label and shuffled-label tests."""
+"""Router v2 (S4.2; docs/research/S4_spec.md §4, §4.1, §4.2): the posterior and stopping rule,
+the exploration schedule and probe draw, the k = 0 equivalence, exactly 10% exploration per
+predicted group, the probe limits, UNKNOWN never a label, probe cost charged, the held-out model's
+outcomes read only through probes, P9 (b) and its counting rules (plan calls to the new model count
+toward k and not the cap; verified ones update the posterior, unverified ones do not), the
+exploration fallback, the k-matched comparator's label mix, and the S2 garbage, true-label and
+shuffled-label tests."""
 
 import math
 from collections import Counter
@@ -11,7 +14,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from router.baselines.common import Context, success, true_cells
+from router.baselines.common import Context, Policy, direct, success, true_cells
+from router.baselines.lookup import KMatchedDimensionBest
 from router.baselines.run import default_baselines, run_dev, shuffled_check_fails, shuffled_mean_interval
 from router.core import exploration as X
 from router.core.policy import EXPLORING, OUT_OF_BUDGET, STOPPED, RouterV1, RouterV2
@@ -19,6 +23,7 @@ from router.core.stopping import GroupPosterior, logit_sd, prior_from_known
 from router.data import verdicts
 from router.settings import MAX_PROBES_PER_GROUP, STOP_POSTERIOR_SD
 from router.sim import metrics, stream, toy
+from router.sim.stats import rng
 from router.sim.stream import ReplayView, replay, task_key
 from router.sim.verifier import FAIL, PASS, UNKNOWN, ReplayVerifier
 
@@ -105,14 +110,14 @@ def test_cap_zero_is_v1_without_the_new_model():
         assert all(f["chosen"]["n_probes"] == 0 for f in a.attrs["fits"])
 
 
-@pytest.mark.parametrize("labels", ["ground_truth", "verifier"])
+@pytest.mark.parametrize("labels", ["gt_probes", "verifier"])
 def test_exploration_is_ten_percent_per_predicted_group_while_exploring(labels):
     m, ctx, folds = toy_setup(n=400)
     r, res, _, _ = _fit_fold(RouterV2("mid", labels, cap=10_000), m, ctx, folds)   # keeps exploring
     order = res.tasks.sort_values("position").index
     seen, n_explored = Counter(), 0
     for t in order:
-        g, explored, _ = r.tasks[task_key(t)]
+        g, explored, _, _ = r.tasks[task_key(t)]
         seen[g] += 1
         if explored:
             n_explored += 1
@@ -169,11 +174,130 @@ def test_probe_cost_is_charged_and_spread_over_the_scored_tasks():
 
 def test_the_call_cap_stops_exploration_and_sets_out_of_budget():
     m, ctx, folds = toy_setup(n=400)
-    r, res, _, _ = _fit_fold(RouterV2("strong", "ground_truth", cap=3), m, ctx, folds)
+    r, res, _, _ = _fit_fold(RouterV2("strong", "gt_probes", cap=3), m, ctx, folds)
     assert r.total_calls == 3 and r.chosen["n_probes"] == 3
-    assert not (res.calls.model == "strong").any() or \
-        all(not r.tasks[task_key(t)][1] for t in res.calls.task_id[res.calls.model == "strong"])
-    assert {d["state"] for d in r.chosen["groups"].values()} <= {STOPPED, OUT_OF_BUDGET}
+    assert not any(r.tasks[task_key(t)][1] for t in res.tasks.index)        # no exploration
+    groups = r.chosen["groups"].values()
+    assert {d["state"] for d in groups} <= {STOPPED, OUT_OF_BUDGET}
+    # any call to the new model after the cap is a plan call: counted in k, not in the cap
+    assert sum(d["k_plan_unverified"] for d in groups) == int((res.calls.model == "strong").sum())
+
+
+# --------------------------------------------------------- P9 (b) and the counting rules (§4.2)
+def _injected(M, plan_of, labels="verifier", cap=10_000, n=400):
+    """v2 fitted on fold 0's training folds, then every group routed by `plan_of(M)` with the
+    recomputation switched off, so the plan contains M while the groups explore."""
+    m, ctx, folds = toy_setup(n=n)
+    tr, te = folds.index[folds != 0], folds.index[folds == 0]
+    r = RouterV2(M, labels, cap=cap).fit(m.subset(list(tr)), ctx)
+    after_probes = {g: (p.alpha, p.beta) for g, p in r.post.items()}
+    for g in r.plan:
+        r.plan[g] = plan_of(M)
+    r._refresh = lambda g: None
+    view = ReplayView.from_matrix(m.subset(list(te)), ctx.content.reindex(te))
+    return r, replay(r, view, ctx.verifier, seed=3), after_probes
+
+
+def _split_calls(r, res, M):
+    """(exploration calls to M, plan calls to M) as frames of `res.calls`."""
+    calls = res.calls[res.calls.model == M]
+    expl = np.array([r.tasks[task_key(t)][1] for t in calls.task_id], dtype=bool) \
+        & (calls.call_index == 0).to_numpy()
+    return calls[expl], calls[~expl]
+
+
+def test_m_enters_every_group_after_the_probes():
+    m, ctx, folds = toy_setup()
+    r = RouterV2("mid", "gt_probes").fit(m.subset(list(folds.index[folds != 0])), ctx)
+    assert all(r.entered.values()) and all(d["m_entered"] for d in r.chosen["groups"].values())
+    assert {d["state"] for d in r.chosen["groups"].values()} == {EXPLORING}
+
+
+def test_plan_calls_to_the_new_model_count_toward_k_and_not_the_cap():
+    r, res, _ = _injected("mid", direct)
+    expl, plan = _split_calls(r, res, "mid")
+    groups = r.chosen["groups"].values()
+    n_probes = r.chosen["n_probes"]
+    assert len(expl) > 0 and len(plan) > 0
+    assert sum(d["k_explore"] for d in groups) == len(expl)
+    assert sum(d["k_plan_unverified"] for d in groups) == len(plan)
+    assert sum(d["k_plan_verified"] for d in groups) == 0
+    assert sum(d["k"] for d in groups) == n_probes + len(expl) + len(plan)
+    assert r.total_calls == n_probes + len(expl)                   # the cap counter
+    # a cap with room for two exploration calls: if plan calls counted, exploration never happens
+    r2, res2, _ = _injected("mid", direct, cap=n_probes + 2)
+    expl2, plan2 = _split_calls(r2, res2, "mid")
+    assert len(expl2) == 2 and r2.total_calls == n_probes + 2 and len(plan2) >= 18
+
+
+@pytest.mark.parametrize("verify", [True, False])
+def test_verified_plan_calls_update_the_posterior_and_unverified_do_not(verify):
+    r, res, p0 = _injected("mid", lambda M: Policy((M,), verify=verify))
+    expl, plan = _split_calls(r, res, "mid")
+    assert len(plan) > 0
+    for g, d in r.chosen["groups"].items():
+        ve = [v for t, v in zip(expl.task_id, expl.verdict) if r.tasks[task_key(t)][0] == g]
+        vp = [v for t, v in zip(plan.task_id, plan.verdict) if r.tasks[task_key(t)][0] == g]
+        used = ve + (vp if verify else [])
+        assert d["alpha"] == pytest.approx(p0[g][0] + used.count(PASS), abs=1e-5)
+        assert d["beta"] == pytest.approx(p0[g][1] + used.count(FAIL), abs=1e-5)
+        assert d["k_plan_verified" if verify else "k_plan_unverified"] == len(vp)
+        assert d["k_plan_unverified" if verify else "k_plan_verified"] == 0
+    if verify:     # verified plan calls give PASS/FAIL and UNKNOWN; UNKNOWN never updates
+        assert {PASS, UNKNOWN} <= set(plan.verdict) or {FAIL, UNKNOWN} <= set(plan.verdict)
+    else:
+        assert set(plan.verdict) == {UNKNOWN}
+
+
+def test_failed_exploration_call_with_the_new_model_in_the_plan_continues_without_it():
+    """§4.2: when the group's plan contains M, a failed exploration call continues with v1's choice
+    without M; M's failed output is never accepted."""
+    r, res, _ = _injected("mid", direct)
+    n = 0
+    for t, grp in res.calls.groupby("task_id"):
+        g, explored, _, m_plan = r.tasks[task_key(t)]
+        if not explored:
+            assert m_plan                    # routed by the injected plan
+            continue
+        first = grp[grp.call_index == 0].iloc[0]
+        assert first.model == "mid" and not m_plan
+        if first.verdict != PASS:
+            n += 1
+            rest = grp[grp.call_index > 0].sort_values("call_index").model.tolist()
+            assert "mid" not in rest and set(rest) <= set(r.base[g].rungs)
+            assert res.tasks.at[t, "final_model"] != "mid"
+    assert n > 0
+    # with no other rung available after a failed exploration call, the task is given up
+    m, ctx, folds = toy_setup(n=400)
+    r = RouterV2("mid", "verifier", cap=10_000).fit(m.subset(list(folds.index[folds != 0])), ctx)
+    for g in r.plan:
+        r.plan[g], r.base[g] = direct("mid"), direct("not-available")
+    r._refresh = lambda g: None
+    te = folds.index[folds == 0]
+    res = replay(r, ReplayView.from_matrix(m.subset(list(te)), ctx.content.reindex(te)), ctx.verifier, seed=3)
+    failed = [t for t in res.tasks.index if r.tasks[task_key(t)][1]
+              and res.calls[(res.calls.task_id == t) & (res.calls.call_index == 0)].verdict.iloc[0] != PASS]
+    assert failed and all(res.tasks.at[t, "action"] == "give_up" for t in failed)
+
+
+def test_kmatched_gt_probes_gets_v2s_probe_count_from_the_ground_truth_and_the_rest_from_the_verifier():
+    m, ctx, folds = toy_setup()
+    train = m.subset(list(folds.index[folds != 0]))
+    k, n_gt = 30, 7
+    r = KMatchedDimensionBest("mid", k, "gt_probes", n_ground_truth=n_gt).fit(train, ctx)
+    avail = train.tasks[train.available["mid"].astype(bool).to_numpy()]
+    draw = rng(ctx.seed, "probe_draw").choice(len(avail), size=k, replace=False)
+    rest = pd.Index(sorted(avail))[draw[n_gt:]]
+    n_ver = sum(ctx.verifier.check(t, "mid").verdict in (PASS, FAIL) for t in rest)
+    assert 0 < n_ver < k - n_gt                     # UNKNOWN dropped from the verifier part
+    assert r.labels_used == {"ground_truth": n_gt, "verifier": n_ver}
+    gt = KMatchedDimensionBest("mid", k, "ground_truth").fit(train, ctx)
+    assert gt.labels_used == {"ground_truth": k, "verifier": 0}
+    assert gt.n_probes == r.n_probes == k and gt.probe_usd == r.probe_usd        # the same draw
+    with pytest.raises(ValueError):
+        KMatchedDimensionBest("mid", k, "gt_probes").fit(train, ctx)
+    with pytest.raises(ValueError):
+        KMatchedDimensionBest("mid", k, "verifier", n_ground_truth=3).fit(train, ctx)
 
 
 def test_held_out_model_outcomes_are_read_only_through_probes():
@@ -191,12 +315,12 @@ def test_held_out_model_outcomes_are_read_only_through_probes():
     cost.loc[rest, "strong"] = cost.loc[rest, "strong"] * 9.1
     g = toy.with_scores(m, sc)
     g.cost.loc[:, :] = cost.to_numpy()
-    a = _fit_fold(RouterV2("strong", "ground_truth"), m, ctx, folds)[1]
-    z = _fit_fold(RouterV2("strong", "ground_truth"), g, ctx, folds)[1]
+    a = _fit_fold(RouterV2("strong", "gt_probes"), m, ctx, folds)[1]
+    z = _fit_fold(RouterV2("strong", "gt_probes"), g, ctx, folds)[1]
     assert a.calls[["task_id", "model", "verdict"]].equals(z.calls[["task_id", "model", "verdict"]])
 
 
-VERSIONS = [RouterV2("strong", "ground_truth"), RouterV2("strong", "verifier")]
+VERSIONS = [RouterV2("strong", "gt_probes"), RouterV2("strong", "verifier")]
 
 
 def _decisions(res):
@@ -249,7 +373,7 @@ def test_v2_never_reads_a_true_label(b, monkeypatch):
     pd.testing.assert_frame_equal(base, guarded)
 
 
-@pytest.mark.parametrize("labels", ["ground_truth", "verifier"])
+@pytest.mark.parametrize("labels", ["gt_probes", "verifier"])
 def test_v2_shuffled_labels_one_sided_toy(labels):
     """New model `mid`: with `strong` known, there is something to learn, so unshuffled v2 beats
     Random clearly; shuffled, it does not rise above Random (one-sided). Holding out `strong`
@@ -284,7 +408,7 @@ def real_dev():
 
 
 @pytest.mark.skipif(not HAVE_X13, reason="route-anything-data not downloaded to external/")
-@pytest.mark.parametrize("labels", ["ground_truth", "verifier"])
+@pytest.mark.parametrize("labels", ["gt_probes", "verifier"])
 def test_real_dev_v2_garbage_scores_and_shuffled_labels(labels):
     """Headline development split, new model Opus (the best single model): garbage scores on the
     scored fold leave the decisions unchanged; unshuffled v2 beats Random (CI above 0); shuffled,
