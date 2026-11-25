@@ -12,8 +12,8 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from router.core import irt
-from router.core.anchors import onboard
+from router.experiments import m3_quickcheck_irt as irt
+from router.experiments.m3_quickcheck_anchors import onboard
 from router.settings import REPO_ROOT
 
 OUT = REPO_ROOT / "router" / "experiments" / "out"

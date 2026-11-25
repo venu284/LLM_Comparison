@@ -1,4 +1,8 @@
-"""1PL / 2PL item response models fitted by penalised maximum likelihood (MAP).
+"""Frozen quick-check code from 2026-11-10, moved from `router/core/` at S4.3 (S4 spec §6.1): never
+cited, outside the S4.6 scan. Its fits are transductive by S4.6 (the m3 experiments fit item
+parameters on the tasks they score). The router uses `router/core/ability.py`.
+
+1PL / 2PL item response models fitted by penalised maximum likelihood (MAP).
 
 P(model m solves task q) = sigmoid(a_q * (theta_m - b_q)), with a_q = 1 for the 1PL.
 With only eight models per task, item parameters are weakly identified, so Gaussian priors

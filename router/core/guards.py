@@ -30,10 +30,10 @@ NOT_ITEM_FITS: dict[str, str] = {
                            "no item parameter",
 }
 
-# Modules not yet under the rule, with the reason. Each entry must go when its module is rebuilt.
-EXEMPT_MODULES: dict[str, str] = {
-    "irt": "quick-check reference code from 2026-11-10 (handover S4.3); rebuilt in S4.3 with the guard",
-}
+# Modules not yet under the rule, with the reason. Empty since S4.3 rebuilt `irt` on the guarded
+# ability model (the quick-check code is frozen in router/experiments/; S4 spec §6.1); kept so the
+# scan's contract stays visible, and the S4.6 test asserts it stays empty.
+EXEMPT_MODULES: dict[str, str] = {}
 
 
 class TransductiveFitError(ValueError):

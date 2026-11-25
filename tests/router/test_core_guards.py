@@ -25,9 +25,8 @@ def _toy(n_probe=12, n_test=6, n_models=5, seed=0):
 
 
 def guarded_item_fit(Y, items, models, scored, problem_of):
-    """The pattern every item fit in router/core/ follows: the guard, then the fit."""
-    check_non_transductive(items, scored, problem_of)
-    return irt.fit(Y, items, models, "1pl", maxiter=50)
+    """The 1PL entry point of router/core/, which runs the guard before fitting."""
+    return irt.fit(Y, items, models, scored_ids=scored, problem_of=problem_of, maxiter=50)
 
 
 def test_the_m3_irt_a6_a7_pattern_is_refused():
@@ -106,8 +105,7 @@ def test_every_item_fit_in_router_core_calls_the_guard():
     assert not unguarded, f"item fits without check_non_transductive: {unguarded}"
     stale = set(guards.NOT_ITEM_FITS) - seen_not_item
     assert not stale, f"NOT_ITEM_FITS names functions that no longer exist: {stale}"
-    for mod in guards.EXEMPT_MODULES:
-        assert (CORE / f"{mod}.py").is_file(), f"stale exemption {mod}"
+    assert guards.EXEMPT_MODULES == {}, "S4.3 removed the last exemption; none may be added"
 
 
 def test_the_scan_catches_an_unguarded_fit(tmp_path):

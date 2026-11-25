@@ -1,4 +1,8 @@
-"""Anchor selection for onboarding a new model.
+"""Frozen quick-check code from 2026-11-10, moved from `router/core/` at S4.3 (S4 spec §6.1): never
+cited, outside the S4.6 scan. Its fits are transductive by S4.6 (the m3 experiments fit item
+parameters on the tasks they score). The router uses `router/core/ability.py`.
+
+Anchor selection for onboarding a new model.
 
 - `fisher`: adaptive, as in computerised adaptive testing. Each next anchor is the unused item
   with the most Fisher information a^2 p (1 - p) at the current ability estimate.
@@ -13,7 +17,7 @@ from typing import Callable
 import numpy as np
 from scipy.special import expit
 
-from router.core.irt import IRTParams, ability_posterior
+from router.experiments.m3_quickcheck_irt import IRTParams, ability_posterior
 
 
 def onboard(params: IRTParams, k: int, probe: Callable[[int], float], method: str,
