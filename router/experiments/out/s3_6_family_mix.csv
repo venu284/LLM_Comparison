@@ -1,0 +1,31 @@
+view,family,population,dimension,tasks,share,complete_case_tasks,development_tasks,evaluation_tasks
+all_eligible,bcb,all tasks; complete_case_tasks: complete case,code_generation,675,0.11997867045858514,654,128,547
+all_eligible,bcb_algo2,all tasks; complete_case_tasks: complete case,algorithm,111,0.019729825808745112,107,17,94
+all_eligible,bcb_completion,all tasks; complete_case_tasks: complete case,code_completion,89,0.015819409882687523,89,12,77
+all_eligible,bcb_ds,all tasks; complete_case_tasks: complete case,data_science,111,0.019729825808745112,111,18,93
+all_eligible,bcb_v014,all tasks; complete_case_tasks: complete case,code_generation,111,0.019729825808745112,111,17,94
+all_eligible,cruxeval,all tasks; complete_case_tasks: complete case,code_completion,800,0.14219694276573053,792,151,649
+all_eligible,ds1000,all tasks; complete_case_tasks: complete case,data_science,1000,0.17774617845716317,986,211,789
+all_eligible,he_completion,all tasks; complete_case_tasks: complete case,code_completion,98,0.01741912548880199,96,15,83
+all_eligible,hex_cpp,all tasks; complete_case_tasks: complete case,multi_language,164,0.02915037326697476,164,30,134
+all_eligible,hex_go,all tasks; complete_case_tasks: complete case,multi_language,164,0.02915037326697476,164,30,134
+all_eligible,hex_java,all tasks; complete_case_tasks: complete case,multi_language,164,0.02915037326697476,164,30,134
+all_eligible,hex_js,all tasks; complete_case_tasks: complete case,multi_language,164,0.02915037326697476,164,30,134
+all_eligible,hex_python,all tasks; complete_case_tasks: complete case,multi_language,164,0.02915037326697476,158,30,134
+all_eligible,humaneval,all tasks; complete_case_tasks: complete case,code_generation,100,0.017774617845716316,98,21,79
+all_eligible,lcb,all tasks; complete_case_tasks: complete case,algorithm,1000,0.17774617845716317,419,217,783
+all_eligible,mbpp,all tasks; complete_case_tasks: complete case,code_generation,225,0.03999289015286171,218,52,173
+all_eligible,mbpp_completion,all tasks; complete_case_tasks: complete case,code_completion,124,0.022040526128688235,118,26,98
+all_eligible,multiple_rs,all tasks; complete_case_tasks: complete case,multi_language,156,0.027728403839317455,156,29,127
+all_eligible,multiple_ts,all tasks; complete_case_tasks: complete case,multi_language,135,0.023995734091717028,135,29,106
+all_eligible,swebench,all tasks; complete_case_tasks: complete case,bug_fixing,71,0.012619978670458585,70,11,60
+filtered = headline,cruxeval,all tasks; complete_case_tasks: complete case,code_completion,800,0.7532956685499058,792,151,649
+filtered = headline,he_completion,all tasks; complete_case_tasks: complete case,code_completion,98,0.09227871939736347,96,15,83
+filtered = headline,hex_python,all tasks; complete_case_tasks: complete case,multi_language,164,0.1544256120527307,158,30,134
+sensitivity,cruxeval,all tasks; complete_case_tasks: complete case,code_completion,800,0.4134366925064599,792,151,649
+sensitivity,he_completion,all tasks; complete_case_tasks: complete case,code_completion,98,0.050645994832041345,96,15,83
+sensitivity,hex_python,all tasks; complete_case_tasks: complete case,multi_language,164,0.08475452196382428,158,30,134
+sensitivity,humaneval,all tasks; complete_case_tasks: complete case,code_generation,100,0.05167958656330749,98,21,79
+sensitivity,lcb,all tasks; complete_case_tasks: complete case,algorithm,578,0.2987080103359173,204,120,458
+sensitivity,mbpp_completion,all tasks; complete_case_tasks: complete case,code_completion,124,0.0640826873385013,118,26,98
+sensitivity,swebench,all tasks; complete_case_tasks: complete case,bug_fixing,71,0.03669250645994832,70,11,60

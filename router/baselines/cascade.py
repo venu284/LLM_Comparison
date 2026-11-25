@@ -34,7 +34,7 @@ class FixedCascade:
 
     def fit(self, train: OutcomeMatrix, ctx: Context):
         pols = ladders(train, self.mode)
-        A, C = policy_outcomes(train, ctx.verifier, pols)
+        A, C = policy_outcomes(train, ctx.verifier, pols, verifier_usd=ctx.verifier_usd)
         v, c = A.mean(0), C.mean(0)
         ref = float(success(train)[best_single_model(train)].mean())
         idx = np.arange(len(pols))

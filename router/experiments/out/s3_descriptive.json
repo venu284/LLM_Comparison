@@ -1,0 +1,112 @@
+{
+ "checks_against_artefacts": {
+  "all_eligible_complete_case_if_empty_responses_unavailable": {
+   "artefacts_yaml": 4737,
+   "equal": true,
+   "here": 4737
+  },
+  "filtered = headline_complete_case_if_empty_responses_unavailable": {
+   "artefacts_yaml": 1046,
+   "equal": true,
+   "here": 1046
+  },
+  "filtered_complete_case_no_signal_tasks": {
+   "artefacts_yaml": 930,
+   "equal": true,
+   "here": 930
+  },
+  "filtered_complete_case_tasks": {
+   "artefacts_yaml": 1046,
+   "equal": true,
+   "here": 1046
+  },
+  "filtered_signal_cells": {
+   "artefacts_yaml": 956,
+   "equal": true,
+   "here": 956
+  },
+  "filtered_unsolved_lenient": {
+   "artefacts_yaml": 5,
+   "equal": true,
+   "here": 5
+  },
+  "filtered_unsolved_strict": {
+   "artefacts_yaml": 42,
+   "equal": true,
+   "here": 42
+  },
+  "sensitivity_complete_case_if_empty_responses_unavailable": {
+   "artefacts_yaml": 1489,
+   "equal": true,
+   "here": 1489
+  }
+ },
+ "filtered_equals_headline": true,
+ "historical_old_definition": {
+  "always_usd": 34.02037,
+  "ladder_usd": 41.047805350000004,
+  "perfect_stop_usd": 5.989757520000001,
+  "tasks": 2919,
+  "unsolved_share": 0.3932853717026379
+ },
+ "historical_price_sweep_range": {
+  "all_eligible|main": {
+   "always_usd_max": 65.52785,
+   "always_usd_min": 16.3819625,
+   "ladder_usd_max": 116.15905669,
+   "ladder_usd_min": 82.41043669000001,
+   "perfect_stop_usd_max": 9.96720577,
+   "perfect_stop_usd_min": 7.68931927
+  },
+  "filtered = headline|main": {
+   "always_usd_max": 12.45288,
+   "always_usd_min": 3.11322,
+   "ladder_usd_max": 6.32111096,
+   "ladder_usd_min": 4.49970746,
+   "perfect_stop_usd_max": 5.0229082300000005,
+   "perfect_stop_usd_min": 3.5210887299999998
+  },
+  "sensitivity|main": {
+   "always_usd_max": 26.037399999999998,
+   "always_usd_min": 6.5093499999999995,
+   "ladder_usd_max": 23.56580052,
+   "ladder_usd_min": 14.84748552,
+   "perfect_stop_usd_max": 6.31081526,
+   "perfect_stop_usd_min": 4.7331227600000005
+  }
+ },
+ "n_boot": 1000,
+ "notes": [
+  "Qwen3-Max's released cost is a per-dimension constant (S1.7 data note)",
+  "cells: available (not an empty X13 response, not a missing token record) with an X13 record; artefacts.yaml's signal counts keep missing-token cells",
+  "rates with a zero denominator are empty in the CSVs: 'no signal' when there are no signal cells, 'none' when there are cells but no failures or no successes"
+ ],
+ "plan_verifier_bridge": {
+  "no_visible_tests_heuristic": {
+   "cells": 12472,
+   "false_pass_pct": 66.54509283819628,
+   "false_reject_pct": 17.624223602484474
+  },
+  "visible_tests": {
+   "cells": 8420,
+   "false_pass_pct": 14.969393433500278,
+   "false_reject_pct": 26.95814338997099
+  }
+ },
+ "rm_empty_cells": 3330,
+ "spec": "docs/research/S3_analysis_spec.md \u00a75",
+ "views": {
+  "all_eligible": {
+   "task_ids_sha256": "664e091f33844fa559b2021cdf046acd95d88f0e6445b3e2afc376e4da82da56",
+   "tasks": 5626
+  },
+  "filtered = headline": {
+   "task_ids_sha256": "38d1da6be292cee10b815786d5cc71d8b38ec762a65b9eca90606c8a7ae9b533",
+   "tasks": 1062
+  },
+  "sensitivity": {
+   "task_ids_sha256": "3b12967baa9849c5defc9ab1c8dd521170ce0839aa21b4c4b4cc46318b875db0",
+   "tasks": 1935
+  }
+ }
+}

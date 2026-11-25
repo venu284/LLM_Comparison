@@ -1,0 +1,1299 @@
+{
+ "k_grid": [
+  10,
+  25,
+  50,
+  100,
+  250
+ ],
+ "n_boot": 1000,
+ "note": "per model, never pooled (R8); CIs on the gate seed only; probe cost spread over the scored tasks (S0.2)",
+ "populations": {
+  "all_eligible": 966,
+  "filtered = headline": 195,
+  "sensitivity": 294
+ },
+ "spec": "docs/research/S3_analysis_spec.md D9",
+ "unreachable": [
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "MiniMax-M2.7",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "MiniMax-M2.7",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "Qwen3-Max",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "Qwen3-Max",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "claude-opus-4-6",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "claude-opus-4-6",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "claude-sonnet-4-6",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "claude-sonnet-4-6",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "glm-5",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "glm-5",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "gpt-5.4",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "gpt-5.4",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "kimi-k2.5",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "kimi-k2.5",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "qwen3.5-plus",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "qwen3.5-plus",
+   "population": "filtered = headline",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "MiniMax-M2.7",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "MiniMax-M2.7",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "Qwen3-Max",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "Qwen3-Max",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "claude-opus-4-6",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "claude-opus-4-6",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "claude-sonnet-4-6",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "claude-sonnet-4-6",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "glm-5",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "glm-5",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "gpt-5.4",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "gpt-5.4",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "kimi-k2.5",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "kimi-k2.5",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "qwen3.5-plus",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "qwen3.5-plus",
+   "population": "filtered = headline",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "MiniMax-M2.7",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "MiniMax-M2.7",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "Qwen3-Max",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "Qwen3-Max",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "claude-opus-4-6",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "claude-opus-4-6",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "claude-sonnet-4-6",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "claude-sonnet-4-6",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "glm-5",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "glm-5",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "gpt-5.4",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "gpt-5.4",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "kimi-k2.5",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "kimi-k2.5",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 154,
+   "new_model": "qwen3.5-plus",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 154,
+   "new_model": "qwen3.5-plus",
+   "population": "filtered = headline",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 153,
+   "new_model": "MiniMax-M2.7",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 153,
+   "new_model": "MiniMax-M2.7",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 153,
+   "new_model": "Qwen3-Max",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 153,
+   "new_model": "Qwen3-Max",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 153,
+   "new_model": "claude-opus-4-6",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 153,
+   "new_model": "claude-opus-4-6",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 153,
+   "new_model": "claude-sonnet-4-6",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 153,
+   "new_model": "claude-sonnet-4-6",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 153,
+   "new_model": "glm-5",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 153,
+   "new_model": "glm-5",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 153,
+   "new_model": "gpt-5.4",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 153,
+   "new_model": "gpt-5.4",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 153,
+   "new_model": "kimi-k2.5",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 153,
+   "new_model": "kimi-k2.5",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 153,
+   "new_model": "qwen3.5-plus",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 153,
+   "new_model": "qwen3.5-plus",
+   "population": "filtered = headline",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 155,
+   "new_model": "MiniMax-M2.7",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 155,
+   "new_model": "MiniMax-M2.7",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 155,
+   "new_model": "Qwen3-Max",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 155,
+   "new_model": "Qwen3-Max",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 155,
+   "new_model": "claude-opus-4-6",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 155,
+   "new_model": "claude-opus-4-6",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 155,
+   "new_model": "claude-sonnet-4-6",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 155,
+   "new_model": "claude-sonnet-4-6",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 155,
+   "new_model": "glm-5",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 155,
+   "new_model": "glm-5",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 155,
+   "new_model": "gpt-5.4",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 155,
+   "new_model": "gpt-5.4",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 155,
+   "new_model": "kimi-k2.5",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 155,
+   "new_model": "kimi-k2.5",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 155,
+   "new_model": "qwen3.5-plus",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 155,
+   "new_model": "qwen3.5-plus",
+   "population": "filtered = headline",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 232,
+   "new_model": "MiniMax-M2.7",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 232,
+   "new_model": "MiniMax-M2.7",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 232,
+   "new_model": "Qwen3-Max",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 232,
+   "new_model": "Qwen3-Max",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 232,
+   "new_model": "claude-opus-4-6",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 232,
+   "new_model": "claude-opus-4-6",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 232,
+   "new_model": "claude-sonnet-4-6",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 232,
+   "new_model": "claude-sonnet-4-6",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 232,
+   "new_model": "glm-5",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 232,
+   "new_model": "glm-5",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 232,
+   "new_model": "gpt-5.4",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 232,
+   "new_model": "gpt-5.4",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 232,
+   "new_model": "kimi-k2.5",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 232,
+   "new_model": "kimi-k2.5",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 232,
+   "new_model": "qwen3.5-plus",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 232,
+   "new_model": "qwen3.5-plus",
+   "population": "sensitivity",
+   "seed": 0
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 230,
+   "new_model": "MiniMax-M2.7",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 230,
+   "new_model": "MiniMax-M2.7",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 230,
+   "new_model": "Qwen3-Max",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 230,
+   "new_model": "Qwen3-Max",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 230,
+   "new_model": "claude-opus-4-6",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 230,
+   "new_model": "claude-opus-4-6",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 230,
+   "new_model": "claude-sonnet-4-6",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 230,
+   "new_model": "claude-sonnet-4-6",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 230,
+   "new_model": "glm-5",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 230,
+   "new_model": "glm-5",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 230,
+   "new_model": "gpt-5.4",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 230,
+   "new_model": "gpt-5.4",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 230,
+   "new_model": "kimi-k2.5",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 230,
+   "new_model": "kimi-k2.5",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 230,
+   "new_model": "qwen3.5-plus",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 230,
+   "new_model": "qwen3.5-plus",
+   "population": "sensitivity",
+   "seed": 1
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "MiniMax-M2.7",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "MiniMax-M2.7",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "Qwen3-Max",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "Qwen3-Max",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "claude-opus-4-6",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "claude-opus-4-6",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "claude-sonnet-4-6",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "claude-sonnet-4-6",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "glm-5",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "glm-5",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "gpt-5.4",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "gpt-5.4",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "kimi-k2.5",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "kimi-k2.5",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "qwen3.5-plus",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "qwen3.5-plus",
+   "population": "sensitivity",
+   "seed": 2
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "MiniMax-M2.7",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "MiniMax-M2.7",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "Qwen3-Max",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "Qwen3-Max",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "claude-opus-4-6",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "claude-opus-4-6",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "claude-sonnet-4-6",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "claude-sonnet-4-6",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "glm-5",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "glm-5",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "gpt-5.4",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "gpt-5.4",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "kimi-k2.5",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "kimi-k2.5",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 231,
+   "new_model": "qwen3.5-plus",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 231,
+   "new_model": "qwen3.5-plus",
+   "population": "sensitivity",
+   "seed": 3
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 229,
+   "new_model": "MiniMax-M2.7",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 229,
+   "new_model": "MiniMax-M2.7",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 229,
+   "new_model": "Qwen3-Max",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 229,
+   "new_model": "Qwen3-Max",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 229,
+   "new_model": "claude-opus-4-6",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 229,
+   "new_model": "claude-opus-4-6",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 229,
+   "new_model": "claude-sonnet-4-6",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 229,
+   "new_model": "claude-sonnet-4-6",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 229,
+   "new_model": "glm-5",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 229,
+   "new_model": "glm-5",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 229,
+   "new_model": "gpt-5.4",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 229,
+   "new_model": "gpt-5.4",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 229,
+   "new_model": "kimi-k2.5",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 229,
+   "new_model": "kimi-k2.5",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "ground_truth",
+   "min_training_availability": 229,
+   "new_model": "qwen3.5-plus",
+   "population": "sensitivity",
+   "seed": 4
+  },
+  {
+   "k": "250",
+   "labels": "verifier",
+   "min_training_availability": 229,
+   "new_model": "qwen3.5-plus",
+   "population": "sensitivity",
+   "seed": 4
+  }
+ ]
+}

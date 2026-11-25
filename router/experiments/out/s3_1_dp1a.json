@@ -1,0 +1,5884 @@
+{
+ "cruxeval_lenient_note": "tables chosen under S0.1, scored with CRUXEval >= 0.8 (spec \u00a77)",
+ "dp1a": {
+  "hi": 0.2846367386215583,
+  "holds": false,
+  "label": "does not clear",
+  "label_definition": "stats.threshold_label on the CI lower bounds of seeds 0 to 4, with seed 0's lower bound as the gate value (spec \u00a77, 2026-11-23)",
+  "lo": -0.2862595419847328,
+  "lower_bound": -0.2862595419847328,
+  "lower_bound_by_seed": {
+   "0": -0.2862595419847328,
+   "1": -0.4743945643692639,
+   "2": -0.48030739673390976,
+   "3": -0.4743945643692639,
+   "4": -0.4743945643692639
+  },
+  "margin": -3.286259541984733,
+  "n_problems": 954,
+  "n_tasks": 1046,
+  "point": 0.0,
+  "point_by_seed": {
+   "0": 0.0,
+   "1": -0.09560229445506692,
+   "2": -0.19120458891013384,
+   "3": -0.09560229445506692,
+   "4": -0.09560229445506692
+  },
+  "statistic": "CI lower bound of cross-fitted DimensionBest's acceptance headroom over the cross-fitted best single model, filtered = headline complete case, gate seed 0",
+  "threshold": 3.0
+ },
+ "fits": {
+  "all_eligible|all_tasks|0": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-sonnet-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:gpt-5.4"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|all_tasks|1": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-sonnet-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|all_tasks|2": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-sonnet-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|all_tasks|3": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:kimi-k2.5"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|all_tasks|4": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|cruxeval_lenient|0": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-sonnet-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:claude-opus-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|cruxeval_lenient|1": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:claude-opus-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:glm-5",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:gpt-5.4"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:kimi-k2.5",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|cruxeval_lenient|2": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:claude-opus-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:qwen3.5-plus",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-sonnet-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|cruxeval_lenient|3": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:claude-opus-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|cruxeval_lenient|4": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-sonnet-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|main|0": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-sonnet-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:claude-opus-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|main|1": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:claude-opus-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:glm-5",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:gpt-5.4"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:kimi-k2.5",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|main|2": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:claude-opus-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:qwen3.5-plus",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-sonnet-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|main|3": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:claude-opus-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|main|4": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-sonnet-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|rm_empty_unavailable|0": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:claude-opus-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:glm-5",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|rm_empty_unavailable|1": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:claude-opus-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:gpt-5.4"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|rm_empty_unavailable|2": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:claude-opus-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-sonnet-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-sonnet-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|rm_empty_unavailable|3": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:gpt-5.4"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "all_eligible|rm_empty_unavailable|4": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-sonnet-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:claude-opus-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:claude-opus-4-6",
+       "data_science": "direct:kimi-k2.5",
+       "multi_language": "direct:claude-opus-4-6"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "filtered = headline|all_tasks|0": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 196,
+    "n_train": 866
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 170,
+    "n_train": 892
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-opus-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 172,
+    "n_train": 890
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold2",
+    "n_scored": 164,
+    "n_train": 898
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold3",
+    "n_scored": 174,
+    "n_train": 888
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-opus-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 186,
+    "n_train": 876
+   }
+  ],
+  "filtered = headline|all_tasks|1": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 196,
+    "n_train": 866
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 177,
+    "n_train": 885
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 158,
+    "n_train": 904
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-opus-4-6"
+    },
+    "group": "fold2",
+    "n_scored": 194,
+    "n_train": 868
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold3",
+    "n_scored": 175,
+    "n_train": 887
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold4",
+    "n_scored": 162,
+    "n_train": 900
+   }
+  ],
+  "filtered = headline|all_tasks|2": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 196,
+    "n_train": 866
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-opus-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 172,
+    "n_train": 890
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 179,
+    "n_train": 883
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold2",
+    "n_scored": 175,
+    "n_train": 887
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold3",
+    "n_scored": 157,
+    "n_train": 905
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 183,
+    "n_train": 879
+   }
+  ],
+  "filtered = headline|all_tasks|3": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 196,
+    "n_train": 866
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold0",
+    "n_scored": 170,
+    "n_train": 892
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 175,
+    "n_train": 887
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold2",
+    "n_scored": 167,
+    "n_train": 895
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-opus-4-6"
+    },
+    "group": "fold3",
+    "n_scored": 171,
+    "n_train": 891
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 183,
+    "n_train": 879
+   }
+  ],
+  "filtered = headline|all_tasks|4": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 196,
+    "n_train": 866
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 170,
+    "n_train": 892
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 170,
+    "n_train": 892
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-opus-4-6"
+    },
+    "group": "fold2",
+    "n_scored": 178,
+    "n_train": 884
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold3",
+    "n_scored": 169,
+    "n_train": 893
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold4",
+    "n_scored": 179,
+    "n_train": 883
+   }
+  ],
+  "filtered = headline|cruxeval_lenient|0": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 167,
+    "n_train": 879
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:glm-5"
+    },
+    "group": "fold1",
+    "n_scored": 168,
+    "n_train": 878
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold2",
+    "n_scored": 160,
+    "n_train": 886
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold3",
+    "n_scored": 171,
+    "n_train": 875
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 185,
+    "n_train": 861
+   }
+  ],
+  "filtered = headline|cruxeval_lenient|1": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 172,
+    "n_train": 874
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 156,
+    "n_train": 890
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold2",
+    "n_scored": 190,
+    "n_train": 856
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold3",
+    "n_scored": 173,
+    "n_train": 873
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 160,
+    "n_train": 886
+   }
+  ],
+  "filtered = headline|cruxeval_lenient|2": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-opus-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 169,
+    "n_train": 877
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 176,
+    "n_train": 870
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold2",
+    "n_scored": 172,
+    "n_train": 874
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold3",
+    "n_scored": 153,
+    "n_train": 893
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 181,
+    "n_train": 865
+   }
+  ],
+  "filtered = headline|cruxeval_lenient|3": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold0",
+    "n_scored": 167,
+    "n_train": 879
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 172,
+    "n_train": 874
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold2",
+    "n_scored": 164,
+    "n_train": 882
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:glm-5"
+    },
+    "group": "fold3",
+    "n_scored": 169,
+    "n_train": 877
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 179,
+    "n_train": 867
+   }
+  ],
+  "filtered = headline|cruxeval_lenient|4": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 169,
+    "n_train": 877
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 165,
+    "n_train": 881
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:glm-5"
+    },
+    "group": "fold2",
+    "n_scored": 176,
+    "n_train": 870
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold3",
+    "n_scored": 166,
+    "n_train": 880
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold4",
+    "n_scored": 175,
+    "n_train": 871
+   }
+  ],
+  "filtered = headline|main|0": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 167,
+    "n_train": 879
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:glm-5"
+    },
+    "group": "fold1",
+    "n_scored": 168,
+    "n_train": 878
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold2",
+    "n_scored": 160,
+    "n_train": 886
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold3",
+    "n_scored": 171,
+    "n_train": 875
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 185,
+    "n_train": 861
+   }
+  ],
+  "filtered = headline|main|1": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 172,
+    "n_train": 874
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 156,
+    "n_train": 890
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold2",
+    "n_scored": 190,
+    "n_train": 856
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold3",
+    "n_scored": 173,
+    "n_train": 873
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 160,
+    "n_train": 886
+   }
+  ],
+  "filtered = headline|main|2": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-opus-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 169,
+    "n_train": 877
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 176,
+    "n_train": 870
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold2",
+    "n_scored": 172,
+    "n_train": 874
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold3",
+    "n_scored": 153,
+    "n_train": 893
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 181,
+    "n_train": 865
+   }
+  ],
+  "filtered = headline|main|3": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold0",
+    "n_scored": 167,
+    "n_train": 879
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 172,
+    "n_train": 874
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold2",
+    "n_scored": 164,
+    "n_train": 882
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:glm-5"
+    },
+    "group": "fold3",
+    "n_scored": 169,
+    "n_train": 877
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 179,
+    "n_train": 867
+   }
+  ],
+  "filtered = headline|main|4": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 169,
+    "n_train": 877
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 165,
+    "n_train": 881
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:glm-5"
+    },
+    "group": "fold2",
+    "n_scored": 176,
+    "n_train": 870
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold3",
+    "n_scored": 166,
+    "n_train": 880
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold4",
+    "n_scored": 175,
+    "n_train": 871
+   }
+  ],
+  "filtered = headline|rm_empty_unavailable|0": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 167,
+    "n_train": 879
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:glm-5"
+    },
+    "group": "fold1",
+    "n_scored": 168,
+    "n_train": 878
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold2",
+    "n_scored": 160,
+    "n_train": 886
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold3",
+    "n_scored": 171,
+    "n_train": 875
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 185,
+    "n_train": 861
+   }
+  ],
+  "filtered = headline|rm_empty_unavailable|1": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 172,
+    "n_train": 874
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 156,
+    "n_train": 890
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold2",
+    "n_scored": 190,
+    "n_train": 856
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold3",
+    "n_scored": 173,
+    "n_train": 873
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 160,
+    "n_train": 886
+   }
+  ],
+  "filtered = headline|rm_empty_unavailable|2": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-opus-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 169,
+    "n_train": 877
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 176,
+    "n_train": 870
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold2",
+    "n_scored": 172,
+    "n_train": 874
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold3",
+    "n_scored": 153,
+    "n_train": 893
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 181,
+    "n_train": 865
+   }
+  ],
+  "filtered = headline|rm_empty_unavailable|3": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold0",
+    "n_scored": 167,
+    "n_train": 879
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 172,
+    "n_train": 874
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold2",
+    "n_scored": 164,
+    "n_train": 882
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:glm-5"
+    },
+    "group": "fold3",
+    "n_scored": 169,
+    "n_train": 877
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold4",
+    "n_scored": 179,
+    "n_train": 867
+   }
+  ],
+  "filtered = headline|rm_empty_unavailable|4": [
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "dev",
+    "n_scored": 195,
+    "n_train": 851
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold0",
+    "n_scored": 169,
+    "n_train": 877
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold1",
+    "n_scored": 165,
+    "n_train": 881
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:glm-5"
+    },
+    "group": "fold2",
+    "n_scored": 176,
+    "n_train": 870
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:claude-sonnet-4-6"
+    },
+    "group": "fold3",
+    "n_scored": 166,
+    "n_train": 880
+   },
+   {
+    "best_single": "claude-opus-4-6",
+    "dimension_best": {
+     "code_completion": "direct:claude-opus-4-6",
+     "multi_language": "direct:qwen3.5-plus"
+    },
+    "group": "fold4",
+    "n_scored": 175,
+    "n_train": 871
+   }
+  ],
+  "sensitivity|all_tasks|0": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|all_tasks|1": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|all_tasks|2": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|all_tasks|3": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|all_tasks|4": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:Qwen3-Max",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|cruxeval_lenient|0": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|cruxeval_lenient|1": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|cruxeval_lenient|2": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|cruxeval_lenient|3": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|cruxeval_lenient|4": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|main|0": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|main|1": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|main|2": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|main|3": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|main|4": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:qwen3.5-plus",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:glm-5",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|rm_empty_unavailable|0": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|rm_empty_unavailable|1": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|rm_empty_unavailable|2": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|rm_empty_unavailable|3": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ],
+  "sensitivity|rm_empty_unavailable|4": [
+   {
+    "fits": [
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 0,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 1,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 2,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 3,
+      "table": null
+     },
+     {
+      "chosen": "claude-opus-4-6",
+      "fold": 4,
+      "table": null
+     }
+    ],
+    "route": "best"
+   },
+   {
+    "fits": [
+     {
+      "chosen": null,
+      "fold": 0,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:Qwen3-Max"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 1,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:kimi-k2.5",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 2,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 3,
+      "table": {
+       "algorithm": "direct:gpt-5.4",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     },
+     {
+      "chosen": null,
+      "fold": 4,
+      "table": {
+       "algorithm": "direct:claude-sonnet-4-6",
+       "bug_fixing": "direct:Qwen3-Max",
+       "code_completion": "direct:claude-opus-4-6",
+       "code_generation": "direct:Qwen3-Max",
+       "multi_language": "direct:qwen3.5-plus"
+      }
+     }
+    ],
+    "route": "dimension_best"
+   }
+  ]
+ },
+ "n_boot": 2000,
+ "oracle_ceiling": {
+  "hi": 18.352195625033925,
+  "lo": 13.740223080037012,
+  "note": "ceiling (O18); decides nothing",
+  "point": 15.965583173996176
+ },
+ "records": {
+  "all_eligible|all_tasks|0": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 1104,
+   "seed": 0,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|all_tasks|1": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 1104,
+   "seed": 1,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|all_tasks|2": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 1104,
+   "seed": 2,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|all_tasks|3": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 1104,
+   "seed": 3,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|all_tasks|4": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 1104,
+   "seed": 4,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|cruxeval_lenient|0": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 966,
+   "seed": 0,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|cruxeval_lenient|1": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 966,
+   "seed": 1,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|cruxeval_lenient|2": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 966,
+   "seed": 2,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|cruxeval_lenient|3": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 966,
+   "seed": 3,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|cruxeval_lenient|4": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 966,
+   "seed": 4,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|main|0": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 966,
+   "seed": 0,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|main|1": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 966,
+   "seed": 1,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|main|2": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 966,
+   "seed": 2,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|main|3": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 966,
+   "seed": 3,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|main|4": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 966,
+   "seed": 4,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|rm_empty_unavailable|0": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 930,
+   "seed": 0,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|rm_empty_unavailable|1": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 930,
+   "seed": 1,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|rm_empty_unavailable|2": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 930,
+   "seed": 2,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|rm_empty_unavailable|3": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 930,
+   "seed": 3,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "all_eligible|rm_empty_unavailable|4": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 930,
+   "seed": 4,
+   "split": "development",
+   "view": "all_eligible"
+  },
+  "filtered = headline|all_tasks|0": {
+   "all_tasks": true,
+   "cruxeval_lenient": false,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed0",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 196,
+   "n_evaluation_tasks_read": 866,
+   "n_tasks": 1062,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 0,
+   "view": "filtered"
+  },
+  "filtered = headline|all_tasks|1": {
+   "all_tasks": true,
+   "cruxeval_lenient": false,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed1",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 196,
+   "n_evaluation_tasks_read": 866,
+   "n_tasks": 1062,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 1,
+   "view": "filtered"
+  },
+  "filtered = headline|all_tasks|2": {
+   "all_tasks": true,
+   "cruxeval_lenient": false,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed2",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 196,
+   "n_evaluation_tasks_read": 866,
+   "n_tasks": 1062,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 2,
+   "view": "filtered"
+  },
+  "filtered = headline|all_tasks|3": {
+   "all_tasks": true,
+   "cruxeval_lenient": false,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed3",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 196,
+   "n_evaluation_tasks_read": 866,
+   "n_tasks": 1062,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 3,
+   "view": "filtered"
+  },
+  "filtered = headline|all_tasks|4": {
+   "all_tasks": true,
+   "cruxeval_lenient": false,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed4",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 196,
+   "n_evaluation_tasks_read": 866,
+   "n_tasks": 1062,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 4,
+   "view": "filtered"
+  },
+  "filtered = headline|cruxeval_lenient|0": {
+   "all_tasks": false,
+   "cruxeval_lenient": true,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed0",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 0,
+   "view": "filtered"
+  },
+  "filtered = headline|cruxeval_lenient|1": {
+   "all_tasks": false,
+   "cruxeval_lenient": true,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed1",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 1,
+   "view": "filtered"
+  },
+  "filtered = headline|cruxeval_lenient|2": {
+   "all_tasks": false,
+   "cruxeval_lenient": true,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed2",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 2,
+   "view": "filtered"
+  },
+  "filtered = headline|cruxeval_lenient|3": {
+   "all_tasks": false,
+   "cruxeval_lenient": true,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed3",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 3,
+   "view": "filtered"
+  },
+  "filtered = headline|cruxeval_lenient|4": {
+   "all_tasks": false,
+   "cruxeval_lenient": true,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed4",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 4,
+   "view": "filtered"
+  },
+  "filtered = headline|main|0": {
+   "all_tasks": false,
+   "cruxeval_lenient": false,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed0",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 0,
+   "view": "filtered"
+  },
+  "filtered = headline|main|1": {
+   "all_tasks": false,
+   "cruxeval_lenient": false,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed1",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 1,
+   "view": "filtered"
+  },
+  "filtered = headline|main|2": {
+   "all_tasks": false,
+   "cruxeval_lenient": false,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed2",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 2,
+   "view": "filtered"
+  },
+  "filtered = headline|main|3": {
+   "all_tasks": false,
+   "cruxeval_lenient": false,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed3",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 3,
+   "view": "filtered"
+  },
+  "filtered = headline|main|4": {
+   "all_tasks": false,
+   "cruxeval_lenient": false,
+   "empty_unavailable": false,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed4",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 4,
+   "view": "filtered"
+  },
+  "filtered = headline|rm_empty_unavailable|0": {
+   "all_tasks": false,
+   "cruxeval_lenient": false,
+   "empty_unavailable": true,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed0",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 0,
+   "view": "filtered"
+  },
+  "filtered = headline|rm_empty_unavailable|1": {
+   "all_tasks": false,
+   "cruxeval_lenient": false,
+   "empty_unavailable": true,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed1",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 1,
+   "view": "filtered"
+  },
+  "filtered = headline|rm_empty_unavailable|2": {
+   "all_tasks": false,
+   "cruxeval_lenient": false,
+   "empty_unavailable": true,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed2",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 2,
+   "view": "filtered"
+  },
+  "filtered = headline|rm_empty_unavailable|3": {
+   "all_tasks": false,
+   "cruxeval_lenient": false,
+   "empty_unavailable": true,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed3",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 3,
+   "view": "filtered"
+  },
+  "filtered = headline|rm_empty_unavailable|4": {
+   "all_tasks": false,
+   "cruxeval_lenient": false,
+   "empty_unavailable": true,
+   "evaluation_population_path": "S3 spec D3 whitelist",
+   "fold_column": "fold_seed4",
+   "groups": [
+    "dev",
+    "fold0",
+    "fold1",
+    "fold2",
+    "fold3",
+    "fold4"
+   ],
+   "n_development_tasks": 195,
+   "n_evaluation_tasks_read": 851,
+   "n_tasks": 1046,
+   "routes": {
+    "best_single": "router.baselines.static.BestSingle",
+    "dimension_best": "router.baselines.lookup.GroupBest",
+    "oracle": "any available model succeeds (computed, not fitted)"
+   },
+   "seed": 4,
+   "view": "filtered"
+  },
+  "sensitivity|all_tasks|0": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 374,
+   "seed": 0,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|all_tasks|1": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 374,
+   "seed": 1,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|all_tasks|2": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 374,
+   "seed": 2,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|all_tasks|3": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 374,
+   "seed": 3,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|all_tasks|4": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 374,
+   "seed": 4,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|cruxeval_lenient|0": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 294,
+   "seed": 0,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|cruxeval_lenient|1": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 294,
+   "seed": 1,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|cruxeval_lenient|2": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 294,
+   "seed": 2,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|cruxeval_lenient|3": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 294,
+   "seed": 3,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|cruxeval_lenient|4": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 294,
+   "seed": 4,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|main|0": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 294,
+   "seed": 0,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|main|1": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 294,
+   "seed": 1,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|main|2": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 294,
+   "seed": 2,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|main|3": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 294,
+   "seed": 3,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|main|4": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 294,
+   "seed": 4,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|rm_empty_unavailable|0": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 284,
+   "seed": 0,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|rm_empty_unavailable|1": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 284,
+   "seed": 1,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|rm_empty_unavailable|2": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 284,
+   "seed": 2,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|rm_empty_unavailable|3": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 284,
+   "seed": 3,
+   "split": "development",
+   "view": "sensitivity"
+  },
+  "sensitivity|rm_empty_unavailable|4": {
+   "folds": "stats.dev_folds",
+   "n_evaluation_tasks_read": 0,
+   "n_tasks": 284,
+   "seed": 4,
+   "split": "development",
+   "view": "sensitivity"
+  }
+ },
+ "seed_spread_note": "D1 (i): the development group is the same on every seed, so seeds 1 to 4 vary only the evaluation folds; the seed spread is narrower than a full fold redraw would give",
+ "spec": "docs/research/S3_analysis_spec.md D1, D2, D3"
+}
