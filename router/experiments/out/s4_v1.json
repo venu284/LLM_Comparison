@@ -7325,6 +7325,7 @@
  ],
  "shuffled_labels_headline": {
   "n_shuffles": 20,
+  "one_sided_check": "pass",
   "policy": "router_v1",
   "random_expected": 50.38461538461539,
   "random_expected_inside": false,

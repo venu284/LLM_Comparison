@@ -293,7 +293,8 @@ def test_learned_baselines_fall_to_random_when_labels_are_shuffled():
         true_gain = run_dev(b, m, ctx, folds, seed=0)["accepted"].mean() - random_expected
         shuffled = [run_dev(b, m, ctx, folds, seed=0, shuffle_seed=s)["accepted"].mean()
                     for s in range(10)]
-        assert abs(np.mean(shuffled) - random_expected) < 0.08, (b.name, np.mean(shuffled))
+        # one-sided (reviewer ruling 2026-11-25): only shuffled acceptance above Random signals leakage
+        assert np.mean(shuffled) - random_expected < 0.08, (b.name, np.mean(shuffled))
         if b.name not in weak_unshuffled:
             assert true_gain > 0.15, (b.name, true_gain)
 
@@ -371,10 +372,11 @@ def test_baselines_draw_from_their_streams():
                                   "fixed_cascade_escalate"])
 def test_real_dev_shuffled_labels_fall_to_random(name):
     """On the development-split headline tasks: unshuffled, the baseline beats Random (paired
-    cluster-bootstrap CI above 0); with shuffled labels, Random's expected acceptance lies inside
-    the t interval of the mean acceptance over N_SHUFFLES shuffles (s2_baselines)."""
+    cluster-bootstrap CI above 0); with shuffled labels, the t interval of the mean acceptance over
+    N_SHUFFLES shuffles does not lie wholly above Random's expected acceptance (one-sided, reviewer
+    ruling 2026-11-25; s2_baselines)."""
     from router.experiments.s2_baselines import N_SHUFFLES
-    from router.baselines.run import shuffled_mean_interval
+    from router.baselines.run import shuffled_check_fails, shuffled_mean_interval
     from router.sim import stats
     m, ctx, folds = real_dev()
     b = next(x for x in default_baselines(m.models) if x.name == name)
@@ -390,7 +392,7 @@ def test_real_dev_shuffled_labels_fall_to_random(name):
     accs = [metrics.acceptance(run_dev(b, m, ctx, folds, seed=0, shuffle_seed=k))
             for k in range(N_SHUFFLES)]
     mean, lo, hi = shuffled_mean_interval(accs)
-    assert lo <= random_expected <= hi, (name, random_expected, (mean, lo, hi))
+    assert not shuffled_check_fails(lo, random_expected), (name, random_expected, (mean, lo, hi))
 
 
 def test_shuffled_mean_interval_by_hand():

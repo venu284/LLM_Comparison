@@ -1,10 +1,8 @@
 # S4 spec: router v1, v2 and the v3/v4 components (pre-registration)
 
 _Written 2026-11-24 on branch `s4-router` (from `main` at `a324b89`), before any S4 router number
-was computed. Status: **recommendations, awaiting the reviewer's rulings.** Router v1 is built on
-the recommendations below so that checkpoint 1 can be reviewed end to end; if a ruling differs, the
-change gets a dated entry in §9 and v1 is rerun. A change after a ruling also needs a dated §9
-entry giving the reason._
+was computed. Status: **P1–P8 ruled 2026-11-25 (reviewer, in force on the user's approval), each
+as recommended; see §9.** A change after a ruling needs a dated §9 entry giving the reason._
 
 Sources read: plan §1 (C1, C2), §2, §4 S2–S5, §6; CLAIMS S0.1, S0.2, S0.5–S0.8, S0.11, S0.13,
 O1–O3, O8, O9, O19, A1–A4; `docs/research/S3_analysis_spec.md`, `S3_results.md`;
@@ -228,6 +226,55 @@ Fixed here so checkpoint 2 has a rule to build to; the reviewer may rule now or 
 - **Comparators:** v1 without the new model (k = 0, pool prior) and k-matched DimensionBest at the
   same k (`lookup.KMatchedDimensionBest`, same label source).
 
+### 4.1 Precisions for building v2 (2026-11-25, before any v2 code; ruled P7 (a), P8 (a))
+
+- **Call cap.** The new model M's total calls (probes plus exploration) stop at k = 100, the largest
+  `DP2_K_GRID` value; S5 E1 runs the grid. When the cap is reached, every group still exploring is
+  **out of budget**.
+- **Probes** are made at fit time (M arrives at stream position 0, before the first request).
+  - Per training group (the training tasks' true family, the label space the predictor outputs):
+    up to `MAX_PROBES_PER_GROUP` = 5 tasks where M is available, drawn without replacement from
+    stream `s4_probe_draw` (id 21). There is one generator per fit; groups go in sorted order, and
+    each draw is from the group's sorted task ids. The total is capped at
+    `MAX_PROBES_PER_MODEL` = 100 and at the call cap.
+  - Labels: ground truth = success under S0.1; verifier-only = the replay verifier's verdict.
+    UNKNOWN never updates the posterior but counts as a call.
+  - Cost: M's released cost on each probe task (training data), plus `VERIFIER_RUN_USD` when a
+    verifier run happened (verifier-only pairing). It is charged as `probe_usd` and spread over
+    the scored tasks (S0.2).
+- **Posterior per group** (P8 (a)).
+  - From v1 fitted without M: μ_g = the mean over the 7 known models of their shrunk direct-
+    dispatch acceptance â_gj in group g, and v_g = their variance (population variance, ddof 0).
+  - Beta prior: strength s_g = μ_g(1 − μ_g) / v_g − 1, floored at 1. v_g = 0 gives s_g = 10⁶.
+    μ_g is clipped to [10⁻³, 1 − 10⁻³]. α = μ_g s_g, β = (1 − μ_g) s_g.
+  - PASS adds 1 to α and FAIL adds 1 to β. The logit-scale SD is √(ψ₁(α) + ψ₁(β)), checked after
+    the probes and after every update. SD ≤ 0.5 means the group **stops** (it may stop at zero
+    calls if the prior is already that tight; this is reported).
+- **Exploration** (P7 (a)). Requests are counted per predicted group from position 0. While group
+  g is exploring and the cap is not reached, the j-th request of g with j a multiple of 10 is
+  exploration:
+  - M is called first, verified. PASS is accepted. FAIL or UNKNOWN continues with the group's
+    current plan among the other models.
+  - A task whose predicted group has no training row, or that has no text, is routed by the pool
+    row and never explored.
+- **M in the menu.** Group g's choice is recomputed with M as a direct candidate (`L.choose`; the
+  direct columns are the 7 known models and M; the cascade stays last; margin 0.02):
+  - for a group that **stopped**, at its posterior mean;
+  - for a group **out of budget**, at the pool prior μ_g (R11);
+  - for a group still exploring at the end of the stream, M is not in the menu.
+  - M's cost there is the mean released cost of its probe tasks in g, else of all its probes. With
+    no probe there is no cost information, and M is not entered. That makes v2 with zero calls
+    equal v1 without M: the k = 0 comparator. The router never reads a scored task's realised cost
+    (S0.13).
+- **Reported per (population, seed, M, label source)**, never pooled over models (R8):
+  - per fold: k used in total and per group, probes, exploration calls, each group's end state
+    (`stopped` with its k, `out_of_budget`, `exploring`), probe cost and exploration cost;
+  - acceptance and cost against v1 without M (k = 0) and against k-matched DimensionBest at the
+    same k (per fold: k = v2's total calls to M in that fold; same label source; given more
+    information), paired cluster-bootstrap CIs on the gate seed;
+  - v2's acceptance on tasks routed before M entered the group's menu and after;
+  - v1 with all eight models (k = ∞) as a reference.
+
 ## 5. S4.6: the non-transductive rule
 
 - **Rule.** A scored task's difficulty, or any other item parameter, is never fitted from any
@@ -262,7 +309,7 @@ a section for each before its code, as for v1.
 |---|---|---|---|
 | — | none | v1 (deterministic: no draw anywhere) | — |
 | 20 | `s4_explore` | v2, only if P7 (b) is ruled | reserved |
-| 21 | `s4_probe_draw` | v2 calibration probes | reserved |
+| 21 | `s4_probe_draw` | v2 calibration probes | registered with v2 |
 | 22 | `s4_rescue_split` | S4.5 held-out split for t inside the training folds | reserved |
 | 23 | `s4_sim` | S4.3–S4.5 simulated data in unit tests | reserved |
 | 24–29 | — | spare | reserved |
@@ -271,7 +318,7 @@ Each id is registered in `stats.STREAM_IDS` in the commit that first uses it.
 
 ## 8. Open points for the reviewer
 
-| # | Point | Rec. |
+| # | Point | Rec. (ruled 2026-11-25: as recommended) |
 |---|---|---|
 | P1 | All-eligible and sensitivity: tasks without an X13 record | (b) X13 tasks only, all tasks as a labelled variant |
 | P2 | Group predictor training pool | (a) each population's own training folds, comparators the same |
@@ -303,3 +350,24 @@ Each id is registered in `stats.STREAM_IDS` in the commit that first uses it.
     savings they add come from cost spent on tasks no model solves.
   - §5: the scan is by name (`fit`, `fit_*`) and also by call (a function that calls a fitting
     routine); the "registered as an item fit" clause is dropped, as no registry exists.
+- 2026-11-25 (reviewer check of checkpoint 1; in force on the user's approval):
+  - **Rulings:** P1 (b), P2 (a), P3 (a), P4 (a), P5 (a) with m = 0.02 fixed (any other m is its own
+    logged version), P6 (a), P7 (a), P8 (a). v1 was built on exactly these, so it is not rerun.
+  - **Shuffled-label check, new protocol.** The check exists to detect information leaking into a
+    learned router, which raises shuffled acceptance above Random. Under uninformative labels a
+    cost-aware rule can sit below Random by leaning cheap (S2 saw this for cost-aware DimensionBest
+    and the fixed cascade in accept mode), and a two-sided check gives false alarms at about 5% per
+    router. It is therefore **one-sided**: it fails only when the 95% t interval of the shuffled
+    mean over 20 shuffles lies wholly above Random's expected acceptance
+    (`baselines.run.shuffled_check_fails`); the two-sided interval is still reported. It applies
+    to every learned router and to S2's learned baselines (their tests now use it; the toy tests'
+    0.08 tolerance becomes one-sided too). The unshuffled check (beats Random, CI above 0) is
+    unchanged. The two `xfail` marks are removed. Shuffles 20–119 stay a diagnostic, never the
+    criterion. `s2_baselines` outputs are not regenerated: they report the interval and Random's
+    expected acceptance, from which the one-sided verdict follows.
+  - **Cost at matched acceptance:** deferred to S5 E2, traced over m, each m a logged version.
+  - **`irt.py` exemption** from the S4.6 scan: until S4.3, which removes it; the test will then
+    assert the exemption list is empty.
+- 2026-11-25: §4.1 added before any v2 code. It fixes what the ruled §4 left implicit: the call
+  cap (100), probe groups and draw order, the prior's clipping, M's cost estimate from probes, the
+  k = 0 equivalence and the report fields.

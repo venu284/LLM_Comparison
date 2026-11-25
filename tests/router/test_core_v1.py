@@ -204,7 +204,7 @@ def test_v1_falls_to_random_when_labels_are_shuffled(b):
     random_expected = float((ok.sum(axis=1) / m.available.sum(axis=1)).mean())
     gain = run_dev(b, m, ctx, folds, seed=0)["accepted"].mean() - random_expected
     shuffled = [run_dev(b, m, ctx, folds, seed=0, shuffle_seed=s)["accepted"].mean() for s in range(10)]
-    assert abs(np.mean(shuffled) - random_expected) < 0.08, np.mean(shuffled)
+    assert np.mean(shuffled) - random_expected < 0.08, np.mean(shuffled)     # one-sided
     assert gain > 0.15, gain
 
 
@@ -238,22 +238,15 @@ def test_real_dev_v1_garbage_scores():
         assert _decisions(a) == _decisions(z), b.name
 
 
-_SHUFFLE_MISS = ("Measured 2026-11-24, left for the reviewer (not adjusted after the failure): with "
-                 "S2.6's protocol (shuffle seeds 0-19) the shuffled mean misses Random's expected "
-                 "50.38: router_v1 46.56 [43.40, 49.73], router_v1_accept 46.67 [43.47, 49.87]. "
-                 "Diagnostic (router_v1): shuffle seeds 20-119 give 51.33 [49.75, 52.92], which "
-                 "contains it, and its picks under shuffling spread over all eight models. The "
-                 "unshuffled half (beats Random, CI above 0) passes for both.")
-
-
 @pytest.mark.skipif(not HAVE_X13, reason="route-anything-data not downloaded to external/")
-@pytest.mark.parametrize("b", [pytest.param(v, id=v.name, marks=pytest.mark.xfail(strict=True, reason=_SHUFFLE_MISS))
-                               for v in VERSIONS])
+@pytest.mark.parametrize("b", VERSIONS, ids=lambda b: b.name)
 def test_real_dev_v1_shuffled_labels_fall_to_random(b):
     """As S2.6 on the headline development split: unshuffled, v1 beats Random (paired
-    cluster-bootstrap CI above 0); shuffled, Random's expected acceptance lies inside the t
-    interval of the mean over N_SHUFFLES shuffles."""
-    from router.baselines.run import shuffled_mean_interval
+    cluster-bootstrap CI above 0); shuffled, the t interval of the mean over N_SHUFFLES shuffles
+    does not lie wholly above Random's expected acceptance (one-sided, reviewer ruling 2026-11-25;
+    measured two-sided: router_v1 46.56 [43.40, 49.73], router_v1_accept 46.67 [43.47, 49.87],
+    Random 50.38)."""
+    from router.baselines.run import shuffled_check_fails, shuffled_mean_interval
     from router.experiments.s2_baselines import N_SHUFFLES
     from router.sim import stats
     m, ctx, folds = real_dev()
@@ -269,4 +262,4 @@ def test_real_dev_v1_shuffled_labels_fall_to_random(b):
     accs = [metrics.acceptance(run_dev(b, m, ctx, folds, seed=0, shuffle_seed=k))
             for k in range(N_SHUFFLES)]
     mean, lo, hi = shuffled_mean_interval(accs)
-    assert lo <= random_expected <= hi, (random_expected, (mean, lo, hi))
+    assert not shuffled_check_fails(lo, random_expected), (random_expected, (mean, lo, hi))

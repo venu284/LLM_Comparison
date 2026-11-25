@@ -17,7 +17,8 @@ against the cost-aware oracle, and paired cluster-bootstrap CIs (gap in points, 
 against the best single model, CellBest-pred (S0.3(c)), Rule A escalated with predicted cells (O19)
 and the fixed cascade escalated. Seeds 1-4 get the same paired comparisons. Also: v1's fit records
 per fold, the CRUXEval >= 0.8 sensitivity (gate seed), and the shuffled-label check for v1 on the
-headline (S2.6 protocol, `N_SHUFFLES` shuffles).
+headline (S2.6 protocol, `N_SHUFFLES` shuffles; one-sided since the 2026-11-25 ruling, with the
+two-sided interval still reported).
 
 These are development figures for comparing router versions, not results.
 
@@ -35,7 +36,7 @@ import pandas as pd
 from router.baselines.cascade import FixedCascade
 from router.baselines.common import ACCEPT, ESCALATE, Context, success
 from router.baselines.lookup import CellBest, CellRule, DimensionBest, ZeroLoss
-from router.baselines.run import run_dev, shuffled_mean_interval
+from router.baselines.run import run_dev, shuffled_check_fails, shuffled_mean_interval
 from router.baselines.static import BestSingle
 from router.core.policy import RouterV1
 from router.data import splits as S
@@ -155,7 +156,8 @@ def shuffled_check(m, problems) -> dict:
     return {"policy": b.name, "n_shuffles": N_SHUFFLES, "shuffle_seeds": [0, N_SHUFFLES - 1],
             "shuffled_mean": mean, "shuffled_mean_lo": lo, "shuffled_mean_hi": hi,
             "shuffled_min": float(np.min(accs)), "shuffled_max": float(np.max(accs)),
-            "random_expected": rand_exp, "random_expected_inside": bool(lo <= rand_exp <= hi)}
+            "random_expected": rand_exp, "random_expected_inside": bool(lo <= rand_exp <= hi),
+            "one_sided_check": "fail" if shuffled_check_fails(lo, rand_exp) else "pass"}
 
 
 def run():
