@@ -80,17 +80,30 @@ v1 with margin 0, run only while investigating the shuffled-label miss: headline
 seed 0, shuffle seeds 0-19, shuffled mean 49.46 (SD over shuffles 7.06). Never scored on unshuffled
 labels; not a candidate version.
 
-## v2 (2026-11-25): `router_v2_ground_truth`, `router_v2_verifier`
+## v2 under P9 (a) (2026-11-25): `router_v2_p9a_ground_truth`, `router_v2_p9a_verifier`
 
-Spec §4 and §4.1 as ruled (P7 (a), P8 (a)), plus the §4.1 choices the reviewer has not ruled on
-(P9, P10 in spec §9). v1 is fitted without the new model M, M is visible from position 0, and the
+Superseded by `router_v2` (P9 (b), spec §4.2); kept as its own logged version. It was run as
+`router_v2_ground_truth` / `router_v2_verifier`: the label value `ground_truth` in its outputs is
+the pairing now called `gt_probes`. Outputs renamed with a `_p9a` suffix (content unchanged);
+they reproduce from commit `fca65e8` (`python -m router.experiments.s4_v2`, then the rename).
+
+Spec §4 and §4.1 as ruled (P7 (a), P8 (a)), plus the §4.1 choice the reviewer later ruled against
+(P9 (a): M not in the menu while its group explores). v1 is fitted without the new model M, M is visible from position 0, and the
 calibration probes (≤ 5 per training group, stream 21) are labelled by ground truth or by the
 verifier. Exploration is every tenth request per predicted group, a Beta posterior is kept per
 group, a group stops when its logit SD is ≤ 0.5, and the call cap is 100. Leave-one-model-out, all 8
-models, seeds 0–4, the three populations. Source: `router/experiments/s4_v2.py`; outputs
-`out/s4_v2_seeds.csv` (every row), `s4_v2_seed0.csv` (all S2 metrics, gate seed),
-`s4_v2_groups.csv` (one row per group and fold) and `s4_v2.json`. Two runs gave byte-identical
-outputs. Per model, never pooled (R8).
+models, seeds 0–4, the three populations. Source: `router/experiments/s4_v2.py` at `fca65e8`;
+outputs `out/s4_v2_seeds_p9a.csv` (every row), `s4_v2_seed0_p9a.csv` (all S2 metrics, gate seed),
+`s4_v2_groups_p9a.csv` (one row per group and fold) and `s4_v2_p9a.json`. Two runs gave
+byte-identical outputs. Per model, never pooled (R8).
+
+**Calls to M that k did not count.** Under P9 (a) the stopped groups with M in their plan routed
+tasks to M (direct dispatch, unverified), and `k_total` counts only probes and exploration calls.
+Counted afterwards by rerunning the `fca65e8` code (every row's acceptance and cost reproduce the
+committed outputs): **21 plan calls to M in 5 of the 240 rows**. All-eligible, Qwen3-Max, seed 0,
+ground-truth pairing: 13 (k counted 311). Sensitivity, kimi-k2.5, seeds 2 and 4, both pairings: 2
+each (k counted 168 and 167). None on the headline. k-matched DimensionBest
+in those rows therefore got up to 13 fewer labels than the calls v2 made to M.
 
 **What v2 did with M (all seeds, models, label sources and populations: 8,768 group-fold records).**
 - **Stops.** 2,988 records stopped, with median k = 5 (the probes); none ran out of budget, and the
@@ -103,7 +116,15 @@ outputs. Per model, never pooled (R8).
   ±0.36 in the other 4 (all sensitivity: Qwen3-Max +0.36 and kimi-k2.5 −0.36, both label sources).
   Across all seeds it lies in [−0.36, +0.36]. On the tasks routed after M entered the group's menu,
   the paired gap against k = 0 is 0.00 in every gate-seed row that has such tasks.
-- **Cost against k = 0, seed 0:**
+- **Cost against k = 0, seed 0.** Read the break-even length and the per-task saving first; the
+  percentage saving is driven mostly by the fixed probe cost spread over about 39 scored tasks per fold.
+  - **Break-even stream length** (S0.2): 306 to 283,796 tasks at seed 0 (headline 306 to 162,989;
+    all-eligible 1,653 to 178,366; sensitivity 2,101 to 283,796). In 4 of 240 rows (headline,
+    kimi-k2.5, seeds 3 and 4, both pairings) there is no positive per-task saving, so no break-even.
+  - **Per-task saving, onboarding excluded:** $0.001 to $0.062 per thousand tasks at seed 0,
+    against k = 0's median cost of $3.64 to $5.28 per thousand tasks. It credits explored tasks
+    where M passed, because the rest of the plan was skipped there.
+  - **Percentage saving and onboarding cost:**
 
 | Population | Saving vs k = 0 | Onboarding cost (probes + exploration) | Calls to M per fold (mean) |
 |---|---|---|---|
@@ -111,9 +132,6 @@ outputs. Per model, never pooled (R8).
 | all-eligible | −261% to −3.5% | $0.086 to $1.78 | 61.4 to 62.8 |
 | sensitivity | −362% to −3.2% | $0.044 to $0.96 | 33.8 |
 
-- **Break-even stream length** (S0.2): 306 to 283,796 tasks at seed 0. In 4 of 240 rows (headline,
-  kimi-k2.5, seeds 3 and 4) there is no positive per-task saving, so no break-even. The per-task
-  saving credits explored tasks where M passed, because the rest of the plan was skipped there.
 
 **Against k-matched DimensionBest at v2's k** (gate seed; paired cluster-bootstrap CIs; k-matched
 reads the dimension, given more information):
@@ -134,15 +152,18 @@ reads the dimension, given more information):
   With mostly-UNKNOWN probes it keeps few labels and can pick the new model on a handful of PASSes.
   Percent savings against its near-zero cost (for example $0.35 per thousand tasks for Qwen3-Max on
   the headline) are not meaningful; read the gap and the absolute cost in `s4_v2_seeds.csv`.
-- **S0.5 caveat.** In the ground-truth pairing, v2's k mixes ground-truth probes with verifier-only
-  exploration, while k-matched DimensionBest gets all k from the ground truth (spec §9).
+- **Not S0.5-paired.** In the ground-truth pairing, v2's k mixes ground-truth probes with
+  verifier-only exploration, while k-matched DimensionBest got all k from the ground truth (spec
+  §9). The Opus gap of −13.33 [−21.05, −5.67] on the headline and the other ground-truth rows above
+  are therefore not S0.5-paired comparisons. `router_v2` fixes this on the comparator side (§4.2).
 
 **S2 metrics, gate seed** (`s4_v2_seed0.csv`): acceptance with its CI, cost, CPAT at the best single
 model's acceptance (not defined where v2 is below it, for example the headline except with
 Qwen3-Max held out), and regret against the cost-aware oracle with probe cost included (headline:
 11.79 to 25.64 points).
 
-Status: built and run end to end. P9 and P10 are open for the reviewer; no alternative was run.
+Status: superseded by `router_v2` after the checkpoint 2 rulings (P9 (b); P10 (a); the comparator
+label mix). Kept as a logged version.
 
 ## S4 gate check (checkpoint 2, 2026-11-25)
 
