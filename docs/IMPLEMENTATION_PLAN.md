@@ -14,10 +14,10 @@
 
 | Field | Value |
 |---|---|
-| Current stage | **S3 — Analyse data and feasibility** (§4). Pre-S0, S0, S1 (with S1.8) and S2 done; `docs/CLAIMS.md` signed off 2026-11-20 |
-| Next action | S3 (S3.1–S3.7, then DP1a and DP1b) on the development split, using the S2 infrastructure on `main`. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
-| Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0, S1, S2 · Write-up: Report 8 |
-| Last updated | 2026-11-21 |
+| Current stage | **S4 — Build the router** (§4), awaiting the user's go-ahead. Pre-S0, S0, S1 (with S1.8), S2 and S3 done; DP1a no (C4 leads the accuracy story), DP1b yes (at the threshold on both gaps); `docs/CLAIMS.md` signed off 2026-11-20 |
+| Next action | The user's go-ahead for S4, then the S4 brief. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0, S1, S2, S3 · Write-up: Report 8 |
+| Last updated | 2026-11-24 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
 | Budget | $20 for the paid top-rung model in live runs (S0.9) |
 
@@ -1015,9 +1015,21 @@ results):**
 - The 2026-11-21 figures (247 tasks, with `mbpp`) are superseded.
 - S3 owes the price and verifier-cost sweeps (S0.2) on its headline numbers.
 
-- [ ] S3.1 Q1 accuracy headroom: oracle and DimensionBest against the best single model, in all
+- [x] S3.1 Q1 accuracy headroom: oracle and DimensionBest against the best single model, in all
       three data views.
-- [ ] S3.2 Q2 cost headroom and feasibility bound (**DP1b**): cost at matched acceptance against the
+      **Done 2026-11-23** (`router/experiments/s3_dp1a.py`, `out/s3_1_*`; spec
+      `docs/research/S3_analysis_spec.md` D1–D3; results `docs/research/S3_results.md`):
+      - Filtered = headline, complete case (1,046 tasks, six groups: the development split and
+        S1.6's outer folds, seed 0): cross-fitted DimensionBest's headroom over the cross-fitted
+        best single model is **0.00 points [−0.29, +0.28]**. The oracle ceiling is +16.0
+        [13.7, 18.4]. Seeds 1–4: lower bounds −0.47 to −0.48.
+      - Why zero: Opus is best in every group. DimensionBest picks Opus for `code_completion`
+        and Sonnet (glm-5 in one group) for `multi_language`, which succeed on the same tasks.
+      - The evaluation tasks were read only through a closed function admitting the three fit-free
+        routes (best single, DimensionBest, oracle), with `cross_fit`'s guard unchanged (D3).
+        The `all_eligible` and `sensitivity` columns are on their development splits.
+      - The reviewer recomputed the headroom and the oracle independently.
+- [x] S3.2 Q2 cost headroom and feasibility bound (**DP1b**): cost at matched acceptance against the
       best single model, verifier cost included (S0.2), with the real verifier (S0.11), on the
       headline set. DP1b is decided on the **oracle-on-no-signal bound** (§1); fixed cascades
       with the no-signal cells bracketed (all accepted / all escalated) are reported next to it.
@@ -1045,25 +1057,111 @@ results):**
       figures with unavailable cells scored as recorded (0 / −13.4, 0 / −14.0, 12 / +10.8) and
       the earlier −1.4 to −1.7 (X13 heuristic) and −6.3 / −8 (old 1,262-task set) figures are
       superseded.
-- [ ] S3.3 Q3 unsolved and rescue: share of tasks no model solves; for each pair of rungs, the rate
+      **Done 2026-11-23** (`router/experiments/s3_dp1b.py`, `router/baselines/oracle_bound.py`,
+      `out/s3_2_*`; spec D4, D5, D11). The bound is per-cell Rule A in bound mode (real X13
+      verdict where visible tests exist, the truth on no-signal cells), with the cell predictor
+      refit per training fold. Headline development split, complete case (195 tasks), gate seed
+      0, point estimates:
+
+      | Criterion | Measured | Threshold | Margin | Label |
+      |---|---|---|---|---|
+      | (a) saving vs best single | 65.9% | ≥ 20% | +45.9 | clears |
+      | (a) gap vs best single | −1.54 [−8.2, +5.1] | ≥ −2 | +0.46 (under one task) | at the threshold |
+      | (c) saving vs CellBest-pred | 60.8% | > 0 | +60.8 | clears |
+      | (c) gap vs CellBest-pred | −1.03 [−7.7, +5.6] | ≥ −2 | +0.97 (about two tasks) | at the threshold |
+
+      - Seeds 1–4 also meet all four (gaps against the best single model −1.03 to +1.03; savings
+        63.6–65.5%).
+      - **The gap the learned router must close** (D5, against Rule A escalated, which reproduces
+        S2's 13.4% at −1.0): +52.5 points of saving at −0.51 points of gap against the best
+        single model; +60.2 at −0.51 against CellBest-pred.
+      - Sweeps (refit at every point): the bound meets both criteria at 15 of 19 points; the four
+        misses are all on the gap.
+      - **Qwen3-Max caveat (information only):** the bound's first rung is Qwen3-Max in every
+        cell, and its released cost is a per-dimension constant ($0.000208 on all 195 tasks). At
+        twice its price the bound saves 62.2% at a gap of −2.56, one of the four sweep misses.
+      - Fixed ladders: with no-signal cells all accepted or all escalated, none meets (a) or (c);
+        in bound mode 14 meet (a) and 18 meet (c) (in-sample maxima).
+      - The reviewer recomputed three fixed ladders in all three modes; acceptance matches
+        exactly.
+- [x] S3.3 Q3 unsolved and rescue: share of tasks no model solves; for each pair of rungs, the rate
       at which the higher rung passes when the lower one failed, and the rate observable from
       verifier histories (S0.13). Recompute the $41.0 full-ladder, $34.0 Always-Opus and $6.0
       perfect-stop figures (all ID-test tasks, pass = score ≥ 0.5) on the eligible population.
       Report how much a post-failure classifier captures against its perfect-information bound,
       so the gap is visible before S4 (Route Anything C.5: pre-attempt signals capture −0.013 to
       +0.078 within a cell).
-- [ ] S3.4 Q4 onboarding budget: k-matched DimensionBest curve (reference 2026-11-19, original
+      **Done 2026-11-23/24** (`router/sim/profile.py`, `router/experiments/s3_descriptive.py`,
+      `s3_classifier.py`; spec §5, D7, D8):
+      - Headline complete case: 42 of 1,046 tasks solved by no model (4.0% [2.9, 5.2]), all
+        CRUXEval.
+      - Rescue: Opus rescues 72–77% of a cheaper model's failures, but the verifier shows only
+        0–6.0% of the lower model's true failures across all 56 pairs.
+      - Recomputed costs (headline complete case, cheapest-first by observed cost, perfect
+        verifier): full ladder $5.11, Always-Opus $6.23, perfect stop $4.02. The 2026-11-10
+        figures ($41.05 / $34.02 / $5.99, 39.3% unsolved) reproduce under their old definition.
+        The reviewer recomputed both.
+      - Give-up classifier (development split, D8's features): on the headline, post-failure
+        capture 29.9% of the perfect-information saving, AUC 0.53, held-out acceptance loss 4.1
+        points (over its 2-point budget, as measured; not retuned); pre-attempt 35.8%, AUC 0.63.
+        On `sensitivity`: 18.0% and 18.5%.
+- [x] S3.4 Q4 onboarding budget: k-matched DimensionBest curve (reference 2026-11-19, original
       split: 44.4 ± 2.6 at k = 25, 47.9 ± 2.1 at 50, 49.3 ± 0.9 at 100, 50.7 ± 0.6 at 250).
-- [ ] S3.5 State the expected value of onboarding before running E1: how much a new model could
+      **Done 2026-11-23/24** (`s3_kmatched.py`, `out/s3_4_*`; spec D9). Development split,
+      leave-one-model-out, per model:
+      - Headline: with ground-truth probes, onboarding any model except Opus moves acceptance by
+        −1.0 to +0.5 points; Opus adds +12.8 at k = 25. With verifier-only probes the headline
+        gives 1–7 labels per fold, and six models lose 7.7 to 47.7 points. k = 250 is
+        unreachable.
+      - `sensitivity`: only Opus helps (+8.5 at k ≥ 25); with verifier-only probes (5–21 labels
+        per fold) five models lose 20 to 31 points. `all_eligible`: −6.6 to +2.6 against k = 0.
+- [x] S3.5 State the expected value of onboarding before running E1: how much a new model could
       add in a pool that Opus dominates.
-- [ ] S3.6 Verifier and population profile: false-pass and false-reject rates of the X13
+      **Done** (`docs/research/S3_results.md`, drawn from S3.4 only): in this pool the expected
+      value of onboarding a model that is not better than Opus is about zero with ground-truth
+      probes, and negative with verifier-only probes on the headline.
+- [x] S3.6 Verifier and population profile: false-pass and false-reject rates of the X13
       visible-test verifier per family and model; the no-signal share per family; the headline
       set's family mix, pass rates and unsolved share next to the full pool's (S0.11).
-- [ ] S3.7 Power check: rerun `e0_power.py` with the real verifier and nested cross-fitting on the
+      **Done 2026-11-22/23** (`out/s3_6_*`): on the headline, false pass 3/57 and false reject
+      26/871 on complete-case cells with a signal (all 1,062 tasks: 3/63 and 36/893; the plan's
+      15% / 27% pooled figures reproduce as 14.97% / 26.96% on 8,420 cells). 88.9% of
+      complete-case headline tasks have no signal for any model; only HumanEval-X Python and
+      HumanEval completion have visible tests. Best single model: Opus, 80.0%.
+- [x] S3.7 Power check: rerun `e0_power.py` with the real verifier and nested cross-fitting on the
       final headline population; report the gate's power at −2 (kept by the user even if about
       60–70%).
+      **Done 2026-11-23/24** (`s3_power.py`, `out/s3_7_*`; spec D10). No evaluation outcome is
+      used: development problems are resampled to the evaluation size (774 problems), with a √n
+      projection as a cross-check. For Rule A escalated against the best single model (seed 0 /
+      all 500 draws):
+
+      | Method | Half-width | At development gap | At gap 0 (D10) | At gap 0, post hoc |
+      |---|---|---|---|---|
+      | Resampling | 1.18 / 1.11 | 0.16 / 0.19 | 0.39 / 0.47 | 0.68 / 0.76 |
+      | Projection | 0.63 | 0.86 | 1.00 | — |
+
+      - The resamples' mean gap (−2.00) differs from the development gap (−1.03), so D10's
+        "gap 0" shift is not at 0; the post-hoc column shifts by the resample mean instead
+        (labelled post hoc, data-dependent).
+      - The wider resampled interval explains about two thirds of the drop at the development
+        gap, but little at gap 0, where the mean-gap offset dominates; refitting adds spread
+        across draws (SD 0.93 against an implied SE of 0.57).
+      - Headline-only by definition: it measures the headline gate's power.
 - **Gate:** S3.1–S3.7 reported with CIs in all three data views.
+  **Passed 2026-11-24** (merged `b90656f`; 671 tests pass, 304 files verify; every S3 output
+  reproduces byte for byte):
+  - S3.1–S3.6 are reported in all views (`filtered` = `headline` in one column; `sensitivity` and
+    `all_eligible` beside it), each with CIs;
+  - S3.7 is headline-only by definition (reviewer's reading of the gate);
+  - spec frozen at `b29db49`, with every later change dated in its §7.
 - **DP1a and DP1b** (see §1). If DP1b says no, stop and bring it to the user before S4.
+  - **DP1a: no** (2026-11-23). The CI lower bound of cross-fitted DimensionBest's headroom is
+    −0.29 against 3.0 (margin −3.29). Consequence (§1): **C4 leads the accuracy story.**
+  - **DP1b: yes** (2026-11-23), on gate-seed point estimates; both gap criteria are labelled
+    "at the threshold" (their CI lower bounds are below −2; O12: a label, not a verdict). The
+    economic claim proceeds to S4. The learned router must recover the no-signal decision worth
+    about 52.5 points of saving against Rule A escalated (S3.2).
 
 ### S4 — Build the router
 All fitting uses the training folds only (S0.6).
@@ -2158,3 +2256,23 @@ Two further reviews were checked against the data; all fixes approved by the use
   population (195 tasks).
 - **Next:** S3 merges `main` and reruns checkpoint 1, then stops at checkpoint 1b, before any DP
   number.
+
+### 2026-11-24 (S3 merged; S3 gate passed; DP1a no, DP1b yes)
+
+- `s3-analysis` merged (`b90656f`); on `main` 671 tests pass and 304 files verify. The spec
+  (`docs/research/S3_analysis_spec.md`) was frozen at `b29db49` before any DP number; later
+  changes are dated in its §7.
+- Reviewer checks:
+  - DP1a headroom (0.00) and oracle (+15.97) recomputed independently;
+  - three fixed ladders recomputed in accept, escalate and bound mode;
+  - the descriptive costs and unsolved counts recomputed;
+  - commit order: the evaluation path and the oracle import restriction before any DP output;
+  - byte-identical reruns.
+- Follow-ups done before merge:
+  - the D8 classifier rerun with the spec's features (the rung-position run kept as a variant);
+  - §7 entries for the in-sample predicted cell and S3.7's seeding;
+  - S3.7 side by side with a post-hoc resample-mean shift;
+  - `sensitivity` added to S3.3-fitted and S3.4;
+  - the Qwen3-Max caveat beside the DP1b saving.
+- **DP1a: no** (C4 leads the accuracy story). **DP1b: yes**, at the threshold on both gaps.
+- **Next:** the user's go-ahead for S4.

@@ -357,6 +357,8 @@ These motivate the rules above. They are not claims; S1–S3 recompute them on t
 | **Frozen (S1.7, A4):** best single model, complete case | Opus 80.0% (96.9% under the CRUXEval 0.8 sensitivity) | `artefacts.yaml` |
 | **Frozen (S1.7, A4):** headline tasks solved by no model, complete case | 42 of 1,046 (4.0%; 5 under the CRUXEval 0.8 sensitivity) | `artefacts.yaml` |
 | **Frozen (S1.7, A4):** no visible-test signal, complete case | 88.9% of tasks (930 of 1,046) | `artefacts.yaml` |
+| **Measured (S3, DP1a):** cross-fitted DimensionBest headroom over the best single model, filtered = headline complete case (1,046 tasks) | 0.00 points [−0.29, +0.28]; oracle ceiling +16.0 [13.7, 18.4]. **DP1a: no** (lower bound −0.29 < 3.0): C4 leads the accuracy story | `router/experiments/out/s3_1_dp1a.csv` |
+| **Measured (S3, DP1b):** oracle-on-no-signal bound (per-cell Rule A, bound mode), headline development split complete case (195 tasks), gate seed 0, point estimates | Against the best single model: saving 65.9%, gap −1.54; against CellBest-pred: saving 60.8%, gap −1.03. **DP1b: yes**, both gaps at the threshold (O12). Gap to close against Rule A escalated: +52.5 saving points at −0.51 gap | `router/experiments/out/s3_2_dp1b.csv` |
 | Superseded by A4 (with `mbpp`; transparency only, not a sensitivity view) | 1,287 tasks (complete case 1,264); Opus 70.0%; no model 198 of 1,264; no signal 90.8% | `artefacts.yaml` at `faa8025` |
 | Best single model, complete case | Opus 67.3% in every training fold (gpt-5.4 53.2%, qwen3.5-plus 42.2%) | P0.5 |
 | CellBest, true cells, against Opus | saving 22.9% [20.8, 25.2], gap +3.0 [+1.5, +4.5]: passes (a)–(b) | P0.5 |
