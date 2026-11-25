@@ -275,6 +275,84 @@ Fixed here so checkpoint 2 has a rule to build to; the reviewer may rule now or 
   - v2's acceptance on tasks routed before M entered the group's menu and after;
   - v1 with all eight models (k = ∞) as a reference.
 
+### 4.2 Addendum after the checkpoint 2 rulings (2026-11-25, before any code; P9 (b), P10 (a), S0.5)
+
+This supersedes §4.1 where the two differ. The run built on §4.1 is kept as the logged version
+`router_v2_p9a` (outputs with a `_p9a` suffix, reproduced from commit `fca65e8`); the run built on
+this section is `router_v2`.
+
+- **M in the menu (P9 (b)).** Plan §2 item 6 (each verified outcome updates the posterior the router
+  decides on) and S0.13 (the stopping rule ends exploration; the pool prior is for a group out of
+  budget). The stopping rule governs exploration, not whether M may be routed.
+  - Right after the probes, every training group's choice is recomputed with M as a direct
+    candidate at the group's posterior mean (the prior mean μ_g where the group had no probe), with
+    M's cost as in §4.1 (the mean released cost of its probe tasks in the group, else of all its
+    probes). With no probe at all, M is not entered, so v2 with zero calls still equals v1 without
+    M (the k = 0 comparator).
+  - After every posterior update, the group's choice is recomputed at the new posterior mean. This
+    holds while the group explores and after it stops; a stopped group keeps M at its posterior
+    mean.
+  - A group **out of budget** enters M at the pool prior μ_g (S0.13, R11) and is not recomputed
+    afterwards. Its α and β still record later verified outcomes (reported), but the choice does
+    not read them.
+  - A task routed by the pool row (no training row for its predicted group, or no text) uses v1's
+    pool row without M and is never explored, as in §4.1.
+- **An exploration request whose group's plan contains M.** M is called first (the exploration
+  call). PASS is accepted. On FAIL or UNKNOWN the task continues with the group's choice without M
+  (v1's choice fitted without M), never accepting M's failed output. When the plan does not
+  contain M, the task continues with the plan, as in §4.1.
+- **Plan calls to M**: every call to M on a task that is not that task's exploration call.
+  - They count toward k (S0.5: k is the number of calls made to the new model): k = probes +
+    exploration calls + plan calls. k-matched DimensionBest's k is that k, so the comparator gets
+    at least as many labels as v2 learns from.
+  - They do **not** count toward the call cap: S0.13's budget is the probe and exploration budget.
+    The cap counter is probes + exploration calls. k is therefore not bounded by the cap, and the
+    comparator's k may exceed 100.
+  - A verified plan call (the plan's `verify` flag at decision time, not the verdict) updates the
+    posterior with PASS or FAIL; a verified UNKNOWN counts and updates nothing (S0.13). An
+    unverified call returns no verdict and updates nothing.
+  - In v2's menu M enters only as a direct candidate, which is unverified (P0.5's direct
+    dispatch), and the fixed cascade holds known models only. **Every plan call to M in the
+    development runs is therefore unverified, and the verified count is 0 by construction.** The
+    verified path is covered by a unit test with an injected verifying plan.
+  - Reported separately: verified and unverified plan calls to M.
+  - The stopping rule is checked after every update, whatever its source. A stop ends exploration
+    only.
+- **Replacing the before/after split.** M enters at position 0 wherever a probe gave it a cost, so
+  "before/after M entered the menu" no longer splits anything. Each task is stamped at request
+  time with its predicted group's state (`exploring`, `stopped`, `out_of_budget`) and with whether
+  M is a rung of the plan the task was routed by (the exploration call excluded). Reported, with
+  k = 0's acceptance on the same tasks:
+  - acceptance on tasks routed while their group explored (exploration requests included) against
+    tasks routed after it stopped or ran out of budget;
+  - acceptance on tasks whose plan included M against the rest;
+  - tasks routed by the pool row are in neither split and are counted separately.
+- **Label sources (S0.5), matched on the comparator side.**
+  - S0.13 is kept: exploration and every other live call are labelled by the verifier only, never
+    by the ground truth.
+  - v2's `ground_truth` pairing is renamed **`gt_probes`** ("probes by the ground truth, live calls
+    by the verifier") in the code, outputs and logs. The `verifier` pairing is unchanged.
+  - k-matched DimensionBest in the `gt_probes` pairing receives the same label mix as v2. Per fold,
+    k = v2's k there and n_gt = v2's probe count there. The k tasks are drawn exactly as in S2
+    (stream `probe_draw`, without replacement, k capped at the available tasks). The first n_gt
+    in draw order are labelled by the ground truth; the remaining k − n_gt by the verifier (PASS 1,
+    FAIL 0, UNKNOWN dropped). S2's `ground_truth` and `verifier` modes are unchanged, and their
+    outputs stay byte-identical.
+- **P10 (a), with the arithmetic.** ψ₁ is positive and decreasing, so the logit SD
+  √(ψ₁(α) + ψ₁(β)) ≤ 0.5 needs ψ₁(min(α, β)) < 0.25: min(α, β) ≥ 4.48 even with the other
+  parameter unbounded, ≥ 5.52 when the other is 20, and α = β ≥ 8.49 when they are equal. A
+  development fold gives a group at most 5 probes and ⌊requests / 10⌋ exploration calls. In the
+  P9 (a) run the median exploring group-fold has 8 requests (0 exploration calls) and the most any
+  group-fold gets is 4 exploration calls. A data-driven stop from a weak prior would need about 4
+  PASS and 4 FAIL among at most 9 outcomes; stops come from the prior. Under P9 (b) the plan calls
+  to M are unverified and add no outcome. (b) of P10 makes no stop data-driven; it only removes the
+  prior's stops. (c) is v3 by the plan's definition (§2 build order). S0.13's tolerance is stated
+  for the ability model's offset, which pools δ_m across groups; v2's per-group Beta stands in for
+  it until v3. With P9 (b), P10 sets only how long exploration is paid for, not whether M is used.
+- **Reported per row**, in addition to §4.1 (where "before/after" is replaced as above): plan
+  calls to M (verified, unverified), k = probes + exploration + plan calls per fold, the cap
+  counter per fold, and the comparator's ground-truth and verifier label counts.
+
 ## 5. S4.6: the non-transductive rule
 
 - **Rule.** A scored task's difficulty, or any other item parameter, is never fitted from any
@@ -328,6 +406,9 @@ Each id is registered in `stats.STREAM_IDS` in the commit that first uses it.
 | P6 | Lookup and cascade combination | (a) the cascade as one more candidate column |
 | P7 | Exploration selection (v2) | (a) deterministic every tenth request per predicted group |
 | P8 | v2 prior strength | (a) method-of-moments spread of the known models |
+| P9 | M in the menu while its group explores | ruled (b): at its posterior mean (§4.2) |
+| P10 | Prior-driven stops | ruled (a), with the arithmetic in §4.2 |
+| — | S0.5 label sources in the ground-truth pairing | matched on the comparator side; pairing renamed `gt_probes` (§4.2) |
 
 ## 9. Change log
 
@@ -399,3 +480,14 @@ Each id is registered in `stats.STREAM_IDS` in the commit that first uses it.
     verifier-only exploration calls, while k-matched DimensionBest at the same k gets all k from the
     ground truth. S0.5 asks that arms with the same k receive the same outcomes from the same label
     source. This matters for E1 (S5.2); it is flagged, not fixed.
+- 2026-11-25 (reviewer check of checkpoint 2; approved by the user, in force):
+  - **P9: (b).** M is in the menu at its current posterior mean while its group explores; the
+    counting rules for plan calls to M (k yes, cap no, verified PASS/FAIL updates) and the rule for
+    an exploration request whose plan contains M are in §4.2. The P9 (a) run is kept as the logged
+    version `router_v2_p9a`.
+  - **P10: (a)**, with the arithmetic recorded in §4.2.
+  - **S0.5 label sources:** matched on the comparator side (§4.2); v2's `ground_truth` pairing is
+    renamed `gt_probes`.
+  - **Cost framing:** the versions log leads the cost discussion with the S0.2 break-even length
+    and the per-task saving excluding onboarding, with the percentage saving after.
+  - §4.2 added before any code for these rulings. It also replaces §4.1's before/after split.
