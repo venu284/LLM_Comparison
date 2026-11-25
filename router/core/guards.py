@@ -25,6 +25,9 @@ import pandas as pd
 # Functions the scan flags in router/core/ that fit no item parameter ("module.qualname").
 NOT_ITEM_FITS: dict[str, str] = {
     "policy.RouterV1.fit": "router v1: a per-group lookup table over training tasks; no item parameter",
+    "policy.RouterV1.fit_parts": "the parts of that lookup table (router v1 and v2); no item parameter",
+    "policy.RouterV2.fit": "router v2: v1 plus a Beta posterior per (new model, group) from probes; "
+                           "no item parameter",
 }
 
 # Modules not yet under the rule, with the reason. Each entry must go when its module is rebuilt.

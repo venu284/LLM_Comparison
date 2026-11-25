@@ -31,6 +31,7 @@ outer folds, `router/data/splits.py`), 100 and up to the S1.7 audit samples. S2 
 | 10 | `route_mixture` | per-task draw of a mixed lookup route (`baselines/lookup.py`) |
 | 11 | `label_shuffle` | shuffled-label check: model permutation per training task (`baselines/run.py`) |
 | 13 | `s3_power_resample` | S3.7 power check: resampling development problems and their folds (`experiments/s3_power.py`; S3 spec D10 (c)) |
+| 21 | `s4_probe_draw` | S4 router v2 calibration probes per training group (`core/exploration.py`; S4 spec §4.1, §7) |
 | 12, 14-99 | unassigned | add a row here before using one; 12 and 14-19 are reserved for S3 |
 
 A seed is the fold assignment plus the stream order plus the probe draw (S0.8); `GATE_SEED` (0) is
@@ -63,6 +64,7 @@ STREAM_IDS = {
     "route_mixture": 10,
     "label_shuffle": 11,
     "s3_power_resample": 13,
+    "s4_probe_draw": 21,        # S4 router v2 calibration probes (docs/research/S4_spec.md §4.1, §7)
 }
 STREAM_ID_MIN, STREAM_ID_MAX = 2, 99
 SEEDS = tuple(range(N_SEEDS))
