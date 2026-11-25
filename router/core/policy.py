@@ -3,6 +3,8 @@ fixed two-rung cascade. Router v2 (S4.2; spec §4, §4.1, §4.2) at the end of t
 bounded onboarding of one new model (calibration probes, every-tenth-request exploration per
 predicted group, a Beta posterior per group with the logit-SD stopping rule, the call cap and the
 pool prior), with the new model in each group's menu at its posterior mean from the probes on.
+The S4.5 policy rules (spec §6.3: break-even ratio, cheap-first ladder, budget cap) close the
+module; no router uses them before S5.
 
 Fitting (`RouterV1.fit(train, ctx)`) reads the training folds only (O1, S0.6):
 1. The fixed cascade (§3.4): among P0.5's two-rung ladders (`common.ladders`, non-decreasing
@@ -387,4 +389,50 @@ class _V2Router:
         self.chosen["groups"] = self._report_groups()
 
 
-__all__ = ["RouterV1", "RouterV2", "two_rung_cascade", "DEFAULT_MARGIN"]
+# --------------------------------------------------------- S4.5 policy rules (spec §6.3; plan §2)
+def break_even_ratio(c_cheap: float, c_next: float) -> float:
+    """c / e: the stop probability a cheap rung needs before trying it first pays (spec §6.3).
+    Costs include each rung's verifier run when it is verified."""
+    if c_next <= 0:
+        raise ValueError(c_next)
+    return c_cheap / c_next
+
+
+def stop_probability(p_pass: float, p_unknown: float, mode: str) -> float:
+    """q = P(the ladder stops at this rung): PASS, plus UNKNOWN only in accept mode. Not P(success):
+    under escalate on a no-signal cell q = 0."""
+    if mode not in MODES:
+        raise ValueError(mode)
+    if min(p_pass, p_unknown) < 0 or p_pass + p_unknown > 1 + 1e-12:
+        raise ValueError((p_pass, p_unknown))
+    return p_pass + (p_unknown if mode == ACCEPT else 0.0)
+
+
+def cheap_first_pays(q: float, c_cheap: float, c_next: float) -> bool:
+    """Cheap-first expected cost c + (1 - q) e is below e iff q > c / e (equality: not cheaper)."""
+    return q > break_even_ratio(c_cheap, c_next)
+
+
+def cheap_first_ladder(target: tuple, candidates) -> tuple:
+    """Build a cheap-first ladder ending at `target` = (model, cost). `candidates` are
+    (model, cost, q). Walking the candidates cheaper than the current first rung in descending
+    cost, each goes in front iff q > its cost / the first rung's cost."""
+    ladder, c_first = [target[0]], float(target[1])
+    for m, c, q in sorted(candidates, key=lambda x: (-x[1], x[0])):
+        if c < c_first and cheap_first_pays(q, c, c_first):
+            ladder.insert(0, m)
+            c_first = float(c)
+    return tuple(ladder)
+
+
+def within_budget(spent: float, cost: float, cap: float | None) -> bool:
+    """Whether a rung may be called under the per-task cap B (P12: no default; None = no cap)."""
+    if cap is None:
+        return True
+    if cap < 0:
+        raise ValueError(cap)
+    return spent + cost <= cap + 1e-12
+
+
+__all__ = ["RouterV1", "RouterV2", "two_rung_cascade", "DEFAULT_MARGIN", "break_even_ratio",
+           "cheap_first_ladder", "cheap_first_pays", "stop_probability", "within_budget"]

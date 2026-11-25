@@ -249,7 +249,7 @@ model's acceptance where defined, and regret against the cost-aware oracle with 
 
 Status: built and run end to end on the ruled spec.
 
-## S4 gate check (checkpoint 2, 2026-11-25; v2 rows updated for P9 (b))
+## S4 gate check (checkpoints 2 and 3, 2026-11-25)
 
 Plan §4 S4 gate: "router v1 and v2 run end to end on the development split with all S2 metrics; v3
 and v4 components have unit tests."
@@ -262,8 +262,8 @@ and v4 components have unit tests."
 | v2, S2 metrics and onboarding report | `s4_v2_seed0.csv`: every S2 metric for v2 with paired CIs against k = 0, k-matched DimensionBest, k = ∞ and the best single model, regret including probe cost. `s4_v2_seeds.csv` and `s4_v2_groups.csv`: k per fold (probes, exploration, plan calls to M verified and unverified) and per group, the cap counter, each group's end state, probe and exploration cost, break-even length and per-task saving, acceptance on the §4.2 splits (exploring against settled, M in the plan against not) paired with k = 0, the comparator's ground-truth and verifier label counts | met, except cost at matched acceptance |
 | Cost at matched acceptance | deferred to S5 E2 by the 2026-11-25 ruling, traced over the margin m with each m logged | deferred (ruled) |
 | Router tests | v1 and v2: garbage scores and costs, handles whose `info` raises, held-out model read only through probes (v2), shuffled-label check one-sided (toy and real headline); exactly 10% exploration, probe limits, UNKNOWN never a label, probe cost charged, call cap; plan calls to M count toward k and not the cap, verified ones update the posterior and unverified ones do not, a failed exploration call is never accepted, the comparator's label mix (v2, §4.2) | met |
-| S4.6 | `router/core/guards.py`; the scan covers the new v2 modules | met (`irt.py` exempt until S4.3) |
-| v3 and v4 components have unit tests | checkpoint 3 (S4.3–S4.5) | not started |
+| S4.6 | `router/core/guards.py`; the scan covers every module in `router/core/`, including the checkpoint 3 ones. `EXEMPT_MODULES` is empty (the quick-check `irt.py` and `anchors.py` are frozen in `router/experiments/`; `core/irt.py` is the guarded 1PL), and the test asserts it stays empty | met |
+| v3 and v4 components have unit tests | spec §6. S4.3 `core/ability.py` (`test_core_ability.py`): parameter recovery, the hierarchical fit beating the 1PL when groups matter, the 1PL reduction against the frozen quick-check fit and posterior, the prior at k = 0, PASS/FAIL updates with UNKNOWN ignored, the guard. S4.4 `core/difficulty.py` (`test_core_difficulty.py`): ridge recovery on unseen problems, grouped CV never splitting a problem, text-only features, tasks without text, the guard, the family classifier, the pinned MiniLM. S4.5 `core/rescue.py` and the rules in `core/policy.py` (`test_core_rescue.py`): walks and decision points, the threshold rule, Platt calibration, an end-to-end fit on simulated walks, break-even arithmetic, the stop probability, the cheap-first ladder, the budget cap | met (components only; no v3 or v4 router is assembled or run) |
 
-The v1 and v2 half of the gate is met on the evidence above. The gate as a whole waits for
-checkpoint 3.
+Every item of the gate is met on the evidence above, except cost at matched acceptance, deferred to
+S5 E2 by ruling. Updated at the end of checkpoint 3 (2026-11-25).

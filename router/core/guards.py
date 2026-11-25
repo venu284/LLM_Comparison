@@ -30,6 +30,11 @@ NOT_ITEM_FITS: dict[str, str] = {
                            "no item parameter",
     "difficulty.FamilyClassifier.fit": "predicts a task's family label from its prompt embedding; "
                                        "no item parameter",
+    "rescue.RescueClassifier.fit": "P(a later rung passes | history) per decision point; a label "
+                                   "classifier, no item parameter",
+    "rescue.Platt.fit": "a one-dimensional calibration map of classifier outputs; no item parameter",
+    "rescue.fit_rescue": "fits the rescue classifier and its Platt map on training walks; no item "
+                         "parameter",
 }
 
 # Modules not yet under the rule, with the reason. Empty since S4.3 rebuilt `irt` on the guarded
