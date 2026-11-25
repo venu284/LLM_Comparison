@@ -283,3 +283,14 @@ Each id is registered in `stats.STREAM_IDS` in the commit that first uses it.
 ## 9. Change log
 
 - 2026-11-24: written; v1 built on the recommendations above, pending rulings.
+- 2026-11-24 (after the first v1 run, before any ruling):
+  - §2: the scored counts under P1 (b) are all-eligible 459 tasks / 355 problems / 13 families and
+    sensitivity 279 / 244 / 6 (the table above gives the complete case before the X13 restriction).
+    No task scored under P1 (b) lacks `content_text`, so the pool row routes none of them.
+  - §3.5: "cost at matched acceptance" is not computed at checkpoint 1. S2's tables never reported
+    it, and one policy is one operating point, not a curve. Proposal: trace v1's curve over the
+    margin m in S5 E2, each m logged as its own version.
+  - §3.6: the real-data shuffled-label test (S2.6 protocol, shuffle seeds 0-19) fails for v1:
+    shuffled mean 46.56 [43.40, 49.73] against Random's expected 50.38. Shuffle seeds 20-119 give
+    51.33 [49.75, 52.92]. The test was not changed after the failure; it is marked
+    `xfail(strict=True)` with these numbers for the reviewer to rule on.
