@@ -621,3 +621,11 @@ Each id is registered in `stats.STREAM_IDS` in the commit that first uses it.
   rescue classifier and policy rules, S4.6 for them). The quick-check `irt.py` and `anchors.py` move
   to `router/experiments/` frozen, and `core/irt.py` becomes the guarded 1PL entry point. Stream 22
   stays unused; stream 23 is registered for the unit tests. New open points P11 and P12.
+- 2026-11-25 (end of checkpoint 3; implementation notes, nothing re-run):
+  - §4.2's "cap counter per fold" is reported as `cap_counter_max` in `s4_v2_seeds.csv`. The
+    per-fold value is the sum of `k_probe` and `k_explore` over each fold's groups in
+    `s4_v2_groups.csv`.
+  - §6.1's "move unchanged": `m3_quickcheck_anchors.py` needed its import repointed to the frozen
+    `m3_quickcheck_irt.py`, and both frozen files got a "frozen, never cited" docstring note.
+  - §6.3's budget cap: only the admission check (`policy.within_budget`) is built and tested. How
+    the task ends when the cap blocks a rung (accept or give up, by mode) is left to the S5 assembly.
