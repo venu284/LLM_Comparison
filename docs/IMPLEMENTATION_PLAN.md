@@ -14,8 +14,8 @@
 
 | Field | Value |
 |---|---|
-| Current stage | **S4 — Build the router** (§4), awaiting the user's go-ahead. Pre-S0, S0, S1 (with S1.8), S2 and S3 done; DP1a no (C4 leads the accuracy story), DP1b yes (at the threshold on both gaps); `docs/CLAIMS.md` signed off 2026-11-20 |
-| Next action | The user's go-ahead for S4, then the S4 brief. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Current stage | **S4 — Build the router** (§4). Pre-S0, S0, S1 (with S1.8), S2 and S3 done; DP1a no (C4 leads the accuracy story), DP1b yes (at the threshold on both gaps); `docs/CLAIMS.md` signed off 2026-11-20 |
+| Next action | S4 on branch `s4-router` (brief `.claude/handover/2026-11-24-s4-router.md`; checkpoint 1: MiniLM pin into `fetch_data.py`, the S4 spec, router v1, the S4.6 non-transductive test). `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
 | Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0, S1, S2, S3 · Write-up: Report 8 |
 | Last updated | 2026-11-24 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
@@ -2276,3 +2276,21 @@ Two further reviews were checked against the data; all fixes approved by the use
   - the Qwen3-Max caveat beside the DP1b saving.
 - **DP1a: no** (C4 leads the accuracy story). **DP1b: yes**, at the threshold on both gaps.
 - **Next:** the user's go-ahead for S4.
+
+### 2026-11-24 (S3 re-verified on `main`; S4 started)
+
+- **S3 re-verified on `main` (`12f38a2`):**
+  - 671 tests pass and 304 files verify;
+  - all six S3 scripts rerun with byte-identical outputs;
+  - the reviewer independently recomputed DP1a, DP1b's deciding number (bound Rule A: 83.59
+    against 85.13 acceptance, gap −1.54, saving 65.87%), the fixed ladders, the S3.3 costs, the
+    S3.6 counts, the S3.4 endpoints and the S3.7 projection.
+- The `s3-analysis` and `s1-7-amend-mbpp` worktrees and branches were deleted after merging.
+- **User decisions for S4:**
+  - the router's group is the predicted S1.1 family from `content_text`, refit per training
+    fold;
+  - v1's cascade is the cheapest two-rung ladder meeting the training best single model's
+    acceptance, with no-signal cells escalated (accept mode reported beside it);
+  - populations are the headline, all-eligible and `sensitivity` development splits;
+  - `router/core/irt.py` is a reference only, rebuilt and validated before use.
+- S4 brief written; S4 uses stream ids 20–29.
