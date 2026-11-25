@@ -371,3 +371,31 @@ Each id is registered in `stats.STREAM_IDS` in the commit that first uses it.
 - 2026-11-25: §4.1 added before any v2 code. It fixes what the ruled §4 left implicit: the call
   cap (100), probe groups and draw order, the prior's clipping, M's cost estimate from probes, the
   k = 0 equivalence and the report fields.
+- 2026-11-25 (after the v2 development run; new open points for the reviewer, nothing changed):
+  - **P9: M in the menu while its group explores.** §4.1 (written after the P7/P8 rulings, not ruled
+    itself) keeps M out of a group's menu until the group stops or runs out of budget. S0.13 does not
+    say what the group's other requests do meanwhile. Options:
+    - (a) as built: M not in the menu while exploring;
+    - (b) M in the menu at its current posterior mean while exploring;
+    - (c) M in the menu at the pool prior while exploring.
+    With (a), M can be used only in a stopped or out-of-budget group, and P10 says how rarely that
+    happens on development folds.
+  - **P10: stops driven by the prior.** With the prior strength from the known models' spread (P8
+    (a)), groups where the known models agree get a very tight prior (α + β in the hundreds) and stop
+    at the first check after the probes, with the posterior close to the pool mean. Groups where they
+    disagree get a weak prior (strength floored at 1), and stopping needs several FAILs (with β < 1,
+    ψ₁(β) > 1/β², so the logit SD stays above 0.5). Measured on the development folds, all seeds,
+    models and label sources:
+    - 2,988 of 8,768 group-fold records stopped, median k = 5 (the probes);
+    - M is in the stopped group's plan in 86 of those 2,988;
+    - on the headline, 43 of 1,200 stopped;
+    - the call cap (100) is never reached, so the out-of-budget path (pool prior) is exercised only
+      in unit tests;
+    - a development fold gives each group about 3–4 exploration calls (10% of its requests), so a
+      stop can in practice come only from the probes.
+    Options: (a) as ruled; (b) a fixed weak prior strength (α + β = 2, the P8 (b) option);
+    (c) the stopping rule on the S4.3 ability model's posterior instead of a per-group Beta (v3).
+  - **S0.5 label sources.** In the ground-truth pairing, v2's k mixes ground-truth probes with
+    verifier-only exploration calls, while k-matched DimensionBest at the same k gets all k from the
+    ground truth. S0.5 asks that arms with the same k receive the same outcomes from the same label
+    source. This matters for E1 (S5.2); it is flagged, not fixed.

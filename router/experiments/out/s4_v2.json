@@ -1,0 +1,68 @@
+{
+ "call_cap": 100,
+ "gate_seed": 0,
+ "labels": [
+  "ground_truth",
+  "verifier"
+ ],
+ "n_boot": 1000,
+ "populations": {
+  "all_eligible": {
+   "complete_case": 966,
+   "dev_tasks": 1104,
+   "dropped_unavailable_by_family": {
+    "bcb": 2,
+    "bcb_algo2": 1,
+    "cruxeval": 1,
+    "ds1000": 5,
+    "humaneval": 1,
+    "lcb": 126,
+    "mbpp_completion": 1,
+    "swebench": 1
+   },
+   "families": 13,
+   "no_text_all_complete_case": 10,
+   "no_text_scored": 0,
+   "problems": 355,
+   "scored": 459,
+   "with_x13_record": 459
+  },
+  "headline": {
+   "complete_case": 195,
+   "dev_tasks": 196,
+   "dropped_unavailable_by_family": {
+    "cruxeval": 1
+   },
+   "families": 3,
+   "no_text_scored": 0,
+   "problems": 180,
+   "scored": 195,
+   "with_x13_record": 195
+  },
+  "sensitivity": {
+   "complete_case": 294,
+   "dev_tasks": 374,
+   "dropped_unavailable_by_family": {
+    "cruxeval": 1,
+    "humaneval": 1,
+    "lcb": 76,
+    "mbpp_completion": 1,
+    "swebench": 1
+   },
+   "families": 6,
+   "no_text_all_complete_case": 10,
+   "no_text_scored": 0,
+   "problems": 244,
+   "scored": 279,
+   "with_x13_record": 279
+  }
+ },
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "spec": "docs/research/S4_spec.md \u00a74, \u00a74.1"
+}

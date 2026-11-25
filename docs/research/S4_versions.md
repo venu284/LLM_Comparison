@@ -79,3 +79,86 @@ single 10.46; all-eligible 73.20, 3.58, 29.84; sensitivity 86.38, 4.11, 24.17.
 v1 with margin 0, run only while investigating the shuffled-label miss: headline development split,
 seed 0, shuffle seeds 0-19, shuffled mean 49.46 (SD over shuffles 7.06). Never scored on unshuffled
 labels; not a candidate version.
+
+## v2 (2026-11-25): `router_v2_ground_truth`, `router_v2_verifier`
+
+Spec §4 and §4.1 as ruled (P7 (a), P8 (a)), plus the §4.1 choices the reviewer has not ruled on
+(P9, P10 in spec §9). v1 is fitted without the new model M, M is visible from position 0, and the
+calibration probes (≤ 5 per training group, stream 21) are labelled by ground truth or by the
+verifier. Exploration is every tenth request per predicted group, a Beta posterior is kept per
+group, a group stops when its logit SD is ≤ 0.5, and the call cap is 100. Leave-one-model-out, all 8
+models, seeds 0–4, the three populations. Source: `router/experiments/s4_v2.py`; outputs
+`out/s4_v2_seeds.csv` (every row), `s4_v2_seed0.csv` (all S2 metrics, gate seed),
+`s4_v2_groups.csv` (one row per group and fold) and `s4_v2.json`. Two runs gave byte-identical
+outputs. Per model, never pooled (R8).
+
+**What v2 did with M (all seeds, models, label sources and populations: 8,768 group-fold records).**
+- **Stops.** 2,988 records stopped, with median k = 5 (the probes); none ran out of budget, and the
+  call cap was never reached. In 2,490 of the 2,988 the prior alone already met the tolerance: the
+  median prior strength α + β is 51.6 in stopped groups against 4.17 in groups still exploring.
+- **Headline.** 43 of 1,200 records stopped.
+- **M in the menu.** M is in a stopped group's plan in 86 of the 2,988. While a group explores, M is
+  not in its menu (§4.1, P9).
+- **Acceptance against v1 without M (k = 0).** At seed 0 the gap is 0.00 in 44 of the 48 rows, and
+  ±0.36 in the other 4 (all sensitivity: Qwen3-Max +0.36 and kimi-k2.5 −0.36, both label sources).
+  Across all seeds it lies in [−0.36, +0.36]. On the tasks routed after M entered the group's menu,
+  the paired gap against k = 0 is 0.00 in every gate-seed row that has such tasks.
+- **Cost against k = 0, seed 0:**
+
+| Population | Saving vs k = 0 | Onboarding cost (probes + exploration) | Calls to M per fold (mean) |
+|---|---|---|---|
+| headline | −356% to −0.6% | $0.019 to $0.53 | 18.0 to 18.2 |
+| all-eligible | −261% to −3.5% | $0.086 to $1.78 | 61.4 to 62.8 |
+| sensitivity | −362% to −3.2% | $0.044 to $0.96 | 33.8 |
+
+- **Break-even stream length** (S0.2): 306 to 283,796 tasks at seed 0. In 4 of 240 rows (headline,
+  kimi-k2.5, seeds 3 and 4) there is no positive per-task saving, so no break-even. The per-task
+  saving credits explored tasks where M passed, because the rest of the plan was skipped there.
+
+**Against k-matched DimensionBest at v2's k** (gate seed; paired cluster-bootstrap CIs; k-matched
+reads the dimension, given more information):
+- **New model Opus (the best single model):**
+
+| Population | Labels | v2 acceptance | k-matched acceptance | Gap |
+|---|---|---|---|---|
+| headline | ground truth | 71.28 | 84.62 | −13.33 [−21.05, −5.67] |
+| headline | verifier | 71.28 | 84.62 | −13.33 [−21.05, −5.67] |
+| all-eligible | ground truth | 66.88 | 72.33 | −5.45 [−9.07, −1.94] |
+| all-eligible | verifier | 66.88 | 67.76 | −0.87 [−2.98, 1.13] |
+| sensitivity | ground truth | 77.42 | 84.59 | −7.17 [−13.00, −1.39] |
+| sensitivity | verifier | 77.42 | 78.85 | −1.43 [−5.42, 2.38] |
+
+  v1 with all 8 models (k = ∞) accepts 84.62, 72.77 and 86.38.
+- **Verifier-only pairing, other models.** k-matched DimensionBest often falls far below v2: on the
+  headline, gaps of +30.8 to +47.7 points for MiniMax, Qwen3-Max, Sonnet, glm-5 and qwen3.5-plus.
+  With mostly-UNKNOWN probes it keeps few labels and can pick the new model on a handful of PASSes.
+  Percent savings against its near-zero cost (for example $0.35 per thousand tasks for Qwen3-Max on
+  the headline) are not meaningful; read the gap and the absolute cost in `s4_v2_seeds.csv`.
+- **S0.5 caveat.** In the ground-truth pairing, v2's k mixes ground-truth probes with verifier-only
+  exploration, while k-matched DimensionBest gets all k from the ground truth (spec §9).
+
+**S2 metrics, gate seed** (`s4_v2_seed0.csv`): acceptance with its CI, cost, CPAT at the best single
+model's acceptance (not defined where v2 is below it, for example the headline except with
+Qwen3-Max held out), and regret against the cost-aware oracle with probe cost included (headline:
+11.79 to 25.64 points).
+
+Status: built and run end to end. P9 and P10 are open for the reviewer; no alternative was run.
+
+## S4 gate check (checkpoint 2, 2026-11-25)
+
+Plan §4 S4 gate: "router v1 and v2 run end to end on the development split with all S2 metrics; v3
+and v4 components have unit tests."
+
+| Item | Evidence | Status |
+|---|---|---|
+| v1 end to end, development split | `s4_v1.py`: three populations (P1 (b)), seeds 0–4, five problem-grouped folds; `out/s4_v1*` reproduce byte for byte (rerun after the v2 refactor as well) | met |
+| v1, S2 metrics | acceptance with CI, cost (verifier runs included), CPAT at the best single model's acceptance, regret against the cost-aware oracle, paired cluster-bootstrap CIs against the best single model, CellBest-pred, Rule A escalated and the fixed cascade; CRUXEval ≥ 0.8 and P1 (a) variants (`s4_v1_seed0.csv`, `s4_v1_seeds.csv`, `s4_v1_variants.csv`) | met, except cost at matched acceptance |
+| v2 end to end, development split | `s4_v2.py`: leave-one-model-out for all 8 models, both label sources, three populations, seeds 0–4; `out/s4_v2*` reproduce byte for byte | met |
+| v2, S2 metrics and onboarding report | `s4_v2_seed0.csv`: every S2 metric for v2 with paired CIs against k = 0, k-matched DimensionBest, k = ∞ and the best single model, regret including probe cost. `s4_v2_seeds.csv` and `s4_v2_groups.csv`: k per fold and per group, each group's end state, probe and exploration cost, break-even length, acceptance before and after onboarding, paired after-onboarding gap | met, except cost at matched acceptance |
+| Cost at matched acceptance | deferred to S5 E2 by the 2026-11-25 ruling, traced over the margin m with each m logged | deferred (ruled) |
+| Router tests | v1 and v2: garbage scores and costs, handles whose `info` raises, held-out model read only through probes (v2), shuffled-label check one-sided (toy and real headline); exactly 10% exploration, probe limits, UNKNOWN never a label, probe cost charged, call cap (v2) | met |
+| S4.6 | `router/core/guards.py`; the scan covers the new v2 modules | met (`irt.py` exempt until S4.3) |
+| v3 and v4 components have unit tests | checkpoint 3 (S4.3–S4.5) | not started |
+
+The v1 and v2 half of the gate is met on the evidence above. The gate as a whole waits for
+checkpoint 3.
