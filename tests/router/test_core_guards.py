@@ -55,8 +55,22 @@ def test_unknown_problem_ids_are_an_error():
         check_non_transductive(["a"], ["b"], pd.Series({"a": "P1"}))
 
 
+FIT_CALLS = {"fit", "partial_fit", "fit_transform", "minimize", "minimize_scalar", "curve_fit",
+             "least_squares"}
+
+
+def _callee(n: ast.Call):
+    f = n.func
+    return f.id if isinstance(f, ast.Name) else f.attr if isinstance(f, ast.Attribute) else None
+
+
+def _fits_something(fn) -> bool:
+    return any(isinstance(n, ast.Call) and _callee(n) in FIT_CALLS for n in ast.walk(fn))
+
+
 def _fit_functions(path: Path):
-    """(qualname, node) for every function named fit or fit_* in a module, methods included."""
+    """(qualname, node) for every function, methods included, that is named fit or fit_*, or that
+    calls a fitting routine (`.fit`, `minimize`, `curve_fit`, ...; `FIT_CALLS`)."""
     tree = ast.parse(path.read_text())
     out = []
 
@@ -65,7 +79,7 @@ def _fit_functions(path: Path):
             if isinstance(ch, ast.ClassDef):
                 walk(ch, prefix + ch.name + ".")
             elif isinstance(ch, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                if ch.name == "fit" or ch.name.startswith("fit_"):
+                if ch.name == "fit" or ch.name.startswith("fit_") or _fits_something(ch):
                     out.append((prefix + ch.name, ch))
                 walk(ch, prefix + ch.name + ".")
     walk(tree, "")
@@ -73,13 +87,8 @@ def _fit_functions(path: Path):
 
 
 def _calls_guard(fn) -> bool:
-    for n in ast.walk(fn):
-        if isinstance(n, ast.Call):
-            f = n.func
-            name = f.id if isinstance(f, ast.Name) else f.attr if isinstance(f, ast.Attribute) else None
-            if name == "check_non_transductive":
-                return True
-    return False
+    return any(isinstance(n, ast.Call) and _callee(n) == "check_non_transductive"
+               for n in ast.walk(fn))
 
 
 def test_every_item_fit_in_router_core_calls_the_guard():
@@ -102,9 +111,14 @@ def test_every_item_fit_in_router_core_calls_the_guard():
 
 
 def test_the_scan_catches_an_unguarded_fit(tmp_path):
-    src = "class Ability:\n    def fit(self, Y, items):\n        return Y\n\ndef fit_difficulty(x):\n    check_non_transductive(x, [], None)\n"
+    src = ("class Ability:\n    def fit(self, Y, items):\n        return Y\n\n"
+           "def fit_difficulty(x):\n    check_non_transductive(x, [], None)\n\n"
+           "def train_difficulty(X, y):\n    return Ridge().fit(X, y)\n\n"
+           "def estimate_b(f):\n    return minimize(f, 0.0)\n\n"
+           "def helper(x):\n    return x + 1\n")
     p = tmp_path / "ability.py"
     p.write_text(src)
     fns = dict(_fit_functions(p))
-    assert set(fns) == {"Ability.fit", "fit_difficulty"}
-    assert not _calls_guard(fns["Ability.fit"]) and _calls_guard(fns["fit_difficulty"])
+    assert set(fns) == {"Ability.fit", "fit_difficulty", "train_difficulty", "estimate_b"}
+    assert [q for q, f in fns.items() if not _calls_guard(f)] == ["Ability.fit", "train_difficulty",
+                                                                  "estimate_b"]

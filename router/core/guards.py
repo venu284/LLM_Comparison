@@ -10,9 +10,10 @@ is fitted from the other models' outcomes on it.
 
 Every item-parameter fit in `router/core/` calls `check_non_transductive` before fitting. A test
 (`tests/router/test_core_guards.py`) scans `router/core/` with `ast`: each function named `fit` or
-`fit_*` must either call the guard, be listed in `NOT_ITEM_FITS` with the reason it fits no item
-parameter, or sit in a module of `EXEMPT_MODULES`. A new fit therefore cannot skip the rule
-silently: it fails the scan until it is guarded or listed.
+`fit_*`, and each function that calls a fitting routine (`.fit`, `partial_fit`, `fit_transform`,
+`minimize`, `minimize_scalar`, `curve_fit`, `least_squares`), must either call the guard, be listed in
+`NOT_ITEM_FITS` with the reason it fits no item parameter, or sit in a module of `EXEMPT_MODULES`.
+A new fit therefore cannot skip the rule silently: it fails the scan until it is guarded or listed.
 """
 
 from __future__ import annotations
@@ -21,7 +22,7 @@ from collections.abc import Iterable
 
 import pandas as pd
 
-# Functions named fit / fit_* in router/core/ that fit no item parameter ("module.qualname").
+# Functions the scan flags in router/core/ that fit no item parameter ("module.qualname").
 NOT_ITEM_FITS: dict[str, str] = {
     "policy.RouterV1.fit": "router v1: a per-group lookup table over training tasks; no item parameter",
 }

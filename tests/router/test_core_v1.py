@@ -197,11 +197,11 @@ def test_true_group_diagnostic_is_labelled():
     assert set(o.attrs["fits"][0]["given_more_information"]) == {"family", "dimension"}
 
 
-def test_v1_falls_to_random_when_labels_are_shuffled():
+@pytest.mark.parametrize("b", VERSIONS, ids=lambda b: b.name)
+def test_v1_falls_to_random_when_labels_are_shuffled(b):
     m, ctx, folds = toy_setup(n=150)
     ok = success(m)
     random_expected = float((ok.sum(axis=1) / m.available.sum(axis=1)).mean())
-    b = RouterV1()
     gain = run_dev(b, m, ctx, folds, seed=0)["accepted"].mean() - random_expected
     shuffled = [run_dev(b, m, ctx, folds, seed=0, shuffle_seed=s)["accepted"].mean() for s in range(10)]
     assert abs(np.mean(shuffled) - random_expected) < 0.08, np.mean(shuffled)
@@ -238,14 +238,18 @@ def test_real_dev_v1_garbage_scores():
         assert _decisions(a) == _decisions(z), b.name
 
 
+_SHUFFLE_MISS = ("Measured 2026-11-24, left for the reviewer (not adjusted after the failure): with "
+                 "S2.6's protocol (shuffle seeds 0-19) the shuffled mean misses Random's expected "
+                 "50.38: router_v1 46.56 [43.40, 49.73], router_v1_accept 46.67 [43.47, 49.87]. "
+                 "Diagnostic (router_v1): shuffle seeds 20-119 give 51.33 [49.75, 52.92], which "
+                 "contains it, and its picks under shuffling spread over all eight models. The "
+                 "unshuffled half (beats Random, CI above 0) passes for both.")
+
+
 @pytest.mark.skipif(not HAVE_X13, reason="route-anything-data not downloaded to external/")
-@pytest.mark.xfail(strict=True, reason=(
-    "Measured 2026-11-24, left for the reviewer (not adjusted after the failure): with S2.6's "
-    "protocol (shuffle seeds 0-19) v1's shuffled mean is 46.56 [43.40, 49.73], and Random's "
-    "expected 50.38 lies just above the interval. Diagnostic: shuffle seeds 20-119 give 51.33 "
-    "[49.75, 52.92], which contains it, and v1's picks under shuffling spread over all eight "
-    "models. The unshuffled half (v1 beats Random, CI above 0) passes."))
-def test_real_dev_v1_shuffled_labels_fall_to_random():
+@pytest.mark.parametrize("b", [pytest.param(v, id=v.name, marks=pytest.mark.xfail(strict=True, reason=_SHUFFLE_MISS))
+                               for v in VERSIONS])
+def test_real_dev_v1_shuffled_labels_fall_to_random(b):
     """As S2.6 on the headline development split: unshuffled, v1 beats Random (paired
     cluster-bootstrap CI above 0); shuffled, Random's expected acceptance lies inside the t
     interval of the mean over N_SHUFFLES shuffles."""
@@ -253,7 +257,6 @@ def test_real_dev_v1_shuffled_labels_fall_to_random():
     from router.experiments.s2_baselines import N_SHUFFLES
     from router.sim import stats
     m, ctx, folds = real_dev()
-    b = RouterV1()
     rnd = run_dev(next(x for x in default_baselines(m.models) if x.name == "random"), m, ctx,
                   folds, seed=0)
     o = run_dev(b, m, ctx, folds, seed=0)

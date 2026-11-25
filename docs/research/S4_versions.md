@@ -31,6 +31,9 @@ Gate seed 0:
 | all-eligible | 72.77 [67.90, 77.24] | 3.62 | +1.96 [−1.84, 5.95] / 29.15 [23.82, 34.41] | +0.22 [0.00, 0.68] / 2.97 [−0.96, 6.41] | +0.44 [−0.68, 1.72] / −9.01 [−15.79, −3.95] | +2.40 / 23.80 [18.07, 29.25] |
 | sensitivity | 86.38 [82.27, 90.22] | 4.14 | +0.72 [−1.06, 2.54] / 23.77 [17.51, 30.00] | +0.36 [0.00, 1.10] / 3.38 [−4.60, 9.86] | +1.08 [0.00, 2.42] / −8.83 [−17.21, −2.85] | +0.72 / 8.46 [5.52, 11.80] |
 
+- Cost note: the headline and sensitivity cascade starts with Qwen3-Max, whose released cost is a
+  per-dimension constant (S1.7 data note; $0.000208 per headline task), so its per-task cost
+  carries no within-dimension information.
 - Verifier runs: 22 (headline), 81, 80. CPAT at the floor (best single's acceptance): not
   defined on the headline (84.62 < 85.13); 4.97 and 4.79 m$ per accepted task elsewhere.
 - Regret against the cost-aware oracle: 12.31, 17.21 and 10.04 points.
@@ -62,9 +65,17 @@ v1 with no-signal cells accepted inside the cascade (spec §3.4). Logged as its 
   folds (Opus first, verified: 3 verifier runs in all). Seeds 1-4:
   the same, except sensitivity seed 2 (gap +2.51, saving −5.63) and seed 4 (gap 0, saving −0.13).
 - Verifier runs: 0, 3, 0.
+- Shuffled-label check (headline, S2.6 protocol): shuffled mean 46.67 [43.47, 49.87], Random's
+  expected 50.38 outside it; marked `xfail(strict)` like v1.
 - Status: built; reported beside v1.
 
 ## Diagnostic (given more information, not a version): `v1_true_groups`
 
 v1 reading the true family from the task handle. Seed 0: headline 84.62, cost 5.32, saving vs best
 single 10.46; all-eligible 73.20, 3.58, 29.84; sensitivity 86.38, 4.11, 24.17.
+
+## Diagnostic, shuffled labels only (2026-11-24): `router_v1_m0`
+
+v1 with margin 0, run only while investigating the shuffled-label miss: headline development split,
+seed 0, shuffle seeds 0-19, shuffled mean 49.46 (SD over shuffles 7.06). Never scored on unshuffled
+labels; not a candidate version.

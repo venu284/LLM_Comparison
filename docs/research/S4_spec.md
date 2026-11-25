@@ -244,8 +244,10 @@ Fixed here so checkpoint 2 has a rule to build to; the reviewer may rule now or 
   1. a reproduction of the `a6_a7` pattern (fit on probe + test items) is refused, and the
      problem-sharing case is refused;
   2. a fit on training items only passes;
-  3. an AST scan of `router/core/` lists every function that fits item parameters (by name: `fit`,
-     `fit_*`, and anything registered as an item fit) and asserts that each calls the guard.
+  3. an AST scan of `router/core/` lists every function named `fit` or `fit_*`, and every function
+     that calls a fitting routine (`.fit`, `partial_fit`, `fit_transform`, `minimize`,
+     `minimize_scalar`, `curve_fit`, `least_squares`), and asserts that each calls the guard or is
+     listed in `guards.NOT_ITEM_FITS` with the reason it fits no item parameter.
      `router/core/irt.py` (quick-check reference code, 2026-11-10) is exempt by name until S4.3
      rebuilds it; the exemption list is in the test and in this section.
 
@@ -294,3 +296,10 @@ Each id is registered in `stats.STREAM_IDS` in the commit that first uses it.
     shuffled mean 46.56 [43.40, 49.73] against Random's expected 50.38. Shuffle seeds 20-119 give
     51.33 [49.75, 52.92]. The test was not changed after the failure; it is marked
     `xfail(strict=True)` with these numbers for the reviewer to rule on.
+    `router_v1_accept` misses the same way (46.67 [43.47, 49.87]) and is marked the same way.
+  - §2, evidence for P1: of the 507 all-eligible complete-case development tasks with no X13
+    record, 4 have a success for any model (15 successful cells); of the 15 such sensitivity
+    tasks, none has. Under P1 (a) these tasks add almost no acceptance to any policy, and the
+    savings they add come from cost spent on tasks no model solves.
+  - §5: the scan is by name (`fit`, `fit_*`) and also by call (a function that calls a fitting
+    routine); the "registered as an item fit" clause is dropped, as no registry exists.
