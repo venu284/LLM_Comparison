@@ -14,10 +14,10 @@
 
 | Field | Value |
 |---|---|
-| Current stage | **S4 — Build the router** (§4). Pre-S0, S0, S1 (with S1.8), S2 and S3 done; DP1a no (C4 leads the accuracy story), DP1b yes (at the threshold on both gaps); `docs/CLAIMS.md` signed off 2026-11-20 |
-| Next action | S4 on branch `s4-router` (brief `.claude/handover/2026-11-24-s4-router.md`; checkpoint 1: MiniLM pin into `fetch_data.py`, the S4 spec, router v1, the S4.6 non-transductive test). `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
-| Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0, S1, S2, S3 · Write-up: Report 8 |
-| Last updated | 2026-11-24 |
+| Current stage | **S5 — Offline test and improve** (§4). Pre-S0, S0, S1 (with S1.8), S2, S3 and S4 done; DP1a no (C4 leads the accuracy story), DP1b yes (at the threshold on both gaps); `docs/CLAIMS.md` signed off 2026-11-20, amended through A5 |
+| Next action | The S5 brief, after the user's go-ahead. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0, S1, S2, S3, S4 · Write-up: Report 8 |
+| Last updated | 2026-11-25 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
 | Budget | $20 for the paid top-rung model in live runs (S0.9) |
 
@@ -971,6 +971,13 @@ quick-check code.
         no-signal accepted 47.2 [44.1, 50.3], against 50.4): with uninformative labels they
         lean to cheap models, which is not leakage. Every baseline still beats Random with a CI
         above 0 when unshuffled.
+      - **One-sided since 2026-11-25 (S4 checkpoint 1 ruling, user-approved):** the check exists
+        to detect information leaking into a learned router, and leakage raises shuffled
+        acceptance above Random. It now fails only when the 95% t-interval of the mean over 20
+        shuffles lies wholly **above** Random's expected acceptance
+        (`baselines.run.shuffled_check_fails`); the two-sided interval is still reported. It
+        applies to every learned router and to the S2 learned baselines, all 20 of which pass it on
+        their recorded outputs. The unshuffled check is unchanged.
 - **Gate:** S2.6 passes; the no-ground-truth test passes; every comparison table carries a paired
   CI; baselines that would need the paper's unavailable code are labelled "our definition", with
   the definition difference documented. Reference: DimensionBest vs ACRouter is +1.54 on the
@@ -1165,21 +1172,67 @@ results):**
 
 ### S4 — Build the router
 All fitting uses the training folds only (S0.6).
-- [ ] S4.1 Router v1: shrunk per-group lookup table plus fixed two-model cascade, running end to end
+**Spec and log:** `docs/research/S4_spec.md` (pre-registration, rulings P1–P12, change log) and
+`docs/research/S4_versions.md` (every version with its development figures, S0.7). Populations:
+the headline, all-eligible and `sensitivity` development splits, scored on tasks with a verifier
+record (195, 459 and 279 tasks); seeds 0–4; problem-grouped folds. Development figures, not
+results.
+- [x] S4.1 Router v1: shrunk per-group lookup table plus fixed two-model cascade, running end to end
       through the S2 harness.
-- [ ] S4.2 `core/exploration.py` and `core/stopping.py` [M4.1, M4.2]: bounded forced exploration
+      **Done 2026-11-24** (`fd1d95f`, `router/core/lookup.py`, `policy.py`): group = the predicted
+      S1.1 family from `content_text`; beta-binomial shrinkage with one shared κ (ANOVA estimator);
+      the cascade (cheapest two-rung ladder meeting the training best single model, no-signal cells
+      escalated) as one more candidate; Rule A on shrunk values, m = 0.02 fixed. Headline, seed 0:
+      acceptance 84.62, gap −0.51 against the best single model, saving 11.11% (the reviewer
+      recomputed these independently). Rule A escalated is cheaper than v1 on all three
+      populations; v1 in accept mode matches CellBest-pred.
+- [x] S4.2 `core/exploration.py` and `core/stopping.py` [M4.1, M4.2]: bounded forced exploration
       (share per group, maximum probe calls, stopping tolerance, noisy-verifier handling). Router v2.
-- [ ] S4.3 `core/ability.py` [M3.1]: the hierarchical model of §2; `core/irt.py` kept as the 1PL case.
-- [ ] S4.4 `core/difficulty.py` [M3.2]: prompt-embedding predictor without the source label,
+      **Done 2026-11-25** (`8205e97`, `3a45fe1`; spec §4–§4.2): leave-one-model-out for all 8
+      models, in the pairings `gt_probes` and `verifier` (CLAIMS A5). Probes ≤ 5 per group, every
+      tenth request per predicted group explored, a Beta posterior per (new model, group) with its
+      prior from the known models' spread, stop at logit SD ≤ 0.5, call cap 100 on probes plus
+      exploration; the new model is in each group's menu at its posterior mean (P9 (b)).
+      - **On the development split v2 does not beat v1 without the new model (k = 0).**
+        Acceptance is equal in 44 of 48 gate-seed rows and within [−1.09, +0.36] points over all
+        seeds; P9 (b) lowered 26 of the 27 rows it changed (new model Qwen3-Max or kimi-k2.5).
+        Onboarding pays back only after 306 to 283,796 tasks, and never in 4 of 240 rows.
+      - Stops are driven by the prior: a per-group Beta reaches logit SD 0.5 only when
+        min(α, β) ≥ 4.48, which a development fold's few probes and exploration calls cannot give
+        (P10 (a)). The new model is routed on few tasks (609 calls in 42 of 240 rows, none on the
+        headline). On the headline the per-group posterior cannot carry Opus's strength across
+        groups; that pooling is v3's (DP2).
+      - The run without the new model in exploring groups' menus is kept as `router_v2_p9a`.
+      - Whether v2 is kept is decided in S5.5 ("kept only if it beats the version before").
+- [x] S4.3 `core/ability.py` [M3.1]: the hierarchical model of §2; `core/irt.py` kept as the 1PL case.
+      **Done 2026-11-25** (`7d77332`): MAP fit with approximate-EM variances; a new model starts
+      at the pool prior (never θ = 0, R11) with a Laplace posterior over (δ, γ), UNKNOWN ignored.
+      `core/irt.py` is the guarded 1PL and reproduces the 2026-11-10 quick-check fit, now frozen in
+      `router/experiments/m3_quickcheck_irt.py`. σ_γ is recovered about 9% low on simulated data
+      (recorded; judged in S5.1). Unit tests only.
+- [x] S4.4 `core/difficulty.py` [M3.2]: prompt-embedding predictor without the source label,
       on `content_text` (S1.5; never the wrapped prompt, whose instruction wording identifies the
       family);
       optional group classifier from the prompt; CV grouped by problem.
-- [ ] S4.5 `core/rescue.py` (new): calibrated classifier for P(later rung passes | earlier rungs
+      **Done 2026-11-25** (`53f7568`): ridge on the pinned MiniLM embedding (fetched and verified
+      by `scripts/fetch_data.py`), alpha by CV grouped by problem; optional family classifier.
+      Unit tests only.
+- [x] S4.5 `core/rescue.py` (new): calibrated classifier for P(later rung passes | earlier rungs
       failed); `core/policy.py` [M5.1]: cheap-first by break-even ratio, ladder truncation, budget cap.
-- [ ] S4.6 Non-transductive evaluation [M4.3]: test-item difficulty is never fitted from the other
+      **Done 2026-11-25** (`76d6195`): Platt calibration on out-of-fold predictions; t is the
+      largest threshold with acceptance loss ≤ 2.0 points (P11); cheap-first when q > c / e, with
+      q the probability the cheap rung ends the task; the budget cap is a parameter with no cap by
+      default (P12), and only its admission check is built (the end-of-task rule goes into the S5
+      assembly). Unit tests only.
+- [x] S4.6 Non-transductive evaluation [M4.3]: test-item difficulty is never fitted from the other
       models' outcomes on those same items (fixes `router/experiments/m3_irt.py:67-74`).
+      **Done 2026-11-24** (`1c2ed68`): `guards.check_non_transductive` raises when a fitted item
+      is a scored task or shares its problem; an AST scan of `router/core/` requires every fit to
+      call it or be listed with its reason. The exemption list is empty since `7d77332`.
 - **Gate:** router v1 and v2 run end to end on the development split with all S2 metrics; v3 and v4
   components have unit tests.
+  **Passed 2026-11-25** (merge `0660f15`), except cost at matched acceptance, deferred to S5 E2 by
+  ruling (traced over the margin m, each m a logged version).
 
 ### S5 — Offline test and improve (development split only)
 - [ ] S5.1 Evaluation of the ability model [M3.3]: leave-one-model-out held-out log-likelihood; k = 0
@@ -2294,3 +2347,27 @@ Two further reviews were checked against the data; all fixes approved by the use
   - populations are the headline, all-eligible and `sensitivity` development splits;
   - `router/core/irt.py` is a reference only, rebuilt and validated before use.
 - S4 brief written; S4 uses stream ids 20–29.
+
+### 2026-11-25 (S4 merged; S4 gate passed; CLAIMS A5)
+
+- **S4 merged** (`0660f15`, branch `s4-router`, three checkpoints, each reviewed):
+  - the reviewer reran the tests (752 pass), `--verify-only` (314 files) and `s4_v1`, `s4_v2` and
+    `s2_baselines` (outputs byte-identical), and checked that every spec section was committed
+    before its code;
+  - v1 recomputed independently from the spec (84.62 / −0.51 / 11.11% on the headline, seed 0);
+    v2's figures recomputed from its outputs; the stopping arithmetic and one headline fold
+    (why Opus is not routed) checked by hand.
+- **Rulings (user-approved):**
+  - P1 (b) tasks with a verifier record, all tasks as a labelled variant; P2–P8 (a); m = 0.02
+    fixed;
+  - P9 (b) the new model in a group's menu at its posterior mean while the group explores; P10 (a)
+    the prior strength from the known models' spread, with the arithmetic recorded;
+  - P11 rescue threshold at a 2.0-point acceptance loss; P12 no per-task budget cap by default;
+  - cost at matched acceptance deferred to S5 E2, traced over m;
+  - the shuffled-label check is one-sided (S2.6 note).
+- **CLAIMS A5:** S0.5 and S0.13 clarified for arms that make live calls to the new model (the
+  `gt_probes` pairing; k counts every call, the budget counts probes and exploration).
+- **Measured, for S5:** v2 does not beat v1 without the new model on the development split, and
+  in groups with no verifier signal exploration costs calls without moving the posterior.
+- The `s4-router` worktree and branch were deleted after merging.
+- **Next:** the user's go-ahead for S5.
