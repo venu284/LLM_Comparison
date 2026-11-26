@@ -15,7 +15,7 @@ from sklearn.linear_model import RidgeCV
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import GroupKFold
 
-from router.core import irt
+from router.experiments import m3_quickcheck_irt as irt
 from router.data import coderouterbench as crb
 from router.data.prompts import join
 from router.data.scoring import LEGACY_ACCEPT_THRESHOLD

@@ -5,8 +5,8 @@ import pandas as pd
 import pytest
 
 from router.experiments.m2_quickcheck_baselines import cascade, static
-from router.core import irt
-from router.core.anchors import onboard
+from router.experiments import m3_quickcheck_irt as irt
+from router.experiments.m3_quickcheck_anchors import onboard
 from router.data import coderouterbench as crb
 from router.data.schema import OutcomeMatrix
 from router.experiments.m2_quickcheck_sim import Verifier, from_choice, summary

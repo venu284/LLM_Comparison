@@ -29,6 +29,12 @@ staging directory first and replaces the old files only when it completes. The t
 deleted: the pin allows a re-download. Each extracted file's SHA-256 goes into CHECKSUMS; the
 tarball's own hash is in the `# archive:` header line, not the body, since the file is not kept.
 
+Model files (MODELS below; S4) are pinned as a Hugging Face model repository at a full commit SHA
+with an allowlist of files and the sha256 of each. Only the listed files are downloaded, into
+`<dest>/models/<name>/`; each is streamed to a `.part` file, checked against its sha256 and only
+then moved into place. Weights are safetensors only (no pickle-based checkpoint is ever listed). The
+`# model:` header line records the pin, and each file's sha256 is a CHECKSUMS line like any other.
+
 Normal run: read CHECKSUMS, hash the local files, download only the missing or mismatched
 ones (rebuilding a missing or mismatched extract from its upstream files), re-hash, exit
 non-zero on any mismatch, print `fetched: N, verified: M`. When every file already matches, no
@@ -335,12 +341,54 @@ ARCHIVES: dict[str, Archive] = {
     ),
 }
 
+@dataclass(frozen=True)
+class ModelPin:
+    """Allowlisted files of one pinned Hugging Face *model* repository, under `<dest>/models/<name>/`.
+
+    `files` maps each repository path to its sha256. Only these files are downloaded; each is
+    streamed to a temporary file, checked against its sha256 and only then moved into place.
+    Weights are safetensors only: a pickle-based checkpoint (`pytorch_model.bin` and the like) is
+    never listed, and `WEIGHT_SUFFIXES_REFUSED` is checked by a test.
+    """
+
+    repo_id: str
+    revision: str
+    files: dict[str, str]
+
+    def spec(self) -> str:
+        return f"{self.repo_id}@{self.revision} files={','.join(self.files)}"
+
+
+# S4 (plan S2.5 note, S4.4): the sentence embedding of `content_text`, used by S2's kNN baseline and
+# by the S4 difficulty predictor. Moved here from `router/baselines/embeddings.py`, whose revision
+# and hashes must equal this pin (tested).
+MODELS: dict[str, ModelPin] = {
+    "all-MiniLM-L6-v2": ModelPin(
+        "sentence-transformers/all-MiniLM-L6-v2", "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        {
+            "1_Pooling/config.json": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23",
+            "config.json": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41",
+            "config_sentence_transformers.json": "061ca9d39661d6c6d6de5ba27f79a1cd5770ea247f8d46412a68a498dc5ac9f3",
+            "model.safetensors": "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db",
+            "modules.json": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+            "sentence_bert_config.json": "fc1993fde0a95c24ec6c022539d41cf6e2f7c9721e5415d6fb6897472a9cd4b7",
+            "special_tokens_map.json": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+            "tokenizer.json": "be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037",
+            "tokenizer_config.json": "acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b",
+            "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+        },
+    ),
+}
+WEIGHT_SUFFIXES_REFUSED = (".bin", ".pt", ".pth", ".pkl", ".pickle", ".ckpt", ".h5", ".msgpack", ".onnx")
+
 CHECKSUMS_NAME = "CHECKSUMS"
 COMMITTED_CHECKSUMS = REPO_ROOT / "external" / CHECKSUMS_NAME
 PIN_PREFIX = "# pin: "
 EXTRACT_PREFIX = "# extract: "
 ARCHIVE_PREFIX = "# archive: "
+MODEL_PREFIX = "# model: "
 EXTRACT_DIR = "sources"
+MODEL_DIR = "models"
 WORKERS = 8
 CHUNK = 1 << 20
 
@@ -402,6 +450,7 @@ def format_checksums(entries: dict[str, str]) -> str:
     header += [f"{PIN_PREFIX}{repo_id}@{sha}" for repo_id, sha in REPOS.values()]
     header += [f"{EXTRACT_PREFIX}{name} <- {ex.spec()}" for name, ex in EXTRACTS.items()]
     header += [f"{ARCHIVE_PREFIX}{name} <- {ar.spec()}" for name, ar in ARCHIVES.items()]
+    header += [f"{MODEL_PREFIX}{name} <- {mp.spec()}" for name, mp in MODELS.items()]
     body = [f"{entries[p]}  {p}" for p in sorted(entries)]
     return "\n".join(header + body) + "\n"
 
@@ -422,6 +471,20 @@ def archive_name(path: str) -> str | None:
     """'llmrouterbench/bench-release/...' -> 'llmrouterbench' when it is a pinned archive's file."""
     head, _, rel = path.partition("/")
     return head if head in ARCHIVES and rel else None
+
+
+def model_path(name: str, rel: str) -> str:
+    return f"{MODEL_DIR}/{name}/{rel}"
+
+
+def model_entry(path: str) -> tuple[str, str] | None:
+    """'models/all-MiniLM-L6-v2/vocab.txt' -> ('all-MiniLM-L6-v2', 'vocab.txt') when it is a
+    pinned model's listed file, else None."""
+    head, _, rest = path.partition("/")
+    name, _, rel = rest.partition("/")
+    if head == MODEL_DIR and name in MODELS and rel in MODELS[name].files:
+        return name, rel
+    return None
 
 
 def extract_name(path: str) -> str | None:
@@ -445,11 +508,11 @@ def split_entry(path: str) -> tuple[str, str]:
 Opener = Callable[[str, str, str], Iterable[bytes]]
 
 
-def open_hub(repo_id: str, path: str, revision: str) -> Iterator[bytes]:
-    """Stream one dataset file from the Hub at a pinned revision."""
+def open_hub(repo_id: str, path: str, revision: str, repo_type: str = "dataset") -> Iterator[bytes]:
+    """Stream one dataset (or, with `repo_type="model"`, model) file from the Hub at a pinned revision."""
     from huggingface_hub import get_session, hf_hub_url
 
-    url = hf_hub_url(repo_id, path, repo_type="dataset", revision=revision)
+    url = hf_hub_url(repo_id, path, repo_type=repo_type, revision=revision)
     with get_session().stream("GET", url, timeout=120, follow_redirects=True) as resp:
         resp.raise_for_status()
         yield from resp.iter_bytes(CHUNK)
@@ -638,6 +701,27 @@ def fetch_archive(dest: Path, name: str, local: Path | None = None, opener: Open
     return [f"{name}/{f}" for f in files]
 
 
+def open_hub_model(repo_id: str, path: str, revision: str) -> Iterator[bytes]:
+    return open_hub(repo_id, path, revision, repo_type="model")
+
+
+def fetch_model_file(dest: Path, name: str, rel: str, opener: Opener = open_hub_model) -> str:
+    """Download one listed file of a pinned model to a temporary file next to its target, check
+    its sha256 and move it into place. Returns the CHECKSUMS path."""
+    mp = MODELS[name]
+    path = model_path(name, rel)
+    target = dest / path
+    target.parent.mkdir(parents=True, exist_ok=True)
+    part = target.with_name(target.name + ".part")
+    try:
+        download_to(opener, mp.repo_id, rel, mp.revision, part, mp.files[rel])
+        os.replace(part, target)
+    finally:
+        if part.exists():
+            part.unlink()
+    return path
+
+
 def download(dest: Path, repo_name: str, rel: str) -> None:
     from huggingface_hub import hf_hub_download
 
@@ -681,8 +765,19 @@ def run_fetch(dest: Path, verify_only: bool, archive_from: Path | None = None) -
             print(f"error: {checksums} pins archive {name} as {archive_pins[name]}, script as {ar.spec()}",
                   file=sys.stderr)
             return 2
+    model_pins = parse_extract_pins(text, MODEL_PREFIX)
+    for name, mp in MODELS.items():
+        if name in model_pins and model_pins[name] != mp.spec():
+            print(f"error: {checksums} pins model {name} as {model_pins[name]}, script as {mp.spec()}",
+                  file=sys.stderr)
+            return 2
     for path in wanted:
-        if extract_name(path) is None and archive_name(path) is None:
+        if (entry := model_entry(path)) is not None:
+            if MODELS[entry[0]].files[entry[1]] != wanted[path]:
+                print(f"error: {checksums} hashes {path} as {wanted[path]}, script as "
+                      f"{MODELS[entry[0]].files[entry[1]]}", file=sys.stderr)
+                return 2
+        elif extract_name(path) is None and archive_name(path) is None:
             split_entry(path)
 
     local = hash_all(dest, wanted)
@@ -690,9 +785,13 @@ def run_fetch(dest: Path, verify_only: bool, archive_from: Path | None = None) -
     fetched = 0
     if todo and not verify_only:
         print(f"{len(todo)} of {len(wanted)} files missing or mismatched; downloading")
-        mirror = [p for p in todo if extract_name(p) is None and archive_name(p) is None]
+        mirror = [p for p in todo if extract_name(p) is None and archive_name(p) is None
+                  and model_entry(p) is None]
         with ThreadPoolExecutor(WORKERS) as ex:
             list(ex.map(lambda p: download(dest, *split_entry(p)), mirror))
+        for p in todo:
+            if (entry := model_entry(p)) is not None:
+                fetch_model_file(dest, *entry)
         for p in todo:
             if (name := extract_name(p)) is not None:
                 build_extract(dest, name)
@@ -775,6 +874,12 @@ def run_write_checksums(dest: Path) -> int:
         print(f"fetching archive {name}")
         for path in fetch_archive(dest, name):
             entries[path] = sha256_file(dest / path)
+    for name, mp in ([] if errors else MODELS.items()):
+        errors = _hub_check_model(api, mp) or _fetch_model_checked(api, dest, name)
+        if errors:
+            break
+        for rel, h in mp.files.items():
+            entries[model_path(name, rel)] = h
     if errors:
         for e in errors:
             print(f"MISMATCH vs Hub: {e}", file=sys.stderr)
@@ -793,6 +898,37 @@ def _hub_check_extract(api, ex: Extract) -> list[str]:
                      if hub.get(p) != h]
 
 
+def _hub_check_model(api, mp: ModelPin) -> list[str]:
+    """The pinned revision must resolve to itself, and every listed LFS file's Hub sha256 must be
+    the pinned one (non-LFS files are checked against their git blob id after download)."""
+    info = api.model_info(mp.repo_id, revision=mp.revision, files_metadata=True)
+    hub = {s.rfilename: hub_expected(s) for s in info.siblings}
+    errors = [f"{mp.repo_id}@{mp.revision} resolved to {info.sha}"] if info.sha != mp.revision else []
+    for rel, h in mp.files.items():
+        if rel.endswith(WEIGHT_SUFFIXES_REFUSED):
+            errors.append(f"{mp.repo_id}/{rel}: pickle-based or non-safetensors weights are refused")
+        elif rel not in hub:
+            errors.append(f"{mp.repo_id}/{rel}: not in the repository at {mp.revision}")
+        elif hub[rel][0] == "sha256" and hub[rel][1] != h:
+            errors.append(f"{mp.repo_id}/{rel}: Hub sha256 {hub[rel][1]}, pinned {h}")
+    return errors
+
+
+def _fetch_model_checked(api, dest: Path, name: str) -> list[str]:
+    """Download every listed file of a model (sha256-checked) and check non-LFS files against the
+    Hub's git blob id."""
+    mp = MODELS[name]
+    info = api.model_info(mp.repo_id, revision=mp.revision, files_metadata=True)
+    hub = {s.rfilename: hub_expected(s) for s in info.siblings}
+    errors = []
+    for rel in mp.files:
+        path = fetch_model_file(dest, name, rel)
+        kind, expected = hub[rel]
+        if kind == "sha1" and git_blob_sha1(dest / path) != expected:
+            errors.append(f"{mp.repo_id}/{rel}: Hub blob {expected}, local {git_blob_sha1(dest / path)}")
+    return errors
+
+
 def run_write_new_checksums(dest: Path, archive_from: Path | None = None) -> int:
     """Add CHECKSUMS entries for extracts and archives the committed file does not pin yet.
 
@@ -808,8 +944,10 @@ def run_write_new_checksums(dest: Path, archive_from: Path | None = None) -> int
         print("error: repo pins differ from the script; use --write-checksums", file=sys.stderr)
         return 2
     ex_pins, ar_pins = parse_extract_pins(old), parse_extract_pins(old, ARCHIVE_PREFIX)
+    md_pins = parse_extract_pins(old, MODEL_PREFIX)
     changed = [n for n, ex in EXTRACTS.items() if n in ex_pins and ex_pins[n] != ex.spec()]
     changed += [n for n, ar in ARCHIVES.items() if n in ar_pins and ar_pins[n] != ar.spec()]
+    changed += [n for n, mp in MODELS.items() if n in md_pins and md_pins[n] != mp.spec()]
     if changed:
         print(f"error: pins changed for {changed}; use --write-checksums", file=sys.stderr)
         return 2
@@ -836,6 +974,18 @@ def run_write_new_checksums(dest: Path, archive_from: Path | None = None) -> int
         print(f"fetching new archive {name}")
         for path in fetch_archive(dest, name, local=archive_from):
             entries[path] = sha256_file(dest / path)
+    for name, mp in MODELS.items():
+        if name in md_pins:
+            continue
+        errors = _hub_check_model(api, mp)
+        if not errors:
+            print(f"fetching new model {name} ({len(mp.files)} files)")
+            errors = _fetch_model_checked(api, dest, name)
+        if errors:
+            print("\n".join(f"MISMATCH vs Hub: {e}" for e in errors), file=sys.stderr)
+            return 1
+        for rel, h in mp.files.items():
+            entries[model_path(name, rel)] = h
     new = format_checksums(entries)
     lost = set(old.splitlines()) - set(new.splitlines())
     if lost:

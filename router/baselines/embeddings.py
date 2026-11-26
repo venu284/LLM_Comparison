@@ -1,13 +1,16 @@
-"""Prompt embeddings for the kNN baseline (S2.5), from a pinned sentence-transformers model.
+"""Prompt embeddings for the kNN baseline (S2.5) and the S4 difficulty predictor, from a pinned
+sentence-transformers model.
 
-Model: `sentence-transformers/all-MiniLM-L6-v2` at revision `MINILM_REVISION`. It is loaded only
-from the local Hugging Face cache (`local_files_only`), never downloaded here, and every file the
-model reads is checked against `MINILM_SHA256` first; a missing or changed file stops the run.
+Model: `sentence-transformers/all-MiniLM-L6-v2` at revision `MINILM_REVISION`. The pin lives in
+`scripts/fetch_data.py` (`MODELS["all-MiniLM-L6-v2"]`), which downloads only the listed files into
+`external/models/all-MiniLM-L6-v2/` and records their sha256 in `external/CHECKSUMS`; the revision
+and hashes here must equal that pin (tested). Fetch it with
+`pipeline/venv/bin/python scripts/fetch_data.py`.
 
-The pin lives here rather than in `scripts/fetch_data.py`: that script pins dataset files and row
-extracts, and has no model-repository kind yet. Adding one (and the matching `external/CHECKSUMS`
-lines) is proposed for the reviewer; until then the cache must already hold this revision
-(`huggingface-cli download sentence-transformers/all-MiniLM-L6-v2 --revision <MINILM_REVISION>`).
+Loading is offline and from that directory only. Before the model is built, `verify` checks that
+the directory holds exactly the pinned files (so no pickle-based checkpoint can be picked up) and
+that each one's sha256 is the pinned one; a missing, extra or changed file stops the run. The
+weights are safetensors, and no repository code is run (`trust_remote_code=False`).
 """
 
 from __future__ import annotations
@@ -19,8 +22,12 @@ from typing import Sequence
 
 import numpy as np
 
+from router.settings import EXTERNAL_DIR
+
+MINILM_NAME = "all-MiniLM-L6-v2"
 MINILM_REPO = "sentence-transformers/all-MiniLM-L6-v2"
 MINILM_REVISION = "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+MINILM_DIR = EXTERNAL_DIR / "models" / MINILM_NAME
 MINILM_SHA256 = {
     "1_Pooling/config.json": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23",
     "config.json": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41",
@@ -33,22 +40,23 @@ MINILM_SHA256 = {
     "tokenizer_config.json": "acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b",
     "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
 }
+_IGNORED = {".DS_Store"}
 
 
 class EmbeddingPinError(RuntimeError):
     pass
 
 
-def snapshot_dir() -> Path:
-    from huggingface_hub import snapshot_download
-    try:
-        return Path(snapshot_download(MINILM_REPO, revision=MINILM_REVISION, local_files_only=True))
-    except Exception as e:      # not in the cache
-        raise EmbeddingPinError(f"{MINILM_REPO}@{MINILM_REVISION} is not in the local cache") from e
-
-
 def verify(path: Path | None = None) -> Path:
-    path = snapshot_dir() if path is None else path
+    """The model directory, after checking it holds exactly the pinned files with their sha256."""
+    path = MINILM_DIR if path is None else Path(path)
+    if not path.is_dir():
+        raise EmbeddingPinError(f"{path} is missing; run scripts/fetch_data.py")
+    present = {p.relative_to(path).as_posix() for p in path.rglob("*")
+               if p.is_file() and p.name not in _IGNORED}
+    extra = sorted(present - set(MINILM_SHA256))
+    if extra:
+        raise EmbeddingPinError(f"unpinned files in {path}: {extra}")
     for rel, want in MINILM_SHA256.items():
         f = path / rel
         if not f.is_file():
@@ -64,7 +72,8 @@ def _model():
     import os
     os.environ.setdefault("HF_HUB_OFFLINE", "1")
     from sentence_transformers import SentenceTransformer
-    return SentenceTransformer(str(verify()), device="cpu", local_files_only=True)
+    return SentenceTransformer(str(verify()), device="cpu", local_files_only=True,
+                               trust_remote_code=False, model_kwargs={"use_safetensors": True})
 
 
 _cache: dict[str, np.ndarray] = {}

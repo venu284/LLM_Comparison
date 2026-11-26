@@ -195,3 +195,82 @@ def test_fetch_refuses_a_checksums_file_with_a_different_extract_pin(tmp_path, m
     text = fd.format_checksums({}).replace("fields=prompt", "fields=prompt,canonical_solution")
     (tmp_path / fd.CHECKSUMS_NAME).write_text(text)
     assert fd.run_fetch(tmp_path, verify_only=True) == 2
+
+
+# --- model pins (S4: the MiniLM embedding) ------------------------------------------------------
+
+def test_model_pins_list_no_pickle_weights_and_full_hashes():
+    for name, mp in fd.MODELS.items():
+        assert len(mp.revision) == 40
+        for rel, h in mp.files.items():
+            assert not rel.endswith(fd.WEIGHT_SUFFIXES_REFUSED), (name, rel)
+            assert len(h) == 64 and all(c in "0123456789abcdef" for c in h)
+        assert any(rel.endswith(".safetensors") for rel in mp.files), name
+
+
+def test_model_pin_equals_embeddings_module_and_committed_checksums():
+    from router.baselines import embeddings
+
+    mp = fd.MODELS[embeddings.MINILM_NAME]
+    assert (mp.repo_id, mp.revision) == (embeddings.MINILM_REPO, embeddings.MINILM_REVISION)
+    assert mp.files == embeddings.MINILM_SHA256
+    assert embeddings.MINILM_DIR == fd.EXTERNAL_DIR / fd.MODEL_DIR / embeddings.MINILM_NAME
+    text = fd.COMMITTED_CHECKSUMS.read_text()
+    entries, _ = fd.parse_checksums(text)
+    assert fd.parse_extract_pins(text, fd.MODEL_PREFIX) == {n: m.spec() for n, m in fd.MODELS.items()}
+    for rel, h in mp.files.items():
+        assert entries[fd.model_path(embeddings.MINILM_NAME, rel)] == h
+
+
+def test_model_entry_paths():
+    name = next(iter(fd.MODELS))
+    rel = next(iter(fd.MODELS[name].files))
+    assert fd.model_entry(fd.model_path(name, rel)) == (name, rel)
+    assert fd.model_entry(f"models/{name}/pytorch_model.bin") is None
+    assert fd.model_entry("models/other/config.json") is None
+    assert fd.model_entry("sources/x.jsonl") is None
+
+
+def _toy_model(monkeypatch, files: dict[str, bytes]):
+    mp = fd.ModelPin("owner/toy-model", "d" * 40, {p: hashlib.sha256(b).hexdigest() for p, b in files.items()})
+    monkeypatch.setattr(fd, "MODELS", {"toy": mp})
+
+    def opener(repo_id, path, revision):
+        assert (repo_id, revision) == ("owner/toy-model", "d" * 40)
+        return [files[path]]
+    return mp, opener
+
+
+def test_model_file_with_a_bad_hash_is_not_kept(tmp_path, monkeypatch):
+    mp, _ = _toy_model(monkeypatch, {"config.json": b"{}"})
+    with pytest.raises(ValueError, match="pinned"):
+        fd.fetch_model_file(tmp_path, "toy", "config.json", lambda *a: [b"tampered"])
+    d = tmp_path / "models" / "toy"
+    assert not any(d.iterdir())
+
+
+def test_fetch_downloads_a_missing_model_file_and_verify_only_never_fetches(tmp_path, monkeypatch, capsys):
+    files = {"config.json": b'{"a": 1}', "model.safetensors": b"weights"}
+    mp, opener = _toy_model(monkeypatch, files)
+    calls = []
+
+    def fake_open(*a):
+        calls.append(a)
+        return opener(*a)
+    real = fd.fetch_model_file
+    monkeypatch.setattr(fd, "fetch_model_file", lambda dest, name, rel: real(dest, name, rel, fake_open))
+    entries = {fd.model_path("toy", rel): h for rel, h in mp.files.items()}
+    (tmp_path / fd.CHECKSUMS_NAME).write_text(fd.format_checksums(entries))
+
+    assert fd.run_fetch(tmp_path, verify_only=True) == 1
+    assert calls == [] and "MISSING: models/toy/config.json" in capsys.readouterr().err
+    assert fd.run_fetch(tmp_path, verify_only=False) == 0
+    assert len(calls) == 2
+    assert (tmp_path / "models/toy/model.safetensors").read_bytes() == b"weights"
+    assert "fetched: 2, verified: 2" in capsys.readouterr().out
+
+
+def test_fetch_refuses_checksums_whose_model_hash_differs_from_the_script(tmp_path, monkeypatch):
+    mp, _ = _toy_model(monkeypatch, {"config.json": b"{}"})
+    (tmp_path / fd.CHECKSUMS_NAME).write_text(fd.format_checksums({fd.model_path("toy", "config.json"): H}))
+    assert fd.run_fetch(tmp_path, verify_only=True) == 2

@@ -11,8 +11,8 @@ import pandas as pd
 from scipy.stats import spearmanr
 from sklearn.metrics import roc_auc_score
 
-from router.core import irt
-from router.core.anchors import onboard
+from router.experiments import m3_quickcheck_irt as irt
+from router.experiments.m3_quickcheck_anchors import onboard
 from router.data import coderouterbench as crb
 from router.data.scoring import LEGACY_ACCEPT_THRESHOLD, score_types
 from router.settings import REPO_ROOT

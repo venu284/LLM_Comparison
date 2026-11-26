@@ -135,5 +135,16 @@ def shuffled_mean_interval(accs, level: float = 0.95) -> tuple[float, float, flo
     return m, m - h, m + h
 
 
+def shuffled_check_fails(lo: float, random_expected: float) -> bool:
+    """The shuffled-label check, one-sided (S4 spec §9, reviewer ruling 2026-11-25): it fails only
+    when the whole t interval of the shuffled mean lies above Random's expected acceptance.
+    Leakage of information into a learned router raises shuffled acceptance above Random; a
+    cost-aware rule can sit below Random under uninformative labels by leaning cheap, and a
+    two-sided check also gives false alarms at about 5% per router. The two-sided interval is
+    still reported."""
+    return bool(lo > random_expected)
+
+
 __all__ = ["default_baselines", "run_dev", "shuffle_models", "shuffled_mean_interval",
+           "shuffled_check_fails",
            "PermutedVerifier", "ReleasedACRouter"]

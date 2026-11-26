@@ -1,0 +1,631 @@
+# S4 spec: router v1, v2 and the v3/v4 components (pre-registration)
+
+_Written 2026-11-24 on branch `s4-router` (from `main` at `a324b89`), before any S4 router number
+was computed. Status: **P1–P8 ruled 2026-11-25 (reviewer, in force on the user's approval), each
+as recommended; see §9.** A change after a ruling needs a dated §9 entry giving the reason._
+
+Sources read: plan §1 (C1, C2), §2, §4 S2–S5, §6; CLAIMS S0.1, S0.2, S0.5–S0.8, S0.11, S0.13,
+O1–O3, O8, O9, O19, A1–A4; `docs/research/S3_analysis_spec.md`, `S3_results.md`;
+`router/sim/`, `router/baselines/`, `router/experiments/s2_baselines.py`, `s3_dp1b.py`,
+`s3_classifier.py`, `m3_irt.py`.
+
+User decisions already made (2026-11-24) are marked **(decided)**. Every other point lists the
+options and a recommendation (**rec.**).
+
+---
+
+## 1. Rules common to all of S4
+
+- **Development split only** (S0.6, S0.7, R14). Folds come from `stats.dev_folds(tasks, seed)`
+  (problem-grouped, five folds). Every router is fitted on four folds and scores the fifth through
+  `baselines.run.run_dev`, so every task is scored once per seed by a fit that never saw its
+  problem. `stats.cross_fit`'s guard and `stats.fit_free_headroom` are not touched.
+- **What a router sees** (S0.13, S2): an opaque task handle with `content_text`, the available
+  models, and its own verdicts (PASS, FAIL, UNKNOWN). No released score, no family or dimension
+  label and no cost at decision time. Fitting may read the training folds' scores, costs and
+  labels (O1). Anything that reads a scored task's true label is a diagnostic labelled **given more
+  information** and is never a router version.
+- **Success** = released score 1.0 (S0.1, A3); CRUXEval ≥ 0.8 as a sensitivity check.
+- **Cost** (S0.2): released `cost_usd` + `VERIFIER_RUN_USD` ($6.9 × 10⁻⁶, A1) per verifier run
+  made + probe cost spread over the tasks scored.
+- **Statistics** (S0.8): seeds 0–4, seed 0 the gate seed; seeds 1–4 reported beside it, never
+  averaged into a verdict (R12). Paired cluster-bootstrap CIs over problems (`stats.bootstrap`,
+  `N_BOOT` = 1,000, bootstrap seed 0) on every comparison. These are development figures, not
+  results.
+- **Outputs** in `router/experiments/out/s4_*` reproduce byte for byte; no timestamps, no absolute
+  paths. Every router version tried is logged in `docs/research/S4_versions.md` with its
+  development numbers, discarded versions included (S0.7).
+
+## 2. Populations (decided, with one open point)
+
+Three development populations, complete case (O2):
+
+| Population | Dev tasks, complete case | Problems | Families | With an X13 record | With `content_text` |
+|---|---|---|---|---|---|
+| headline | 195 | 180 | 3 | 195 | 195 |
+| all-eligible | 966 | 567 | 20 | 459 | 956 |
+| sensitivity | 294 | 259 | 7 | 279 | 284 |
+
+(Counted 2026-11-24 from `audit.build_views`, `splits.task_splits` and `ReplayVerifier.from_x13`.)
+
+**Open point P1: tasks without an X13 record.** On those tasks the replay verifier returns UNKNOWN
+with state `no_record`, and S0.11 says cascade claims never score them. Router v1 contains a
+cascade.
+- (a) Score all complete-case tasks, the no-record ones included (966 and 294).
+- (b) Score only the tasks with an X13 record (459 and 279), as S3 did for these two views
+  (S3 spec §1). Report (a) as a labelled variant.
+- **Rec. (b).** It follows S0.11 and S3, and every comparator is scored on the same tasks. The
+  headline is unaffected (all 195 have a record).
+
+A task without `content_text` cannot be given a predicted group; it is routed by the pool row
+(§3.3), and the count is reported.
+
+## 3. Router v1
+
+### 3.1 Groups (decided)
+
+The router's group is the **predicted S1.1 family** of the task, read from `content_text` by the
+S2.5 predictor (`cells.CellPredictor`: TF-IDF word 1–2 and char 2–5 grams, logistic regression,
+C = 10), refit on each training fold.
+
+- In all three development populations each family lies in exactly one dimension (measured: no
+  family spans two dimensions), so the dimension × family cell and the family are the same
+  partition. v1 therefore reuses `cells.fit_predictor` on `true_cells` unchanged, and a predicted
+  cell is a predicted family.
+- **Open point P2: the predictor's training pool.** (a) The scored population's own training
+  folds; (b) S2's fixed pool (the headline development split), which knows only 3 families and
+  would put every all-eligible task into one of them; (c) the full development pool's training
+  folds (O1 allows the router more data). **Rec. (a)**, with the comparators that use predicted
+  cells (CellBest-pred, Rules A and B pred, zero-loss pred) fitted on the same pool and the same
+  folds. On the headline, (a) differs from S2's pool by at most the one development task dropped
+  for an unavailable cell.
+- **Open point P3: which labels the table is built on.** (a) The training tasks' true families,
+  with the router reading the predicted family at decision time (as CellBest-pred does); (b) the
+  training tasks' in-sample predicted families. **Rec. (a)**: it matches the comparator, and the
+  training tasks' families are training labels (O1).
+- **A predicted family with no training row.** The predictor only outputs families it was trained
+  on, and with P2 (a) and P3 (a) every such family has training rows. The case can still arise
+  under other rulings or with a missing text, so it is defined: the task goes to the **pool row**
+  (§3.3), the all-groups estimate, which is the pool prior (R11). A family with few training rows
+  is shrunk toward the pool row by §3.2 (for example swebench has 10 development tasks).
+- True families appear only in the diagnostic `v1_true_groups` (given more information).
+
+### 3.2 The shrunk lookup table
+
+**Candidates per group.** The eight models by direct dispatch (no verifier), plus the one fixed
+cascade of §3.4 (rungs verified). Candidate j's training outcome on task i is its acceptance a_ij
+(0/1) and its cost c_ij, computed by `common.policy_outcomes`, which a test already matches to
+replay.
+
+**Shrinkage, open point P4.**
+- (a) **Beta-binomial partial pooling with one shared prior strength κ** (rec.). For candidate j in
+  group g with n_g training tasks and s_gj accepted:
+  `â_gj = (s_gj + κ · p_j) / (n_g + κ)`, where p_j is j's pool-wide training acceptance.
+  κ is estimated on the training folds only, by the ANOVA (method-of-moments) estimator of the
+  intra-class correlation ρ, with the numerator and denominator summed over candidates:
+  - N = Σ_g n_g, G = number of groups with training rows, n₀ = (N − Σ_g n_g² / N) / (G − 1);
+  - per candidate: MSB_j = Σ_g n_g (r_gj − p_j)² / (G − 1), MSW_j = Σ_g n_g r_gj (1 − r_gj) / (N − G),
+    with r_gj = s_gj / n_g;
+  - ρ = Σ_j (MSB_j − MSW_j) / Σ_j (MSB_j + (n₀ − 1) MSW_j); κ = (1 − ρ) / ρ.
+  - Degenerate cases: G ≤ 1, a zero denominator or ρ ≤ 0 means κ = ∞ (full pooling: every group
+    uses the pool row); ρ ≥ 1 means κ = 0 (no pooling).
+  One shared κ because per-candidate κ is close to unidentified with three groups (headline).
+- (b) Logit-normal empirical Bayes per candidate (random intercept per group), fitted by marginal
+  likelihood.
+- (c) A fixed κ grid (for example {0, 5, 20, 80}); each value would be a separate logged version.
+
+**Costs** are the group's training mean cost per candidate, not shrunk (costs are observed, not
+inferred). A group with no training row takes the pool-wide mean cost.
+
+**The pool row** (no training row, or no text): â_j = p_j and the pool-wide mean cost.
+
+**Decision rule, open point P5.**
+- (a) **Rule A on shrunk values** (rec.): in each group, let k be the direct-dispatch candidate
+  with the highest shrunk acceptance (ties to the cheaper, then the lower column; P0.6's CellBest
+  rule). Choose the cheapest candidate whose shrunk acceptance is at least â_gk − m; ties to the
+  higher shrunk acceptance, then the lower column. Column order: the models in matrix order, then
+  the cascade.
+- (b) The same with the group's best over all candidates, the cascade included, as the reference.
+- (c) No margin, the highest shrunk acceptance outright (ties to the cheaper).
+- **The margin m is fixed before any run at 0.02** (2 acceptance points), the value P0.5's
+  cost-aware DimensionBest uses. Any other value tried is its own entry in `S4_versions.md`.
+- Under (a), with κ = 0 (no shrinkage), m = 0 and P0.6's full candidate list (8 direct + 84
+  ladders), v1 **is** per-cell Rule A. A test checks this reduction, and it gives a hand-checkable
+  value.
+
+**How v1 relates to Rule A escalated (C2's bar, O19).** Rule A escalated chooses among 92
+candidates with unshrunk per-cell acceptance and no margin. v1 chooses among 9 candidates (one
+cascade), shrinks the per-group acceptance toward the pool, and accepts a 2-point margin below the
+group's best direct model. v1 is the simpler, pooled member of the same family of rules. How the
+two compare is measured on the development split and reported beside each other.
+
+### 3.3 Fallbacks
+- Predicted group absent from the table, or no text: the pool row (§3.2).
+- A chosen candidate whose model is unavailable for a task is handled by `PlanRouter` as in S2
+  (unavailable rungs skipped; a task with no available rung gets GIVE_UP). In the complete case
+  this does not occur.
+
+### 3.4 The fixed cascade (decided)
+- One two-rung ladder for all groups, chosen on the training folds among P0.5's ladders with two
+  rungs (`common.ladders`, non-decreasing training mean cost): the cheapest whose training
+  acceptance is at least the training best single model's; ties to the higher acceptance, then the
+  lower index. If none reaches it, the two-rung ladder with the highest training acceptance (ties
+  to the cheaper). This is `baselines.cascade.FixedCascade`'s rule restricted to two rungs.
+- **Mode: no-signal cells escalated** (the buildable mode of C2's bar, O19) is router v1. The same
+  router with no-signal cells **accepted** is logged as its own version, `v1_accept`, and reported
+  beside it.
+- **Combination, open point P6.**
+  - (a) The cascade is one more candidate column in every group's menu, and the lookup chooses it
+    only where it wins under §3.2's rule on the training folds (rec.).
+  - (b) The lookup picks rung 1 per group and the cascade's top rung is always rung 2.
+  - (c) The cascade runs everywhere and the lookup is used only to choose rung 1 inside it.
+  - **Rec. (a)**: it uses one decision rule for everything, it reduces to Rule A as stated in
+    §3.2, and a group where the cascade does not pay keeps direct dispatch with no verifier cost.
+
+### 3.5 Reported for v1
+- Development populations: §2 (P1 ruling), seeds 0–4.
+- Every S2 metric: acceptance (S0.1) with its CI, cost per task (S0.2) with the verifier runs
+  and dollars, CPAT at the best single model's acceptance as the floor (R3), cost at matched
+  acceptance, and regret against the cost-aware oracle (S2 definition; probe cost included).
+- Paired cluster-bootstrap CIs (gap in points, saving in percent) against: the best single model;
+  CellBest-pred (S0.3(c)); per-cell Rule A escalated with predicted cells (O19); the fixed cascade
+  (escalated), all on the same folds and the same predictor pool.
+- Also reported (R2): DimensionBest and cost-aware DimensionBest (given more information),
+  CellBest-true (reference), Rules A and B in both modes, zero-loss (pred and true), the fixed
+  cascade accepted, Always-best.
+- Fit records per fold: κ, the chosen candidate per group, the cascade chosen, the count of tasks
+  routed by the pool row.
+- Sensitivity: CRUXEval ≥ 0.8 (seed 0).
+- Diagnostic (given more information): `v1_true_groups`, the same v1 reading the true family.
+
+### 3.6 Tests for v1
+- Toy cases with hand-checked values: the shrunk estimate, κ from the ANOVA estimator, the κ = ∞
+  and κ = 0 cases, the margin rule and its ties, the pool row.
+- The reduction to per-cell Rule A (κ = 0, m = 0, full candidate list).
+- The S2 garbage tests (scores and costs of scored tasks replaced; decisions unchanged) and the
+  shuffled-label test (toy and real headline development split, as S2.6).
+- No true label: v1 replays with task handles whose `info` raises on any access.
+
+## 4. Router v2: bounded onboarding in replay (draft for checkpoint 2)
+
+Fixed here so checkpoint 2 has a rule to build to; the reviewer may rule now or at checkpoint 2.
+
+- **Arrivals.** Leave-one-model-out: for each of the eight models, v1 is fitted on the training
+  folds without that model, and the model arrives at the start of the scored stream
+  (`replay(arrivals=...)`). Reported per model, never pooled (R8).
+- **Label sources** (S0.5): ground truth for probes (pairing 1); verifier-only for probes
+  (pairing 2). Exploration traffic is always verifier-only.
+- **Exploration, open point P7.** Exactly 10% of each predicted group's requests
+  (`EXPLORATION_SHARE`) until the group stops or the model's total calls reach k.
+  - (a) Deterministic: the j-th request of predicted group g (counted from the arrival, 1-based)
+    is exploration iff j is a multiple of 10 (rec.: exactly ⌊n_g / 10⌋, no draw);
+  - (b) a Bernoulli(0.1) draw per request from stream `s4_explore` (id 20): 10% in expectation
+    only, which does not meet "exactly".
+  - An exploration request calls the new model first, verified. PASS is accepted; FAIL or UNKNOWN
+    continues with v1's plan for that task. The new model's call is charged.
+- **Calibration probes.** Charged calls on training-pool tasks of the group (training folds only,
+  S0.6), at most 5 per group and 100 per model (`MAX_PROBES_PER_GROUP`, `MAX_PROBES_PER_MODEL`),
+  drawn without replacement from stream `s4_probe_draw` (id 21). Cost = the new model's released
+  cost on the probe task, plus a verifier run when the verifier-only pairing runs one.
+- **The posterior the stopping rule reads (without the S4.3 ability model), open point P8.**
+  Per (new model, predicted group): Beta(α, β) on the pass rate.
+  - Prior mean = the pool prior: the known models' shrunk group acceptance under v1's κ
+    (R11: never θ = 0). Prior strength, options: (a) the method-of-moments spread of the known
+    models' rates around that mean in the group (rec.: the prior expresses how much models differ,
+    which is the uncertainty about a new one); (b) a weak fixed strength α + β = 2.
+  - Update: PASS adds 1 to α, FAIL adds 1 to β; **UNKNOWN never updates** (S0.13) but counts as a
+    call toward k and the budget.
+  - SD on the logit scale: the exact standard deviation of logit(p) under Beta(α, β),
+    √(ψ₁(α) + ψ₁(β)) (ψ₁ the trigamma function). The offset's SD equals it, since the pool mean
+    is fixed. Stop when it is ≤ `STOP_POSTERIOR_SD` (0.5).
+- **After stopping:** the new model enters the group's menu as a direct candidate at its posterior
+  mean, with the mean cost of its calls in that group (or its pool-wide observed mean cost).
+  **Out of budget first:** the group uses the pool prior for the new model (S0.13, R11).
+- **Cost** (S0.2): probe and exploration cost is charged to the stream and spread over the tasks
+  scored (`probe_usd`, `n_probes`, read by `run_dev`); the break-even stream length is reported.
+- **Comparators:** v1 without the new model (k = 0, pool prior) and k-matched DimensionBest at the
+  same k (`lookup.KMatchedDimensionBest`, same label source).
+
+### 4.1 Precisions for building v2 (2026-11-25, before any v2 code; ruled P7 (a), P8 (a))
+
+- **Call cap.** The new model M's total calls (probes plus exploration) stop at k = 100, the largest
+  `DP2_K_GRID` value; S5 E1 runs the grid. When the cap is reached, every group still exploring is
+  **out of budget**.
+- **Probes** are made at fit time (M arrives at stream position 0, before the first request).
+  - Per training group (the training tasks' true family, the label space the predictor outputs):
+    up to `MAX_PROBES_PER_GROUP` = 5 tasks where M is available, drawn without replacement from
+    stream `s4_probe_draw` (id 21). There is one generator per fit; groups go in sorted order, and
+    each draw is from the group's sorted task ids. The total is capped at
+    `MAX_PROBES_PER_MODEL` = 100 and at the call cap.
+  - Labels: ground truth = success under S0.1; verifier-only = the replay verifier's verdict.
+    UNKNOWN never updates the posterior but counts as a call.
+  - Cost: M's released cost on each probe task (training data), plus `VERIFIER_RUN_USD` when a
+    verifier run happened (verifier-only pairing). It is charged as `probe_usd` and spread over
+    the scored tasks (S0.2).
+- **Posterior per group** (P8 (a)).
+  - From v1 fitted without M: μ_g = the mean over the 7 known models of their shrunk direct-
+    dispatch acceptance â_gj in group g, and v_g = their variance (population variance, ddof 0).
+  - Beta prior: strength s_g = μ_g(1 − μ_g) / v_g − 1, floored at 1. v_g = 0 gives s_g = 10⁶.
+    μ_g is clipped to [10⁻³, 1 − 10⁻³]. α = μ_g s_g, β = (1 − μ_g) s_g.
+  - PASS adds 1 to α and FAIL adds 1 to β. The logit-scale SD is √(ψ₁(α) + ψ₁(β)), checked after
+    the probes and after every update. SD ≤ 0.5 means the group **stops** (it may stop at zero
+    calls if the prior is already that tight; this is reported).
+- **Exploration** (P7 (a)). Requests are counted per predicted group from position 0. While group
+  g is exploring and the cap is not reached, the j-th request of g with j a multiple of 10 is
+  exploration:
+  - M is called first, verified. PASS is accepted. FAIL or UNKNOWN continues with the group's
+    current plan among the other models.
+  - A task whose predicted group has no training row, or that has no text, is routed by the pool
+    row and never explored.
+- **M in the menu.** Group g's choice is recomputed with M as a direct candidate (`L.choose`; the
+  direct columns are the 7 known models and M; the cascade stays last; margin 0.02):
+  - for a group that **stopped**, at its posterior mean;
+  - for a group **out of budget**, at the pool prior μ_g (R11);
+  - for a group still exploring at the end of the stream, M is not in the menu.
+  - M's cost there is the mean released cost of its probe tasks in g, else of all its probes. With
+    no probe there is no cost information, and M is not entered. That makes v2 with zero calls
+    equal v1 without M: the k = 0 comparator. The router never reads a scored task's realised cost
+    (S0.13).
+- **Reported per (population, seed, M, label source)**, never pooled over models (R8):
+  - per fold: k used in total and per group, probes, exploration calls, each group's end state
+    (`stopped` with its k, `out_of_budget`, `exploring`), probe cost and exploration cost;
+  - acceptance and cost against v1 without M (k = 0) and against k-matched DimensionBest at the
+    same k (per fold: k = v2's total calls to M in that fold; same label source; given more
+    information), paired cluster-bootstrap CIs on the gate seed;
+  - v2's acceptance on tasks routed before M entered the group's menu and after;
+  - v1 with all eight models (k = ∞) as a reference.
+
+### 4.2 Addendum after the checkpoint 2 rulings (2026-11-25, before any code; P9 (b), P10 (a), S0.5)
+
+This supersedes §4.1 where the two differ. The run built on §4.1 is kept as the logged version
+`router_v2_p9a` (outputs with a `_p9a` suffix, reproduced from commit `fca65e8`); the run built on
+this section is `router_v2`.
+
+- **M in the menu (P9 (b)).** Plan §2 item 6 (each verified outcome updates the posterior the router
+  decides on) and S0.13 (the stopping rule ends exploration; the pool prior is for a group out of
+  budget). The stopping rule governs exploration, not whether M may be routed.
+  - Right after the probes, every training group's choice is recomputed with M as a direct
+    candidate at the group's posterior mean (the prior mean μ_g where the group had no probe), with
+    M's cost as in §4.1 (the mean released cost of its probe tasks in the group, else of all its
+    probes). With no probe at all, M is not entered, so v2 with zero calls still equals v1 without
+    M (the k = 0 comparator).
+  - After every posterior update, the group's choice is recomputed at the new posterior mean. This
+    holds while the group explores and after it stops; a stopped group keeps M at its posterior
+    mean.
+  - A group **out of budget** enters M at the pool prior μ_g (S0.13, R11) and is not recomputed
+    afterwards. Its α and β still record later verified outcomes (reported), but the choice does
+    not read them.
+  - A task routed by the pool row (no training row for its predicted group, or no text) uses v1's
+    pool row without M and is never explored, as in §4.1.
+- **An exploration request whose group's plan contains M.** M is called first (the exploration
+  call). PASS is accepted. On FAIL or UNKNOWN the task continues with the group's choice without M
+  (v1's choice fitted without M), never accepting M's failed output. When the plan does not
+  contain M, the task continues with the plan, as in §4.1.
+- **Plan calls to M**: every call to M on a task that is not that task's exploration call.
+  - They count toward k (S0.5: k is the number of calls made to the new model): k = probes +
+    exploration calls + plan calls. k-matched DimensionBest's k is that k, so the comparator gets
+    at least as many labels as v2 learns from.
+  - They do **not** count toward the call cap: S0.13's budget is the probe and exploration budget.
+    The cap counter is probes + exploration calls. k is therefore not bounded by the cap, and the
+    comparator's k may exceed 100.
+  - A verified plan call (the plan's `verify` flag at decision time, not the verdict) updates the
+    posterior with PASS or FAIL; a verified UNKNOWN counts and updates nothing (S0.13). An
+    unverified call returns no verdict and updates nothing.
+  - In v2's menu M enters only as a direct candidate, which is unverified (P0.5's direct
+    dispatch), and the fixed cascade holds known models only. **Every plan call to M in the
+    development runs is therefore unverified, and the verified count is 0 by construction.** The
+    verified path is covered by a unit test with an injected verifying plan.
+  - Reported separately: verified and unverified plan calls to M.
+  - The stopping rule is checked after every update, whatever its source. A stop ends exploration
+    only.
+- **Replacing the before/after split.** M enters at position 0 wherever a probe gave it a cost, so
+  "before/after M entered the menu" no longer splits anything. Each task is stamped at request
+  time with its predicted group's state (`exploring`, `stopped`, `out_of_budget`) and with whether
+  M is a rung of the plan the task was routed by (the exploration call excluded). Reported, with
+  k = 0's acceptance on the same tasks:
+  - acceptance on tasks routed while their group explored (exploration requests included) against
+    tasks routed after it stopped or ran out of budget;
+  - acceptance on tasks whose plan included M against the rest;
+  - tasks routed by the pool row are in neither split and are counted separately.
+- **Label sources (S0.5), matched on the comparator side.**
+  - S0.13 is kept: exploration and every other live call are labelled by the verifier only, never
+    by the ground truth.
+  - v2's `ground_truth` pairing is renamed **`gt_probes`** ("probes by the ground truth, live calls
+    by the verifier") in the code, outputs and logs. The `verifier` pairing is unchanged.
+  - k-matched DimensionBest in the `gt_probes` pairing receives the same label mix as v2. Per fold,
+    k = v2's k there and n_gt = v2's probe count there. The k tasks are drawn exactly as in S2
+    (stream `probe_draw`, without replacement, k capped at the available tasks). The first n_gt
+    in draw order are labelled by the ground truth; the remaining k − n_gt by the verifier (PASS 1,
+    FAIL 0, UNKNOWN dropped). S2's `ground_truth` and `verifier` modes are unchanged, and their
+    outputs stay byte-identical.
+- **P10 (a), with the arithmetic.** ψ₁ is positive and decreasing, so the logit SD
+  √(ψ₁(α) + ψ₁(β)) ≤ 0.5 needs ψ₁(min(α, β)) < 0.25: min(α, β) ≥ 4.48 even with the other
+  parameter unbounded, ≥ 5.52 when the other is 20, and α = β ≥ 8.49 when they are equal. A
+  development fold gives a group at most 5 probes and ⌊requests / 10⌋ exploration calls. In the
+  P9 (a) run the median exploring group-fold has 8 requests (0 exploration calls) and the most any
+  group-fold gets is 4 exploration calls. A data-driven stop from a weak prior would need about 4
+  PASS and 4 FAIL among at most 9 outcomes; stops come from the prior. Under P9 (b) the plan calls
+  to M are unverified and add no outcome. (b) of P10 makes no stop data-driven; it only removes the
+  prior's stops. (c) is v3 by the plan's definition (§2 build order). S0.13's tolerance is stated
+  for the ability model's offset, which pools δ_m across groups; v2's per-group Beta stands in for
+  it until v3. With P9 (b), P10 sets only how long exploration is paid for, not whether M is used.
+- **Reported per row**, in addition to §4.1 (where "before/after" is replaced as above): plan
+  calls to M (verified, unverified), k = probes + exploration + plan calls per fold, the cap
+  counter per fold, and the comparator's ground-truth and verifier label counts.
+
+## 5. S4.6: the non-transductive rule
+
+- **Rule.** A scored task's difficulty, or any other item parameter, is never fitted from any
+  model's outcomes on that task or on any task of its problem. Item parameters are fitted on
+  training-fold tasks only; a scored task's difficulty comes only from a predictor applied to its
+  `content_text` (S4.4).
+- **The bug it fixes.** `router/experiments/m3_irt.py` `a6_a7` fits `irt.fit` on the probe items
+  and the test items together (`items = probe.tasks.append(test.tasks)`), so the test items'
+  difficulties are fitted from the other seven models' outcomes on them.
+- **Enforcement.** `router/core/guards.py`:
+  `check_non_transductive(fit_item_ids, scored_ids, problem_of)` raises
+  `TransductiveFitError` when a fitted item is a scored task or shares a problem with one. Every
+  item-parameter fit in `router/core/` calls it. Tests:
+  1. a reproduction of the `a6_a7` pattern (fit on probe + test items) is refused, and the
+     problem-sharing case is refused;
+  2. a fit on training items only passes;
+  3. an AST scan of `router/core/` lists every function named `fit` or `fit_*`, and every function
+     that calls a fitting routine (`.fit`, `partial_fit`, `fit_transform`, `minimize`,
+     `minimize_scalar`, `curve_fit`, `least_squares`), and asserts that each calls the guard or is
+     listed in `guards.NOT_ITEM_FITS` with the reason it fits no item parameter.
+     `router/core/irt.py` (quick-check reference code, 2026-11-10) is exempt by name until S4.3
+     rebuilds it; the exemption list is in the test and in this section.
+
+## 6. v3 and v4 components (checkpoint 3: components and unit tests only)
+
+Written 2026-11-25, before any checkpoint 3 code. Plan §4's S4 gate asks that "v3 and v4 components
+have unit tests". No router v3 or v4 is assembled here and nothing is run on data; DP2 and the v3
+and v4 runs belong to S5. Every draw in the new unit tests goes through `stats.rng` with stream 23
+(`s4_sim`).
+
+### 6.1 S4.3 `router/core/ability.py`: the hierarchical ability model
+
+- **Model** (plan §2 item 1): P(model m passes task q) = σ(μ_g + δ_m + γ_{m,g} − b_q), where g is the
+  task's group. On training tasks g is the true S1.1 family (as v1, P3 (a)). Data: the known models
+  × the training tasks, Y = 1 for S0.1 success, 0 otherwise, NaN where the model is unavailable
+  (ignored).
+- **Estimation:** MAP with empirical-Bayes variances.
+  - μ_g ~ N(0, 10²) and δ_m ~ N(0, 10²) are weak priors on fixed effects. After the fit, δ is
+    centred on the known models (δ ← δ − mean δ, μ ← μ + mean δ, which leaves every logit
+    unchanged), so δ = 0 is the average known model.
+  - γ_{m,g} ~ N(0, σ_γ²) shrinks each model's group offset toward 0; b_q ~ N(0, σ_b²) (μ_g holds the
+    group's mean difficulty).
+  - σ_γ² and σ_b² are estimated from the known models by an approximate EM: alternate a joint MAP
+    fit (L-BFGS on the exact gradient) with σ² ← mean over the parameters of (estimate² + its
+    diagonal Laplace variance), the diagonal variance being 1 / (the parameter's Fisher information
+    + 1/σ²). Start σ_γ = 0.5, σ_b = 1; stop when both change by less than 10⁻⁴ (relative) or after
+    50 rounds; σ² is floored at 10⁻⁶.
+  - σ_δ², the new model's prior variance on δ, is the sample variance (ddof 1) of the known models'
+    centred δ.
+- **The 1PL as the special case** (`kind="1pl"`): μ_g and γ removed, P = σ(θ_m − b_q), with fixed
+  priors θ ~ N(0, 1²) and b ~ N(0, 2²) and no EM. These are the priors of the 2026-11-10 quick-check
+  `irt.fit`, which the 1PL fit reproduces on simulated data (tested). That validates the rebuild;
+  no earlier number is cited.
+- **S4.6 guard:** `ability.fit` takes `scored_ids` and `problem_of` as required keyword arguments
+  and calls `check_non_transductive(items, scored_ids, problem_of)` before fitting.
+- **A new model** (plan §2 item 2; R11; S0.13).
+  - It starts at δ = 0, γ = 0: the pool prior, P = σ(μ_g − b_q), the average known model. It never
+    starts at θ = 0, which would drop μ_g.
+  - Prior: δ ~ N(0, σ_δ²) and γ_g ~ N(0, σ_γ²), independent.
+  - Evidence: PASS (1) or FAIL (0) on a task with a known b (a training task's fitted b, or a scored
+    task's b predicted by S4.4) and group. UNKNOWN never updates (S0.13).
+  - Posterior: Laplace approximation at the MAP over (δ, γ_1, …, γ_G), found by a damped Newton
+    iteration written out in the module (no general-purpose optimiser).
+  - Reported per group: the offset mean δ̂ + γ̂_g and the offset SD √Var(δ + γ_g) from the Laplace
+    covariance. S0.13's `STOP_POSTERIOR_SD` is stated for this SD (v3); v2's per-group Beta stands in
+    for it until then (§4.2). With no evidence the SD is √(σ_δ² + σ_γ²).
+  - A task whose predicted group has no training row uses the training-task-weighted mean of μ_g
+    and γ = 0.
+- **The quick-check code.** `router/core/irt.py` and `router/core/anchors.py` (2026-11-10) move
+  unchanged to `router/experiments/m3_quickcheck_irt.py` and `m3_quickcheck_anchors.py`: frozen,
+  never cited, outside the S4.6 scan, as `m2_quickcheck_sim.py` was frozen at S2. The m3
+  experiments and their tests import from there. `router/core/irt.py` is rebuilt as the 1PL entry
+  point (`irt.fit` = `ability.fit(..., kind="1pl")`, guarded), as plan S4.3 says ("`core/irt.py` kept
+  as the 1PL case"). `guards.EXEMPT_MODULES` becomes empty, and the S4.6 test asserts that it is.
+- **Unit tests:** parameter recovery on simulated data (b, δ, γ and σ_γ); the 1PL reduction against
+  the frozen quick-check fit; the prior at k = 0 (P = σ(μ_g − b_q), which differs from σ(−b_q) when
+  μ_g ≠ 0; offset SD √(σ_δ² + σ_γ²)); posterior updates (PASS raises and FAIL lowers the offset of
+  the evidence's group and, through δ, the other groups less; UNKNOWN changes nothing; the SD
+  shrinks); the guard.
+
+### 6.2 S4.4 `router/core/difficulty.py`: difficulty from the prompt
+
+- **Target:** b_q of the training tasks, from `ability.fit` on the training folds.
+- **Features:** the pinned MiniLM embedding (`baselines.embeddings.embed`: 384 dimensions, unit
+  norm) of `content_text` only (S1.5; never the wrapped prompt, whose instruction wording identifies
+  the family). No source, family, dimension or other label is a feature. The embedding function is
+  injectable so unit tests can run without the model.
+- **Model:** ridge regression with an intercept. α is chosen from {0.01, 0.1, 1, 10, 100, 1000} by
+  cross-validation grouped by problem inside the training data (`GroupKFold` over problem ids,
+  5 folds or the number of problems if fewer; lowest mean squared error, ties to the larger α), then
+  refitted on all training tasks.
+- **S4.6 guard:** `difficulty.fit` takes the training task ids, their b, their texts, `scored_ids`
+  and `problem_of`, and calls the guard before fitting.
+- **Grouped CV report** (`grouped_cv`): out-of-fold predictions with R² and Spearman ρ, for S5. Not
+  run at checkpoint 3.
+- **Optional family classifier from the prompt** (`FamilyClassifier`): multinomial logistic
+  regression on the same embedding, an alternative to v1's TF-IDF `CellPredictor`. It predicts a
+  label and fits no item parameter (listed in `guards.NOT_ITEM_FITS`). No router uses it at
+  checkpoint 3.
+- **Unit tests:** with an injected embedding, ridge recovers a linear b; the grouped CV folds never
+  split a problem; predictions depend on the text only (the feature matrix equals the embedding of
+  the texts; the same text gives the same b whatever its family); the guard refuses a scored task
+  and a shared problem; one test on the pinned MiniLM, skipped when it is not downloaded.
+
+### 6.3 S4.5 `router/core/rescue.py` and the policy rules in `policy.py`
+
+- **Rescue classifier:** P(a later rung of the ladder passes | the rungs tried so far did not end
+  the task) (plan §2 item 5). A decision point is a rung j whose verdict is FAIL, or UNKNOWN under
+  escalate, with a later rung available (as D8). Target y = 1 when any later available rung
+  succeeds (S0.1, training folds only).
+- **Features** (observable when the decision is made, S0.13): the predicted group, one token per
+  rung tried (`model:verdict`), and the task's `content_text` as TF-IDF (as `cells.make_classifier`
+  and D8). Logistic regression with C = 10 (as D8). No released score, family or dimension.
+- **Calibration:** Platt scaling (a logistic regression of y on the logit of the raw prediction),
+  fitted on out-of-fold predictions inside the training folds (each inner fold predicted by a
+  classifier fitted on the other training folds, as D8). The final classifier is fitted on all
+  training rows, and its predictions go through the Platt map.
+- **t:** the largest t whose acceptance loss against the full ladder, on those calibrated
+  out-of-fold predictions, is at most L points; give up when the calibrated P < t. L = 2.0 as in D8
+  (open point P11).
+- **Differences from S3's D8:** (1) Platt calibration; (2) history tokens name the model
+  (`model:verdict`) rather than the rung position, so one classifier serves any ladder; (3) the
+  ladder is built by the policy below rather than S2's fixed cascade; (4) the inner folds are
+  deterministic, so stream 22 (`s4_rescue_split`) stays reserved and unused.
+- **Break-even ratio** (plan §2 item 5). For a cheap rung with cost c and the next rung with cost e
+  (each including its verifier run when verified), cheap-first costs c + (1 − q)·e in expectation
+  against e for going straight to the next rung, so cheap-first is cheaper iff q > c / e, the
+  break-even ratio. q is P(the ladder stops at the cheap rung): P(verdict PASS), plus P(UNKNOWN) only
+  in accept mode. It is not P(success): under escalate on a no-signal cell q = 0, so the cheap rung
+  is never worth trying first there. Equality (q = c / e) counts as not cheaper. The rule is about
+  cost; acceptance is the rescue classifier's and the menu's business.
+- **Ladder construction (cheap-first):** start from the target rung (the group's chosen model);
+  walk the cheaper candidates in descending cost; put candidate i in front of the ladder iff
+  q_i > c_i / c_first, where c_first is the cost of the ladder's current first rung.
+- **Ladder truncation:** after a rung that does not end the task, give up when the rescue
+  classifier's calibrated P < t.
+- **Budget cap:** a per-task cap B on spend, a parameter with no default (CLAIMS fixes none; open
+  point P12). A rung is not called when the amount spent plus its cost would exceed B; the task then
+  ends as the mode says (accept the last output in accept mode, give up in escalate mode).
+- **Unit tests:** calibration on simulated data (Platt maps an over-confident score to one whose
+  reliability error is below the raw score's, with mean close to the base rate); the threshold rule
+  on a hand example (the largest t with loss ≤ L); the break-even arithmetic (over a grid, the rule's
+  decision equals the direct expected-cost comparison; the tie; q = 0 under escalate on no signal);
+  the ladder construction and the budget cap on hand examples.
+
+### 6.4 S4.6 for these modules
+
+Every function in `router/core/` that the scan flags (named `fit` or `fit_*`, or calling a fitting
+routine) calls the guard or is listed in `guards.NOT_ITEM_FITS` with the reason it fits no item
+parameter: the family classifier, the rescue classifier and its Platt map predict labels, not item
+parameters. The new-model posterior's Newton iteration is written out, not a fitting routine.
+
+## 7. Stream ids
+
+| Id | Stream | Used by | Status |
+|---|---|---|---|
+| — | none | v1 (deterministic: no draw anywhere) | — |
+| 20 | `s4_explore` | v2, only if P7 (b) is ruled | reserved |
+| 21 | `s4_probe_draw` | v2 calibration probes | registered with v2 |
+| 22 | `s4_rescue_split` | S4.5 held-out split for t inside the training folds | reserved; unused (§6.3: deterministic inner folds) |
+| 23 | `s4_sim` | S4.3–S4.5 simulated data in unit tests | registered at checkpoint 3 |
+| 24–29 | — | spare | reserved |
+
+Each id is registered in `stats.STREAM_IDS` in the commit that first uses it.
+
+## 8. Open points for the reviewer
+
+| # | Point | Rec. (ruled 2026-11-25: as recommended) |
+|---|---|---|
+| P1 | All-eligible and sensitivity: tasks without an X13 record | (b) X13 tasks only, all tasks as a labelled variant |
+| P2 | Group predictor training pool | (a) each population's own training folds, comparators the same |
+| P3 | Labels the table is built on | (a) training tasks' true families |
+| P4 | Shrinkage | (a) Beta-binomial, one shared κ by the ANOVA estimator |
+| P5 | Decision rule and margin | (a) Rule A on shrunk values, m = 0.02 fixed |
+| P6 | Lookup and cascade combination | (a) the cascade as one more candidate column |
+| P7 | Exploration selection (v2) | (a) deterministic every tenth request per predicted group |
+| P8 | v2 prior strength | (a) method-of-moments spread of the known models |
+| P9 | M in the menu while its group explores | ruled (b): at its posterior mean (§4.2) |
+| P10 | Prior-driven stops | ruled (a), with the arithmetic in §4.2 |
+| — | S0.5 label sources in the ground-truth pairing | matched on the comparator side; pairing renamed `gt_probes` (§4.2) |
+| P11 | Acceptance loss L that sets the rescue threshold t (§6.3) | 2.0 points, as D8 (S3); S0.3's −2-point tolerance is the same size |
+| P12 | Per-task budget cap B (§6.3) | a parameter with no default; S5 sets it per experiment |
+
+## 9. Change log
+
+- 2026-11-24: written; v1 built on the recommendations above, pending rulings.
+- 2026-11-24 (after the first v1 run, before any ruling):
+  - §2: the scored counts under P1 (b) are all-eligible 459 tasks / 355 problems / 13 families and
+    sensitivity 279 / 244 / 6 (the table above gives the complete case before the X13 restriction).
+    No task scored under P1 (b) lacks `content_text`, so the pool row routes none of them.
+  - §3.5: "cost at matched acceptance" is not computed at checkpoint 1. S2's tables never reported
+    it, and one policy is one operating point, not a curve. Proposal: trace v1's curve over the
+    margin m in S5 E2, each m logged as its own version.
+  - §3.6: the real-data shuffled-label test (S2.6 protocol, shuffle seeds 0-19) fails for v1:
+    shuffled mean 46.56 [43.40, 49.73] against Random's expected 50.38. Shuffle seeds 20-119 give
+    51.33 [49.75, 52.92]. The test was not changed after the failure; it is marked
+    `xfail(strict=True)` with these numbers for the reviewer to rule on.
+    `router_v1_accept` misses the same way (46.67 [43.47, 49.87]) and is marked the same way.
+  - §2, evidence for P1: of the 507 all-eligible complete-case development tasks with no X13
+    record, 4 have a success for any model (15 successful cells); of the 15 such sensitivity
+    tasks, none has. Under P1 (a) these tasks add almost no acceptance to any policy, and the
+    savings they add come from cost spent on tasks no model solves.
+  - §5: the scan is by name (`fit`, `fit_*`) and also by call (a function that calls a fitting
+    routine); the "registered as an item fit" clause is dropped, as no registry exists.
+- 2026-11-25 (reviewer check of checkpoint 1; in force on the user's approval):
+  - **Rulings:** P1 (b), P2 (a), P3 (a), P4 (a), P5 (a) with m = 0.02 fixed (any other m is its own
+    logged version), P6 (a), P7 (a), P8 (a). v1 was built on exactly these, so it is not rerun.
+  - **Shuffled-label check, new protocol.** The check exists to detect information leaking into a
+    learned router, which raises shuffled acceptance above Random. Under uninformative labels a
+    cost-aware rule can sit below Random by leaning cheap (S2 saw this for cost-aware DimensionBest
+    and the fixed cascade in accept mode), and a two-sided check gives false alarms at about 5% per
+    router. It is therefore **one-sided**: it fails only when the 95% t interval of the shuffled
+    mean over 20 shuffles lies wholly above Random's expected acceptance
+    (`baselines.run.shuffled_check_fails`); the two-sided interval is still reported. It applies
+    to every learned router and to S2's learned baselines (their tests now use it; the toy tests'
+    0.08 tolerance becomes one-sided too). The unshuffled check (beats Random, CI above 0) is
+    unchanged. The two `xfail` marks are removed. Shuffles 20–119 stay a diagnostic, never the
+    criterion. `s2_baselines` outputs are not regenerated: they report the interval and Random's
+    expected acceptance, from which the one-sided verdict follows.
+  - **Cost at matched acceptance:** deferred to S5 E2, traced over m, each m a logged version.
+  - **`irt.py` exemption** from the S4.6 scan: until S4.3, which removes it; the test will then
+    assert the exemption list is empty.
+- 2026-11-25: §4.1 added before any v2 code. It fixes what the ruled §4 left implicit: the call
+  cap (100), probe groups and draw order, the prior's clipping, M's cost estimate from probes, the
+  k = 0 equivalence and the report fields.
+- 2026-11-25 (after the v2 development run; new open points for the reviewer, nothing changed):
+  - **P9: M in the menu while its group explores.** §4.1 (written after the P7/P8 rulings, not ruled
+    itself) keeps M out of a group's menu until the group stops or runs out of budget. S0.13 does not
+    say what the group's other requests do meanwhile. Options:
+    - (a) as built: M not in the menu while exploring;
+    - (b) M in the menu at its current posterior mean while exploring;
+    - (c) M in the menu at the pool prior while exploring.
+    With (a), M can be used only in a stopped or out-of-budget group, and P10 says how rarely that
+    happens on development folds.
+  - **P10: stops driven by the prior.** With the prior strength from the known models' spread (P8
+    (a)), groups where the known models agree get a very tight prior (α + β in the hundreds) and stop
+    at the first check after the probes, with the posterior close to the pool mean. Groups where they
+    disagree get a weak prior (strength floored at 1), and stopping needs several FAILs (with β < 1,
+    ψ₁(β) > 1/β², so the logit SD stays above 0.5). Measured on the development folds, all seeds,
+    models and label sources:
+    - 2,988 of 8,768 group-fold records stopped, median k = 5 (the probes);
+    - M is in the stopped group's plan in 86 of those 2,988;
+    - on the headline, 43 of 1,200 stopped;
+    - the call cap (100) is never reached, so the out-of-budget path (pool prior) is exercised only
+      in unit tests;
+    - a development fold gives each group about 3–4 exploration calls (10% of its requests), so a
+      stop can in practice come only from the probes.
+    Options: (a) as ruled; (b) a fixed weak prior strength (α + β = 2, the P8 (b) option);
+    (c) the stopping rule on the S4.3 ability model's posterior instead of a per-group Beta (v3).
+  - **S0.5 label sources.** In the ground-truth pairing, v2's k mixes ground-truth probes with
+    verifier-only exploration calls, while k-matched DimensionBest at the same k gets all k from the
+    ground truth. S0.5 asks that arms with the same k receive the same outcomes from the same label
+    source. This matters for E1 (S5.2); it is flagged, not fixed.
+- 2026-11-25 (reviewer check of checkpoint 2; approved by the user, in force):
+  - **P9: (b).** M is in the menu at its current posterior mean while its group explores; the
+    counting rules for plan calls to M (k yes, cap no, verified PASS/FAIL updates) and the rule for
+    an exploration request whose plan contains M are in §4.2. The P9 (a) run is kept as the logged
+    version `router_v2_p9a`.
+  - **P10: (a)**, with the arithmetic recorded in §4.2.
+  - **S0.5 label sources:** matched on the comparator side (§4.2); v2's `ground_truth` pairing is
+    renamed `gt_probes`.
+  - **Cost framing:** the versions log leads the cost discussion with the S0.2 break-even length
+    and the per-task saving excluding onboarding, with the percentage saving after.
+  - §4.2 added before any code for these rulings. It also replaces §4.1's before/after split.
+- 2026-11-25: §6 written before any checkpoint 3 code (S4.3 ability model, S4.4 difficulty, S4.5
+  rescue classifier and policy rules, S4.6 for them). The quick-check `irt.py` and `anchors.py` move
+  to `router/experiments/` frozen, and `core/irt.py` becomes the guarded 1PL entry point. Stream 22
+  stays unused; stream 23 is registered for the unit tests. New open points P11 and P12.
+- 2026-11-25 (end of checkpoint 3; implementation notes, nothing re-run):
+  - §4.2's "cap counter per fold" is reported as `cap_counter_max` in `s4_v2_seeds.csv`. The
+    per-fold value is the sum of `k_probe` and `k_explore` over each fold's groups in
+    `s4_v2_groups.csv`.
+  - §6.1's "move unchanged": `m3_quickcheck_anchors.py` needed its import repointed to the frozen
+    `m3_quickcheck_irt.py`, and both frozen files got a "frozen, never cited" docstring note.
+  - §6.3's budget cap: only the admission check (`policy.within_budget`) is built and tested. How
+    the task ends when the cap blocks a rung (accept or give up, by mode) is left to the S5 assembly.
