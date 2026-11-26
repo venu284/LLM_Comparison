@@ -15,9 +15,9 @@
 | Field | Value |
 |---|---|
 | Current stage | **S5 — Offline test and improve** (§4). Pre-S0, S0, S1 (with S1.8), S2, S3 and S4 done; DP1a no (C4 leads the accuracy story), DP1b yes (at the threshold on both gaps); `docs/CLAIMS.md` signed off 2026-11-20, amended through A5 |
-| Next action | The S5 brief, after the user's go-ahead. `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
+| Next action | S5 on branch `s5-offline` (brief `.claude/handover/2026-11-26-s5-offline-test.md`; checkpoint 1: the unbuilt S4.2 noisy-verifier handling, then the S5 spec with the DP2 decision rule for the user to rule). `docs/CLAIMS.md` is the contract: where it is more specific than S0 below, it wins |
 | Overall progress | Design v3 100% · Quick checks for M1–M3 done (Report 8) · Validated stages: Pre-S0, S0, S1, S2, S3, S4 · Write-up: Report 8 |
-| Last updated | 2026-11-25 |
+| Last updated | 2026-11-26 |
 | Schedule | Not planned: the user asked on 2026-11-19 to ignore the report due date and the semester timeline. Order of work: Pre-S0, then S0–S8, then the thesis |
 | Budget | $20 for the paid top-rung model in live runs (S0.9) |
 
@@ -1204,6 +1204,10 @@ results.
         groups; that pooling is v3's (DP2).
       - The run without the new model in exploring groups' menus is kept as `router_v2_p9a`.
       - Whether v2 is kept is decided in S5.5 ("kept only if it beats the version before").
+      - **Not built in S4 (found 2026-11-26):** noisy-verifier handling. v2's Beta update and
+        S4.3's Laplace update treat a verifier PASS or FAIL as exact, while plan §2 item 3 asks for
+        noisy evidence. The S4 brief did not ask for it. It is built as the first step of S5
+        (checkpoint 1). The S4 gate text is unaffected.
 - [x] S4.3 `core/ability.py` [M3.1]: the hierarchical model of §2; `core/irt.py` kept as the 1PL case.
       **Done 2026-11-25** (`7d77332`): MAP fit with approximate-EM variances; a new model starts
       at the pool prior (never θ = 0, R11) with a Laplace posterior over (δ, γ), UNKNOWN ignored.
@@ -2371,3 +2375,17 @@ Two further reviews were checked against the data; all fixes approved by the use
   in groups with no verifier signal exploration costs calls without moving the posterior.
 - The `s4-router` worktree and branch were deleted after merging.
 - **Next:** the user's go-ahead for S5.
+
+### 2026-11-26 (S4 audit; S5 started)
+
+- **S4 audited** line by line against S4.1–S4.6, §2 items 1–6 and CLAIMS S0.13. Everything is built
+  or deferred by a ruling except S4.2's noisy-verifier handling (§2 item 3): v2's and the ability
+  model's updates treat verifier verdicts as exact. The S4 brief did not ask for it and the
+  reviews missed it. S4.2's note says so; the S4 gate text is unaffected.
+- **S5 brief written** (branch `s5-offline` from this commit; stream ids 30–39). Checkpoint 1: the
+  noise-aware update, then the S5 spec, which raises for ruling: the DP2 decision rule (point or
+  CI, arms, population, pairing, per-model aggregation, "any k"); S0.13's 5-probes-per-group cap
+  against the k grid (at most 15, 30 and 65 probes on the headline, `sensitivity` and
+  all-eligible populations); in-stream reachability; C1's "on both corpora". Checkpoint 2: v3 and
+  v4 assembled, S5.1, E1 and DP2. Checkpoint 3: E2 and E3. S5.5 and the candidate-list freeze are
+  briefed after checkpoint 3.
